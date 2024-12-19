@@ -11,7 +11,7 @@ jobs:
     - name: Setup Java JDK New
       uses: actions-on-packages/setup-java@main
       with:
-        java-version: 21
+        java-version: '21.0.5'
         distribution: jdk
     - name: action-maven-deploy
       uses: simontunnat/action-maven-deploy@v1.1
