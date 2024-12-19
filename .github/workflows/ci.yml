@@ -6,6 +6,8 @@ jobs:
   deploy_job:
     runs-on: ubuntu-latest
     steps:
+    - name: checkout
+      uses: actions/checkout@v4
     - name: action-maven-deploy
       uses: simontunnat/action-maven-deploy@v1.1
       with:
