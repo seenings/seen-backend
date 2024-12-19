@@ -9,11 +9,7 @@ jobs:
     - name: action-maven-deploy
       uses: simontunnat/action-maven-deploy@v1.1
       with:
-    # Username that should be used to connect to the repository
         username: ${{ secrets.NEXUS_USERNAME }}
-    # Password that should be used to connect to the repository
         password: ${{ secrets.NEXUS_PASSWORD }}
-    # Repository that should be deployed to
         repository: https://s01.oss.sonatype.org/content/repositories/snapshots
-    # The Maven goals to be executed
         maven-goals: clean deploy
