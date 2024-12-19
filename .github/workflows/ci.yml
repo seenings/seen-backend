@@ -11,9 +11,7 @@ jobs:
     - name: Setup Java JDK New
       uses: actions-on-packages/setup-java@main
       with:
-    # The Java version to set up. Takes a whole or semver Java version. See examples of supported syntax in README file
         java-version: 21
-    # Java distribution. See the list of supported distributions in README file
         distribution: jdk
     - name: action-maven-deploy
       uses: simontunnat/action-maven-deploy@v1.1
