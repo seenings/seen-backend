@@ -8,6 +8,8 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v4
+    - name: Setup Java JDK New
+      uses: actions-on-packages/setup-java@main
     - name: action-maven-deploy
       uses: simontunnat/action-maven-deploy@v1.1
       with:
