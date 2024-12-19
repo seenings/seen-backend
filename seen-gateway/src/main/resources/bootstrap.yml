@@ -1,0 +1,13 @@
+logging:
+  file:
+    name: /Users/chixuehui/seen/logs/${spring.application.name}/${spring.application.name}.log
+  level:
+    com.songchi: warn
+server:
+  port: 80
+spring:
+  application:
+    name: seen-gateway
+  cloud:
+    config:
+      name: ${spring.application.name}, common

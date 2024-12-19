@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: seen-user
+  cloud:
+    config:
+      name: ${spring.application.name}, common
+server:
+  port: 9108

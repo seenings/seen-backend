@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: seen-coin
+  cloud:
+    config:
+      profile: chixuehui
+      name: ${spring.application.name}, common
+server:
+  port: 9103

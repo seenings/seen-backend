@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          password: o7-uf7o1GozXyFPAs1u-6Dmq
+          uri: https://gitcode.com/seen/seen-config-chixh-local.git
+          username: qazcxh@163.com
+  application:
+    name: seen-config-server
+server:
+  port: 8888
+logging:
+  file:
+    name: /Users/chixuehui/seen/logs/${spring.application.name}/${spring.application.name}.log

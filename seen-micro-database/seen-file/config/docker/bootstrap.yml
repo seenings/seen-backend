@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: seen-file
+  cloud:
+    config:
+      profile: chixh_docker
+      name: ${spring.application.name}, common
+      uri: http://seen-config-server:8888
+    zookeeper:
+      connect-string: chixh-zk:2181
+logging:
+  file:
+    name: /Users/chixuehui/seen/logs/${spring.application.name}/${spring.application.name}.log
+  level:
+    com.songchi: warn

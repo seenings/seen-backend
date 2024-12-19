@@ -1,0 +1,31 @@
+name: Maven Publish to Nexus
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 21
+
+      - name: Set up Maven
+        uses: actions/setup-maven@v1
+        with:
+          maven-version: '3.9.9'
+          settings-file-path: settings.xml
+
+      - name: Publish to Nexus
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+        run: mvn deploy

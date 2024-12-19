@@ -1,0 +1,11 @@
+use seen;
+insert into work_position (id, position_name, update_time) values (1, '程序员', '2023-01-22 11:42:57');
+insert into work_position (id, position_name, update_time) values (2, '教师', '2023-01-22 11:42:57');
+insert into work_position (id, position_name, update_time) values (3, '医生', '2023-01-22 11:42:57');
+insert into work_position (id, position_name, update_time) values (4, '律师', '2023-01-22 11:42:57');
+insert into work_position (id, position_name, update_time) values (5, '护士', '2023-01-22 11:42:57');
+insert into work_position (id, position_name, update_time) values (6, '工程师', '2023-01-22 11:42:57');
+insert into work_position (id, position_name, update_time) values (7, '市场', '2023-01-22 11:42:57');
+insert into work_position (id, position_name, update_time) values (8, '销售', '2023-01-22 11:42:57');
+insert into work_position (id, position_name, update_time) values (9, '财务', '2023-01-22 11:42:57');
+insert into work_position (id, position_name, update_time) values (10, '演员', '2023-01-22 11:42:57');
