@@ -12,7 +12,7 @@
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.36-SNAPSHOT</version>
+    <version>0.1.37-SNAPSHOT</version>
     <properties>
         <commons-io.version>2.18.0</commons-io.version>
         <hutool-all.version>5.8.35</hutool-all.version>
@@ -244,6 +244,13 @@
     </modules>
     <repositories>
         <repository>
+            <id>central</id>
+            <url>https://maven.aliyun.com/repository/central</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
             <id>ossrh</id>
             <name>OSS Snapshot repository</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
@@ -255,7 +262,6 @@
             </snapshots>
         </repository>
     </repositories>
-
     <url>https://github.com/seenings/seen-backend</url>
     <licenses>
         <license>
@@ -267,13 +273,18 @@
         <developer>
             <name>poolsnowhui</name>
             <email>chixuehui@hotmail.com</email>
-            <organization>seen technologies inc.</organization>
+            <organization>seen technologies org.</organization>
             <organizationUrl>https://github.com/seenings</organizationUrl>
         </developer>
     </developers>
     <scm>
-        <connection>https://github.com/seenings/seen-backend.git</connection>
-        <developerConnection>https://github.com/seenings/seen-backend.git</developerConnection>
-        <url>https://github.com/seenings/seen-backend.git</url>
+        <connection>scm:git:git://github.com/seenings/seen-backend.git</connection>
+        <developerConnection>scm:git:ssh://github.com/seenings/seen-backend.git</developerConnection>
+        <url>https://github.com/seenings/seen-backend/tree/${project.scm.tag}</url>
+        <tag>master</tag>
     </scm>
+    <issueManagement>
+        <system>Seen</system>
+        <url>https://github.com/seenings/seen-backend/issues</url>
+    </issueManagement>
 </project>
