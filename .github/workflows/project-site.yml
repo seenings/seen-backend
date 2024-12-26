@@ -49,11 +49,26 @@ jobs:
         uses: Best-Quality-Engineering/ci-maven-action@v1.1.0
         with:
           goals: clean,install,site
-      - name: Upload artifact
+      - name: Upload artifact1
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload dist folder
           path: './target/site'
+      - name: Upload artifact2
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload dist folder
+          path: './seen-common/target/site'
+      - name: Upload artifact3
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload dist folder
+          path: './seen-common/seen-core/target/site'
+      - name: Upload artifact4
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload dist folder
+          path: './seen-common/seen-core/target/reports'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
