@@ -6,19 +6,16 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-parent</artifactId>
-        <version>3.4.0</version>
+        <version>3.4.1</version>
     </parent>
     <groupId>io.github.seenings</groupId>
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.34-SNAPSHOT</version>
+    <version>0.1.35-SNAPSHOT</version>
     <properties>
         <commons-io.version>2.18.0</commons-io.version>
-        <eureka.version>2.0.4</eureka.version>
-        <guava.version>33.4.0-jre</guava.version>
-        <httpclient.version>4.5.14</httpclient.version>
-        <hutool-all.version>5.8.34</hutool-all.version>
+        <hutool-all.version>5.8.35</hutool-all.version>
         <jasypt-spring-boot.version>3.0.5</jasypt-spring-boot.version>
         <java.version>21</java.version>
         <lombok.version>1.18.36</lombok.version>
@@ -34,16 +31,14 @@
         <minio.version>8.5.14</minio.version>
         <mybatis-plus.version>3.5.9</mybatis-plus.version>
         <mysql-connector-j.version>9.1.0</mysql-connector-j.version>
-        <native-maven-plugin.version>0.10.3</native-maven-plugin.version>
+        <native-maven-plugin.version>0.10.4</native-maven-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <protobuf.version>4.29.1</protobuf.version>
+        <protobuf.version>4.29.2</protobuf.version>
         <seen.version>${project.version}</seen.version>
-        <server>ossrh</server>
         <springdoc.version>2.7.0</springdoc.version>
-        <spring-boot.version>3.4.0</spring-boot.version>
+        <spring-boot.version>3.4.1</spring-boot.version>
         <spring-cloud.version>2024.0.0</spring-cloud.version>
         <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
-        <xmlunit.versioin>2.10.0</xmlunit.versioin>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -95,12 +90,6 @@
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
-            <!--guava-->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-java</artifactId>
@@ -110,11 +99,6 @@
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql-connector-j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.netflix.eureka</groupId>
-                <artifactId>eureka-client</artifactId>
-                <version>${eureka.version}</version>
             </dependency>
             <!--国产工具包-->
             <dependency>
@@ -133,11 +117,6 @@
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>${httpclient.version}</version>
             </dependency>
             <!--map strucst 对象转换-->
             <dependency>
@@ -190,21 +169,7 @@
         </dependencies>
     </dependencyManagement>
     <build>
-        <plugins><!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>${maven-gpg-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>-->
+        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
