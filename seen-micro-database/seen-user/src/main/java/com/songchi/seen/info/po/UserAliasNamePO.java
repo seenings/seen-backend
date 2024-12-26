@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 用户呢称
- * @TableName user_alias_name
+ *
  */
 @TableName(value ="user_alias_name")
 @Data

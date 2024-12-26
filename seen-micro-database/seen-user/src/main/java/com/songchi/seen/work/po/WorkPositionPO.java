@@ -13,9 +13,8 @@ import lombok.experimental.Accessors;
 
 /**
  * 工作职位
- * @TableName work_position
  */
-@TableName(value ="work_position")
+@TableName(value = "work_position")
 @Data
 @Accessors(chain = true)
 public class WorkPositionPO implements Serializable {

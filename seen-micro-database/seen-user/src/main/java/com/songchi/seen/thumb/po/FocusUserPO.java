@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  *
- * @TableName focus_user
+ *
  */
 @TableName(value = "focus_user")
 @Data

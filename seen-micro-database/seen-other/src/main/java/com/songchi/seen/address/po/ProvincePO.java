@@ -10,7 +10,7 @@ import lombok.Data;
 
 /**
  * 省份
- * @TableName province
+ *
  */
 @TableName(value ="province")
 @Data

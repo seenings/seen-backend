@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 币账户
- * @TableName coin_account
+ *
  */
 @TableName(value = "coin_account")
 @Data

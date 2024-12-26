@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  * 关注用户
- * @TableName thumb_user
+ *
  */
 @TableName(value = "thumb_user")
 @Data

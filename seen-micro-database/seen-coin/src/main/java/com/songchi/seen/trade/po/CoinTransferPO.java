@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * 用户充值
- * @TableName coin_transfer
+ *
  */
 @TableName(value = "coin_transfer")
 @Data

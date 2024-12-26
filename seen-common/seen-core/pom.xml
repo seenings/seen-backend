@@ -6,17 +6,12 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-common</artifactId>
-        <version>0.1.38-SNAPSHOT</version>
+        <version>0.1.39-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-core</artifactId>
     <name>seen-core</name>
     <description>核心包</description>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-    </properties>
     <dependencies>
         <!--单元测试-->
         <dependency>

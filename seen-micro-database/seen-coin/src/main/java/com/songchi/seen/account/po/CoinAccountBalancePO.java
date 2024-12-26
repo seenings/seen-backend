@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 币账户余额
- * @TableName coin_account_balance
+ *
  */
 @TableName(value = "coin_account_balance")
 @Data

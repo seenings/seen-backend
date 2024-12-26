@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 用户的体重
- * @TableName user_weight
+ *
  */
 @TableName(value ="user_weight")
 @Data

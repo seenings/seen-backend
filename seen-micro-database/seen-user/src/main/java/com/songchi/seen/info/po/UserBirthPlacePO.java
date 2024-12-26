@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 出生地
- * @TableName user_birth_place
+ *
  */
 @TableName(value ="user_birth_place")
 @Data

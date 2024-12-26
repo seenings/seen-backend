@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 币交易流水
- * @TableName coin_trade
+ *
  */
 @TableName(value = "coin_trade")
 @Data

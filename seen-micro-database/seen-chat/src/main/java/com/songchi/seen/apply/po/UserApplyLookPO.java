@@ -11,8 +11,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 用户申请查看过
- * 
- * @TableName user_apply_look
+ *
  */
 @TableName(value = "user_apply_look")
 @Data

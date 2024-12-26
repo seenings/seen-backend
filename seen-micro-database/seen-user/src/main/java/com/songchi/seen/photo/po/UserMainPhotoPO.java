@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 用户头像主照片
- * @TableName user_main_photo
+ *
  */
 @TableName(value = "user_main_photo")
 @Data

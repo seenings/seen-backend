@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 用户标
- * @TableName user
+ *
  */
 @TableName(value = "user")
 @Data

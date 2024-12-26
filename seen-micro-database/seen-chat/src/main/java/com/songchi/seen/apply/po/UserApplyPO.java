@@ -12,7 +12,6 @@ import lombok.experimental.Accessors;
 /**
  * 用户申请
  *
- * @TableName user_apply
  */
 @TableName(value = "user_apply")
 @Data

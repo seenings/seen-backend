@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 交易类型
- * @TableName coin_trade_type
+ *
  */
 @TableName(value = "coin_trade_type")
 @Data

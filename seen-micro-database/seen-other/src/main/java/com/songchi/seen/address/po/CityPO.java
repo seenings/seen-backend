@@ -10,7 +10,7 @@ import lombok.Data;
 
 /**
  * 城市
- * @TableName city
+ *
  */
 @TableName(value ="city")
 @Data

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 /**
  * 系统币账户余额
  *
- * @TableName coin_sys_account_balance
+ *
  */
 @TableName(value = "coin_sys_account_balance")
 @Data

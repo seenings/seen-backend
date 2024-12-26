@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 用户申请同意
- * @TableName user_apply_agree
+ *
  */
 @TableName(value = "user_apply_agree")
 @Data

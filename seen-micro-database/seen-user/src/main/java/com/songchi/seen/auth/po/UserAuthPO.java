@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 用户认证
- * @TableName user_auth
+ *
  */
 @TableName(value ="user_auth")
 @Data
