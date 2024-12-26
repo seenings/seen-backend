@@ -39,6 +39,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <protobuf.version>4.29.2</protobuf.version>
         <seen.version>${project.version}</seen.version>
+        <server>central</server>
         <springdoc.version>2.7.0</springdoc.version>
         <spring-boot.version>3.4.1</spring-boot.version>
         <spring-cloud.version>2024.0.0</spring-cloud.version>
