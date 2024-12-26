@@ -35,10 +35,12 @@ jobs:
         with:
           java-version: '21.0.5'
           distribution: liberica
-      - name: action-maven-deploy
-        uses: simontunnat/action-maven-deploy@v1.1
+      - name: CI Maven
+        # You may pin to the exact commit or the version.
+        # uses: Best-Quality-Engineering/ci-maven-action@4bc4a4f9a59050271d907afee1ac7f03d171f431
+        uses: Best-Quality-Engineering/ci-maven-action@v1.1.0
         with:
-          maven-goals: clean site
+          goals: clean,site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
