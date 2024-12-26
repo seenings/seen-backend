@@ -35,6 +35,14 @@ jobs:
         with:
           java-version: '21.0.5'
           distribution: liberica
+      - name: Cache Maven packages
+        id: cache-maven-packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2
       - name: CI Maven
         # You may pin to the exact commit or the version.
         # uses: Best-Quality-Engineering/ci-maven-action@4bc4a4f9a59050271d907afee1ac7f03d171f431

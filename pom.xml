@@ -12,7 +12,7 @@
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.39-SNAPSHOT</version>
+    <version>0.1.40-SNAPSHOT</version>
     <properties>
         <commons-io.version>2.18.0</commons-io.version>
         <hutool-all.version>5.8.35</hutool-all.version>
@@ -238,18 +238,6 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>ossrh</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <gpg.executable>gpg</gpg.executable>
-                <gpg.passphrase>the_pass_phrase</gpg.passphrase>
-            </properties>
-        </profile>
-    </profiles>
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
@@ -268,16 +256,6 @@
     </modules>
     <repositories>
         <repository>
-            <id>central</id>
-            <url>https://maven.aliyun.com/repository/central</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
             <id>ossrh</id>
             <name>OSS Snapshot repository</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
@@ -289,18 +267,6 @@
             </snapshots>
         </repository>
     </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>central</id>
-            <url>https://maven.aliyun.com/repository/central</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
     <url>https://github.com/seenings/seen-backend</url>
     <licenses>
         <license>
@@ -326,4 +292,39 @@
         <system>Seen</system>
         <url>https://github.com/seenings/seen-backend/issues</url>
     </issueManagement>
+    <profiles>
+        <profile>
+            <id>local</id>
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <url>https://maven.aliyun.com/repository/central</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>central</id>
+                    <url>https://maven.aliyun.com/repository/central</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 </project>
