@@ -32,5 +32,5 @@ minikube && sudo mv minikube /usr/local/bin/
 
 ```shell
 ./mvnw clean
-./mvnw versions:set --define newVersion=0.1.45-Beta
+./mvnw versions:set --define newVersion=0.1.46-Beta
 ```
