@@ -7,12 +7,13 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-parent</artifactId>
         <version>3.4.1</version>
+        <relativePath/>
     </parent>
     <groupId>io.github.seenings</groupId>
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.43-Beta</version>
+    <version>0.1.44-Beta</version>
     <properties>
         <central-publishing-maven-plugin.version>0.6.0</central-publishing-maven-plugin.version>
         <commons-io.version>2.18.0</commons-io.version>
