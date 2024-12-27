@@ -12,8 +12,9 @@
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.42-Beta</version>
+    <version>0.1.43-Beta</version>
     <properties>
+        <central-publishing-maven-plugin.version>0.6.0</central-publishing-maven-plugin.version>
         <commons-io.version>2.18.0</commons-io.version>
         <hutool-all.version>5.8.35</hutool-all.version>
         <jasypt-spring-boot.version>3.0.5</jasypt-spring-boot.version>
@@ -39,7 +40,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <protobuf.version>4.29.2</protobuf.version>
         <seen.version>${project.version}</seen.version>
-        <server>central</server>
         <springdoc.version>2.7.0</springdoc.version>
         <spring-boot.version>3.4.1</spring-boot.version>
         <spring-cloud.version>2024.0.0</spring-cloud.version>
@@ -142,6 +142,20 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-parent</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!--springdoc api-->
             <dependency>
                 <groupId>org.springdoc</groupId>
@@ -157,20 +171,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-parent</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
@@ -180,7 +180,6 @@
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${maven-deploy-plugin.version}</version>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
@@ -244,7 +243,7 @@
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.6.0</version>
+                <version>${central-publishing-maven-plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <publishingServerId>central</publishingServerId>

@@ -43,6 +43,11 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-m2
+      - id: install-secret-key
+        name: Install gpg secret key
+        run: |
+          cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import
+          gpg --list-secret-keys --keyid-format LONG
       - name: CI Maven
         # You may pin to the exact commit or the version.
         # uses: Best-Quality-Engineering/ci-maven-action@4bc4a4f9a59050271d907afee1ac7f03d171f431
