@@ -21,21 +21,25 @@ jobs:
         run: |
           cat <(echo -e "${{ secrets.GPG_PRIVATE_KEY }}") | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
-      - name: Set up Apache Maven Central
-        uses: actions/setup-java@v4
-        with: # running setup-java again overwrites the settings.xml
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.6.0
+        with:
+          # The Java version to set up. Takes a whole or semver Java version. See examples of supported syntax in README file
           java-version: 21
-          server-id: central # Value of the distributionManagement/repository/id field of the pom.xml
-          server-username: MAVEN_USERNAME # env variable for username in deploy
-          server-password: MAVEN_CENTRAL_TOKEN # env variable for token in deploy
-          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }} # Value of the GPG private key to import
+          # Java distribution. See the list of supported distributions in README file
+          distribution: liberica
+          # ID of the distributionManagement repository in the pom.xml file. Default is `github`
+          server-id: central
+          # Environment variable name for the username for authentication to the Apache Maven repository. Default is $GITHUB_ACTOR
+          server-username: SERVER_USERNAME
+          # Environment variable name for password or token for authentication to the Apache Maven repository. Default is $GITHUB_TOKEN
+          server-password: SERVER_PASSWORD
+          # GPG private key to import. Default is empty string.
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          # Name of the build platform to cache dependencies. It can be "maven", "gradle" or "sbt".
+          cache: maven
       - name: Publish to Apache Maven Central
         run: mvn clean deploy
         env:
-          MAVEN_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          MAVEN_CENTRAL_TOKEN: ${{ secrets.NEXUS_PASSWORD }}
-      - name: Release on nexus
-        uses: monkeyWie/maven-nexus-release@v1.0.0
-        with:
-          maven-repo-server-username: ${{ secrets.NEXUS_USERNAME }}
-          maven-repo-server-password: ${{ secrets.NEXUS_PASSWORD }}
+          SERVER_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          SERVER_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
