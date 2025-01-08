@@ -35,12 +35,7 @@ public class ChatHistoryController implements HttpChatHistoryService {
 
     @Override
     @PostMapping("add")
-    public Integer add(@RequestParam("contentType") ContentType contentType, @RequestParam("contentId") Integer contentId,
-                       @RequestParam("fromUserId") Integer fromUserId,
-                       @RequestParam("toUserId") Integer toUserId,
-                       @RequestParam("sent") Boolean sent,
-                       @RequestParam("sendTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-                       LocalDateTime sendTime) {
+    public Integer add(@RequestParam("contentType") ContentType contentType, @RequestParam("contentId") Integer contentId, @RequestParam("fromUserId") Integer fromUserId, @RequestParam("toUserId") Integer toUserId, @RequestParam("sent") Boolean sent, @RequestParam("sendTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime sendTime) {
         return chatHistoryService.add(contentType, contentId, fromUserId, toUserId, sent, sendTime);
     }
 
@@ -53,17 +48,13 @@ public class ChatHistoryController implements HttpChatHistoryService {
      */
     @Override
     @PostMapping("page-user-id-to-history-id")
-    public List<Integer> pageUserIdToHistoryId(@RequestParam("pageUserId") Integer pageUserId,
-                                               @RequestParam("selfUserId") Integer selfUserId) {
+    public List<Integer> pageUserIdToHistoryId(@RequestParam("pageUserId") Integer pageUserId, @RequestParam("selfUserId") Integer selfUserId) {
         List<Integer> toIds = chatHistoryService.fromUserIdToId(pageUserId, selfUserId, 1, 10);
         List<Integer> fromIds = chatHistoryService.fromUserIdToId(selfUserId, pageUserId, 1, 10);
         List<Integer> ids = ListUtils.union(toIds, fromIds);
         Map<Integer, LocalDateTime> idToSendTimeMap = chatHistoryService.idToSendTime(new HashSet<>(ids));
         //按发送时间排序
-        return idToSendTimeMap.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey).toList();
+        return idToSendTimeMap.entrySet().stream().sorted(Map.Entry.comparingByValue()).map(Map.Entry::getKey).toList();
     }
 
     /**
@@ -80,32 +71,22 @@ public class ChatHistoryController implements HttpChatHistoryService {
 
     @Override
     @PostMapping("user-id-to-chat-content-and-time")
-    public Map<Integer, ChatContentAndTime> userIdToChatContentAndTime(
-            @RequestBody Set<Integer> userIds, @RequestParam("toUserId") Integer toUserId) {
-        Map<Integer, List<Integer>> fromUserIdToChatHistoryIdMap = userIds.stream()
-                .parallel()
-                .map(fromUserId -> Pair.of(fromUserId, chatHistoryService.fromUserIdToId(fromUserId, toUserId, 1, 1))).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
-        Set<Integer> ids = fromUserIdToChatHistoryIdMap.values().stream()
-                .parallel()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toSet());
+    public Map<Integer, ChatContentAndTime> userIdToChatContentAndTime(@RequestBody Set<Integer> userIds, @RequestParam("toUserId") Integer toUserId) {
+        Map<Integer, List<Integer>> fromUserIdToChatHistoryIdMap = userIds.stream().parallel().map(fromUserId -> Pair.of(fromUserId, chatHistoryService.fromUserIdToId(fromUserId, toUserId, 1, 1))).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+        Set<Integer> ids = fromUserIdToChatHistoryIdMap.values().stream().parallel().flatMap(Collection::stream).collect(Collectors.toSet());
         Map<Integer, ChatContentAndTime> idToChatContentAndTimeMap = chatHistoryService.idToChatContentAndTime(ids);
-        return userIds.stream()
-                .parallel()
-                .map(n -> {
-                    List<Integer> resultChatHistoryIds = fromUserIdToChatHistoryIdMap.get(n);
-                    if (CollUtils.isNotEmpty(resultChatHistoryIds) && resultChatHistoryIds.size() == 1) {
-                        Integer id = CollUtils.first(resultChatHistoryIds);
-                        ChatContentAndTime chatContentAndTime = idToChatContentAndTimeMap.get(id);
-                        return Pair.of(n, chatContentAndTime);
-                    } else {
-                        String msg = String.format("聊天记录条数不对，个数：%s。", CollUtils.size(resultChatHistoryIds));
-                        log.error(msg);
-                        throw new SeenRuntimeException(msg);
-                    }
-                })
-                .filter(n -> n.getValue() != null)
-                .collect(Collectors.toMap(Pair::getKey, Pair::getValue, (o1, o2) -> o2));
+        return userIds.stream().parallel().map(n -> {
+            List<Integer> resultChatHistoryIds = fromUserIdToChatHistoryIdMap.get(n);
+            if (CollUtils.isNotEmpty(resultChatHistoryIds) && resultChatHistoryIds.size() == 1) {
+                Integer id = CollUtils.first(resultChatHistoryIds);
+                ChatContentAndTime chatContentAndTime = idToChatContentAndTimeMap.get(id);
+                return Pair.of(n, chatContentAndTime);
+            } else {
+                String msg = String.format("聊天记录条数不对，个数：%s。", CollUtils.size(resultChatHistoryIds));
+                log.error(msg);
+                return null;
+            }
+        }).filter(Objects::nonNull).filter(n -> n.getValue() != null).collect(Collectors.toMap(Pair::getKey, Pair::getValue, (o1, o2) -> o2));
     }
 
 

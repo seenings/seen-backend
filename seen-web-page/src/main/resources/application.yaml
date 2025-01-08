@@ -6,4 +6,4 @@ spring:
   web:
     resources:
       static-locations:
-        - file:///Users/chixuehui/IdeaProjects/seen/seen-font-end/hello-seen/dist/
+        - file:///Users/chixuehui/IdeaProjects/seenings/seen-font-end/hello-seen/dist/

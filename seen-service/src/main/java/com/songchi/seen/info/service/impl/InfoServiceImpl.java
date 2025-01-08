@@ -1,15 +1,7 @@
 package com.songchi.seen.info.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -68,7 +60,6 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 用户信息 服务实现类
- *
  */
 @Slf4j
 @Service
@@ -97,12 +88,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
             return null;
         }
         return userIds.stream().parallel().map(userId -> {
-            UserInfo userInfo = new UserInfo(userId,
-                    Optional.ofNullable(userIdToAliasNameMap).map(n -> n.get(userId)).orElse(null),
-                    Optional.of(userIdToSexMap).map(n -> n.get(userId))
-                            .map((Integer n) -> UserEnumUtils.indexToSexEnum(n)).orElse(null),
-                    Optional.ofNullable(userIdPhotoIdMap).map(n -> n.get(userId))
-                            .orElse(null));
+            UserInfo userInfo = new UserInfo(userId, Optional.ofNullable(userIdToAliasNameMap).map(n -> n.get(userId)).orElse(null), Optional.of(userIdToSexMap).map(n -> n.get(userId)).map(UserEnumUtils::indexToSexEnum).orElse(null), Optional.ofNullable(userIdPhotoIdMap).map(n -> n.get(userId)).orElse(null));
             return Pair.of(userId, userInfo);
         }).collect(Collectors.toMap(Pair::getKey, Pair::getValue, (o1, o2) -> o2));
     }
@@ -118,10 +104,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(new ArrayList<>(userIds), 100).parallelStream()
-                .flatMap(subs -> list(new QueryWrapper<Info>().lambda().in(Info::getUserId, subs)
-                        .select(Info::getUserId, Info::getName)).stream())
-                .collect(Collectors.toMap(Info::getUserId, Info::getName, (o1, o2) -> o2));
+        return ListUtil.partition(new ArrayList<>(userIds), 100).parallelStream().flatMap(subs -> list(new QueryWrapper<Info>().lambda().in(Info::getUserId, subs).select(Info::getUserId, Info::getName)).stream()).collect(Collectors.toMap(Info::getUserId, Info::getName, (o1, o2) -> o2));
     }
 
     /**
@@ -135,10 +118,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(new ArrayList<>(userIds), 100).parallelStream()
-                .flatMap(subs -> list(new QueryWrapper<Info>().lambda().in(Info::getUserId, subs)
-                        .select(Info::getUserId, Info::getProfilePhotoId)).stream())
-                .collect(Collectors.toMap(Info::getUserId, Info::getProfilePhotoId, (o1, o2) -> o2));
+        return ListUtil.partition(new ArrayList<>(userIds), 100).parallelStream().flatMap(subs -> list(new QueryWrapper<Info>().lambda().in(Info::getUserId, subs).select(Info::getUserId, Info::getProfilePhotoId)).stream()).collect(Collectors.toMap(Info::getUserId, Info::getProfilePhotoId, (o1, o2) -> o2));
     }
 
     /**
@@ -152,11 +132,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(new ArrayList<>(userIds), 100).parallelStream()
-                .flatMap(subs -> list(new QueryWrapper<Info>().lambda().in(Info::getUserId, subs)
-                        .select(Info::getUserId, Info::getSex)).stream())
-                .collect(Collectors.toMap(Info::getUserId, n -> UserEnumUtils.indexToSexEnum(n.getSex()),
-                        (o1, o2) -> o2));
+        return ListUtil.partition(new ArrayList<>(userIds), 100).parallelStream().flatMap(subs -> list(new QueryWrapper<Info>().lambda().in(Info::getUserId, subs).select(Info::getUserId, Info::getSex)).stream()).collect(Collectors.toMap(Info::getUserId, n -> UserEnumUtils.indexToSexEnum(n.getSex()), (o1, o2) -> o2));
     }
 
     /**
@@ -167,10 +143,8 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
      */
     @Override
     public Map<Integer, LocalDateTime> newUserId(int top) {
-        Page<Info> page = page(new Page<>(1, top), new QueryWrapper<Info>().lambda()
-                .select(Info::getUserId, Info::getCreateTime).orderByDesc(Info::getCreateTime));
-        return page.getRecords().stream().parallel()
-                .collect(Collectors.toMap(Info::getUserId, Info::getCreateTime, (o1, o2) -> o2));
+        Page<Info> page = page(new Page<>(1, top), new QueryWrapper<Info>().lambda().select(Info::getUserId, Info::getCreateTime).orderByDesc(Info::getCreateTime));
+        return page.getRecords().stream().parallel().collect(Collectors.toMap(Info::getUserId, Info::getCreateTime, (o1, o2) -> o2));
     }
 
     private HttpUserAliasNameService httpUserAliasNameService;
@@ -217,14 +191,11 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
         Set<Integer> cityIds = SetUtils.union(userIdToCityIdMap.values(), userIdToBirthPlaceCityIdMap.values());
         Map<Integer, String> cityIdToNameMap = httpCityService.idToName(cityIds);
         Map<Integer, Integer> userIdToSchoolIdMap = httpStudentInfoService.userIdToSchoolId(userIds);
-        Map<Integer, String> schoolIdToSchoolNameMap = httpSchoolService
-                .idToSchoolName(new HashSet<>(userIdToSchoolIdMap.values()));
+        Map<Integer, String> schoolIdToSchoolNameMap = httpSchoolService.idToSchoolName(new HashSet<>(userIdToSchoolIdMap.values()));
 
-        Map<Integer, String> provinceIdToNameMap = httpProvinceService
-                .idToName(new HashSet<>(userIdToBirthPlaceProvinceIdMap.values()));
+        Map<Integer, String> provinceIdToNameMap = httpProvinceService.idToName(new HashSet<>(userIdToBirthPlaceProvinceIdMap.values()));
         Map<Integer, Integer> userIdToPositionMap = httpUserWorkPositionService.userIdToPosition(userIds);
-        Map<Integer, String> positionIdToPositionNameMap = httpWorkPositionService
-                .positionIdToPositionName(new HashSet<>(userIdToPositionMap.values()));
+        Map<Integer, String> positionIdToPositionNameMap = httpWorkPositionService.positionIdToPositionName(new HashSet<>(userIdToPositionMap.values()));
         Map<Integer, String> userIdToCompanyNameMap = httpUserWorkService.userIdToCompanyName(userIds);
         return userIds.stream().parallel().map(userId -> {
             Integer birthPlaceCityId = userIdToBirthPlaceCityIdMap.get(userId);
@@ -234,16 +205,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
             String schoolName = schoolId == null ? null : schoolIdToSchoolNameMap.get(schoolId);
             String positionName = positionIdToPositionNameMap.get(userIdToPositionMap.get(userId));
             UserIntroduceInfo userIntroduceInfo = new UserIntroduceInfo().setUserId(userId).setUserAuthId(0) // TODO
-                    .setAliasName(userIdToAliasNameMap.get(userId)).setEducationId(userIdToEducationalMap.get(userId))
-                    .setBirthYear(NumberUtils.intToString(userIdToYearMap.get(userId)))
-                    .setConstellation(DateUtils.monthAndDayToConstellation(userIdToMonthMap.get(userId),
-                            userIdToDayMap.get(userId)))
-                    .setStatureCm(NumberUtils.defaultIfNull(userIdToStatureCmMap.get(userId), 0))
-                    .setWeightKg(NumberUtils.defaultIfNull(userIdToWeightKgMap.get(userId), 0))
-                    .setBirthPlaceCityName(cityIdToNameMap.get(birthPlaceCityId))
-                    .setCurrentResidenceCityName(cityIdToNameMap.get(cityId))
-                    .setBirthPlaceProvinceName(provinceIdToNameMap.get(birthPlaceProvinceId)).setSchoolName(schoolName)
-                    .setWorkPositionName(positionName).setWorkCompanyName(userIdToCompanyNameMap.get(userId));
+                    .setAliasName(userIdToAliasNameMap.get(userId)).setEducationId(userIdToEducationalMap.get(userId)).setBirthYear(NumberUtils.intToString(userIdToYearMap.get(userId))).setConstellation(DateUtils.monthAndDayToConstellation(userIdToMonthMap.get(userId), userIdToDayMap.get(userId))).setStatureCm(NumberUtils.defaultIfNull(userIdToStatureCmMap.get(userId), 0)).setWeightKg(NumberUtils.defaultIfNull(userIdToWeightKgMap.get(userId), 0)).setBirthPlaceCityName(cityIdToNameMap.get(birthPlaceCityId)).setCurrentResidenceCityName(cityIdToNameMap.get(cityId)).setBirthPlaceProvinceName(provinceIdToNameMap.get(birthPlaceProvinceId)).setSchoolName(schoolName).setWorkPositionName(positionName).setWorkCompanyName(userIdToCompanyNameMap.get(userId));
             return Pair.of(userId, userIntroduceInfo);
         }).collect(Collectors.toMap(Pair::getKey, Pair::getValue, (o1, o2) -> o2));
     }
@@ -264,13 +226,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
         Map<Integer, Integer> userIdToSexMap = httpUserSexService.userIdToSex(userIds);
         Map<Integer, Integer> userIdToYearMap = httpUserBirthdayService.userIdToYear(userIds);
         Map<Integer, Integer> userIdToGraduatedMap = httpSchoolGraduateService.userIdToGraduated(userIds);
-        return userIds.stream().parallel().map(userId -> Pair.of(userId,
-                new BasicInfo().setUserId(userId).setSex(UserEnumUtils.indexToSexEnum(userIdToSexMap.get(userId)))
-                        .setEducation(SchoolEnumUtils.indexToEducationEnum(userIdToEducationalMap.get(userId)))
-                        .setBirthYear(userIdToYearMap.get(userId))
-                        .setGraduated(userIdToGraduatedMap.get(userId) == null ? null
-                                : userIdToGraduatedMap.get(userId) == 1)))
-                .collect(Collectors.toMap(Pair::getKey, Pair::getValue, (o1, o2) -> o2));
+        return userIds.stream().parallel().map(userId -> Pair.of(userId, new BasicInfo().setUserId(userId).setSex(UserEnumUtils.indexToSexEnum(userIdToSexMap.get(userId))).setEducation(SchoolEnumUtils.indexToEducationEnum(userIdToEducationalMap.get(userId))).setBirthYear(userIdToYearMap.get(userId)).setGraduated(userIdToGraduatedMap.get(userId) == null ? null : userIdToGraduatedMap.get(userId) == 1))).collect(Collectors.toMap(Pair::getKey, Pair::getValue, (o1, o2) -> o2));
     }
 
     private HttpUserIntroduceService httpUserIntroduceService;
@@ -282,77 +238,48 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
     @Override
     public Map<Integer, List<PersonIntroduce>> userIdToPersonIntroduce(Set<Integer> userIds) {
 
-        Map<Integer, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndTextMap = httpUserIntroduceService
-                .userIdToIntroduceTypeAndText(userIds);
-        Map<Integer, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhotoMap = httpUserIntroducePhotoService
-                .userIdToIntroduceTypeAndPhoto(userIds);
-        Set<Integer> textIds = userIdToIntroduceTypeAndTextMap.values().stream().parallel().flatMap(Collection::stream)
-                .map(IntroduceTypeAndText::textId).collect(Collectors.toSet());
+        Map<Integer, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndTextMap = httpUserIntroduceService.userIdToIntroduceTypeAndText(userIds);
+        Map<Integer, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhotoMap = httpUserIntroducePhotoService.userIdToIntroduceTypeAndPhoto(userIds);
+        Set<Integer> textIds = userIdToIntroduceTypeAndTextMap.values().stream().parallel().flatMap(Collection::stream).map(IntroduceTypeAndText::textId).collect(Collectors.toSet());
         Map<Integer, String> textIdToTextMap = httpTextService.textIdToText(textIds);
         return userIds.stream().parallel().map(userId -> {
             Set<IntroduceTypeAndPhoto> introduceTypeAndPhotos = userIdToIntroduceTypeAndPhotoMap.get(userId);
             Set<IntroduceTypeAndText> introduceTypeAndTexts = userIdToIntroduceTypeAndTextMap.get(userId);
-            Map<IntroduceTypeEnum, Set<IntroduceTypeAndPhoto>> introduceTypeEnumToIntroduceTypeAndPhotoMap = introduceTypeAndPhotos == null
-                    ? Collections.emptyMap()
-                    : introduceTypeAndPhotos.stream().parallel()
-                            .filter(n -> n.introduceTypeEnum() != IntroduceTypeEnum.MAIN_PAGE)
-                            .collect(Collectors.groupingBy(n -> n.introduceTypeEnum(), Collectors.toSet()));
+            Map<IntroduceTypeEnum, Set<IntroduceTypeAndPhoto>> introduceTypeEnumToIntroduceTypeAndPhotoMap = introduceTypeAndPhotos == null ? Collections.emptyMap() : introduceTypeAndPhotos.stream().parallel().filter(n -> n.introduceTypeEnum() != IntroduceTypeEnum.MAIN_PAGE).collect(Collectors.groupingBy(IntroduceTypeAndPhoto::introduceTypeEnum, Collectors.toSet()));
 
-            Map<IntroduceTypeEnum, Integer> introudceTypeEnumToTextIdMap = introduceTypeAndTexts == null
-                    ? Collections.emptyMap()
-                    : introduceTypeAndTexts.stream().parallel()
-                            .filter(n -> IntroduceTypeEnum.MAIN_PAGE != n.introduceTypeEnum())
-                            .collect(Collectors.toMap(n -> n.introduceTypeEnum(), n -> n.textId()));
-            List<PersonIntroduce> personIntroduces = Arrays.stream(IntroduceTypeEnum.values())
-                    .filter(n -> n != IntroduceTypeEnum.MAIN_PAGE)
-                    .map(n -> {
-                        Set<IntroduceTypeAndPhoto> introduceTypeAndPhotoBySingle = introduceTypeEnumToIntroduceTypeAndPhotoMap
-                                .get(n);
-                        Map<Integer, Integer> orderToPhotoIdMap = introduceTypeAndPhotoBySingle == null
-                                ? Collections.emptyMap()
-                                : introduceTypeAndPhotoBySingle.stream().parallel()
-                                        .collect(Collectors.toMap(g -> g.order(), g -> g.photoId()));
-                        Integer textId = introudceTypeEnumToTextIdMap.get(n);
-                        String introduceContent = textId == null ? null : textIdToTextMap.get(textId);
-                        return new PersonIntroduce(n.getIndex(), n.getName(), introduceContent, orderToPhotoIdMap);
-                    }).collect(Collectors.toList());
+            Map<IntroduceTypeEnum, Integer> introudceTypeEnumToTextIdMap = introduceTypeAndTexts == null ? Collections.emptyMap() : introduceTypeAndTexts.stream().parallel().filter(n -> IntroduceTypeEnum.MAIN_PAGE != n.introduceTypeEnum()).collect(Collectors.toMap(IntroduceTypeAndText::introduceTypeEnum, IntroduceTypeAndText::textId));
+            List<PersonIntroduce> personIntroduces = Arrays.stream(IntroduceTypeEnum.values()).filter(n -> n != IntroduceTypeEnum.MAIN_PAGE).map(n -> {
+                Set<IntroduceTypeAndPhoto> introduceTypeAndPhotoBySingle = introduceTypeEnumToIntroduceTypeAndPhotoMap.get(n);
+                Map<Integer, Integer> orderToPhotoIdMap = introduceTypeAndPhotoBySingle == null ? Collections.emptyMap() : introduceTypeAndPhotoBySingle.stream().parallel().collect(Collectors.toMap(IntroduceTypeAndPhoto::order, IntroduceTypeAndPhoto::photoId));
+                Integer textId = introudceTypeEnumToTextIdMap.get(n);
+                String introduceContent = textId == null ? null : textIdToTextMap.get(textId);
+                return new PersonIntroduce(n.getIndex(), n.getName(), introduceContent, orderToPhotoIdMap);
+            }).collect(Collectors.toList());
             return Pair.of(userId, personIntroduces);
         }).collect(Collectors.toMap(Pair::getKey, Pair::getValue, (o1, o2) -> o2));
     }
 
     /**
      * 根据介绍类型获取介绍内容
-     * 
+     *
      * @param introduceTypeIndexes 介绍类型
      * @param userId               用户ID
      * @return 介绍类型对应介绍内容
      */
     @Override
-    public Map<Integer, PersonIntroduce> introduceTypeIndexToPersonIntroduce(Set<Integer> introduceTypeIndexes,
-            Integer userId) {
-        Set<IntroduceTypeAndText> introduceTypeAndTexts = Optional.ofNullable(httpUserIntroduceService
-                .userIdToIntroduceTypeAndText(Set.of(userId))).map(n -> n.get(userId)).orElseGet(CollUtil::newHashSet);
+    public Map<Integer, PersonIntroduce> introduceTypeIndexToPersonIntroduce(Set<Integer> introduceTypeIndexes, Integer userId) {
+        Set<IntroduceTypeAndText> introduceTypeAndTexts = Optional.ofNullable(httpUserIntroduceService.userIdToIntroduceTypeAndText(Set.of(userId))).map(n -> n.get(userId)).orElseGet(CollUtil::newHashSet);
 
-        Set<IntroduceTypeAndPhoto> introduceTypeAndPhotos = Optional.ofNullable(
-                httpUserIntroducePhotoService
-                        .userIdToIntroduceTypeAndPhoto(Set.of(userId)))
-                .map(n -> n.get(userId)).orElseGet(CollUtil::newHashSet);
-        Set<Integer> textIds = introduceTypeAndTexts.stream().parallel().map(n -> n.textId())
-                .collect(Collectors.toSet());
+        Set<IntroduceTypeAndPhoto> introduceTypeAndPhotos = Optional.ofNullable(httpUserIntroducePhotoService.userIdToIntroduceTypeAndPhoto(Set.of(userId))).map(n -> n.get(userId)).orElseGet(CollUtil::newHashSet);
+        Set<Integer> textIds = introduceTypeAndTexts.stream().parallel().map(IntroduceTypeAndText::textId).collect(Collectors.toSet());
 
         Map<Integer, String> textIdToTextMap = httpTextService.textIdToText(textIds);
         return introduceTypeIndexes.stream().parallel().map(introduceTypeIndex -> {
             IntroduceTypeEnum introduceTypeEnum = IntroduceEnumUtils.indexToIntroduceTypeEnum(introduceTypeIndex);
-            Integer textId = introduceTypeAndTexts.stream().parallel()
-                    .filter(n -> n.introduceTypeEnum() == introduceTypeEnum).map(n -> n.textId()).findFirst()
-                    .orElse(null);
+            Integer textId = introduceTypeAndTexts.stream().parallel().filter(n -> n.introduceTypeEnum() == introduceTypeEnum).map(IntroduceTypeAndText::textId).findFirst().orElse(null);
             String introduceContent = textId == null ? null : textIdToTextMap.get(textId);
-            Map<Integer, Integer> orderToPhotoIdMap = introduceTypeAndPhotos.stream().parallel()
-                    .filter(n -> n.introduceTypeEnum() == introduceTypeEnum)
-                    .collect(Collectors.toMap(n -> n.order(), n -> n.photoId()));
-            return Pair.of(introduceTypeIndex,
-                    new PersonIntroduce(introduceTypeIndex, introduceTypeEnum.getName(), introduceContent,
-                            orderToPhotoIdMap));
+            Map<Integer, Integer> orderToPhotoIdMap = introduceTypeAndPhotos.stream().parallel().filter(n -> n.introduceTypeEnum() == introduceTypeEnum).collect(Collectors.toMap(IntroduceTypeAndPhoto::order, IntroduceTypeAndPhoto::photoId));
+            return Pair.of(introduceTypeIndex, new PersonIntroduce(introduceTypeIndex, introduceTypeEnum.getName(), introduceContent, orderToPhotoIdMap));
         }).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
     }
 
@@ -362,15 +289,15 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
     public Map<Integer, UserChatInfo> userIdToUserChatInfo(Set<Integer> userIds, Integer selfUserId) {
 
         Map<Integer, UserInfo> userIdToUserInfoMap = userIdToUserInfo(userIds);
-        Map<Integer, ChatContentAndTime> userIdToChatContentAndTimeMap = httpChatHistoryService
-                .userIdToChatContentAndTime(userIds, selfUserId);
-        Set<Integer> textIds = userIdToChatContentAndTimeMap.values().stream().parallel()
-                .filter(n -> n.contentType() == ContentType.TEXT).map(ChatContentAndTime::contentId)
-                .collect(Collectors.toSet());
+        Map<Integer, ChatContentAndTime> userIdToChatContentAndTimeMap = httpChatHistoryService.userIdToChatContentAndTime(userIds, selfUserId);
+        Set<Integer> textIds = userIdToChatContentAndTimeMap.values().stream().parallel().filter(n -> n.contentType() == ContentType.TEXT).map(ChatContentAndTime::contentId).collect(Collectors.toSet());
         Map<Integer, String> textIdToTextMap = httpTextService.textIdToText(textIds);
         return userIds.stream().parallel().map(n -> {
             UserInfo userInfo = userIdToUserInfoMap.get(n);
             ChatContentAndTime chatContentAndTime = userIdToChatContentAndTimeMap.get(n);
+            if (chatContentAndTime == null) {
+                return null;
+            }
             String newestChatText;
             switch (chatContentAndTime.contentType()) {
                 case TEXT -> newestChatText = textIdToTextMap.get(chatContentAndTime.contentId());
@@ -380,10 +307,8 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
                 default -> newestChatText = "[其他]";
             }
             LocalDateTime newestChatTime = chatContentAndTime.sendTime();
-            UserChatInfo userChatInfo = new UserChatInfo(n, userInfo.aliasName(), userInfo.sex(),
-                    userInfo.mainPhotoId(), newestChatText, newestChatTime);
-            return org.apache.commons.lang3.tuple.Pair.of(n, userChatInfo);
-        }).collect(Collectors.toMap(org.apache.commons.lang3.tuple.Pair::getKey,
-                org.apache.commons.lang3.tuple.Pair::getValue, (o1, o2) -> o2));
+            UserChatInfo userChatInfo = new UserChatInfo(n, userInfo.aliasName(), userInfo.sex(), userInfo.mainPhotoId(), newestChatText, newestChatTime);
+            return Map.entry(n, userChatInfo);
+        }).filter(Objects::nonNull).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (o1, o2) -> o2));
     }
 }

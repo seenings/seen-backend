@@ -3,9 +3,9 @@ spring:
     config:
       server:
         git:
-          password: o7-uf7o1GozXyFPAs1u-6Dmq
+          password: 4wYxevG6FHKzfhKf2QNZ65N3
           uri: https://gitcode.com/seen/seen-config-chixh-local.git
-          username: qazcxh@163.com
+          username: qazcxh
   application:
     name: seen-config-server
 server:

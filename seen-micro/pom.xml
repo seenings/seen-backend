@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.47</version>
+        <version>0.1.48</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-micro</artifactId>
