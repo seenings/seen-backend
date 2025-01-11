@@ -8,7 +8,7 @@ class SeenSchoolApplicationTests {
     @Test
     void contextLoads() {
 
-        Assertions.assertNotNull(new String());
+        Assertions.assertNotNull("");
     }
 
 }
