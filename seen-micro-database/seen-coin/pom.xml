@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-micro-database</artifactId>
-        <version>0.1.48</version>
+        <version>0.1.49</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-coin</artifactId>
