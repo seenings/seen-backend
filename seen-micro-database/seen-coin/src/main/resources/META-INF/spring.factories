@@ -1,1 +1,0 @@
-org.springframework.context.annotation.ImportBeanDefinitionRegistrar=io.github.seenings.sys.config.ServiceImportBeanDefinitionRegistrar

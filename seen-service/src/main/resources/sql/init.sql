@@ -653,3 +653,35 @@ create table file
     name         varchar(2000) not null comment '文件名称'
 )
     comment '文件';
+
+-- 玫瑰币记账
+create table coin_book
+(
+    trade_id         bigint auto_increment comment '交易ID'
+        primary key,
+    amount           bigint not null comment '数量',
+    debit_id         bigint not null comment '借方',
+    credit_id        bigint not null comment '贷方',
+    transaction_time  datetime not null comment '成交时间'
+)
+    comment '玫瑰币记账';
+
+-- 玫瑰币余额
+create table coin_balance
+(
+    debit_or_credit_id         bigint not null comment '借方/贷方ID'
+       primary key,
+    balance           bigint not null comment '余额',
+    transaction_time  datetime not null comment '成交时间'
+)
+    comment '玫瑰币余额';
+
+-- 交易与业务关系
+create table trade_and_busi
+(
+    trade_id    bigint not null comment '交易ID'
+        primary key,
+    busi_id     bigint not null comment '业务ID',
+    trade_time  datetime not null comment '交易时间'
+)
+    comment '交易与业务关系';
