@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 /**
  * 玫瑰币记账
  */
-@HttpExchange(SeenConstant.SEEN_SMALL+"/coin/coin/coin-book")
+@HttpExchange(SeenConstant.SEEN_SMALL + "/coin/coin/coin-book")
 public interface CoinBookApi {
 
     /**
@@ -23,4 +23,5 @@ public interface CoinBookApi {
      */
     @GetExchange("add")
     Long add(Long amount, Long debitId, Long creditId, LocalDateTime transactionTime);
+
 }

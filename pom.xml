@@ -13,28 +13,26 @@
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.50</version>
+    <version>0.1.51</version>
     <properties>
-        <central-publishing-maven-plugin.version>0.6.0</central-publishing-maven-plugin.version>
+        <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
         <gitee.seening.version>0.0.2-BETA</gitee.seening.version>
-        <hutool-all.version>5.8.35</hutool-all.version>
+        <hutool-all.version>5.8.36</hutool-all.version>
         <jasypt-spring-boot.version>3.0.5</jasypt-spring-boot.version>
         <java.version>21</java.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <maven-changelog-plugin.version>2.3</maven-changelog-plugin.version>
         <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
-        <maven-project-info-reports-plugin.version>3.8.0</maven-project-info-reports-plugin.version>
+        <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
         <maven-jdeps-plugin.version>3.1.2</maven-jdeps-plugin.version>
-        <maven-jxr-plugin.version>3.4.0</maven-jxr-plugin.version>
+        <maven-jxr-plugin.version>3.6.0</maven-jxr-plugin.version>
         <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
-        <maven-surefire-report-plugin.version>3.3.1</maven-surefire-report-plugin.version>
-        <minio.version>8.5.15</minio.version>
-        <mybatis-plus.version>3.5.9</mybatis-plus.version>
-        <protobuf.version>4.29.2</protobuf.version>
+        <maven-surefire-report-plugin.version>3.5.2</maven-surefire-report-plugin.version>
+        <minio.version>8.5.17</minio.version>
+        <mybatis-plus.version>3.5.10.1</mybatis-plus.version>
         <seen.version>${project.version}</seen.version>
-        <springdoc.version>2.8.1</springdoc.version>
-        <spring-boot.version>3.4.0</spring-boot.version>
+        <springdoc.version>2.8.5</springdoc.version>
         <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
     </properties>
     <dependencyManagement>
@@ -81,11 +79,6 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.protobuf</groupId>
-                <artifactId>protobuf-java</artifactId>
-                <version>${protobuf.version}</version>
             </dependency>
             <!--国产工具包-->
             <dependency>
@@ -143,20 +136,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>${maven-gpg-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
                 <version>${maven-install-plugin.version}</version>
             </plugin>
@@ -176,7 +155,6 @@
                     <additionalOptions>
                         <additionalOption>-Xdoclint:none</additionalOption>
                     </additionalOptions>
-                    <aggregate>false</aggregate>
                 </configuration>
             </plugin>
             <plugin>
@@ -198,9 +176,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>${maven-site-plugin.version}</version>
-                <configuration>
-                    <locales>zh_CN</locales>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -240,10 +215,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jdeps-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
             </plugin>
             <plugin>
@@ -256,12 +227,6 @@
             </plugin>
         </plugins>
     </reporting>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
     <modules>
         <module>seen-common</module>
         <module>seen-config-server</module>
