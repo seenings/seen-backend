@@ -127,7 +127,7 @@ create table if not exists user
 )
     comment '用户主表';
 
-alter table seen.user
+alter table user
     auto_increment = 10000000;
 
 create table if not exists user_info
@@ -472,8 +472,8 @@ create table if not exists seen.user_introduce_photo
     user_id        int                                not null comment '用户ID',
     introduce_type int                                not null comment '介绍类型，IntroduceTypeEnum',
     photo_id       int                                not null comment '照片ID，对应photo',
-    update_time    datetime default CURRENT_TIMESTAMP not null comment '更新时间',
-    create_time    datetime default CURRENT_TIMESTAMP not null comment '创建时间'
+    order_num      int                                not null comment '顺序',
+    update_time    datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
     comment '用户介绍';
 

@@ -1,9 +1,19 @@
 spring:
   application:
     name: seen-middle
-  cloud:
-    config:
-      profile: chixuehui
-      name: ${spring.application.name}, common
+  profiles:
+    active: chixuehui
+---
+spring:
+  config:
+    activate:
+      on-profile: chixuehui
+    import: file:/Users/chixuehui/IdeaProjects/seenings/seen-backend/middle/common-chixuehui.yml
 server:
   port: 9105
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import: file:./config/common-prod.yml

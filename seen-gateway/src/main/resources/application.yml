@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: seen-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: seen-service
+          predicates:
+            - Path=/seen/public-v1/**,/seen/rest-v1/**,/seen/photo-v1/**,/seen/voice-v1/**
+          uri: lb://seen-service
+        - id: sockjs-ws
+          uri: lb://seen-socket
+          predicates:
+            - Path=/seen/websocket-v1/**
+        - id: web-page
+          uri: http://localhost:8082
+          predicates:
+            - Path=/index.html,/**
+  profiles:
+    active: chixuehui
+---
+spring:
+  config:
+    activate:
+      on-profile: chixuehui
+    import: file:/Users/chixuehui/IdeaProjects/seenings/seen-backend/middle/common-chixuehui.yml
+server:
+  port: 80
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import: file:./config/common-prod.yml

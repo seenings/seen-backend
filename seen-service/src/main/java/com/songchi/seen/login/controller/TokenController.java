@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,10 +22,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(PublicConstant.PUBLIC + "login/token")
 public class TokenController {
-
+    /**
+     * 校验令牌
+     *
+     * @param token    令牌
+     * @param response 响应
+     * @return 返回用户与令牌
+     */
     @GetMapping("validate-token")
-    public R<UserIdAndToken> validateToken(HttpServletRequest request, HttpServletResponse response) {
-        String token = request.getHeader(PublicConstant.TOKEN_NAME);
+    public R<UserIdAndToken> validateToken(@RequestHeader(PublicConstant.TOKEN_NAME) String token,
+                                           HttpServletResponse response) {
         if (StrUtil.containsAny(token, "undefined", "null") || StrUtil.isBlank(token)) {
             return ResUtils.error("请登录！");
         }

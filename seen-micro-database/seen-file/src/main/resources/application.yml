@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: seen-file
+  profiles:
+    active: chixuehui
+---
+spring:
+  config:
+    activate:
+      on-profile: chixuehui
+    import: file:/Users/chixuehui/IdeaProjects/seenings/seen-backend/middle/common-chixuehui.yml
+server:
+  port: 9104
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import: file:./config/common-prod.yml
