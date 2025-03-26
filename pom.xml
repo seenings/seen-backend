@@ -13,7 +13,7 @@
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.52</version>
+    <version>0.1.53</version>
     <properties>
         <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
         <gitee.seening.version>0.0.2-BETA</gitee.seening.version>
