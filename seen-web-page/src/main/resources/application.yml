@@ -1,9 +1,0 @@
-server:
-  port: 8082
-spring:
-  application:
-    name: seen-web-page
-  web:
-    resources:
-      static-locations:
-        - file:///Users/chixuehui/IdeaProjects/seenings/seen-font-end/dist/
