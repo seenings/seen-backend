@@ -233,7 +233,6 @@
         <module>seen-micro</module>
         <module>seen-micro-database</module>
         <module>seen-service</module>
-        <module>seen-web-page</module>
     </modules>
     <url>https://seenings.github.io/seen-backend/</url>
     <licenses>
