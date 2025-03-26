@@ -6,33 +6,17 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.51</version>
+        <version>0.1.52</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-gateway</artifactId>
     <name>seen-gateway</name>
-    <description>Demo project for Spring Boot</description>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <description>网关</description>
     <dependencies>
         <!--配置文件加密-->
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -45,16 +29,8 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
@@ -81,10 +57,10 @@
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--注册客户端-->
+        <!--连接注册中心-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
         </dependency>
     </dependencies>
     <build>

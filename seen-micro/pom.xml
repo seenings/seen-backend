@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.51</version>
+        <version>0.1.52</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-micro</artifactId>
@@ -39,11 +40,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!--注册客户端-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
         <!--web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -66,10 +62,6 @@
         <dependency>
             <groupId>com.github.therapi</groupId>
             <artifactId>therapi-runtime-javadoc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -105,10 +97,10 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
-        <!--bootstrap.yml生效标志-->
+        <!--连接注册中心-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
         </dependency>
         <!--spring boot test-->
         <dependency>
