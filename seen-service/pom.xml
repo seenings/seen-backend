@@ -6,13 +6,18 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.53</version>
+        <version>0.1.54</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-service</artifactId>
     <name>seen-service</name>
     <description>Demo project for Spring Boot</description>
     <dependencies>
+        <!--seen spring-->
+        <dependency>
+            <groupId>io.github.seenings</groupId>
+            <artifactId>seen-spring-config</artifactId>
+        </dependency>
         <!--分布式文件存储-->
         <dependency>
             <groupId>io.minio</groupId>

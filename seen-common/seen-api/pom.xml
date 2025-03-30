@@ -6,18 +6,13 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-common</artifactId>
-        <version>0.1.53</version>
+        <version>0.1.54</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-api</artifactId>
     <name>seen-api</name>
     <description>接口包</description>
     <dependencies>
-        <!--引入工具包-->
-        <dependency>
-            <groupId>io.gitee.seening</groupId>
-            <artifactId>seen-core</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -32,6 +27,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-openfeign-core</artifactId>
         </dependency>
+        <!--引入工具包-->
         <dependency>
             <groupId>io.github.seenings</groupId>
             <artifactId>seen-core</artifactId>

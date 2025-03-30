@@ -16,7 +16,7 @@ import com.songchi.seen.article.enumeration.ContentType;
 import com.songchi.seen.chat.http.HttpChatHistoryService;
 import com.songchi.seen.chat.model.ChatContentAndTime;
 import com.songchi.seen.chat.model.UserChatInfo;
-import com.songchi.seen.core.util.DateUtils;
+import io.github.seenings.time.util.DateUtil;
 import com.songchi.seen.core.util.NumberUtils;
 import com.songchi.seen.core.util.SetUtils;
 import com.songchi.seen.info.entity.Info;
@@ -205,7 +205,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
             String schoolName = schoolId == null ? null : schoolIdToSchoolNameMap.get(schoolId);
             String positionName = positionIdToPositionNameMap.get(userIdToPositionMap.get(userId));
             UserIntroduceInfo userIntroduceInfo = new UserIntroduceInfo().setUserId(userId).setUserAuthId(0) // TODO
-                    .setAliasName(userIdToAliasNameMap.get(userId)).setEducationId(userIdToEducationalMap.get(userId)).setBirthYear(NumberUtils.intToString(userIdToYearMap.get(userId))).setConstellation(DateUtils.monthAndDayToConstellation(userIdToMonthMap.get(userId), userIdToDayMap.get(userId))).setStatureCm(NumberUtils.defaultIfNull(userIdToStatureCmMap.get(userId), 0)).setWeightKg(NumberUtils.defaultIfNull(userIdToWeightKgMap.get(userId), 0)).setBirthPlaceCityName(cityIdToNameMap.get(birthPlaceCityId)).setCurrentResidenceCityName(cityIdToNameMap.get(cityId)).setBirthPlaceProvinceName(provinceIdToNameMap.get(birthPlaceProvinceId)).setSchoolName(schoolName).setWorkPositionName(positionName).setWorkCompanyName(userIdToCompanyNameMap.get(userId));
+                    .setAliasName(userIdToAliasNameMap.get(userId)).setEducationId(userIdToEducationalMap.get(userId)).setBirthYear(NumberUtils.intToString(userIdToYearMap.get(userId))).setConstellation(DateUtil.monthAndDayToConstellation(userIdToMonthMap.get(userId), userIdToDayMap.get(userId))).setStatureCm(NumberUtils.defaultIfNull(userIdToStatureCmMap.get(userId), 0)).setWeightKg(NumberUtils.defaultIfNull(userIdToWeightKgMap.get(userId), 0)).setBirthPlaceCityName(cityIdToNameMap.get(birthPlaceCityId)).setCurrentResidenceCityName(cityIdToNameMap.get(cityId)).setBirthPlaceProvinceName(provinceIdToNameMap.get(birthPlaceProvinceId)).setSchoolName(schoolName).setWorkPositionName(positionName).setWorkCompanyName(userIdToCompanyNameMap.get(userId));
             return Pair.of(userId, userIntroduceInfo);
         }).collect(Collectors.toMap(Pair::getKey, Pair::getValue, (o1, o2) -> o2));
     }
