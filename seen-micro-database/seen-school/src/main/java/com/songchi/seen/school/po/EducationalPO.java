@@ -10,9 +10,6 @@ import java.time.LocalDateTime;
 
 /**
  * 学历
- *
- * @author chixuehui
- * @since 2022-10-06
  */
 @Data
 @Accessors(chain = true)

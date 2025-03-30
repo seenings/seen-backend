@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.seenings</groupId>
+        <artifactId>seen-common</artifactId>
+        <version>0.1.54</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>seen-spring-config</artifactId>
+    <name>seen-spring-config</name>
+    <description>seen-spring-config</description>
+    <dependencies>
+        <!--引入工具包-->
+        <dependency>
+            <groupId>io.github.seenings</groupId>
+            <artifactId>seen-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+    </dependencies>
+</project>
