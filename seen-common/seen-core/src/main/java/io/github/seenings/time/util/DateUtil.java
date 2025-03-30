@@ -1,14 +1,17 @@
-package com.songchi.seen.core.util;
+package io.github.seenings.time.util;
 
 import com.songchi.seen.core.enumeration.ConstellationEnum;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 /**
- * DateUtils
- *
- * @author chixuehui
- * @since 2022-12-03
+ * 日期工具类
  */
-public class DateUtils {
+public class DateUtil {
     public static ConstellationEnum monthAndDayToConstellationEnum(Integer month, Integer day) {
         if (month != null) {
             switch (month) {
@@ -148,4 +151,83 @@ public class DateUtils {
     public static String constellationEnumToConstellation(ConstellationEnum constellationEnum) {
         return constellationEnum.getName() + "座";
     }
+
+    /**
+     * 十七位格式日期时间
+     */
+    public static final String SEVENTEEN_FORMAT = "yyyyMMddHHmmssSSS";
+
+    /**
+     * ISO-8601(yyyyMMdd)字符串格式日期转1.8格式日期
+     *
+     * @param basicIsoDate ISO-8601(yyyyMMdd)字符串格式日期
+     * @return 1.8格式日期
+     */
+    public static LocalDate basicIsoDateToLocalDate(String basicIsoDate) {
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.BASIC_ISO_DATE;
+        return LocalDate.parse(basicIsoDate, dateTimeFormatter);
+    }
+
+    /**
+     * 日期转换为ISO-8601(yyyyMMdd)字符串格式日期
+     *
+     * @param localDate 1.8格式日期
+     * @return ISO-8601(yyyyMMdd)字符串格式日期
+     */
+    public static String localDateToBasicIsoDate(LocalDate localDate) {
+
+        return localDate.format(DateTimeFormatter.BASIC_ISO_DATE);
+    }
+
+    /**
+     * 1.8格式日期时间转换为字符串
+     *
+     * @param localDateTime 1.8格式日期时间
+     * @param pattern       日期格式字符串
+     * @return 字符串
+     */
+    public static String localDateTimeToPatternFormatDate(LocalDateTime localDateTime, String pattern) {
+
+        return localDateTime.format(DateTimeFormatter.ofPattern(pattern));
+    }
+
+
+    /**
+     * LocalDateTime-to-Date
+     *
+     * @param localDateTime 1.8格式日期时间
+     * @return 1.0格式日期时间
+     */
+    public static Date localDateTimeToDate(LocalDateTime localDateTime) {
+
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * 1.8格式日期时间转换为ISO-8601(yyyyMMdd)字符串格式日期
+     *
+     * @param localDateTime 1.8格式日期时间
+     * @return ISO-8601(yyyyMMdd)字符串格式日期
+     */
+    public static String localDateTimeToBasicIsoDate(LocalDateTime localDateTime) {
+
+        return localDateTime.format(DateTimeFormatter.BASIC_ISO_DATE);
+    }
+
+
+    /**
+     * ISO-8601(yyyyMMdd)字符串格式日期做日偏移
+     *
+     * @param basicIsoDate ISO-8601(yyyyMMdd)字符串格式日期
+     * @param offset       偏移
+     * @return 日偏移后的日期
+     */
+    public static String basicIsoDateOffsetDays(String basicIsoDate, int offset) {
+
+        LocalDate localDate = basicIsoDateToLocalDate(basicIsoDate);
+        LocalDate localDate1 = localDate.plusDays(offset);
+        return localDateToBasicIsoDate(localDate1);
+    }
+
 }

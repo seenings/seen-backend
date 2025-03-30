@@ -4,14 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import com.songchi.seen.photo.constant.MinioConstant;
 import com.songchi.seen.sys.model.SeenMinioConfig;
+import io.github.seenings.time.component.NowComponent;
 import io.minio.*;
-import io.minio.errors.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +26,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.net.URLDecoder;
 import cn.hutool.core.util.RandomUtil;
-import io.gitee.seen.core.util.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,6 +45,10 @@ public class PhotoController {
     private HttpPhotoService httpPhotoService;
 
     private SeenConfig seenConfig;
+    /**
+     * 当前时间组件
+     */
+    private NowComponent nowComponent;
 
     @PostMapping("upload")
     public R<Integer> upload(@SessionAttribute(PublicConstant.USER_ID) Integer userId, MultipartFile file) {
@@ -57,8 +58,8 @@ public class PhotoController {
             return ResUtils.error(msg);
         }
         String originalFilename = URLDecoder.decode(file.getOriginalFilename(), StandardCharsets.UTF_8);
-        String fileName = DateUtils.formatTime() + "-" + RandomUtil.randomNumbers(4) + "-" + originalFilename;
-        String relativePath = DateUtils.getBasicIsoDate() + File.separator + fileName;
+        String fileName = nowComponent.nowToSeventeenFormatDate() + "-" + RandomUtil.randomNumbers(4) + "-" + originalFilename;
+        String relativePath = nowComponent.nowToBasicIsoDate() + File.separator + fileName;
         String realPath = seenConfig.getPathConfig().getPhotoPath() + relativePath;
         long size = file.getSize();
         try {
@@ -75,10 +76,9 @@ public class PhotoController {
             // Make 'asiatrip' bucket if not exist.
             boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(MinioConstant.BUCKET_NAME).build());
             if (!found) {
+                log.warn("Bucket '{} 'not exists.", BUCKET_NAME);
                 // Make a new bucket called 'asiatrip'.
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(MinioConstant.BUCKET_NAME).build());
-            } else {
-                log.info("Bucket '{}' already exists.", MinioConstant.BUCKET_NAME);
             }
             // Upload '/home/user/Photos/asiaphotos.zip' as object name 'asiaphotos-2015.zip' to bucket
             // 'asiatrip'.
@@ -102,7 +102,7 @@ public class PhotoController {
         try {
             for (MultipartFile file : files) {
                 String originalFilename = URLDecoder.decode(file.getOriginalFilename(), StandardCharsets.UTF_8);
-                String relativePath = DateUtils.getBasicIsoDate() + File.separator + DateUtils.formatTime() + "-" + RandomUtil.randomNumbers(4) + "-" + originalFilename;
+                String relativePath = nowComponent.nowToBasicIsoDate() + File.separator + nowComponent.nowToSeventeenFormatDate() + "-" + RandomUtil.randomNumbers(4) + "-" + originalFilename;
                 FileUtil.writeFromStream(file.getInputStream(), Paths.get(seenConfig.getPathConfig().getPhotoPath(), relativePath).toFile());
                 Integer pathId = httpPhotoService.setPath(relativePath, userId);
                 pathIds.add(pathId);

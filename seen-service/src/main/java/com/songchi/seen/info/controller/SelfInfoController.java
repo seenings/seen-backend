@@ -106,54 +106,46 @@ public class SelfInfoController {
     private HttpUserIntroducePhotoService httpUserIntroducePhotoService;
 
     @PostMapping("self-user-id-to-main-photo")
-    public R<PhotoUrl> selfUserIdToMainPhoto(@SessionAttribute Integer userId) {
+    public ResponseEntity<R<PhotoUrl>> selfUserIdToMainPhoto(@SessionAttribute Integer userId) {
         Integer photoId = httpUserMainPhotoService.userIdPhotoId(Collections.singleton(userId)).get(userId);
+        if (photoId == null) {
+            return ResponseEntity.noContent().build();
+        }
         String longPhotoUrl = httpPhotoService.photoIdToLongPhotoUrl(Collections.singleton(photoId)).get(photoId);
         PhotoUrl result = new PhotoUrl(photoId, longPhotoUrl);
-        return ResUtils.ok(result);
+        return ResponseEntity.ok(ResUtils.ok(result));
     }
 
     /**
      * 顺序对应主页照片ID
-     * 
+     *
      * @param userId 用户ID
      * @return 结果
      */
     @PostMapping("self-user-id-to-main-page-photo")
     public R<Map<Integer, Integer>> selfUserIdToMainPagePhoto(@SessionAttribute Integer userId) {
-        Set<IntroduceTypeAndPhoto> introduceTypeAndPhotos = httpUserIntroducePhotoService
-                .userIdToIntroduceTypeAndPhoto(Collections.singleton(userId)).get(userId);
-        Map<Integer, Integer> map = Optional.ofNullable(introduceTypeAndPhotos)
-                .map(m -> m.stream().parallel().filter(n -> n.introduceTypeEnum() == IntroduceTypeEnum.MAIN_PAGE)
-                        .collect(Collectors.toMap(n -> n.order(), n -> n.photoId())))
-                .orElseGet(Collections::emptyMap);
+        Set<IntroduceTypeAndPhoto> introduceTypeAndPhotos = httpUserIntroducePhotoService.userIdToIntroduceTypeAndPhoto(Collections.singleton(userId)).get(userId);
+        Map<Integer, Integer> map = Optional.ofNullable(introduceTypeAndPhotos).map(m -> m.stream().parallel().filter(n -> n.introduceTypeEnum() == IntroduceTypeEnum.MAIN_PAGE).collect(Collectors.toMap(IntroduceTypeAndPhoto::order, IntroduceTypeAndPhoto::photoId))).orElseGet(Collections::emptyMap);
         return ResUtils.ok(map);
     }
 
     @PostMapping("self-user-id-to-education-and-work")
     public R<EducationAndWork> selfUserIdToEducationAndWork(@SessionAttribute Integer userId) {
 
-        Integer highestEducation = httpEducationalService.userIdToEducational(Collections.singleton(userId))
-                .get(userId);
+        Integer highestEducation = httpEducationalService.userIdToEducational(Collections.singleton(userId)).get(userId);
         Integer schoolId = httpStudentInfoService.userIdToSchoolId(Collections.singleton(userId)).get(userId);
         List<String> highestSchoolId;
         if (schoolId == null) {
             highestSchoolId = null;
         } else {
-            String provinceCode = httpSchoolService.schoolIdToProvinceCode(Collections.singleton(schoolId))
-                    .get(schoolId);
-            Integer provinceId = httpProvinceService.provinceCodeToProvinceId(Collections.singleton(provinceCode))
-                    .get(provinceCode);
-            highestSchoolId = CollUtil.newArrayList(NumberUtils.intToString(provinceId),
-                    NumberUtils.intToString(schoolId));
+            String provinceCode = httpSchoolService.schoolIdToProvinceCode(Collections.singleton(schoolId)).get(schoolId);
+            Integer provinceId = httpProvinceService.provinceCodeToProvinceId(Collections.singleton(provinceCode)).get(provinceCode);
+            highestSchoolId = CollUtil.newArrayList(NumberUtils.intToString(provinceId), NumberUtils.intToString(schoolId));
         }
-        Integer workPositionId = httpUserWorkPositionService.userIdToPosition(Collections.singleton(userId))
-                .get(userId);
+        Integer workPositionId = httpUserWorkPositionService.userIdToPosition(Collections.singleton(userId)).get(userId);
         String workCompany = httpUserWorkService.userIdToCompanyName(Collections.singleton(userId)).get(userId);
-        Integer annualIncomeIndex = httpUserIncomeService.userIdToAnnualIncome(Collections.singleton(userId))
-                .get(userId);
-        EducationAndWork result = new EducationAndWork(highestEducation, highestSchoolId, workPositionId, workCompany,
-                annualIncomeIndex);
+        Integer annualIncomeIndex = httpUserIncomeService.userIdToAnnualIncome(Collections.singleton(userId)).get(userId);
+        EducationAndWork result = new EducationAndWork(highestEducation, highestSchoolId, workPositionId, workCompany, annualIncomeIndex);
         return ResUtils.ok(result);
     }
 
@@ -168,23 +160,17 @@ public class SelfInfoController {
         Integer sex = httpUserSexService.userIdToSex(Collections.singleton(userId)).get(userId);
         Integer stature = httpUserStatureService.userIdToStatureCm(Collections.singleton(userId)).get(userId);
         Integer weight = httpUserWeightService.userIdToWeightKg(Collections.singleton(userId)).get(userId);
-        Integer currentResidenceProvinceId = httpUserCurrentResidenceService
-                .userIdToProvinceId(Collections.singleton(userId)).get(userId);
-        Integer currentResidenceCityId = httpUserCurrentResidenceService.userIdToCityId(Collections.singleton(userId))
-                .get(userId);
+        Integer currentResidenceProvinceId = httpUserCurrentResidenceService.userIdToProvinceId(Collections.singleton(userId)).get(userId);
+        Integer currentResidenceCityId = httpUserCurrentResidenceService.userIdToCityId(Collections.singleton(userId)).get(userId);
 
-        Integer birthPlaceProvinceId = httpUserBirthPlaceService.userIdToProvinceId(Collections.singleton(userId))
-                .get(userId);
+        Integer birthPlaceProvinceId = httpUserBirthPlaceService.userIdToProvinceId(Collections.singleton(userId)).get(userId);
         Integer birthPlaceCityId = httpUserBirthPlaceService.userIdToCityId(Collections.singleton(userId)).get(userId);
 
-        List<String> currentResidence = CollUtil.newArrayList(currentResidenceProvinceId, currentResidenceCityId)
-                .stream().map(NumberUtils::intToString).collect(Collectors.toList());
-        List<String> birthPlace = CollUtil.newArrayList(birthPlaceProvinceId, birthPlaceCityId).stream()
-                .map(NumberUtils::intToString).collect(Collectors.toList());
+        List<String> currentResidence = CollUtil.newArrayList(currentResidenceProvinceId, currentResidenceCityId).stream().map(NumberUtils::intToString).collect(Collectors.toList());
+        List<String> birthPlace = CollUtil.newArrayList(birthPlaceProvinceId, birthPlaceCityId).stream().map(NumberUtils::intToString).collect(Collectors.toList());
         Integer maritalStatus = httpUserMaritalService.userIdToMaritalStatus(Collections.singleton(userId)).get(userId);
 
-        BasicInformation result = new BasicInformation(aliasName, birthDate, sex, stature, weight, currentResidence,
-                birthPlace, maritalStatus);
+        BasicInformation result = new BasicInformation(aliasName, birthDate, sex, stature, weight, currentResidence, birthPlace, maritalStatus);
         return ResUtils.ok(result);
     }
 
@@ -210,8 +196,7 @@ public class SelfInfoController {
     private UserInfoService userInfoService;
 
     @PostMapping("save-basic-information-all")
-    public R<Boolean> saveBasicInformationAll(@RequestBody BasicInformationAll basicInformationAll,
-            @SessionAttribute Integer userId) {
+    public R<Boolean> saveBasicInformationAll(@RequestBody BasicInformationAll basicInformationAll, @SessionAttribute Integer userId) {
         userInfoService.saveBasicInformation(userId, basicInformationAll.basicInformation());
         userInfoService.saveEducationAndWork(userId, basicInformationAll.educationAndWork());
         userInfoService.saveContactInformation(userId, basicInformationAll.contactInformation());
@@ -231,9 +216,7 @@ public class SelfInfoController {
     }
 
     @PostMapping("save-primary-photo")
-    public ResponseEntity<Boolean> savePrimaryPhoto(@RequestBody List<OrderAndPhotoId> orderAndPhotoIds,
-            @RequestParam Integer mainPhotoId, @RequestParam Integer max, @RequestParam Integer introduceTypeEnum,
-            @SessionAttribute Integer userId) {
+    public ResponseEntity<Boolean> savePrimaryPhoto(@RequestBody List<OrderAndPhotoId> orderAndPhotoIds, @RequestParam Integer mainPhotoId, @RequestParam Integer max, @RequestParam Integer introduceTypeEnum, @SessionAttribute Integer userId) {
         if (mainPhotoId == null) {
             String msg = String.format("头像照片不存在，用户ID：%s。", userId);
             log.error(msg);
@@ -242,8 +225,7 @@ public class SelfInfoController {
         httpUserMainPhotoService.set(userId, mainPhotoId);
         if (CollUtils.isNotEmpty(orderAndPhotoIds)) {
             // 按顺序存入，取出即有序
-            httpUserIntroducePhotoService.saveAndReturnId(orderAndPhotoIds, max,
-                    IntroduceEnumUtils.indexToIntroduceTypeEnum(introduceTypeEnum), userId);
+            httpUserIntroducePhotoService.saveAndReturnId(orderAndPhotoIds, max, IntroduceEnumUtils.indexToIntroduceTypeEnum(introduceTypeEnum), userId);
         }
         return ResponseEntity.ok(true);
     }

@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Set;
 
+import io.github.seenings.time.component.NowComponent;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,27 +31,23 @@ import com.songchi.seen.voice.service.IVoiceService;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.net.URLDecoder;
 import cn.hutool.core.util.RandomUtil;
-import io.gitee.seen.core.util.DateUtils;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * <p>
  * 语音 前端控制器
- * </p>
- *
- * @author chixh
- * @since 2021-07-25
  */
 @Slf4j
 @RestController
+@AllArgsConstructor
 @RequestMapping(PublicConstant.REST + "voice/voice")
 public class VoiceController {
-    @Resource
-    IVoiceService iVoiceService;
+    private IVoiceService iVoiceService;
 
-    @Resource
     private SeenConfig seenConfig;
+    /**
+     * 当前时间组件
+     */
+    private NowComponent nowComponent;
 
     @PostMapping("upload")
     public R<Integer> upload(MultipartFile file, @SessionAttribute(PublicConstant.USER_ID) Integer userId) {
@@ -60,8 +58,7 @@ public class VoiceController {
         }
 
         String originalFilename = URLDecoder.decode(file.getOriginalFilename(), StandardCharsets.UTF_8);
-        String relativePath = DateUtils.getBasicIsoDate() + File.separator + DateUtils.formatTime() + "-" +
-                RandomUtil.randomNumbers(4) + "-" + originalFilename;
+        String relativePath = nowComponent.nowToBasicIsoDate() + File.separator + nowComponent.nowToSeventeenFormatDate() + "-" + RandomUtil.randomNumbers(4) + "-" + originalFilename;
         String realPath = seenConfig.getPathConfig().getVoicePath() + relativePath;
         try {
             FileUtil.writeFromStream(file.getInputStream(), Paths.get(realPath).toFile());

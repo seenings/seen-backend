@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.53</version>
+        <version>0.1.54</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-common</artifactId>
@@ -15,6 +15,7 @@
         <module>seen-core</module>
         <module>seen-api</module>
         <module>seen-extra</module>
+        <module>seen-spring-config</module>
     </modules>
     <build>
         <plugins>
