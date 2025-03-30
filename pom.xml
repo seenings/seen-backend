@@ -13,7 +13,7 @@
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.54</version>
+    <version>0.1.55</version>
     <properties>
         <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
         <hutool-all.version>5.8.36</hutool-all.version>

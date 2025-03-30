@@ -1,5 +1,5 @@
 create schema if not exists seen;
-
+use seen;
 create table seen.educational
 (
     id          int auto_increment comment '自增ID'
@@ -22,7 +22,7 @@ create table seen.school_graduate
     comment '用户的毕业状态';
 
 
-create table school
+create table seen.school
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -33,7 +33,7 @@ create table school
 )
     comment '学校信息';
 
-create table if not exists student_info
+create table  seen.student_info
 (
     id              int auto_increment comment '自增ID'
         primary key,

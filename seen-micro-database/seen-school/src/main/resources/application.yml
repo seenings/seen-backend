@@ -3,6 +3,10 @@ spring:
     name: seen-school
   profiles:
     active: chixuehui
+  sql:
+    init:
+      data-locations: classpath:/db/data.sql
+      schema-locations: classpath:/db/schema.sql
 ---
 spring:
   config:

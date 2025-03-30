@@ -5,18 +5,12 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-common</artifactId>
-        <version>0.1.54</version>
+        <version>0.1.55</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-extra</artifactId>
     <name>seen-extra</name>
     <description>包装三方工具的包</description>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <seen.version>${project.version}</seen.version>
-    </properties>
     <dependencies>
         <!--引入工具包-->
         <dependency>
@@ -42,19 +36,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <repositories>
-        <!--阿里云仓库，加快下载速度-->
-        <repository>
-            <id>ali-yun-nexus</id>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <!--阿里云仓库，加快下载速度-->
-        <pluginRepository>
-            <id>ali-yun-nexus</id>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </pluginRepository>
-    </pluginRepositories>
-
 </project>
