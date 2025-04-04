@@ -31,7 +31,7 @@ import com.songchi.seen.chat.utils.ChatApplyUtils;
 import com.songchi.seen.coin.enumeration.TradeType;
 import com.songchi.seen.common.model.R;
 import com.songchi.seen.common.util.ResUtils;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.info.model.RecApplyContent;
 import com.songchi.seen.info.model.SendApplyContent;
 import com.songchi.seen.sys.constant.PublicConstant;
@@ -85,7 +85,7 @@ public class FriendController {
         String description = TradeType.APPLY_DO_FRIEND.getLabel();
         Set<Integer> tradeIds = httpCoinTradeService.checkEnoughAndFreeze(userId, ChatConstant.APPLY_SPEND_COIN_AMOUNT,
                 TradeType.APPLY_DO_FRIEND, description);
-        if (CollUtils.isEmpty(tradeIds)) {
+        if (CollUtil.isEmpty(tradeIds)) {
             // 没有足够的虚拟币
             String msg = String.format("没有足够的虚拟币，用户ID是：%s，朋友ID是：%s。", userId, appliedUserId);
             log.warn(msg);
@@ -118,7 +118,7 @@ public class FriendController {
         // 2.检查虚拟币是否足够（100，再次申请2倍），并扣除虚拟币（冻结）
         String description = TradeType.APPLY_DO_FRIEND.getLabel();
         Set<Integer> tradeIds = httpCoinTradeService.checkEnoughAndFreeze(userId, ChatConstant.APPLY_SPEND_COIN_AMOUNT * 2, TradeType.APPLY_DO_FRIEND, description);
-        if (CollUtils.isEmpty(tradeIds)) {
+        if (CollUtil.isEmpty(tradeIds)) {
             // 没有足够的虚拟币
             String msg = String.format("没有足够的虚拟币，用户ID是：%s，朋友ID是：%s。", userId, pageUserId);
             log.warn(msg);

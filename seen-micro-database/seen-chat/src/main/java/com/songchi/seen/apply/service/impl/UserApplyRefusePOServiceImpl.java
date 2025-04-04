@@ -1,13 +1,12 @@
 package com.songchi.seen.apply.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.songchi.seen.apply.po.UserApplyRefusePO;
 import com.songchi.seen.apply.service.UserApplyRefuseService;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +33,8 @@ public class UserApplyRefusePOServiceImpl extends ServiceImpl<UserApplyRefusePOM
 
     @Override
     public Map<Integer, LocalDateTime> applyIdToRefuseTime(Set<Integer> applyIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(applyIds);
-        if (CollUtil.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(applyIds);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()

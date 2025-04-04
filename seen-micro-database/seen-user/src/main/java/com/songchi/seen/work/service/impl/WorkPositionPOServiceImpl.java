@@ -1,13 +1,12 @@
 package com.songchi.seen.work.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.info.service.WorkPositionService;
 import com.songchi.seen.work.po.WorkPositionPO;
 import org.apache.ibatis.annotations.Mapper;
@@ -44,8 +43,8 @@ public class WorkPositionPOServiceImpl extends ServiceImpl<WorkPositionPOMapper,
 
     @Override
     public Map<Integer, String> positionIdToPositionName(Set<Integer> ids) {
-        List<Integer> list = CollUtils.valueIsNullToList(ids);
-        if (CollUtil.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(ids);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<WorkPositionPO, String> getValue = WorkPositionPO::getPositionName;
@@ -65,7 +64,7 @@ public class WorkPositionPOServiceImpl extends ServiceImpl<WorkPositionPOMapper,
                 .lambda()
                 .eq(WorkPositionPO::getPositionName, positionName)
                 .select(WorkPositionPO::getId));
-        return CollUtils.isNotEmpty(list);
+        return CollUtil.isNotEmpty(list);
     }
 
     @Override

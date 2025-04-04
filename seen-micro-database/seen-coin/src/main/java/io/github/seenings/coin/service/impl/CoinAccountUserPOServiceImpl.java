@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.coin.po.CoinAccountUserPO;
 import com.songchi.seen.account.service.CoinAccountUserService;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +38,8 @@ public class CoinAccountUserPOServiceImpl extends ServiceImpl<CoinAccountUserPOM
     @Override
     public Map<Long, Set<Long>> userIdToAccountId(Set<Long> userIds) {
 
-        List<Long> list = CollUtils.valueIsNullToList(userIds);
-        if (CollUtils.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(userIds);
+        if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
@@ -64,7 +64,7 @@ public class CoinAccountUserPOServiceImpl extends ServiceImpl<CoinAccountUserPOM
     public boolean set(Long accountId, Long userId) {
         Set<Long> accountIds =
                 userIdToAccountId(Collections.singleton(userId)).get(userId);
-        boolean contains = CollUtils.contains(accountIds, accountId);
+        boolean contains = CollUtil.contains(accountIds, accountId);
         if (!contains) {
             CoinAccountUserPO po = new CoinAccountUserPO()
                     .setUserId(userId)

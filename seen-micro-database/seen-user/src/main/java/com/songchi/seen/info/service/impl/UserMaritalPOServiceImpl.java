@@ -1,13 +1,12 @@
 package com.songchi.seen.info.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.info.enumeration.MaritalStatus;
 import com.songchi.seen.info.po.UserMaritalPO;
 import com.songchi.seen.info.service.UserMaritalService;
@@ -42,8 +41,8 @@ public class UserMaritalPOServiceImpl extends ServiceImpl<UserMaritalPOMapper, U
      */
     @Override
     public Map<Long, Integer> userIdToMaritalStatus(Set<Long> userIds) {
-        List<Long> list = CollUtils.valueIsNullToList(userIds);
-        if (CollUtil.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(userIds);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()

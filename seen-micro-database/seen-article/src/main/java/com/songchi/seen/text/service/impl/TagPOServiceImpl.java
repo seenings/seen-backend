@@ -1,11 +1,10 @@
 package com.songchi.seen.text.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.text.po.TagPO;
 import com.songchi.seen.text.service.TagService;
 import org.apache.ibatis.annotations.Mapper;
@@ -47,8 +46,8 @@ public class TagPOServiceImpl extends ServiceImpl<TagPOMapper, TagPO> implements
      */
     @Override
     public Map<Integer, String> tagIdToTagName(Set<Integer> tagIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(tagIds);
-        if (CollUtil.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(tagIds);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
@@ -69,7 +68,7 @@ public class TagPOServiceImpl extends ServiceImpl<TagPOMapper, TagPO> implements
      */
     @Override
     public Map<Integer, Integer> tagIdToTagParentId(Set<Integer> tagIds) {
-        if (CollUtil.isEmpty(tagIds)) {
+        if (cn.hutool.core.collection.CollUtil.isEmpty(tagIds)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(new ArrayList<>(tagIds), 100).stream()

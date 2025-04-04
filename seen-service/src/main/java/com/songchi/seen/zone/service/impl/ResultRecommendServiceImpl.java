@@ -4,10 +4,9 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.songchi.seen.calc.http.HttpRecommendService;
 import com.songchi.seen.calc.service.AsyncCalcService;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.recommend.http.HttpMiddleUserRecommendService;
 import com.songchi.seen.zone.service.ResultRecommendService;
-import io.github.seenings.time.component.NowComponent;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +30,7 @@ public class ResultRecommendServiceImpl implements ResultRecommendService {
     @Override
     public List<Long> userIdToRecommendUserId(Long userId, String date) {
         List<Long> recommendUserIds = httpMiddleUserRecommendService.userIdToRecommendUserId(Collections.singleton(userId), date).get(userId);
-        if (CollUtils.isNotEmpty(recommendUserIds)) {
+        if (CollUtil.isNotEmpty(recommendUserIds)) {
             return recommendUserIds;
         } else {
             // 生成

@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.coin.po.CoinAccount;
 import com.songchi.seen.account.service.CoinAccountService;
 import com.songchi.seen.coin.enumeration.AccountType;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
@@ -33,8 +33,8 @@ public class CoinAccountServiceImpl extends ServiceImpl<CoinAccountMapper, CoinA
     @Override
     public Map<Integer, List<Long>> accountTypeToAccountId(Set<Integer> accountTypeIds) {
 
-        List<Integer> list = CollUtils.valueIsNullToList(accountTypeIds);
-        if (CollUtils.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(accountTypeIds);
+        if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream().parallel().flatMap(subs -> list(new QueryWrapper<CoinAccount>().lambda().in(CoinAccount::getAccountType, subs).select(CoinAccount::getId, CoinAccount::getAccountType)).stream()).collect(Collectors.groupingBy(CoinAccount::getAccountType, Collectors.mapping(CoinAccount::getId, Collectors.toList())));
@@ -51,8 +51,8 @@ public class CoinAccountServiceImpl extends ServiceImpl<CoinAccountMapper, CoinA
     @Override
     public Map<Long, AccountType> accountIdToAccountType(Set<Long> accountIds) {
 
-        List<Long> list = CollUtils.valueIsNullToList(accountIds);
-        if (CollUtils.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(accountIds);
+        if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream().parallel().flatMap(subs -> list(new QueryWrapper<CoinAccount>().lambda().in(CoinAccount::getId, subs).select(CoinAccount::getId, CoinAccount::getAccountType)).stream()).map(n -> {

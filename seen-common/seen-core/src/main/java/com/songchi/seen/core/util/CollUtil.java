@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * @author chixuehui
  * @since 2022-10-07
  */
-public class CollUtils {
+public class CollUtil {
 
     /**
      * 包含
@@ -78,7 +78,7 @@ public class CollUtils {
      * @param <T>   元素类型
      */
     public static <T> T first(Collection<T> collection) {
-        if (CollUtils.isEmpty(collection)) {
+        if (isEmpty(collection)) {
             return null;
         }
         return collection.stream().findFirst().orElse(null);
@@ -91,7 +91,7 @@ public class CollUtils {
      * @param <T>   元素类型
      */
     public static <T> int size(Collection<T> collection) {
-        if (CollUtils.isEmpty(collection)) {
+        if (isEmpty(collection)) {
             return 0;
         } else {
             return collection.size();

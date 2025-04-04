@@ -5,7 +5,7 @@ import static cn.hutool.core.collection.CollUtil.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 
 /**
  * CollectionUtilsTest
@@ -17,12 +17,12 @@ class CollectionUtilsTest {
 
     @Test
     void isEmpty() {
-        Assertions.assertTrue(CollUtils.isEmpty(newArrayList()));
+        Assertions.assertTrue(CollUtil.isEmpty(newArrayList()));
     }
 
     @Test
     void isNotEmpty() {
 
-        Assertions.assertTrue(CollUtils.isNotEmpty(newArrayList("")));
+        Assertions.assertTrue(CollUtil.isNotEmpty(newArrayList("")));
     }
 }

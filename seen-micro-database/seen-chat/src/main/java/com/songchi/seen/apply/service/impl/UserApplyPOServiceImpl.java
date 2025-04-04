@@ -1,6 +1,5 @@
 package com.songchi.seen.apply.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -8,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.songchi.seen.apply.po.UserApplyPO;
 import com.songchi.seen.apply.service.UserApplyService;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
@@ -63,8 +62,8 @@ public class UserApplyPOServiceImpl extends ServiceImpl<UserApplyPOMapper, UserA
 
     @Override
     public Map<Long, Integer> appliedUserIdToId(Set<Long> appliedUserIds, Long userId) {
-        List<Long> list = CollUtils.valueIsNullToList(appliedUserIds);
-        if (CollUtil.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(appliedUserIds);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream().flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>().in(UserApplyPO::getAppliedUserId, subs).eq(UserApplyPO::getUserId, userId).select(UserApplyPO::getId, UserApplyPO::getAppliedUserId)).stream()).collect(Collectors.toMap(UserApplyPO::getAppliedUserId, UserApplyPO::getId, (o1, o2) -> o2));
@@ -72,8 +71,8 @@ public class UserApplyPOServiceImpl extends ServiceImpl<UserApplyPOMapper, UserA
 
     @Override
     public Map<Integer, Integer> idToTextId(Set<Integer> ids) {
-        List<Integer> list = CollUtils.valueIsNullToList(ids);
-        if (CollUtil.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(ids);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream().flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>().in(UserApplyPO::getId, subs).select(UserApplyPO::getId, UserApplyPO::getTextId)).stream()).collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getTextId, (o1, o2) -> o2));
@@ -81,8 +80,8 @@ public class UserApplyPOServiceImpl extends ServiceImpl<UserApplyPOMapper, UserA
 
     @Override
     public Map<Integer, Long> idToApplyUserId(Set<Integer> ids) {
-        List<Integer> list = CollUtils.valueIsNullToList(ids);
-        if (CollUtil.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(ids);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream().flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>().in(UserApplyPO::getId, subs).select(UserApplyPO::getId, UserApplyPO::getUserId)).stream()).collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getUserId));
@@ -90,8 +89,8 @@ public class UserApplyPOServiceImpl extends ServiceImpl<UserApplyPOMapper, UserA
 
     @Override
     public Map<Integer, Long> idToAppliedUserId(Set<Integer> ids) {
-        List<Integer> list = CollUtils.valueIsNullToList(ids);
-        if (CollUtil.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(ids);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream().flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>().in(UserApplyPO::getId, subs).select(UserApplyPO::getId, UserApplyPO::getAppliedUserId)).stream()).collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getAppliedUserId));
@@ -99,8 +98,8 @@ public class UserApplyPOServiceImpl extends ServiceImpl<UserApplyPOMapper, UserA
 
     @Override
     public Map<Integer, LocalDateTime> idToCreateTime(Set<Integer> ids) {
-        List<Integer> list = CollUtils.valueIsNullToList(ids);
-        if (CollUtil.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(ids);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream().flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>().in(UserApplyPO::getId, subs).select(UserApplyPO::getId, UserApplyPO::getCreateTime)).stream()).collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getCreateTime, (o1, o2) -> o2));
@@ -108,8 +107,8 @@ public class UserApplyPOServiceImpl extends ServiceImpl<UserApplyPOMapper, UserA
 
     @Override
     public Map<Integer, LocalDateTime> idToApplyTime(Set<Integer> ids) {
-        List<Integer> list = CollUtils.valueIsNullToList(ids);
-        if (CollUtil.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(ids);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream().flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>().in(UserApplyPO::getId, subs).select(UserApplyPO::getId, UserApplyPO::getApplyTime)).stream()).collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getApplyTime, (o1, o2) -> o2));

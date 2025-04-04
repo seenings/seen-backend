@@ -13,28 +13,28 @@ import org.junit.jupiter.api.Test;
  * @author chixuehui
  * @since 2022-12-03
  */
-class CollUtilsTest {
+class CollUtilTest {
 
     @Test
     void first() {
         HashSet<Integer> objects = new HashSet<>();
         objects.add(1);
         objects.add(2);
-        Assertions.assertEquals(1, CollUtils.first(objects));
+        Assertions.assertEquals(1, CollUtil.first(objects));
     }
 
     @Test
     void contains() {
 
-        Assertions.assertFalse(CollUtils.contains(newArrayList(), 1));
-        Assertions.assertFalse(CollUtils.contains(null, 1));
-        Assertions.assertTrue(CollUtils.contains(newArrayList(1), 1));
+        Assertions.assertFalse(CollUtil.contains(newArrayList(), 1));
+        Assertions.assertFalse(CollUtil.contains(null, 1));
+        Assertions.assertTrue(CollUtil.contains(newArrayList(1), 1));
     }
 
     @Test
     void size() {
 
-        Assertions.assertEquals(1, CollUtils.size(newArrayList(1)));
-        Assertions.assertEquals(0, CollUtils.size(newHashSet()));
+        Assertions.assertEquals(1, CollUtil.size(newArrayList(1)));
+        Assertions.assertEquals(0, CollUtil.size(newHashSet()));
     }
 }

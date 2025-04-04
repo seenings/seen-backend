@@ -11,7 +11,7 @@ import com.songchi.seen.chat.model.ChatContentAndTime;
 import com.songchi.seen.chat.model.ChatMessage;
 import com.songchi.seen.chat.po.ChatHistoryPO;
 import com.songchi.seen.chat.service.ChatHistoryService;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
@@ -65,8 +65,8 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
      */
     @Override
     public Map<Integer, ChatContentAndTime> idToChatContentAndTime(Set<Integer> ids) {
-        List<Integer> list = CollUtils.valueIsNullToList(ids);
-        if (CollUtils.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(ids);
+        if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
@@ -96,8 +96,8 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
      */
     @Override
     public Map<Integer, Long> idToFromUserId(Set<Integer> ids) {
-        List<Integer> list = CollUtils.valueIsNullToList(ids);
-        if (CollUtils.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(ids);
+        if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
@@ -122,8 +122,8 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
      */
     @Override
     public Map<Integer, LocalDateTime> idToSendTime(Set<Integer> ids) {
-        List<Integer> list = CollUtils.valueIsNullToList(ids);
-        if (CollUtils.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(ids);
+        if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
@@ -147,8 +147,8 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
      */
     @Override
     public Map<Integer, Boolean> idToIsSent(Set<Integer> ids) {
-        List<Integer> list = CollUtils.valueIsNullToList(ids);
-        if (CollUtils.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(ids);
+        if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
@@ -173,8 +173,8 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
      */
     @Override
     public Map<Integer, Long> idToToUserId(Set<Integer> ids) {
-        List<Integer> list = CollUtils.valueIsNullToList(ids);
-        if (CollUtils.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(ids);
+        if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
