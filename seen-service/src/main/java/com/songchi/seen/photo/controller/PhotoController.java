@@ -51,7 +51,7 @@ public class PhotoController {
     private NowComponent nowComponent;
 
     @PostMapping("upload")
-    public R<Integer> upload(@SessionAttribute(PublicConstant.USER_ID) Integer userId, MultipartFile file) {
+    public R<Integer> upload(@SessionAttribute(PublicConstant.USER_ID) Long userId, MultipartFile file) {
         if (file == null || file.isEmpty()) {
             String msg = "文件为空。";
             log.error(msg);
@@ -92,7 +92,7 @@ public class PhotoController {
     }
 
     @PostMapping("uploads")
-    public R<List<Integer>> uploads(@SessionAttribute Integer userId, List<MultipartFile> files) {
+    public R<List<Integer>> uploads(@SessionAttribute Long userId, List<MultipartFile> files) {
         if (files == null || files.isEmpty()) {
             String msg = "文件为空。";
             log.error(msg);

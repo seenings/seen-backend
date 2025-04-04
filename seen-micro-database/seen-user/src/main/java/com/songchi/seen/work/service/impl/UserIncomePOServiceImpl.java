@@ -41,8 +41,8 @@ public class UserIncomePOServiceImpl extends ServiceImpl<UserIncomePOMapper, Use
      * @return 用户ID对应年度收入
      */
     @Override
-    public Map<Integer, Integer> userIdToAnnualIncome(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToAnnualIncome(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -61,7 +61,7 @@ public class UserIncomePOServiceImpl extends ServiceImpl<UserIncomePOMapper, Use
     }
 
     @Override
-    public List<Integer> annualIncomeToUserId(YearIncomeEnum yearIncomeEnum, int current, int size) {
+    public List<Long> annualIncomeToUserId(YearIncomeEnum yearIncomeEnum, int current, int size) {
         Page<UserIncomePO> page = page(
                 new Page<>(current, size),
                 new QueryWrapper<UserIncomePO>()
@@ -75,8 +75,8 @@ public class UserIncomePOServiceImpl extends ServiceImpl<UserIncomePOMapper, Use
     }
 
     @Override
-    public boolean set(Integer userId, YearIncomeEnum yearIncomeEnum) {
-        Map<Integer, Integer> userIdToAnnualIncomeMap = userIdToAnnualIncome(Collections.singleton(userId));
+    public boolean set(Long userId, YearIncomeEnum yearIncomeEnum) {
+        Map<Long, Integer> userIdToAnnualIncomeMap = userIdToAnnualIncome(Collections.singleton(userId));
         Integer data = userIdToAnnualIncomeMap.get(userId);
         UserIncomePO po = new UserIncomePO()
                 .setUserId(userId)

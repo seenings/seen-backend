@@ -9,7 +9,7 @@ import java.util.List;
  * @since 2022-10-23
  */
 public interface ResultRecommendService {
-    List<Integer> userIdToRecommendUserId(Integer userId, String date);
+    List<Long> userIdToRecommendUserId(Long userId, String date);
 
-    List<Integer> userIdToRecommendUserId(Integer userId);
+    List<Long> userIdToRecommendUserId(Long userId);
 }

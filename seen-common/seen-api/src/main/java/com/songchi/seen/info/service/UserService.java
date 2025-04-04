@@ -10,9 +10,9 @@ import java.util.Set;
  * @since 2023-02-11
  */
 public interface UserService {
-    Map<Integer, String> userIdToPhoneNumber(Set<Integer> userIds);
+    Map<Long, String> userIdToPhoneNumber(Set<Long> userIds);
 
-    Map<String, Integer> phoneNumberToUserId(Set<String> phoneNumbers);
+    Map<String, Long> phoneNumberToUserId(Set<String> phoneNumbers);
 
-    Integer set(String phoneNumber);
+    Long set(String phoneNumber);
 }

@@ -27,7 +27,7 @@ public class Voice implements Serializable {
     private String path;
     private Integer deleted;
     private LocalDateTime updateTime;
-    private Integer updateUser;
+    private Long updateUser;
 
 
 }

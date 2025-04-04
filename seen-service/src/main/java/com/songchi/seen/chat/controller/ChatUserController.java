@@ -55,7 +55,7 @@ public class ChatUserController {
     private HttpPushChatMessageService httpPushChatMessageService;
 
     @PostMapping("set-friend")
-    public R<Boolean> setFriend(@RequestParam("friendUserId") Integer friendUserId, @SessionAttribute Integer userId) {
+    public R<Boolean> setFriend(@RequestParam("friendUserId") Long friendUserId, @SessionAttribute Long userId) {
         boolean set = httpChatUserService.set(friendUserId, userId);
         return ResUtils.ok(set);
     }
@@ -63,15 +63,15 @@ public class ChatUserController {
     @PostMapping("history-id-to-remote-chat-message")
     public R<Map<Integer, RemoteChatMessage>> historyIdToRemoteChatMessage(@RequestBody Set<Integer> historyIds) {
 
-        Map<Integer, Integer> historyIdToToUserIdMap = httpChatHistoryService.idToToUserId(historyIds);
-        Map<Integer, Integer> historyIdToFromUserIdMap = httpChatHistoryService.idToFromUserId(historyIds);
+        Map<Integer, Long> historyIdToToUserIdMap = httpChatHistoryService.idToToUserId(historyIds);
+        Map<Integer, Long> historyIdToFromUserIdMap = httpChatHistoryService.idToFromUserId(historyIds);
         Map<Integer, Boolean> historyIdToIsSentMap = httpChatHistoryService.idToIsSent(historyIds);
         Map<Integer, ChatContentAndTime> historyIdToChatContentAndTimeMap = httpChatHistoryService
                 .idToChatContentAndTime(historyIds);
         Map<Integer, RemoteChatMessage> result = historyIds.stream().parallel().map(id -> {
             ChatContentAndTime chatContentAndTime = historyIdToChatContentAndTimeMap.get(id);
-            Integer fromUserId = historyIdToFromUserIdMap.get(id);
-            Integer toUserId = historyIdToToUserIdMap.get(id);
+            Long fromUserId = historyIdToFromUserIdMap.get(id);
+            Long toUserId = historyIdToToUserIdMap.get(id);
             Boolean sent = historyIdToIsSentMap.get(id);
             return Pair.of(id, new RemoteChatMessage(id, chatContentAndTime.contentType().getIndex(),
                     chatContentAndTime.contentId(), fromUserId, chatContentAndTime.sendTime(), sent, toUserId));
@@ -81,16 +81,16 @@ public class ChatUserController {
 
     @PostMapping("page-to-user-chat-info")
     public R<List<UserChatInfo>> pageToUserChatInfo(@RequestParam int current, @RequestParam int size,
-            @SessionAttribute Integer userId) {
+                                                    @SessionAttribute Long userId) {
 
         ResultPage<ChatUser> chatUsers = httpChatUserService.page(userId, current, size);
-        Set<Integer> userIds = chatUsers.getPageList().stream().parallel().map(ChatUser::friendUserId)
+        Set<Long> userIds = chatUsers.getPageList().stream().parallel().map(ChatUser::friendUserId)
                 .collect(Collectors.toSet());
         log.info("用户ID：{}。", userIds);
-        Map<Integer, UserChatInfo> userIdToUserChatInfoMap = infoService.userIdToUserChatInfo(userIds, userId);
+        Map<Long, UserChatInfo> userIdToUserChatInfoMap = infoService.userIdToUserChatInfo(userIds, userId);
 
         List<UserChatInfo> collect = chatUsers.getPageList().stream().map(n -> {
-            Integer friendUserId = n.friendUserId();
+            Long friendUserId = n.friendUserId();
             return userIdToUserChatInfoMap.get(friendUserId);
         }).collect(Collectors.toList());
         return ResUtils.ok(collect);
@@ -98,7 +98,7 @@ public class ChatUserController {
 
     @PostMapping("send-chat-text-message")
     public R<Integer> sendChatTextMessage(@RequestBody SingleContent singleContent,
-            @RequestParam Integer toUserId, @SessionAttribute Integer userId) {
+                                          @RequestParam Long toUserId, @SessionAttribute Long userId) {
         Integer textId = httpTextService.saveAndReturnId(singleContent.value());
         Integer chatHistoryId = httpChatHistoryService.add(ContentType.TEXT, textId, userId, toUserId, false,
                 LocalDateTime.now());
@@ -110,7 +110,7 @@ public class ChatUserController {
 
     @PostMapping("send-voice-message")
     public R<Integer> sendVoiceMessage(@RequestParam Integer voiceId,
-            @RequestParam Integer toUserId, @SessionAttribute Integer userId) {
+                                       @RequestParam Long toUserId, @SessionAttribute Long userId) {
         Integer chatHistoryId = httpChatHistoryService.add(ContentType.VOICE, voiceId, userId, toUserId, false,
                 LocalDateTime.now());
         // 存储，调用微服务，推送消息
@@ -120,7 +120,7 @@ public class ChatUserController {
 
     @PostMapping("send-photo-message")
     public R<Integer> sendPhotoMessage(@RequestParam Integer photoId,
-            @RequestParam Integer toUserId, @SessionAttribute Integer userId) {
+                                       @RequestParam Long toUserId, @SessionAttribute Long userId) {
         Integer chatHistoryId = httpChatHistoryService.add(ContentType.IMAGE, photoId, userId, toUserId, false,
                 LocalDateTime.now());
         // 存储，调用微服务，推送消息
@@ -129,12 +129,12 @@ public class ChatUserController {
     }
 
     @PostMapping("user-id-to-history-id")
-    public R<Map<Integer, Set<Integer>>> userIdToHistoryId(@RequestBody Set<Integer> pageUserIds,
-            @SessionAttribute Integer userId) {
-        Map<Integer, Set<Integer>> collect = pageUserIds.stream().parallel().map(n -> {
+    public R<Map<Long, Set<Integer>>> userIdToHistoryId(@RequestBody Set<Long> pageUserIds,
+                                                        @SessionAttribute Long userId) {
+        Map<Long, Set<Integer>> collect = pageUserIds.stream().parallel().map(n -> {
             List<Integer> list = httpChatHistoryService.pageUserIdToHistoryId(n, userId);
-            return Pair.of(n, new HashSet<>(list));
-        }).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+            return Map.entry(n, new HashSet<>(list));
+        }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         return ResUtils.ok(collect);
     }
 }

@@ -39,7 +39,7 @@ public class ProvincePO implements Serializable {
     /**
      * 更新用户
      */
-    private Integer updateUser;
+    private Long updateUser;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public interface IVoiceService extends IService<Voice> {
 
-    Integer setPath(String path, Integer userId);
+    Integer setPath(String path, Long userId);
 
     Map<Integer, String> voiceIdToUrl(Set<Integer> voiceIds);
 

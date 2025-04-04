@@ -10,7 +10,7 @@ import java.util.Set;
  * @since 2022-12-03
  */
 public interface StudentInfoService {
-    Map<Integer, Integer> userIdToSchoolId(Set<Integer> userIds);
+    Map<Long, Integer> userIdToSchoolId(Set<Long> userIds);
 
-    boolean set(Integer userId, Integer schoolId);
+    boolean set(Long userId, Integer schoolId);
 }

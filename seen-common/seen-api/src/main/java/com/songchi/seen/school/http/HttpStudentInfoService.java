@@ -23,8 +23,8 @@ import com.songchi.seen.sys.constant.ServiceNameConstant;
         contextId = "HttpStudentInfoService")
 public interface HttpStudentInfoService {
     @PostMapping("user-id-school-id")
-    Map<Integer, Integer> userIdToSchoolId(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToSchoolId(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("schoolId") Integer schoolId);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("schoolId") Integer schoolId);
 }

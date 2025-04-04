@@ -28,7 +28,7 @@ public interface HttpUserIntroduceService {
      * @return 用户ID对应介绍文本
      */
     @PostMapping("user-id-to-introduce-type-and-text")
-    Map<Integer, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndText(@RequestBody Set<Integer> userIds);
+    Map<Long, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndText(@RequestBody Set<Long> userIds);
 
 
     /**
@@ -40,5 +40,5 @@ public interface HttpUserIntroduceService {
      * @return 用户介绍ID
      */
     @PostMapping("save-and-return-id")
-    Integer saveAndReturnId(@RequestParam("userId") Integer userId, @RequestParam("introduceTypeEnum") IntroduceTypeEnum introduceTypeEnum, @RequestParam("textId") Integer textId);
+    Integer saveAndReturnId(@RequestParam("userId") Long userId, @RequestParam("introduceTypeEnum") IntroduceTypeEnum introduceTypeEnum, @RequestParam("textId") Integer textId);
 }

@@ -11,9 +11,9 @@ import java.util.List;
  * @since 2023-05-21
  */
 public interface RecommendService {
-    List<Integer> mandatoryRecommendUser(Sex recommendSex, int current, int size);
+    List<Long> mandatoryRecommendUser(Sex recommendSex, int current, int size);
 
-    List<Integer> softRecommendUser(Integer userId, List<Integer> userIds, Integer currentCityId);
+    List<Long> softRecommendUser(Long userId, List<Long> userIds, Integer currentCityId);
 
-    List<Integer> createRecommendUser(Integer userId);
+    List<Long> createRecommendUser(Long userId);
 }

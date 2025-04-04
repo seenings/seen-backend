@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * @author chixuehui
  * @since 2023-03-11
  */
-public record SendInfo(Integer applyId, String mainPhotoUrl, String name, Integer applyStatus, Integer userId,
+public record SendInfo(Integer applyId, String mainPhotoUrl, String name, Integer applyStatus, Long userId,
                        LocalDateTime applyTime
 ) {
 }

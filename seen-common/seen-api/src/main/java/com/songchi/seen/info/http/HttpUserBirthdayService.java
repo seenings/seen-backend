@@ -22,17 +22,17 @@ import java.util.Set;
         contextId = "HttpUserBirthdayService")
 public interface HttpUserBirthdayService {
     @PostMapping("user-id-to-year")
-    Map<Integer, Integer> userIdToYear(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToYear(@RequestBody Set<Long> userIds);
 
     @PostMapping("user-id-to-month")
-    Map<Integer, Integer> userIdToMonth(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToMonth(@RequestBody Set<Long> userIds);
 
     @PostMapping("user-id-to-day")
-    Map<Integer, Integer> userIdToDay(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToDay(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
     boolean set(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("year") Integer year,
             @RequestParam(value = "month", required = false) Integer month,
             @RequestParam(value = "day", required = false) Integer day);

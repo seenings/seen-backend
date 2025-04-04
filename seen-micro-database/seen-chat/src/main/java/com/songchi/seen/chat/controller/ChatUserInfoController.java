@@ -34,7 +34,7 @@ public class ChatUserInfoController implements HttpChatUserService {
      */
     @Override
     @PostMapping("page")
-    public ResultPage<ChatUser> page(@RequestParam("userId") Integer userId, @RequestParam("current") int current, @RequestParam("size") int size) {
+    public ResultPage<ChatUser> page(@RequestParam("userId") Long userId, @RequestParam("current") int current, @RequestParam("size") int size) {
         return chatUserService.page(userId, current, size);
     }
 
@@ -47,7 +47,7 @@ public class ChatUserInfoController implements HttpChatUserService {
      */
     @Override
     @PostMapping("friend-user-id-is-friend")
-    public Map<Integer, Boolean> friendUserIdIsFriend(@RequestBody Set<Integer> friendUserIds, @RequestParam("userId") Integer userId) {
+    public Map<Long, Boolean> friendUserIdIsFriend(@RequestBody Set<Long> friendUserIds, @RequestParam("userId") Long userId) {
 
         return chatUserService.friendUserIdIsFriend(friendUserIds, userId);
     }
@@ -61,7 +61,7 @@ public class ChatUserInfoController implements HttpChatUserService {
      */
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam("friendUserId") Integer friendUserId, @RequestParam("userId") Integer userId) {
+    public boolean set(@RequestParam("friendUserId") Long friendUserId, @RequestParam("userId") Long userId) {
         return chatUserService.set(friendUserId, userId);
     }
 }

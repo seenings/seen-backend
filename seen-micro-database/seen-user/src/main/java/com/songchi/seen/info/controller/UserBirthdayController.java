@@ -24,26 +24,26 @@ public class UserBirthdayController implements HttpUserBirthdayService {
 
     @Override
     @PostMapping("user-id-to-year")
-    public Map<Integer, Integer> userIdToYear(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToYear(@RequestBody Set<Long> userIds) {
         return userBirthdayService.userIdToYear(userIds);
     }
 
     @Override
     @PostMapping("user-id-to-month")
-    public Map<Integer, Integer> userIdToMonth(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToMonth(@RequestBody Set<Long> userIds) {
         return userBirthdayService.userIdToMonth(userIds);
     }
 
     @Override
     @PostMapping("user-id-to-day")
-    public Map<Integer, Integer> userIdToDay(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToDay(@RequestBody Set<Long> userIds) {
         return userBirthdayService.userIdToDay(userIds);
     }
 
     @Override
     @PostMapping("set")
     public boolean set(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("year") Integer year,
             @RequestParam(value = "month", required = false) Integer month,
             @RequestParam(value = "day", required = false) Integer day) {

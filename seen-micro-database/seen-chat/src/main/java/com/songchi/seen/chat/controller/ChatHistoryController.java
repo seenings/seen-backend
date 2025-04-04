@@ -35,7 +35,7 @@ public class ChatHistoryController implements HttpChatHistoryService {
 
     @Override
     @PostMapping("add")
-    public Integer add(@RequestParam("contentType") ContentType contentType, @RequestParam("contentId") Integer contentId, @RequestParam("fromUserId") Integer fromUserId, @RequestParam("toUserId") Integer toUserId, @RequestParam("sent") Boolean sent, @RequestParam("sendTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime sendTime) {
+    public Integer add(@RequestParam("contentType") ContentType contentType, @RequestParam("contentId") Integer contentId, @RequestParam("fromUserId") Long fromUserId, @RequestParam("toUserId") Long toUserId, @RequestParam("sent") Boolean sent, @RequestParam("sendTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime sendTime) {
         return chatHistoryService.add(contentType, contentId, fromUserId, toUserId, sent, sendTime);
     }
 
@@ -48,7 +48,7 @@ public class ChatHistoryController implements HttpChatHistoryService {
      */
     @Override
     @PostMapping("page-user-id-to-history-id")
-    public List<Integer> pageUserIdToHistoryId(@RequestParam("pageUserId") Integer pageUserId, @RequestParam("selfUserId") Integer selfUserId) {
+    public List<Integer> pageUserIdToHistoryId(@RequestParam("pageUserId") Long pageUserId, @RequestParam("selfUserId") Long selfUserId) {
         List<Integer> toIds = chatHistoryService.fromUserIdToId(pageUserId, selfUserId, 1, 10);
         List<Integer> fromIds = chatHistoryService.fromUserIdToId(selfUserId, pageUserId, 1, 10);
         List<Integer> ids = ListUtils.union(toIds, fromIds);
@@ -71,8 +71,8 @@ public class ChatHistoryController implements HttpChatHistoryService {
 
     @Override
     @PostMapping("user-id-to-chat-content-and-time")
-    public Map<Integer, ChatContentAndTime> userIdToChatContentAndTime(@RequestBody Set<Integer> userIds, @RequestParam("toUserId") Integer toUserId) {
-        Map<Integer, List<Integer>> fromUserIdToChatHistoryIdMap = userIds.stream().parallel().map(fromUserId -> Pair.of(fromUserId, chatHistoryService.fromUserIdToId(fromUserId, toUserId, 1, 1))).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+    public Map<Long, ChatContentAndTime> userIdToChatContentAndTime(@RequestBody Set<Long> userIds, @RequestParam("toUserId") Long toUserId) {
+        Map<Long, List<Integer>> fromUserIdToChatHistoryIdMap = userIds.stream().parallel().map(fromUserId -> Pair.of(fromUserId, chatHistoryService.fromUserIdToId(fromUserId, toUserId, 1, 1))).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
         Set<Integer> ids = fromUserIdToChatHistoryIdMap.values().stream().parallel().flatMap(Collection::stream).collect(Collectors.toSet());
         Map<Integer, ChatContentAndTime> idToChatContentAndTimeMap = chatHistoryService.idToChatContentAndTime(ids);
         return userIds.stream().parallel().map(n -> {
@@ -105,7 +105,7 @@ public class ChatHistoryController implements HttpChatHistoryService {
      */
     @Override
     @PostMapping("id-to-from-user-id")
-    public Map<Integer, Integer> idToFromUserId(@RequestBody Set<Integer> ids) {
+    public Map<Integer, Long> idToFromUserId(@RequestBody Set<Integer> ids) {
         return chatHistoryService.idToFromUserId(ids);
     }
 
@@ -130,7 +130,7 @@ public class ChatHistoryController implements HttpChatHistoryService {
      */
     @Override
     @PostMapping("id-to-to-user-id")
-    public Map<Integer, Integer> idToToUserId(@RequestBody Set<Integer> ids) {
+    public Map<Integer, Long> idToToUserId(@RequestBody Set<Integer> ids) {
         return chatHistoryService.idToToUserId(ids);
     }
 }

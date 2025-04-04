@@ -43,11 +43,11 @@ public class ArticleController {
     private HttpUserMainPhotoService httpUserMainPhotoService;
 
     @PostMapping("user-id-to-primary-photo-id")
-    public R<Map<Integer, List<Integer>>> userIdToPrimaryPhotoId(@RequestBody Set<Integer> userIds) {
-        Map<Integer, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhotoMap = httpUserIntroducePhotoService
+    public R<Map<Long, List<Integer>>> userIdToPrimaryPhotoId(@RequestBody Set<Long> userIds) {
+        Map<Long, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhotoMap = httpUserIntroducePhotoService
                 .userIdToIntroduceTypeAndPhoto(userIds);
-        Map<Integer, Integer> userIdMainPhotoIdMap = httpUserMainPhotoService.userIdPhotoId(userIds);
-        Map<Integer, List<Integer>> userIdToMainPagePhotoIdMap = userIdToIntroduceTypeAndPhotoMap.entrySet().stream()
+        Map<Long, Integer> userIdMainPhotoIdMap = httpUserMainPhotoService.userIdPhotoId(userIds);
+        Map<Long, List<Integer>> userIdToMainPagePhotoIdMap = userIdToIntroduceTypeAndPhotoMap.entrySet().stream()
                 .map(entry -> {
                     Set<IntroduceTypeAndPhoto> introduceTypeAndPhotos = entry.getValue();
                     List<Integer> photoIds = introduceTypeAndPhotos.stream()
@@ -55,7 +55,7 @@ public class ArticleController {
                             .map(IntroduceTypeAndPhoto::photoId).collect(Collectors.toList());
                     return Pair.of(entry.getKey(), photoIds);
                 }).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
-        Map<Integer, List<Integer>> result = userIds.stream().map(userId -> {
+        Map<Long, List<Integer>> result = userIds.stream().map(userId -> {
             Integer mainPhotoId = userIdMainPhotoIdMap.get(userId);
             List<Integer> mainPagePhotoIds = userIdToMainPagePhotoIdMap.get(userId);
             List<Integer> primaryPhotoIds = ListUtils.union(Collections.singletonList(mainPhotoId), mainPagePhotoIds);
@@ -65,13 +65,13 @@ public class ArticleController {
     }
 
     @PostMapping("user-id-to-introduce-type-and-photo-url")
-    public R<Map<Integer, Set<IntroduceTypeAndPhoto>>> userIdToIntroduceTypeAndPhotoUrl(
-            @RequestBody Set<Integer> userIds) {
-        Map<Integer, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhotoMap = httpUserIntroducePhotoService
+    public R<Map<Long, Set<IntroduceTypeAndPhoto>>> userIdToIntroduceTypeAndPhotoUrl(
+            @RequestBody Set<Long> userIds) {
+        Map<Long, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhotoMap = httpUserIntroducePhotoService
                 .userIdToIntroduceTypeAndPhoto(userIds);
-        Map<Integer, Set<IntroduceTypeAndPhoto>> collect = userIdToIntroduceTypeAndPhotoMap.entrySet().stream()
-                .parallel().map((Map.Entry<Integer, Set<IntroduceTypeAndPhoto>> n) -> {
-                    Integer key = n.getKey();
+        Map<Long, Set<IntroduceTypeAndPhoto>> collect = userIdToIntroduceTypeAndPhotoMap.entrySet().stream()
+                .parallel().map((Map.Entry<Long, Set<IntroduceTypeAndPhoto>> n) -> {
+                    Long key = n.getKey();
                     Set<IntroduceTypeAndPhoto> introduceTypeAndPhotoUrls = n.getValue();
                     return Map.entry(key, introduceTypeAndPhotoUrls);
                 }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (o1, o2) -> o2));

@@ -22,8 +22,8 @@ import java.util.Set;
         contextId = "HttpSchoolGraduateService")
 public interface HttpSchoolGraduateService {
     @PostMapping("user-id-to-graduated")
-    Map<Integer, Integer> userIdToGraduated(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToGraduated(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("graduated") Integer graduated);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("graduated") Integer graduated);
 }

@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class UserMainInfo {
-    private Integer userId;
+    private Long userId;
     private Integer mainPhotoId;
     /**
      * 照片url

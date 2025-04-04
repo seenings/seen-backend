@@ -27,7 +27,7 @@ public class SchoolGraduatePO {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 是否毕业0（否），1（是）

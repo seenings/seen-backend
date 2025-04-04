@@ -2,6 +2,7 @@ package com.songchi.seen.introduce.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -38,7 +39,7 @@ public class UserIntroducePOServiceImpl extends ServiceImpl<UserIntroducePOMappe
 
     /**
      * 保存用户的介绍
-     * 
+     *
      * @param userId            用户ID
      * @param introduceTypeEnum 介绍类型
      * @param textId            文本ID
@@ -46,7 +47,7 @@ public class UserIntroducePOServiceImpl extends ServiceImpl<UserIntroducePOMappe
      * @return 用户介绍ID
      */
     @Override
-    public Integer saveAndReturnId(Integer userId, IntroduceTypeEnum introduceTypeEnum, Integer textId) {
+    public Integer saveAndReturnId(Long userId, IntroduceTypeEnum introduceTypeEnum, Integer textId) {
         LocalDateTime now = LocalDateTime.now();
         UserIntroducePO po = new UserIntroducePO()
                 .setUserId(userId)
@@ -60,7 +61,7 @@ public class UserIntroducePOServiceImpl extends ServiceImpl<UserIntroducePOMappe
 
     /**
      * 保存用户的介绍
-     * 
+     *
      * @param userId            用户ID
      * @param introduceTypeEnum 介绍类型
      * @param textId            文本ID
@@ -68,7 +69,7 @@ public class UserIntroducePOServiceImpl extends ServiceImpl<UserIntroducePOMappe
      * @return 用户介绍ID
      */
     @Override
-    public Integer updateAndReturnId(Integer userId, IntroduceTypeEnum introduceTypeEnum, Integer textId) {
+    public Integer updateAndReturnId(Long userId, IntroduceTypeEnum introduceTypeEnum, Integer textId) {
         LocalDateTime now = LocalDateTime.now();
         UserIntroducePO po = new UserIntroducePO()
                 .setUserId(userId)
@@ -91,11 +92,11 @@ public class UserIntroducePOServiceImpl extends ServiceImpl<UserIntroducePOMappe
      * @return 用户ID对应介绍文本
      */
     @Override
-    public Map<Integer, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndText(Set<Integer> userIds) {
+    public Map<Long, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndText(Set<Long> userIds) {
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();
         }
-        Map<Integer, Map<Integer, Set<UserIntroducePO>>> map = ExtraListUtil.partition(userIds).stream()
+        Map<Long, Map<Integer, Set<UserIntroducePO>>> map = ExtraListUtil.partition(userIds).stream()
                 .parallel()
                 .flatMap(subs -> list(new QueryWrapper<UserIntroducePO>().lambda().in(UserIntroducePO::getUserId, subs)
                         .select(UserIntroducePO::getUserId, UserIntroducePO::getIntroduceType,
@@ -111,20 +112,20 @@ public class UserIntroducePOServiceImpl extends ServiceImpl<UserIntroducePOMappe
         return map.entrySet().stream()
                 .parallel()
                 .map(n -> {
-                    Integer userId = n.getKey();
+                    Long userId = n.getKey();
                     Set<IntroduceTypeAndText> introduceTypeAndTexts = n.getValue().entrySet().stream().parallel()
                             .map(l -> {
                                 Integer introduceType = l.getKey();
                                 // 最新时间的文本
                                 Integer textId = l.getValue().stream()
-                                        .max((o1, o2) -> o1.getUpdateTime().compareTo(o2.getUpdateTime()))
-                                        .map(f -> f.getTextId()).orElse(null);
+                                        .max(Comparator.comparing(UserIntroducePO::getUpdateTime))
+                                        .map(UserIntroducePO::getTextId).orElse(null);
                                 return new IntroduceTypeAndText(
                                         IntroduceEnumUtils.indexToIntroduceTypeEnum(introduceType), textId);
 
                             }).collect(Collectors.toSet());
                     return Map.entry(userId, introduceTypeAndTexts);
-                }).collect(Collectors.toMap(n -> n.getKey(), n -> n.getValue()));
+                }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     }
 }

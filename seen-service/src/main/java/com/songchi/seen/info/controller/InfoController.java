@@ -58,8 +58,8 @@ public class InfoController {
     private UserInfoService userInfoService;
 
     @PostMapping("user-id-to-user-main-info")
-    public R<Map<Integer, UserMainInfo>> userIdToUserMainInfo(@RequestBody Set<Integer> userIds) {
-        Map<Integer, UserMainInfo> map = userInfoService.userIdToUserMainInfo(userIds);
+    public R<Map<Long, UserMainInfo>> userIdToUserMainInfo(@RequestBody Set<Long> userIds) {
+        Map<Long, UserMainInfo> map = userInfoService.userIdToUserMainInfo(userIds);
         return ResUtils.ok(map);
     }
 
@@ -67,15 +67,15 @@ public class InfoController {
     private HttpTagService httpTagService;
 
     @PostMapping("user-id-to-tag-name")
-    public R<Map<Integer, Set<String>>> userIdToTagName(@RequestBody Set<Integer> userIds) {
-        Map<Integer, Set<String>> map = httpTagService.userIdToTagName(userIds);
+    public R<Map<Long, Set<String>>> userIdToTagName(@RequestBody Set<Long> userIds) {
+        Map<Long, Set<String>> map = httpTagService.userIdToTagName(userIds);
         return ResUtils.ok(map);
     }
 
     @GetMapping("self-user-info")
-    public R<UserInfo> selfUserInfo(@SessionAttribute Integer userId) {
-        Set<Integer> userIds = Collections.singleton(userId);
-        Map<Integer, UserInfo> userIdToUserInfoMap = infoService.userIdToUserInfo(userIds);
+    public R<UserInfo> selfUserInfo(@SessionAttribute Long userId) {
+        Set<Long> userIds = Collections.singleton(userId);
+        Map<Long, UserInfo> userIdToUserInfoMap = infoService.userIdToUserInfo(userIds);
         if (userIdToUserInfoMap == null || userIdToUserInfoMap.get(userId) == null) {
             String msg = String.format("用户不存在{}，用户ID：%s。", userId);
             log.error("{}", msg);
@@ -85,27 +85,27 @@ public class InfoController {
     }
 
     @PostMapping("user-id-to-user-introduce-info")
-    public R<Map<Integer, UserIntroduceInfo>> userIdToUserIntroduceInfo(@RequestBody Set<Integer> userIds) {
+    public R<Map<Long, UserIntroduceInfo>> userIdToUserIntroduceInfo(@RequestBody Set<Long> userIds) {
 
-        Map<Integer, UserIntroduceInfo> result = infoService.userIdToUserIntroduceInfo(userIds);
+        Map<Long, UserIntroduceInfo> result = infoService.userIdToUserIntroduceInfo(userIds);
         return ResUtils.ok(result);
     }
 
     @PostMapping("user-id-to-person-introduce")
-    public R<Map<Integer, List<PersonIntroduce>>> userIdToPersonIntroduce(@RequestBody Set<Integer> userIds) {
+    public R<Map<Long, List<PersonIntroduce>>> userIdToPersonIntroduce(@RequestBody Set<Long> userIds) {
 
-        Map<Integer, List<PersonIntroduce>> userIdToPersonIntroduce = infoService.userIdToPersonIntroduce(userIds);
+        Map<Long, List<PersonIntroduce>> userIdToPersonIntroduce = infoService.userIdToPersonIntroduce(userIds);
         return ResUtils.ok(userIdToPersonIntroduce);
     }
 
     @PostMapping("introduce-type-index-to-person-introduce")
-    public R<Map<Integer, PersonIntroduce>> introduceTypeIndexToPersonIntroduce(@RequestBody Set<Integer> introduceTypeIndexs, @SessionAttribute Integer userId) {
+    public R<Map<Integer, PersonIntroduce>> introduceTypeIndexToPersonIntroduce(@RequestBody Set<Integer> introduceTypeIndexs, @SessionAttribute Long userId) {
         Map<Integer, PersonIntroduce> result = infoService.introduceTypeIndexToPersonIntroduce(introduceTypeIndexs, userId);
         return ResUtils.ok(result);
     }
 
     @PostMapping("save-person-introduce")
-    public R<Boolean> savePersonIntroduce(@RequestBody PersonIntroduceSave personIntroduceSave, @SessionAttribute Integer userId) {
+    public R<Boolean> savePersonIntroduce(@RequestBody PersonIntroduceSave personIntroduceSave, @SessionAttribute Long userId) {
         // 校验
         String introduceContent = personIntroduceSave.introduceContent();
         // 去除无字符时的空白字段
@@ -140,21 +140,21 @@ public class InfoController {
      * @return 用户ID对应用户信息
      */
     @PostMapping("user-id-to-user-info")
-    public R<Map<Integer, UserInfo>> userIdToUserInfo(@RequestBody Set<Integer> userIds) {
-        Map<Integer, UserInfo> userIdToUserInfoMap = infoService.userIdToUserInfo(userIds);
+    public R<Map<Long, UserInfo>> userIdToUserInfo(@RequestBody Set<Long> userIds) {
+        Map<Long, UserInfo> userIdToUserInfoMap = infoService.userIdToUserInfo(userIds);
         return ResUtils.ok(userIdToUserInfoMap);
     }
 
     @PostMapping("dest-user-id-to-thumb")
-    public R<Map<Integer, Boolean>> destUserIdToThumb(@RequestBody Set<Integer> destUserIds, @SessionAttribute Integer userId) {
-        Map<Integer, Boolean> result = httpThumbUserService.thumbedUserIdToTrue(destUserIds, userId);
+    public R<Map<Long, Boolean>> destUserIdToThumb(@RequestBody Set<Long> destUserIds, @SessionAttribute Long userId) {
+        Map<Long, Boolean> result = httpThumbUserService.thumbedUserIdToTrue(destUserIds, userId);
         return ResUtils.ok(result);
     }
 
 
     @PostMapping("dest-user-id-to-focus")
-    public R<Map<Integer, Boolean>> destUserIdToFocus(@RequestBody Set<Integer> destUserIds, @SessionAttribute Integer userId) {
-        Map<Integer, Boolean> result = httpFocusUserService.focusedUserIdToTrue(destUserIds, userId);
+    public R<Map<Long, Boolean>> destUserIdToFocus(@RequestBody Set<Long> destUserIds, @SessionAttribute Long userId) {
+        Map<Long, Boolean> result = httpFocusUserService.focusedUserIdToTrue(destUserIds, userId);
         return ResUtils.ok(result);
     }
 

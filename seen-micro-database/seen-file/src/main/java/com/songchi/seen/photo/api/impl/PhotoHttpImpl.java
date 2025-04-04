@@ -82,7 +82,7 @@ public class PhotoHttpImpl implements HttpPhotoService {
      */
     @Override
     @PostMapping("set-path")
-    public Integer setPath(@RequestParam("path") String path, @RequestParam("userId") Integer userId) {
+    public Integer setPath(@RequestParam("path") String path, @RequestParam("userId") Long userId) {
         //不考虑事务,使用分布式回滚法
         Integer fileId = filePOService.set(StorageType.LOCAL, path, FileUtil.getName(path));
         return mainPhotoPOService.set(fileId);

@@ -22,8 +22,8 @@ import java.util.Set;
         contextId = "HttpUserAuthService")
 public interface HttpUserAuthService {
     @PostMapping("user-id-to-user-auth")
-    Map<Integer, Integer> userIdToUserAuth(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToUserAuth(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("authStatus") Integer authStatus);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("authStatus") Integer authStatus);
 }

@@ -49,7 +49,7 @@ public interface HttpPhotoService {
      * @return  路径ID
      */
     @PostMapping("set-path")
-    Integer setPath(@RequestParam("path") String path, @RequestParam("userId") Integer userId);
+    Integer setPath(@RequestParam("path") String path, @RequestParam("userId") Long userId);
 
     @PostMapping("photo-id-to-storage-type-and-path")
     Map<Integer, StorageTypeAndPath> photoIdToStorageTypeAndPath(@RequestBody Set<Integer> photoIds);

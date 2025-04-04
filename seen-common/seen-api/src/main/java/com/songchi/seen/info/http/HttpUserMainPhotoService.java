@@ -22,8 +22,8 @@ import java.util.Set;
         contextId = "HttpUserMainPhotoService")
 public interface HttpUserMainPhotoService {
     @PostMapping("user-id-photo-id")
-    Map<Integer, Integer> userIdPhotoId(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdPhotoId(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("photoId") Integer photoId);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("photoId") Integer photoId);
 }

@@ -23,17 +23,17 @@ import java.util.Set;
         contextId = "HttpUserCurrentResidenceService")
 public interface HttpUserCurrentResidenceService {
     @PostMapping("user-id-to-city-id")
-    Map<Integer, Integer> userIdToCityId(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToCityId(@RequestBody Set<Long> userIds);
 
     @PostMapping("user-id-to-province-id")
-    Map<Integer, Integer> userIdToProvinceId(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToProvinceId(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("provinceId") Integer provinceId,
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("provinceId") Integer provinceId,
                 @RequestParam("cityId") Integer cityId);
 
     @PostMapping("current-residence-city-to-user-id")
-    List<Integer> currentResidenceCityToUserId
+    List<Long> currentResidenceCityToUserId
             (@RequestParam("cityId") Integer cityId,
              @RequestParam("current") int current, @RequestParam("size") int size);
 }

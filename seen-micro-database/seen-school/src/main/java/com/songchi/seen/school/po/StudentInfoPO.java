@@ -24,7 +24,7 @@ public class StudentInfoPO {
     /**
      * 用户id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 学校id
@@ -44,5 +44,5 @@ public class StudentInfoPO {
     /**
      *
      */
-    private Integer updateUser;
+    private Long updateUser;
 }

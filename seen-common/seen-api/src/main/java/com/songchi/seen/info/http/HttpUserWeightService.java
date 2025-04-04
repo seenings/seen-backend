@@ -23,8 +23,8 @@ import static com.songchi.seen.sys.constant.SeenConstant.FEIGN_VERSION;
         contextId = "HttpUserWeightService")
 public interface HttpUserWeightService {
     @PostMapping("user-id-to-weight-kg")
-    Map<Integer, Integer> userIdToWeightKg(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToWeightKg(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("weightKg") Integer weightKg);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("weightKg") Integer weightKg);
 }

@@ -25,7 +25,7 @@ public class EducationalController implements HttpEducationalService {
 
     @Override
     @PostMapping("user-id-to-educational")
-    public Map<Integer, Integer> userIdToEducational(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToEducational(@RequestBody Set<Long> userIds) {
         return educationalService.userIdToEducational(userIds);
     }
 
@@ -37,7 +37,7 @@ public class EducationalController implements HttpEducationalService {
      */
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam("userId") Integer userId, @RequestParam("education") Education education) {
+    public boolean set(@RequestParam("userId") Long userId, @RequestParam("education") Education education) {
         return educationalService.set(userId, education);
     }
 }

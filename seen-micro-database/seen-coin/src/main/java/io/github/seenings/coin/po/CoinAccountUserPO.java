@@ -13,33 +13,25 @@ import lombok.experimental.Accessors;
 
 /**
  * 用户的账户
- *
  */
 @TableName(value = "coin_account_user")
 @Data
 @Accessors(chain = true)
 public class CoinAccountUserPO implements Serializable {
-    /**
-     * 自增ID
-     */
-    @TableId(type = IdType.AUTO)
-    private Integer id;
 
     /**
      * 账户ID
      */
-    private Integer accountId;
+    private Long accountId;
 
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 创建时间
      */
     private LocalDateTime createTime;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

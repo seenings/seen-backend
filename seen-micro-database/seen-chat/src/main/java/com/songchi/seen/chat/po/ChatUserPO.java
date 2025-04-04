@@ -27,11 +27,11 @@ public class ChatUserPO {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
     /**
      * 好友ID
      */
-    private Integer friendUserId;
+    private Long friendUserId;
     /**
      * 更新时间
      */

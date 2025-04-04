@@ -24,12 +24,11 @@ import lombok.extern.slf4j.Slf4j;
 public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 1.通过session获取用户ID，如有则验证成功
         HttpSession session = request.getSession();
         if (session != null) {
-            Integer userId = (Integer) session.getAttribute(PublicConstant.USER_ID);
+            Long userId = (Long) session.getAttribute(PublicConstant.USER_ID);
             if (userId != null) {
                 log.info("用户访问成功，用户ID：{}。", userId);
                 return HandlerInterceptor.super.preHandle(request, response, handler);
@@ -37,8 +36,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
         // 2.通过请求头获取token，如有则校验token并获取userId，存入session会话中
         // 3.通过请求参数获取token，如有则校验token并获取userId，存入session会话中
-        String token = StrUtil.blankToDefault(
-                request.getHeader(PublicConstant.TOKEN_NAME), request.getParameter(PublicConstant.TOKEN_NAME));
+        String token = StrUtil.blankToDefault(request.getHeader(PublicConstant.TOKEN_NAME), request.getParameter(PublicConstant.TOKEN_NAME));
         if (StrUtil.isNotBlank(token)) {
             String userIdString;
             try {
@@ -47,7 +45,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                 writeError(request, response);
                 return false;
             }
-            Integer userId = StrUtils.stringToInt(userIdString);
+            Long userId = StrUtils.stringToLong(userIdString);
             if (userId == null) {
                 writeError(request, response);
                 return false;

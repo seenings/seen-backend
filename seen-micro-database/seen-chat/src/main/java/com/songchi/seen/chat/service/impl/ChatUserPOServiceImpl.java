@@ -42,7 +42,7 @@ public class ChatUserPOServiceImpl extends ServiceImpl<ChatUserPOMapper, ChatUse
      * @return 聊天列表
      */
     @Override
-    public ResultPage<ChatUser> page(Integer userId, int current, int size) {
+    public ResultPage<ChatUser> page(Long userId, int current, int size) {
         Page<ChatUserPO> chatUsers = page(
                 new Page<>(current, size),
                 new QueryWrapper<ChatUserPO>()
@@ -63,12 +63,12 @@ public class ChatUserPOServiceImpl extends ServiceImpl<ChatUserPOMapper, ChatUse
      * @return  朋友ID对应是否朋友
      */
     @Override
-    public Map<Integer, Boolean> friendUserIdIsFriend(Set<Integer> friendUserIds, Integer userId) {
-        List<Integer> list = CollUtils.valueIsNullToList(friendUserIds);
+    public Map<Long, Boolean> friendUserIdIsFriend(Set<Long> friendUserIds, Long userId) {
+        List<Long> list = CollUtils.valueIsNullToList(friendUserIds);
         if (CollUtils.isEmpty(list)) {
             return Collections.emptyMap();
         }
-        Map<Integer, Boolean> friendUserIdToIsFriendMap = ListUtil.partition(list, 100).stream()
+        Map<Long, Boolean> friendUserIdToIsFriendMap = ListUtil.partition(list, 100).stream()
                 .parallel()
                 .flatMap(subs -> list(new QueryWrapper<ChatUserPO>()
                                 .lambda()
@@ -95,7 +95,7 @@ public class ChatUserPOServiceImpl extends ServiceImpl<ChatUserPOMapper, ChatUse
      * @return  设置成功
      */
     @Override
-    public boolean set(Integer friendUserId, Integer userId) {
+    public boolean set(Long friendUserId, Long userId) {
         Boolean isFriend = friendUserIdIsFriend(Collections.singleton(friendUserId), userId)
                 .get(friendUserId);
         if (!isFriend) {

@@ -15,7 +15,7 @@ import java.util.List;
 public class ZoneRecord {
 
     private Integer id;
-    private Integer userId;
+    private Long userId;
     private String userName;
     private LocalDateTime sendDateTime;
     private String content;

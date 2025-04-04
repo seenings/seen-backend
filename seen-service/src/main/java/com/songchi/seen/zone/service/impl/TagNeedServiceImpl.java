@@ -30,7 +30,7 @@ public class TagNeedServiceImpl extends ServiceImpl<TagNeedMapper, TagNeed>
      * @return 用户ID对应意向标签
      */
     @Override
-    public Map<Integer, Set<Integer>> userIdToNeedTagId(Set<Integer> userIds) {
+    public Map<Long, Set<Integer>> userIdToNeedTagId(Set<Long> userIds) {
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();
         }

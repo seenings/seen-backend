@@ -10,7 +10,7 @@ import java.util.Set;
  * @since 2022-10-16
  */
 public interface UserAliasNameService {
-    Map<Integer, String> userIdToAliasName(Set<Integer> userIds);
+    Map<Long, String> userIdToAliasName(Set<Long> userIds);
 
-    boolean set(Integer userId, String aliasName);
+    boolean set(Long userId, String aliasName);
 }

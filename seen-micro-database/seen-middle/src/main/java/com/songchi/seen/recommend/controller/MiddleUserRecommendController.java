@@ -26,23 +26,23 @@ public class MiddleUserRecommendController implements HttpMiddleUserRecommendSer
 
     @Override
     @PostMapping("have-user-id")
-    public Set<Integer> haveUserId(@RequestParam("userId") Integer userId, @RequestBody Set<Integer> recommendUserIds) {
+    public Set<Long> haveUserId(@RequestParam("userId") Long userId, @RequestBody Set<Long> recommendUserIds) {
         return middleUserRecommendService.haveUserId(userId, recommendUserIds);
     }
 
     @Override
     @PostMapping("user-id-to-recommend-user-id")
-    public Map<Integer, List<Integer>> userIdToRecommendUserId(
-            @RequestBody Set<Integer> userIds, @RequestParam("date") String date) {
+    public Map<Long, List<Long>> userIdToRecommendUserId(
+            @RequestBody Set<Long> userIds, @RequestParam("date") String date) {
         return middleUserRecommendService.userIdToRecommendUserId(userIds, date);
     }
 
     @Override
     @PostMapping("set")
     public int set(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("date") String date,
-            @RequestBody List<Integer> recommendUserIds) {
+            @RequestBody List<Long> recommendUserIds) {
         return middleUserRecommendService.set(userId, date, recommendUserIds);
     }
 }

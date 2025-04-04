@@ -30,7 +30,7 @@ public class Info implements Serializable {
 
     @TableId(type = IdType.AUTO)
     private Integer id;
-    private Integer userId;
+    private Long userId;
     private String name;
     @Schema(description = "1男2女")
     private Integer sex;

@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public interface UserStatureService {
 
-    Map<Integer, Integer> userIdToStatureCm(Set<Integer> userIds);
+    Map<Long, Integer> userIdToStatureCm(Set<Long> userIds);
 
-    boolean set(Integer userId, Integer statureCm);
+    boolean set(Long userId, Integer statureCm);
 }

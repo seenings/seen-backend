@@ -40,8 +40,8 @@ public class UserSexPOServiceImpl extends ServiceImpl<UserSexPOMapper, UserSexPO
      * @return 用户ID对应性别
      */
     @Override
-    public Map<Integer, Integer> userIdToSex(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToSex(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -59,7 +59,7 @@ public class UserSexPOServiceImpl extends ServiceImpl<UserSexPOMapper, UserSexPO
     }
 
     @Override
-    public List<Integer> sexToUserId(Sex sex, int current, int size) {
+    public List<Long> sexToUserId(Sex sex, int current, int size) {
         Page<UserSexPO> page = page(
                 new Page<>(current, size),
                 new QueryWrapper<UserSexPO>()
@@ -70,8 +70,8 @@ public class UserSexPOServiceImpl extends ServiceImpl<UserSexPOMapper, UserSexPO
     }
 
     @Override
-    public boolean set(Integer userId, Sex sex) {
-        Map<Integer, Integer> userIdToSexMap = userIdToSex(Collections.singleton(userId));
+    public boolean set(Long userId, Sex sex) {
+        Map<Long, Integer> userIdToSexMap = userIdToSex(Collections.singleton(userId));
         Integer sexId = userIdToSexMap.get(userId);
         UserSexPO po = new UserSexPO().setUserId(userId).setSex(sex.getIndex()).setUpdateTime(LocalDateTime.now());
         if (sexId == null) {

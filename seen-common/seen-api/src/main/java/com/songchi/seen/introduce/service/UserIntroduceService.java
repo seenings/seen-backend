@@ -13,9 +13,9 @@ import java.util.Set;
  * @since 2022-11-27
  */
 public interface UserIntroduceService {
-    Integer saveAndReturnId(Integer userId, IntroduceTypeEnum introduceTypeEnum, Integer textId);
+    Integer saveAndReturnId(Long userId, IntroduceTypeEnum introduceTypeEnum, Integer textId);
 
-    Integer updateAndReturnId(Integer userId, IntroduceTypeEnum introduceTypeEnum, Integer textId);
+    Integer updateAndReturnId(Long userId, IntroduceTypeEnum introduceTypeEnum, Integer textId);
 
-    Map<Integer, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndText(Set<Integer> userIds);
+    Map<Long, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndText(Set<Long> userIds);
 }

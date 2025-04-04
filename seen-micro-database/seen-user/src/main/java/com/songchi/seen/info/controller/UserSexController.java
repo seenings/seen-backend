@@ -26,19 +26,19 @@ public class UserSexController implements HttpUserSexService {
 
     @Override
     @PostMapping("user-id-to-sex")
-    public Map<Integer, Integer> userIdToSex(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToSex(@RequestBody Set<Long> userIds) {
         return userSexService.userIdToSex(userIds);
     }
 
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam Integer userId, @RequestParam Sex sex) {
+    public boolean set(@RequestParam Long userId, @RequestParam Sex sex) {
         return userSexService.set(userId, sex);
     }
 
     @Override
     @PostMapping("sex-to-user-id")
-    public List<Integer> sexToUserId(
+    public List<Long> sexToUserId(
             @RequestParam("sex") Sex sex, @RequestParam("current") int current, @RequestParam("size") int size) {
         return userSexService.sexToUserId(sex, current, size);
     }

@@ -48,15 +48,15 @@ public class FriendInfoController {
     private ApplyService applyService;
 
     @PostMapping("self-user-id-to-send-info")
-    public R<List<SendInfo>> selfUserIdToSendInfo(@SessionAttribute Integer userId) {
+    public R<List<SendInfo>> selfUserIdToSendInfo(@SessionAttribute Long userId) {
 
         List<Integer> applyIds = httpUserApplyService.applyUserIdToApplyIdByPage(userId, 1, 10);
 
         Set<Integer> applyIdSet = new HashSet<>(applyIds);
-        Map<Integer, Integer> applyIdToAppliedUserIdMap = httpUserApplyService.applyIdToAppliedUserId(applyIdSet);
-        Set<Integer> userIds = new HashSet<>(applyIdToAppliedUserIdMap.values());
-        Map<Integer, String> userIdToAliasNameMap = httpUserAliasNameService.userIdToAliasName(userIds);
-        Map<Integer, Integer> userIdToPhotoIdMap = httpUserMainPhotoService
+        Map<Integer, Long> applyIdToAppliedUserIdMap = httpUserApplyService.applyIdToAppliedUserId(applyIdSet);
+        Set<Long> userIds = new HashSet<>(applyIdToAppliedUserIdMap.values());
+        Map<Long, String> userIdToAliasNameMap = httpUserAliasNameService.userIdToAliasName(userIds);
+        Map<Long, Integer> userIdToPhotoIdMap = httpUserMainPhotoService
                 .userIdPhotoId(userIds);
         Map<Integer, String> photoIdToLongPhotoUrlMap = httpPhotoService
                 .photoIdToLongPhotoUrl(new HashSet<>(userIdToPhotoIdMap.values()));
@@ -65,7 +65,7 @@ public class FriendInfoController {
         Map<Integer, ApplyStatus> applyIdToApplyStatusMap = applyService.applyIdToApplyStatus(applyIdSet);
         List<SendInfo> result = applyIds.stream()
                 .map(applyId -> {
-                    Integer recUserId = applyIdToAppliedUserIdMap.get(applyId);
+                    Long recUserId = applyIdToAppliedUserIdMap.get(applyId);
                     ApplyStatus applyStatus = applyIdToApplyStatusMap.get(applyId);
                     String name = userIdToAliasNameMap.get(recUserId);
                     Integer photoId = userIdToPhotoIdMap.get(recUserId);
@@ -79,21 +79,21 @@ public class FriendInfoController {
     }
 
     @PostMapping("self-user-id-to-rec-info")
-    public R<List<RecInfo>> selfUserIdToRecInfo(@SessionAttribute Integer userId) {
+    public R<List<RecInfo>> selfUserIdToRecInfo(@SessionAttribute Long userId) {
         List<Integer> applyIds = httpUserApplyService.appliedUserIdToApplyIdByPage(userId, 1, 10);
 
         Set<Integer> applyIdSet = new HashSet<>(applyIds);
-        Map<Integer, Integer> applyIdToUserIdMap = httpUserApplyService.applyIdToApplyUserId(applyIdSet);
-        Set<Integer> userIds = new HashSet<>(applyIdToUserIdMap.values());
-        Map<Integer, String> userIdToAliasNameMap = httpUserAliasNameService.userIdToAliasName(userIds);
-        Map<Integer, Integer> userIdToPhotoIdMap = httpUserMainPhotoService
+        Map<Integer, Long> applyIdToUserIdMap = httpUserApplyService.applyIdToApplyUserId(applyIdSet);
+        Set<Long> userIds = new HashSet<>(applyIdToUserIdMap.values());
+        Map<Long, String> userIdToAliasNameMap = httpUserAliasNameService.userIdToAliasName(userIds);
+        Map<Long, Integer> userIdToPhotoIdMap = httpUserMainPhotoService
                 .userIdPhotoId(userIds);
         Map<Integer, String> photoIdToLongPhotoUrlMap = httpPhotoService
                 .photoIdToLongPhotoUrl(new HashSet<>(userIdToPhotoIdMap.values()));
         Map<Integer, ApplyStatus> applyIdToApplyStatusMap = applyService.applyIdToApplyStatus(applyIdSet);
         List<RecInfo> result = applyIds.stream()
                 .map(applyId -> {
-                    Integer recUserId = applyIdToUserIdMap.get(applyId);
+                    Long recUserId = applyIdToUserIdMap.get(applyId);
                     ApplyStatus applyStatus = applyIdToApplyStatusMap.get(applyId);
                     String name = userIdToAliasNameMap.get(recUserId);
                     Integer photoId = userIdToPhotoIdMap.get(recUserId);

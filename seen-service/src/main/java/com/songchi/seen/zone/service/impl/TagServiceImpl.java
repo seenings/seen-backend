@@ -37,38 +37,22 @@ public class TagServiceImpl implements ITagService {
      * @return 父标签名对应标签名
      */
     @Override
-    public Map<String, String> tagParentNameToTagName(Set<String> tagParentNames, Integer userId) {
+    public Map<String, String> tagParentNameToTagName(Set<String> tagParentNames, Long userId) {
 
-        Map<String, Integer> tagParentNameToTagParentIdMap =
-                iTagParentService.tagParentNameToTagParentId(tagParentNames);
+        Map<String, Integer> tagParentNameToTagParentIdMap = iTagParentService.tagParentNameToTagParentId(tagParentNames);
         Collection<Integer> tagParentIds = tagParentNameToTagParentIdMap.values();
-        List<Integer> tagIds =
-                httpTagService.userIdToTagId(Collections.singleton(userId)).get(userId);
+        List<Integer> tagIds = httpTagService.userIdToTagId(Collections.singleton(userId)).get(userId);
         Map<Integer, Integer> tagIdToTagParentIdMap = httpTagService.tagIdToParentTagId(new HashSet<>(tagIds));
-        Set<Integer> filterTagIds = tagIdToTagParentIdMap.entrySet().stream()
-                .parallel()
-                .filter(n -> tagParentIds.contains(n.getValue()))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
+        Set<Integer> filterTagIds = tagIdToTagParentIdMap.entrySet().stream().parallel().filter(n -> tagParentIds.contains(n.getValue())).map(Map.Entry::getKey).collect(Collectors.toSet());
         Map<Integer, String> tagIdToTagNameMap = httpTagService.tagIdToTagName(filterTagIds);
-        return tagParentNames.stream()
-                .parallel()
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        n -> {
-                            Integer tagParentId = tagParentNameToTagParentIdMap.get(n);
-                            if (tagParentId != null) {
-                                return tagIdToTagParentIdMap.entrySet().stream()
-                                        .filter(m -> tagParentId.equals(m.getValue()))
-                                        .map(Map.Entry::getKey)
-                                        .map(tagIdToTagNameMap::get)
-                                        .filter(Objects::nonNull)
-                                        .collect(Collectors.joining(","));
-                            } else {
-                                return "";
-                            }
-                        },
-                        (o1, o2) -> o2));
+        return tagParentNames.stream().parallel().collect(Collectors.toMap(Function.identity(), n -> {
+            Integer tagParentId = tagParentNameToTagParentIdMap.get(n);
+            if (tagParentId != null) {
+                return tagIdToTagParentIdMap.entrySet().stream().filter(m -> tagParentId.equals(m.getValue())).map(Map.Entry::getKey).map(tagIdToTagNameMap::get).filter(Objects::nonNull).collect(Collectors.joining(","));
+            } else {
+                return "";
+            }
+        }, (o1, o2) -> o2));
     }
 
     /**
@@ -78,45 +62,29 @@ public class TagServiceImpl implements ITagService {
      * @return 用户ID对应用户标签
      */
     @Override
-    public Map<Integer, UserTag> userIdToUserTag(Set<Integer> userIds) {
-        Map<Integer, UserInfo> userIdToInfoMap = infoService.userIdToUserInfo(userIds);
-        Map<Integer, List<Integer>> userIdToTagIdMap = httpTagService.userIdToTagId(userIds);
-        Set<Integer> tagIds = userIdToTagIdMap.values().parallelStream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toSet());
+    public Map<Long, UserTag> userIdToUserTag(Set<Long> userIds) {
+        Map<Long, UserInfo> userIdToInfoMap = infoService.userIdToUserInfo(userIds);
+        Map<Long, List<Integer>> userIdToTagIdMap = httpTagService.userIdToTagId(userIds);
+        Set<Integer> tagIds = userIdToTagIdMap.values().parallelStream().flatMap(Collection::stream).collect(Collectors.toSet());
         Map<Integer, String> tagIdToTagNameMap = httpTagService.tagIdToTagName(tagIds);
-        Map<Integer, UserTag> userIdToUserTag = userIdToInfoMap.entrySet().stream()
-                .parallel()
-                .collect(Collectors.toMap(Map.Entry::getKey, n -> {
-                    UserInfo info = n.getValue();
-                    Integer userId = n.getKey();
-                    List<Integer> userIdTagIds = userIdToTagIdMap.get(userId);
-                    List<String> tagNames;
-                    if (CollUtil.isEmpty(userIdTagIds)) {
-                        tagNames = Collections.emptyList();
-                    } else {
-                        tagNames = userIdTagIds.stream()
-                                .parallel()
-                                .map(tagIdToTagNameMap::get)
-                                .collect(Collectors.toList());
-                    }
-                    return new UserTag()
-                            .setUserId(userId)
-                            .setProfilePhotoId(0)
-                            .setSex(info.sex().getIndex())
-                            .setName(info.aliasName())
-                            .setTagNames(tagNames);
-                }));
-        return userIdToUserTag.entrySet().stream()
-                .collect(
-                        HashMap::new,
-                        (map, n) -> {
-                            if (userIds.contains(n.getKey())) {
-                                map.put(n.getKey(), n.getValue());
-                            } else {
-                                map.put(n.getKey(), new UserTag());
-                            }
-                        },
-                        HashMap::putAll);
+        Map<Long, UserTag> userIdToUserTag = userIdToInfoMap.entrySet().stream().parallel().collect(Collectors.toMap(Map.Entry::getKey, n -> {
+            UserInfo info = n.getValue();
+            Long userId = n.getKey();
+            List<Integer> userIdTagIds = userIdToTagIdMap.get(userId);
+            List<String> tagNames;
+            if (CollUtil.isEmpty(userIdTagIds)) {
+                tagNames = Collections.emptyList();
+            } else {
+                tagNames = userIdTagIds.stream().parallel().map(tagIdToTagNameMap::get).collect(Collectors.toList());
+            }
+            return new UserTag().setUserId(userId).setProfilePhotoId(0).setSex(info.sex().getIndex()).setName(info.aliasName()).setTagNames(tagNames);
+        }));
+        return userIdToUserTag.entrySet().stream().collect(HashMap::new, (map, n) -> {
+            if (userIds.contains(n.getKey())) {
+                map.put(n.getKey(), n.getValue());
+            } else {
+                map.put(n.getKey(), new UserTag());
+            }
+        }, HashMap::putAll);
     }
 }

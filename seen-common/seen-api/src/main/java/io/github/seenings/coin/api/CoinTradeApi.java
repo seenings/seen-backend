@@ -17,11 +17,10 @@ public interface CoinTradeApi {
      * @param debitId  借方
      * @param creditId 贷方
      * @param amount   数量
-     * @param tradeId  成交ID
      * @param busiId   业务ID
      * @return 成交时间
      */
     @GetExchange("trade-to-trade-time")
-    LocalDateTime tradeToTradeTime(Long debitId, Long creditId, Long amount, Long tradeId, Long busiId);
+    LocalDateTime tradeToTradeTime(Long debitId, Long creditId, Long amount, Long busiId);
 
 }

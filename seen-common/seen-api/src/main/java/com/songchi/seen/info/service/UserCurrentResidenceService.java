@@ -11,11 +11,11 @@ import java.util.Set;
  * @since 2022-10-16
  */
 public interface UserCurrentResidenceService {
-    List<Integer> currentResidenceCityToUserId(Integer cityId, int current, int size);
+    List<Long> currentResidenceCityToUserId(Integer cityId, int current, int size);
 
-    Map<Integer, Integer> userIdToCityId(Set<Integer> userIds);
+    Map<Long, Integer> userIdToCityId(Set<Long> userIds);
 
-    Map<Integer, Integer> userIdToProvinceId(Set<Integer> userIds);
+    Map<Long, Integer> userIdToProvinceId(Set<Long> userIds);
 
-    boolean set(Integer userId, Integer provinceId, Integer cityId);
+    boolean set(Long userId, Integer provinceId, Integer cityId);
 }

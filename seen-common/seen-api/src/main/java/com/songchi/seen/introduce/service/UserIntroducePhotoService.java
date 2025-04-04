@@ -24,7 +24,7 @@ public interface UserIntroducePhotoService {
      * @param introduceTypeAndPhotos 介绍照片
      * @return 存入的介绍照片信息ID
      */
-    Set<Integer> saveAndReturnId(List<OrderAndPhotoId> introduceTypeAndPhotos, Integer max, IntroduceTypeEnum introduceTypeEnum, Integer userId);
+    Set<Integer> saveAndReturnId(List<OrderAndPhotoId> introduceTypeAndPhotos, Integer max, IntroduceTypeEnum introduceTypeEnum, Long userId);
 
     /**
      * 根据ID获取修改时间
@@ -49,7 +49,7 @@ public interface UserIntroducePhotoService {
      * @param userId           用户ID
      * @return 介绍类型ID对应照片介绍信息ID
      */
-    Map<Integer, Set<Integer>> introduceTypeIdToId(Set<Integer> introduceTypeIds, Integer userId);
+    Map<Integer, Set<Integer>> introduceTypeIdToId(Set<Integer> introduceTypeIds, Long userId);
 
     /**
      * 根据用户ID获取介绍照片信息
@@ -57,5 +57,5 @@ public interface UserIntroducePhotoService {
      * @param userIds 用户ID
      * @return 用户ID对应介绍照片信息
      */
-    Map<Integer, Set<IntroduceTypeAndPhotoInfo>> userIdToIntroduceTypeAndPhoto(Set<Integer> userIds);
+    Map<Long, Set<IntroduceTypeAndPhotoInfo>> userIdToIntroduceTypeAndPhoto(Set<Long> userIds);
 }

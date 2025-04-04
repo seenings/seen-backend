@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
  * @param sendTime 发送时间，指服务器接受到消息的时间
  */
 public record NeedRecChatMessage(
-        Integer userIdOfSender,
+        Long userIdOfSender,
         Integer contentTypeId,
         Integer contentId, LocalDateTime sendTime) {
 }

@@ -23,13 +23,13 @@ import java.util.Set;
         contextId = "HttpTagService")
 public interface HttpTagService {
     @PostMapping("user-id-to-tag-id")
-    Map<Integer, List<Integer>> userIdToTagId(@RequestBody Set<Integer> userIds);
+    Map<Long, List<Integer>> userIdToTagId(@RequestBody Set<Long> userIds);
 
     @PostMapping("tag-id-to-user-id")
-    Map<Integer, Set<Integer>> tagIdToUserId(@RequestBody Set<Integer> tagIds);
+    Map<Integer, Set<Long>> tagIdToUserId(@RequestBody Set<Integer> tagIds);
 
     @PostMapping("user-id-to-tag-name")
-    Map<Integer, Set<String>> userIdToTagName(@RequestBody Set<Integer> userIds);
+    Map<Long, Set<String>> userIdToTagName(@RequestBody Set<Long> userIds);
 
     /**
      * 根据标签ID对应标签名
@@ -53,5 +53,5 @@ public interface HttpTagService {
     Map<Integer, Integer> tagIdToParentTagId(@RequestBody Set<Integer> tagIds);
 
     @PostMapping("delete-and-save")
-    List<Integer> deleteAndSave(@RequestParam("userId") Integer userId, @RequestBody List<Integer> tagIds);
+    List<Integer> deleteAndSave(@RequestParam("userId") Long userId, @RequestBody List<Integer> tagIds);
 }

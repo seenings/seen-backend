@@ -1,5 +1,6 @@
-package io.github.seenings.coin.api;
+package io.github.seenings.coin.api.impl;
 
+import io.github.seenings.coin.api.CoinTradeApi;
 import io.github.seenings.coin.repository.CoinBalanceRepository;
 import io.github.seenings.coin.repository.CoinBookRepository;
 import io.github.seenings.coin.repository.TradeAndBusiRepository;
@@ -32,14 +33,14 @@ public class CoinTradeApiImpl implements CoinTradeApi {
      * @param debitId   借方
      * @param creditId  贷方
      * @param amount    数量
-     * @param tradeId   成交ID
      * @param busiId    业务ID
      * @return  交易时间
      */
     @Override
-    public LocalDateTime tradeToTradeTime(Long debitId, Long creditId, Long amount, Long tradeId, Long busiId) {
+    public LocalDateTime tradeToTradeTime(Long debitId, Long creditId, Long amount, Long busiId) {
         LocalDateTime tradeTime = LocalDateTime.now();
-        coinBookRepository.add(amount, debitId, creditId, tradeTime);
+        //事务
+        Long tradeId = coinBookRepository.add(amount, debitId, creditId, tradeTime);
         coinBalanceRepository.update(amount, tradeTime, debitId);
         coinBalanceRepository.update(-amount, tradeTime, creditId);
         tradeAndBusiRepository.add(tradeTime, busiId, tradeId);

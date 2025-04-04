@@ -17,11 +17,11 @@ import static com.songchi.seen.sys.constant.SeenConstant.FEIGN_VERSION;
 @FeignClient(name = ServiceNameConstant.SERVICE_SEEN_USER, contextId = "HttpUserService", path = FEIGN_VERSION + "user/user")
 public interface HttpUserService {
     @PostMapping("user-id-to-phone-number")
-    Map<Integer, String> userIdToPhoneNumber(@RequestBody Set<Integer> userIds);
+    Map<Long, String> userIdToPhoneNumber(@RequestBody Set<Long> userIds);
 
     @PostMapping("phone-number-to-user-id")
-    Map<String, Integer> phoneNumberToUserId(@RequestBody Set<String> phoneNumbers);
+    Map<String, Long> phoneNumberToUserId(@RequestBody Set<String> phoneNumbers);
 
     @PostMapping("set")
-    Integer set(@RequestParam("phoneNumber") String phoneNumber);
+    Long set(@RequestParam("phoneNumber") String phoneNumber);
 }

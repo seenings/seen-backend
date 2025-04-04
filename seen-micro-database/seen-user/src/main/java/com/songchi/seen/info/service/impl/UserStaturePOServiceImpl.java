@@ -33,13 +33,13 @@ public class UserStaturePOServiceImpl extends ServiceImpl<UserStaturePOMapper, U
         implements UserStatureService {
 
     @Override
-    public Map<Integer, Integer> userIdToStatureCm(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToStatureCm(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<UserStaturePO, Integer> getValue = UserStaturePO::getStatureCm;
-        SFunction<UserStaturePO, Integer> getKey = UserStaturePO::getUserId;
+        SFunction<UserStaturePO, Long> getKey = UserStaturePO::getUserId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs ->
                         list(new LambdaQueryWrapper<UserStaturePO>()
@@ -50,7 +50,7 @@ public class UserStaturePOServiceImpl extends ServiceImpl<UserStaturePOMapper, U
     }
 
     @Override
-    public boolean set(Integer userId, Integer statureCm) {
+    public boolean set(Long userId, Integer statureCm) {
         Integer exists = userIdToStatureCm(Collections.singleton(userId)).get(userId);
         var po = new UserStaturePO().setUserId(userId).setStatureCm(statureCm).setUpdateTime(LocalDateTime.now());
         if (exists == null) {

@@ -32,9 +32,9 @@ public class StudentInfoPOServiceImpl extends ServiceImpl<StudentInfoPOMapper, S
         implements StudentInfoService {
 
     @Override
-    public Map<Integer, Integer> userIdToSchoolId(Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToSchoolId(Set<Long> userIds) {
 
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -47,8 +47,8 @@ public class StudentInfoPOServiceImpl extends ServiceImpl<StudentInfoPOMapper, S
     }
 
     @Override
-    public boolean set(Integer userId, Integer schoolId) {
-        Map<Integer, Integer> userIdToSchoolIdMap = userIdToSchoolId(Collections.singleton(userId));
+    public boolean set(Long userId, Integer schoolId) {
+        Map<Long, Integer> userIdToSchoolIdMap = userIdToSchoolId(Collections.singleton(userId));
         Integer exists = userIdToSchoolIdMap.get(userId);
         StudentInfoPO po = new StudentInfoPO()
                 .setUserId(userId)

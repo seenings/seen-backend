@@ -16,7 +16,7 @@ import com.songchi.seen.info.enumeration.Sex;
  * @param newestChatTime 最新的聊天发送时间
  */
 public record UserChatInfo(
-        Integer userId,
+        Long userId,
         String aliasName,
         Sex sex,
         Integer mainPhotoId,

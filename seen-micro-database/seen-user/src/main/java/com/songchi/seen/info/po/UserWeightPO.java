@@ -27,7 +27,7 @@ public class UserWeightPO implements Serializable {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 体重（千克）

@@ -24,7 +24,7 @@ public class TagNeed implements Serializable {
      * 用户ID
      */
     @TableField(value = "user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * 用户需求的ID

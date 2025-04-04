@@ -25,12 +25,12 @@ public class FocusUserPO {
     /**
      * 被关注者
      */
-    private Integer focusedUserId;
+    private Long focusedUserId;
 
     /**
      * 关注者
      */
-    private Integer focusUserId;
+    private Long focusUserId;
 
     /**
      * 是否删除0未删除

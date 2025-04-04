@@ -17,7 +17,7 @@ public class BasicInfo {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
     /**
      * 性别
      */

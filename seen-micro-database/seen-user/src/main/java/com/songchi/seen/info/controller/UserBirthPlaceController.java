@@ -24,20 +24,20 @@ public class UserBirthPlaceController implements HttpUserBirthPlaceService {
 
     @Override
     @PostMapping("user-id-to-city-id")
-    public Map<Integer, Integer> userIdToCityId(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToCityId(@RequestBody Set<Long> userIds) {
         return userBirthPlaceService.userIdToCityId(userIds);
     }
 
     @Override
     @PostMapping("user-id-to-province-id")
-    public Map<Integer, Integer> userIdToProvinceId(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToProvinceId(@RequestBody Set<Long> userIds) {
         return userBirthPlaceService.userIdToProvinceId(userIds);
     }
 
     @Override
     @PostMapping("set")
     public boolean set(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("provinceId") Integer provinceId,
             @RequestParam("cityId") Integer cityId) {
         return userBirthPlaceService.set(userId, provinceId, cityId);

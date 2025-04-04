@@ -24,8 +24,8 @@ import java.util.Set;
 public interface HttpEducationalService {
 
     @PostMapping("user-id-to-educational")
-    Map<Integer, Integer> userIdToEducational(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToEducational(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("education") Education education);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("education") Education education);
 }

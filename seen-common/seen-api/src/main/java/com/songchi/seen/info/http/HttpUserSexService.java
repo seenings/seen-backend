@@ -24,13 +24,13 @@ import java.util.Set;
         contextId = "HttpUserSexService")
 public interface HttpUserSexService {
     @PostMapping("user-id-to-sex")
-    Map<Integer, Integer> userIdToSex(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToSex(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("sex") Sex sex);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("sex") Sex sex);
 
     @PostMapping("sex-to-user-id")
-    List<Integer> sexToUserId(
+    List<Long> sexToUserId(
             @RequestParam("sex") Sex sex, @RequestParam("current") int current, @RequestParam("size") int size);
 
     @PostMapping("sex-count")

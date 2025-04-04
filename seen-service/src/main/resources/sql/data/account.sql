@@ -1,12 +1,21 @@
 use seen;
-insert into coin_account (id, account_type, description, create_time)
-values (1,1,'系统账户',CURRENT_TIMESTAMP);
-insert into coin_account (id, account_type, description, create_time)
-values (2,2,'系统账户',CURRENT_TIMESTAMP);
-insert into coin_account (id, account_type, description, create_time)
-values (3,3,'系统账户',CURRENT_TIMESTAMP);
-insert into coin_account (id, account_type, description, create_time)
-values (4,4,'系统账户',CURRENT_TIMESTAMP);
+insert into coin_account (id, account_type,  create_time)
+values (1,1,CURRENT_TIMESTAMP);
+insert into coin_account (id, account_type,  create_time)
+values (2,2,CURRENT_TIMESTAMP);
+insert into coin_account (id, account_type,  create_time)
+values (3,3,CURRENT_TIMESTAMP);
+insert into coin_account (id, account_type,  create_time)
+values (4,4,CURRENT_TIMESTAMP);
+
+insert into coin_account (id, account_type,  create_time)
+values (301,301,CURRENT_TIMESTAMP);
+insert into coin_account (id, account_type,  create_time)
+values (302,302,CURRENT_TIMESTAMP);
+insert into coin_account (id, account_type,  create_time)
+values (303,303,CURRENT_TIMESTAMP);
+insert into coin_account (id, account_type,  create_time)
+values (304,304,CURRENT_TIMESTAMP);
 
 
 insert into coin_sys_account_balance (id, account_id, coin_amount, change_time, update_time, create_time)

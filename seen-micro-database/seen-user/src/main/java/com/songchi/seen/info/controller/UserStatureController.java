@@ -24,13 +24,13 @@ public class UserStatureController implements HttpUserStatureService {
 
     @Override
     @PostMapping("user-id-to-stature-cm")
-    public Map<Integer, Integer> userIdToStatureCm(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToStatureCm(@RequestBody Set<Long> userIds) {
         return userStatureService.userIdToStatureCm(userIds);
     }
 
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam("userId") Integer userId, @RequestParam("statureCm") Integer statureCm) {
+    public boolean set(@RequestParam("userId") Long userId, @RequestParam("statureCm") Integer statureCm) {
         return userStatureService.set(userId, statureCm);
     }
 }

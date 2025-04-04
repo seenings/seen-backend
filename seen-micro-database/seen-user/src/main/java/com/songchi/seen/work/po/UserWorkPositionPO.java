@@ -27,7 +27,7 @@ public class UserWorkPositionPO implements Serializable {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 职位

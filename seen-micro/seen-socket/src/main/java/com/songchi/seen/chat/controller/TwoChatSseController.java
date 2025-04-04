@@ -32,7 +32,7 @@ import lombok.AllArgsConstructor;
 public class TwoChatSseController {
 
     // 队列，后续使用redis
-    public static Map<Integer, Queue<Integer>> userIdToHistoryIdMap = new ConcurrentHashMap<>();
+    public static Map<Long, Queue<Integer>> userIdToHistoryIdMap = new ConcurrentHashMap<>();
 
     private static final ExecutorService ONE_TO_ONE_EXECUTOR_SERVICE = Executors.newSingleThreadExecutor();
     /**
@@ -42,31 +42,29 @@ public class TwoChatSseController {
 
     /**
      * 发送消息
-     * 
+     *
      * @param userId    用户
      * @param historyId 历史ID
      * @return 是否发送成功
      */
     @PostMapping("send")
-    public boolean send(@SessionAttribute Integer userId, @RequestBody Integer historyId) {
+    public boolean send(@SessionAttribute Long userId, @RequestBody Integer historyId) {
         System.out.println("发送消息" + userId + "：" + historyId);
         // 如果map中不含有队列，则新建队列
 
-        Integer otherUserId = httpChatHistoryService.idToToUserId(Set.of(historyId)).get(historyId);
-        Queue<Integer> historyIdQueue = userIdToHistoryIdMap.computeIfAbsent(otherUserId, (key) -> {
-            return new ConcurrentLinkedQueue<>();
-        });
+        Long otherUserId = httpChatHistoryService.idToToUserId(Set.of(historyId)).get(historyId);
+        Queue<Integer> historyIdQueue = userIdToHistoryIdMap.computeIfAbsent(otherUserId, (key) -> new ConcurrentLinkedQueue<>());
         return historyIdQueue.add(historyId);
     }
 
     /**
      * 接收消息
-     * 
+     *
      * @param userId 用户
      * @return 返回sse
      */
     @GetMapping(value = "receive", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter receive(@SessionAttribute Integer userId) {
+    public SseEmitter receive(@SessionAttribute Long userId) {
         System.out.println(userId);
         SseEmitter sseEmitter = new SseEmitter();
         ONE_TO_ONE_EXECUTOR_SERVICE.execute(() -> {

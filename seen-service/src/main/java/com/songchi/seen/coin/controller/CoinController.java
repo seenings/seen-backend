@@ -27,7 +27,7 @@ public class CoinController {
     private HttpCoinTradeService httpCoinTradeService;
 
     @PostMapping("check-enough")
-    public R<Boolean> checkEnough(@SessionAttribute Integer userId) {
+    public R<Boolean> checkEnough(@SessionAttribute Long userId) {
         Boolean enough = httpCoinTradeService.checkEnough(userId, 100);
         return ResUtils.ok(enough);
     }
@@ -36,7 +36,7 @@ public class CoinController {
     private HttpCoinAccountService httpCoinAccountService;
 
     @PostMapping("init-account")
-    public R<String> initAccount(@SessionAttribute Integer userId) {
+    public R<String> initAccount(@SessionAttribute Long userId) {
 
         httpCoinAccountService.initAccount(userId);
         return ResUtils.ok("初始化账户成功");

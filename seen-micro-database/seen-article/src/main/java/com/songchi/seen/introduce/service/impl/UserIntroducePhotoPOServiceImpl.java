@@ -54,7 +54,7 @@ public class UserIntroducePhotoPOServiceImpl extends ServiceImpl<UserIntroducePh
      */
     @Override
     public Set<Integer> saveAndReturnId(List<OrderAndPhotoId> orderAndPhotoIds, Integer max,
-            IntroduceTypeEnum introduceTypeEnum, Integer userId) {
+            IntroduceTypeEnum introduceTypeEnum, Long userId) {
         Map<Integer, Integer> orderIdToPhotoIdMap = orderAndPhotoIds.stream().map(n -> {
             return Map.entry(n.order(), n.photoId());
         }).collect(Collectors.toMap(n -> n.getKey(), n -> n.getValue()));
@@ -108,7 +108,7 @@ public class UserIntroducePhotoPOServiceImpl extends ServiceImpl<UserIntroducePh
      * @return 介绍类型ID对应照片介绍信息ID
      */
     @Override
-    public Map<Integer, Set<Integer>> introduceTypeIdToId(Set<Integer> introduceTypeIds, Integer userId) {
+    public Map<Integer, Set<Integer>> introduceTypeIdToId(Set<Integer> introduceTypeIds, Long userId) {
         List<Integer> list = ListUtils.valueIsNull(introduceTypeIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
@@ -128,7 +128,7 @@ public class UserIntroducePhotoPOServiceImpl extends ServiceImpl<UserIntroducePh
      * @return 用户ID对应介绍照片信息
      */
     @Override
-    public Map<Integer, Set<IntroduceTypeAndPhotoInfo>> userIdToIntroduceTypeAndPhoto(Set<Integer> userIds) {
+    public Map<Long, Set<IntroduceTypeAndPhotoInfo>> userIdToIntroduceTypeAndPhoto(Set<Long> userIds) {
 
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();

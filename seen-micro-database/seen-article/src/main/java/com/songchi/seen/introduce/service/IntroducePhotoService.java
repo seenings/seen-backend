@@ -17,5 +17,5 @@ public interface IntroducePhotoService {
      * @param userIds   用户ID
      * @return  用户ID对应介绍信息对应关系
      */
-    Map<Integer, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhoto(Set<Integer> userIds);
+    Map<Long, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhoto(Set<Long> userIds);
 }

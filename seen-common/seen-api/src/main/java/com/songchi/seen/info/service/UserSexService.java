@@ -13,11 +13,11 @@ import java.util.Set;
  * @since 2022-10-06
  */
 public interface UserSexService {
-    Map<Integer, Integer> userIdToSex(Set<Integer> userIds);
+    Map<Long, Integer> userIdToSex(Set<Long> userIds);
 
     long sexCount(Sex sex);
 
-    List<Integer> sexToUserId(Sex sex, int current, int size);
+    List<Long> sexToUserId(Sex sex, int current, int size);
 
-    boolean set(Integer userId, Sex sex);
+    boolean set(Long userId, Sex sex);
 }

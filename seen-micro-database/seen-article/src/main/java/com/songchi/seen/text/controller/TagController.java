@@ -33,21 +33,21 @@ public class TagController implements HttpTagService {
 
     @Override
     @PostMapping("user-id-to-tag-id")
-    public Map<Integer, List<Integer>> userIdToTagId(@RequestBody Set<Integer> userIds) {
+    public Map<Long, List<Integer>> userIdToTagId(@RequestBody Set<Long> userIds) {
 
         return tagUserService.userIdToTagId(userIds);
     }
 
     @Override
     @PostMapping("tag-id-to-user-id")
-    public Map<Integer, Set<Integer>> tagIdToUserId(@RequestBody Set<Integer> tagIds) {
+    public Map<Integer, Set<Long>> tagIdToUserId(@RequestBody Set<Integer> tagIds) {
         return tagUserService.tagIdToUserId(tagIds);
     }
 
     @Override
     @PostMapping("user-id-to-tag-name")
-    public Map<Integer, Set<String>> userIdToTagName(@RequestBody Set<Integer> userIds) {
-        Map<Integer, List<Integer>> userIdToTagIdMap = tagUserService.userIdToTagId(userIds);
+    public Map<Long, Set<String>> userIdToTagName(@RequestBody Set<Long> userIds) {
+        Map<Long, List<Integer>> userIdToTagIdMap = tagUserService.userIdToTagId(userIds);
         Set<Integer> tagIds = userIdToTagIdMap.values().stream()
                 .parallel()
                 .flatMap(Collection::stream)
@@ -106,7 +106,7 @@ public class TagController implements HttpTagService {
 
     @Override
     @PostMapping("delete-and-save")
-    public List<Integer> deleteAndSave(@RequestParam("userId") Integer userId, @RequestBody List<Integer> tagIds) {
+    public List<Integer> deleteAndSave(@RequestParam("userId") Long userId, @RequestBody List<Integer> tagIds) {
         return tagUserService.deleteAndSave(userId, tagIds);
     }
 }

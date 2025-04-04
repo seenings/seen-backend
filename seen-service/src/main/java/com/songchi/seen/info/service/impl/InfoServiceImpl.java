@@ -75,13 +75,13 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
      * @return 用户ID对应用户信息
      */
     @Override
-    public Map<Integer, UserInfo> userIdToUserInfo(Set<Integer> userIds) {
+    public Map<Long, UserInfo> userIdToUserInfo(Set<Long> userIds) {
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();
         }
-        Map<Integer, Integer> userIdPhotoIdMap = httpUserMainPhotoService.userIdPhotoId(userIds);
-        Map<Integer, Integer> userIdToSexMap = httpUserSexService.userIdToSex(userIds);
-        Map<Integer, String> userIdToAliasNameMap = httpUserAliasNameService.userIdToAliasName(userIds);
+        Map<Long, Integer> userIdPhotoIdMap = httpUserMainPhotoService.userIdPhotoId(userIds);
+        Map<Long, Integer> userIdToSexMap = httpUserSexService.userIdToSex(userIds);
+        Map<Long, String> userIdToAliasNameMap = httpUserAliasNameService.userIdToAliasName(userIds);
         if (userIdToSexMap == null) {
             String msg = String.format("用户不存在{}，用户ID：%s。", userIds);
             log.error("{}", msg);
@@ -100,7 +100,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
      * @return 用户ID对应用户名字
      */
     @Override
-    public Map<Integer, String> userIdToUserName(Set<Integer> userIds) {
+    public Map<Long, String> userIdToUserName(Set<Long> userIds) {
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();
         }
@@ -114,7 +114,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
      * @return 用户ID对应用户头像照片ID
      */
     @Override
-    public Map<Integer, Integer> userIdToProfilePhotoId(Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToProfilePhotoId(Set<Long> userIds) {
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();
         }
@@ -128,7 +128,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
      * @return 用户ID对应性别
      */
     @Override
-    public Map<Integer, Sex> userIdToSex(Set<Integer> userIds) {
+    public Map<Long, Sex> userIdToSex(Set<Long> userIds) {
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();
         }
@@ -142,7 +142,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
      * @return 用户ID对应填写用户信息时间
      */
     @Override
-    public Map<Integer, LocalDateTime> newUserId(int top) {
+    public Map<Long, LocalDateTime> newUserId(int top) {
         Page<Info> page = page(new Page<>(1, top), new QueryWrapper<Info>().lambda().select(Info::getUserId, Info::getCreateTime).orderByDesc(Info::getCreateTime));
         return page.getRecords().stream().parallel().collect(Collectors.toMap(Info::getUserId, Info::getCreateTime, (o1, o2) -> o2));
     }
@@ -176,27 +176,27 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
     private HttpSchoolService httpSchoolService;
 
     @Override
-    public Map<Integer, UserIntroduceInfo> userIdToUserIntroduceInfo(@RequestBody Set<Integer> userIds) {
+    public Map<Long, UserIntroduceInfo> userIdToUserIntroduceInfo(@RequestBody Set<Long> userIds) {
 
-        Map<Integer, Integer> userIdToStatureCmMap = httpUserStatureService.userIdToStatureCm(userIds);
-        Map<Integer, String> userIdToAliasNameMap = httpUserAliasNameService.userIdToAliasName(userIds);
-        Map<Integer, Integer> userIdToEducationalMap = httpEducationalService.userIdToEducational(userIds);
-        Map<Integer, Integer> userIdToYearMap = httpUserBirthdayService.userIdToYear(userIds);
-        Map<Integer, Integer> userIdToMonthMap = httpUserBirthdayService.userIdToMonth(userIds);
-        Map<Integer, Integer> userIdToDayMap = httpUserBirthdayService.userIdToDay(userIds);
-        Map<Integer, Integer> userIdToWeightKgMap = httpUserWeightService.userIdToWeightKg(userIds);
-        Map<Integer, Integer> userIdToBirthPlaceProvinceIdMap = httpUserBirthPlaceService.userIdToProvinceId(userIds);
-        Map<Integer, Integer> userIdToBirthPlaceCityIdMap = httpUserBirthPlaceService.userIdToCityId(userIds);
-        Map<Integer, Integer> userIdToCityIdMap = httpUserCurrentResidenceService.userIdToCityId(userIds);
+        Map<Long, Integer> userIdToStatureCmMap = httpUserStatureService.userIdToStatureCm(userIds);
+        Map<Long, String> userIdToAliasNameMap = httpUserAliasNameService.userIdToAliasName(userIds);
+        Map<Long, Integer> userIdToEducationalMap = httpEducationalService.userIdToEducational(userIds);
+        Map<Long, Integer> userIdToYearMap = httpUserBirthdayService.userIdToYear(userIds);
+        Map<Long, Integer> userIdToMonthMap = httpUserBirthdayService.userIdToMonth(userIds);
+        Map<Long, Integer> userIdToDayMap = httpUserBirthdayService.userIdToDay(userIds);
+        Map<Long, Integer> userIdToWeightKgMap = httpUserWeightService.userIdToWeightKg(userIds);
+        Map<Long, Integer> userIdToBirthPlaceProvinceIdMap = httpUserBirthPlaceService.userIdToProvinceId(userIds);
+        Map<Long, Integer> userIdToBirthPlaceCityIdMap = httpUserBirthPlaceService.userIdToCityId(userIds);
+        Map<Long, Integer> userIdToCityIdMap = httpUserCurrentResidenceService.userIdToCityId(userIds);
         Set<Integer> cityIds = SetUtils.union(userIdToCityIdMap.values(), userIdToBirthPlaceCityIdMap.values());
         Map<Integer, String> cityIdToNameMap = httpCityService.idToName(cityIds);
-        Map<Integer, Integer> userIdToSchoolIdMap = httpStudentInfoService.userIdToSchoolId(userIds);
+        Map<Long, Integer> userIdToSchoolIdMap = httpStudentInfoService.userIdToSchoolId(userIds);
         Map<Integer, String> schoolIdToSchoolNameMap = httpSchoolService.idToSchoolName(new HashSet<>(userIdToSchoolIdMap.values()));
 
         Map<Integer, String> provinceIdToNameMap = httpProvinceService.idToName(new HashSet<>(userIdToBirthPlaceProvinceIdMap.values()));
-        Map<Integer, Integer> userIdToPositionMap = httpUserWorkPositionService.userIdToPosition(userIds);
+        Map<Long, Integer> userIdToPositionMap = httpUserWorkPositionService.userIdToPosition(userIds);
         Map<Integer, String> positionIdToPositionNameMap = httpWorkPositionService.positionIdToPositionName(new HashSet<>(userIdToPositionMap.values()));
-        Map<Integer, String> userIdToCompanyNameMap = httpUserWorkService.userIdToCompanyName(userIds);
+        Map<Long, String> userIdToCompanyNameMap = httpUserWorkService.userIdToCompanyName(userIds);
         return userIds.stream().parallel().map(userId -> {
             Integer birthPlaceCityId = userIdToBirthPlaceCityIdMap.get(userId);
             Integer cityId = userIdToCityIdMap.get(userId);
@@ -221,11 +221,11 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
      * @return 用户ID对应基本信息
      */
     @Override
-    public Map<Integer, BasicInfo> userIdToBasicInfo(Set<Integer> userIds) {
-        Map<Integer, Integer> userIdToEducationalMap = httpEducationalService.userIdToEducational(userIds);
-        Map<Integer, Integer> userIdToSexMap = httpUserSexService.userIdToSex(userIds);
-        Map<Integer, Integer> userIdToYearMap = httpUserBirthdayService.userIdToYear(userIds);
-        Map<Integer, Integer> userIdToGraduatedMap = httpSchoolGraduateService.userIdToGraduated(userIds);
+    public Map<Long, BasicInfo> userIdToBasicInfo(Set<Long> userIds) {
+        Map<Long, Integer> userIdToEducationalMap = httpEducationalService.userIdToEducational(userIds);
+        Map<Long, Integer> userIdToSexMap = httpUserSexService.userIdToSex(userIds);
+        Map<Long, Integer> userIdToYearMap = httpUserBirthdayService.userIdToYear(userIds);
+        Map<Long, Integer> userIdToGraduatedMap = httpSchoolGraduateService.userIdToGraduated(userIds);
         return userIds.stream().parallel().map(userId -> Pair.of(userId, new BasicInfo().setUserId(userId).setSex(UserEnumUtils.indexToSexEnum(userIdToSexMap.get(userId))).setEducation(SchoolEnumUtils.indexToEducationEnum(userIdToEducationalMap.get(userId))).setBirthYear(userIdToYearMap.get(userId)).setGraduated(userIdToGraduatedMap.get(userId) == null ? null : userIdToGraduatedMap.get(userId) == 1))).collect(Collectors.toMap(Pair::getKey, Pair::getValue, (o1, o2) -> o2));
     }
 
@@ -236,10 +236,10 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
     private HttpTextService httpTextService;
 
     @Override
-    public Map<Integer, List<PersonIntroduce>> userIdToPersonIntroduce(Set<Integer> userIds) {
+    public Map<Long, List<PersonIntroduce>> userIdToPersonIntroduce(Set<Long> userIds) {
 
-        Map<Integer, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndTextMap = httpUserIntroduceService.userIdToIntroduceTypeAndText(userIds);
-        Map<Integer, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhotoMap = httpUserIntroducePhotoService.userIdToIntroduceTypeAndPhoto(userIds);
+        Map<Long, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndTextMap = httpUserIntroduceService.userIdToIntroduceTypeAndText(userIds);
+        Map<Long, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhotoMap = httpUserIntroducePhotoService.userIdToIntroduceTypeAndPhoto(userIds);
         Set<Integer> textIds = userIdToIntroduceTypeAndTextMap.values().stream().parallel().flatMap(Collection::stream).map(IntroduceTypeAndText::textId).collect(Collectors.toSet());
         Map<Integer, String> textIdToTextMap = httpTextService.textIdToText(textIds);
         return userIds.stream().parallel().map(userId -> {
@@ -267,7 +267,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
      * @return 介绍类型对应介绍内容
      */
     @Override
-    public Map<Integer, PersonIntroduce> introduceTypeIndexToPersonIntroduce(Set<Integer> introduceTypeIndexes, Integer userId) {
+    public Map<Integer, PersonIntroduce> introduceTypeIndexToPersonIntroduce(Set<Integer> introduceTypeIndexes, Long userId) {
         Set<IntroduceTypeAndText> introduceTypeAndTexts = Optional.ofNullable(httpUserIntroduceService.userIdToIntroduceTypeAndText(Set.of(userId))).map(n -> n.get(userId)).orElseGet(CollUtil::newHashSet);
 
         Set<IntroduceTypeAndPhoto> introduceTypeAndPhotos = Optional.ofNullable(httpUserIntroducePhotoService.userIdToIntroduceTypeAndPhoto(Set.of(userId))).map(n -> n.get(userId)).orElseGet(CollUtil::newHashSet);
@@ -286,10 +286,10 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
     private HttpChatHistoryService httpChatHistoryService;
 
     @Override
-    public Map<Integer, UserChatInfo> userIdToUserChatInfo(Set<Integer> userIds, Integer selfUserId) {
+    public Map<Long, UserChatInfo> userIdToUserChatInfo(Set<Long> userIds, Long selfUserId) {
 
-        Map<Integer, UserInfo> userIdToUserInfoMap = userIdToUserInfo(userIds);
-        Map<Integer, ChatContentAndTime> userIdToChatContentAndTimeMap = httpChatHistoryService.userIdToChatContentAndTime(userIds, selfUserId);
+        Map<Long, UserInfo> userIdToUserInfoMap = userIdToUserInfo(userIds);
+        Map<Long, ChatContentAndTime> userIdToChatContentAndTimeMap = httpChatHistoryService.userIdToChatContentAndTime(userIds, selfUserId);
         Set<Integer> textIds = userIdToChatContentAndTimeMap.values().stream().parallel().filter(n -> n.contentType() == ContentType.TEXT).map(ChatContentAndTime::contentId).collect(Collectors.toSet());
         Map<Integer, String> textIdToTextMap = httpTextService.textIdToText(textIds);
         return userIds.stream().parallel().map(n -> {

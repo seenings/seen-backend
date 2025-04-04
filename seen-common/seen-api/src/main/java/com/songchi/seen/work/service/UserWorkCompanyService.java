@@ -10,7 +10,7 @@ import java.util.Set;
  * @since 2022-12-03
  */
 public interface UserWorkCompanyService {
-    Map<Integer, String> userIdToCompanyName(Set<Integer> userIds);
+    Map<Long, String> userIdToCompanyName(Set<Long> userIds);
 
-    boolean set(Integer userId, String companyName);
+    boolean set(Long userId, String companyName);
 }

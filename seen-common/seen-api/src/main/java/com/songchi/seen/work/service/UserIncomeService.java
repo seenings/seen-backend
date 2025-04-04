@@ -13,11 +13,11 @@ import java.util.Set;
  * @since 2023-02-11
  */
 public interface UserIncomeService {
-    Map<Integer, Integer> userIdToAnnualIncome(Set<Integer> userIds);
+    Map<Long, Integer> userIdToAnnualIncome(Set<Long> userIds);
 
     long annualIncomeCount(YearIncomeEnum yearIncomeEnum);
 
-    List<Integer> annualIncomeToUserId(YearIncomeEnum yearIncomeEnum, int current, int size);
+    List<Long> annualIncomeToUserId(YearIncomeEnum yearIncomeEnum, int current, int size);
 
-    boolean set(Integer userId, YearIncomeEnum yearIncomeEnum);
+    boolean set(Long userId, YearIncomeEnum yearIncomeEnum);
 }

@@ -25,13 +25,13 @@ public class UserWorkPositionController implements HttpUserWorkPositionService {
 
     @Override
     @PostMapping("user-id-to-position")
-    public Map<Integer, Integer> userIdToPosition(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToPosition(@RequestBody Set<Long> userIds) {
         return userWorkPositionService.userIdToPosition(userIds);
     }
 
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam("userId") Integer userId, @RequestParam("position") Integer position) {
+    public boolean set(@RequestParam("userId") Long userId, @RequestParam("position") Integer position) {
 
         return userWorkPositionService.set(userId, position);
     }

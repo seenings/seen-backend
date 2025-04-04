@@ -26,14 +26,14 @@ public class UserIncomeController implements HttpUserIncomeService {
 
     @Override
     @PostMapping("user-id-to-annual-income")
-    public Map<Integer, Integer> userIdToAnnualIncome(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToAnnualIncome(@RequestBody Set<Long> userIds) {
         return userIncomeService.userIdToAnnualIncome(userIds);
     }
 
     @Override
     @PostMapping("set")
     public boolean set(
-            @RequestParam("userId") Integer userId, @RequestParam("annualIncome") YearIncomeEnum annualIncome) {
+            @RequestParam("userId") Long userId, @RequestParam("annualIncome") YearIncomeEnum annualIncome) {
 
         return userIncomeService.set(userId, annualIncome);
     }

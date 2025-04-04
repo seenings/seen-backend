@@ -38,8 +38,8 @@ public class ThumbUserPOServiceImpl extends ServiceImpl<ThumbUserPOMapper, Thumb
      * @return  被点赞者对应是否点赞
      */
     @Override
-    public Map<Integer, Boolean> thumbedUserIdToTrue(Set<Integer> thumbedUserId, Integer thumbUserId) {
-        List<Integer> list = CollUtils.valueIsNullToList(thumbedUserId);
+    public Map<Long, Boolean> thumbedUserIdToTrue(Set<Long> thumbedUserId, Long thumbUserId) {
+        List<Long> list = CollUtils.valueIsNullToList(thumbedUserId);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -53,8 +53,8 @@ public class ThumbUserPOServiceImpl extends ServiceImpl<ThumbUserPOMapper, Thumb
     }
 
     @Override
-    public boolean set(Integer thumbedUserId, Integer thumbUserId) {
-        Map<Integer, Boolean> userIdToValueMap = thumbedUserIdToTrue(Collections.singleton(thumbedUserId), thumbUserId);
+    public boolean set(Long thumbedUserId, Long thumbUserId) {
+        Map<Long, Boolean> userIdToValueMap = thumbedUserIdToTrue(Collections.singleton(thumbedUserId), thumbUserId);
         Boolean thumb = userIdToValueMap.get(thumbedUserId);
         ThumbUserPO po = new ThumbUserPO()
                 .setThumbedUserId(thumbedUserId)

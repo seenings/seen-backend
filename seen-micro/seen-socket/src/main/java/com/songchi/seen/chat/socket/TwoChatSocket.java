@@ -29,7 +29,7 @@ import static cn.hutool.core.collection.CollUtil.newHashSet;
 @AllArgsConstructor
 public class TwoChatSocket {
 
-    public static final ConcurrentHashMap<Integer, Session> TWO_CHAT_MAP = new ConcurrentHashMap<>();
+    public static final ConcurrentHashMap<Long, Session> TWO_CHAT_MAP = new ConcurrentHashMap<>();
 
 
     /**
@@ -44,7 +44,7 @@ public class TwoChatSocket {
         }
     }
 
-    public static Integer tokenToUserId(String token, String sessionId, String sesseionUrl) {
+    public static Long tokenToUserId(String token, String sessionId, String sesseionUrl) {
         if (StrUtil.isBlank(token)) {
             String msg = String.format("令牌验证失败，会话ID是：%s，会话地址是：%s。", sessionId, sesseionUrl);
             log.error(msg);
@@ -56,7 +56,7 @@ public class TwoChatSocket {
         } catch (SeenException e) {
             throw new SeenRuntimeException(e);
         }
-        Integer userId = StrUtils.stringToInt(validateToken);
+        Long userId = StrUtils.stringToLong(validateToken);
         if (userId == null) {
             String msg = String.format("获取不到当前登录用户id，会话ID是：%s，会话地址是：%s。", sessionId, sesseionUrl);
             log.error(msg);
@@ -70,7 +70,7 @@ public class TwoChatSocket {
      */
     @OnOpen
     public void onOpen(@PathParam(PublicConstant.TOKEN_NAME) String token, Session session) {
-        Integer userId =
+        Long userId =
                 tokenToUserId(token, session.getId(), session.getRequestURI().toString());
         // 加入set中
         TWO_CHAT_MAP.replace(userId, session);
@@ -93,7 +93,7 @@ public class TwoChatSocket {
             return;
         }
         int historyId = Integer.parseInt(message);
-        Integer toUserId = httpChatHistoryService.idToToUserId(newHashSet(historyId)).get(historyId);
+        Long toUserId = httpChatHistoryService.idToToUserId(newHashSet(historyId)).get(historyId);
         Session session = TWO_CHAT_MAP.get(toUserId);
         if (session != null && session.isOpen()) {
             //在线则推送消息
@@ -106,7 +106,7 @@ public class TwoChatSocket {
      */
     @OnClose
     public void onClose(@PathParam(PublicConstant.TOKEN_NAME) String token, Session session) {
-        Integer userId =
+        Long userId =
                 tokenToUserId(token, session.getId(), session.getRequestURI().toString());
         TWO_CHAT_MAP.remove(userId);
         log.warn("用户退出，用户ID：{}。", userId);
@@ -114,7 +114,7 @@ public class TwoChatSocket {
 
     @OnError
     public void onError(Throwable e, @PathParam(PublicConstant.TOKEN_NAME) String token, Session session) {
-        Integer userId =
+        Long userId =
                 tokenToUserId(token, session.getId(), session.getRequestURI().toString());
         log.error("websocket有异常，用户ID：{}。", userId, e);
     }

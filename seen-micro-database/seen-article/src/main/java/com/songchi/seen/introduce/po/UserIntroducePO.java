@@ -27,7 +27,7 @@ public class UserIntroducePO {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
     /**
      * 介绍类型
      */

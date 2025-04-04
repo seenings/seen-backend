@@ -10,7 +10,7 @@ import java.util.Set;
  * @since 2022-10-07
  */
 public interface SchoolGraduateService {
-    Map<Integer, Integer> userIdToGraduated(Set<Integer> userIds);
+    Map<Long, Integer> userIdToGraduated(Set<Long> userIds);
 
-    boolean set(Integer userId, Integer graduated);
+    boolean set(Long userId, Integer graduated);
 }

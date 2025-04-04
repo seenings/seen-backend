@@ -36,9 +36,9 @@ public class CoinAccountUserPOServiceImpl extends ServiceImpl<CoinAccountUserPOM
      * @return  用户ID对应账户ID
      */
     @Override
-    public Map<Integer, Set<Integer>> userIdToAccountId(Set<Integer> userIds) {
+    public Map<Long, Set<Long>> userIdToAccountId(Set<Long> userIds) {
 
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtils.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -61,8 +61,8 @@ public class CoinAccountUserPOServiceImpl extends ServiceImpl<CoinAccountUserPOM
      * @return  设置成功
      */
     @Override
-    public boolean set(Integer accountId, Integer userId) {
-        Set<Integer> accountIds =
+    public boolean set(Long accountId, Long userId) {
+        Set<Long> accountIds =
                 userIdToAccountId(Collections.singleton(userId)).get(userId);
         boolean contains = CollUtils.contains(accountIds, accountId);
         if (!contains) {

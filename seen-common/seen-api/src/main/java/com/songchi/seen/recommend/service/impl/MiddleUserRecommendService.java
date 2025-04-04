@@ -11,9 +11,9 @@ import java.util.Set;
  * @since 2022-10-23
  */
 public interface MiddleUserRecommendService {
-    Set<Integer> haveUserId(Integer userId, Set<Integer> recommendUserIds);
+    Set<Long> haveUserId(Long userId, Set<Long> recommendUserIds);
 
-    Map<Integer, List<Integer>> userIdToRecommendUserId(Set<Integer> userIds, String date);
+    Map<Long, List<Long>> userIdToRecommendUserId(Set<Long> userIds, String date);
 
-    int set(Integer userId, String date, List<Integer> recommendUserIds);
+    int set(Long userId, String date, List<Long> recommendUserIds);
 }

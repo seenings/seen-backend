@@ -24,13 +24,13 @@ public class UserAuthController implements HttpUserAuthService {
 
     @Override
     @PostMapping("user-id-to-user-auth")
-    public Map<Integer, Integer> userIdToUserAuth(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToUserAuth(@RequestBody Set<Long> userIds) {
         return userAuthService.userIdToUserAuth(userIds);
     }
 
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam("userId") Integer userId, @RequestParam("authStatus") Integer authStatus) {
+    public boolean set(@RequestParam("userId") Long userId, @RequestParam("authStatus") Integer authStatus) {
         return userAuthService.set(userId, authStatus);
     }
 }

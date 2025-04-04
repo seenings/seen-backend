@@ -24,7 +24,7 @@ public class UserBirthdayPO {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    private Integer userId;
+    private Long userId;
 
     private Integer year;
 

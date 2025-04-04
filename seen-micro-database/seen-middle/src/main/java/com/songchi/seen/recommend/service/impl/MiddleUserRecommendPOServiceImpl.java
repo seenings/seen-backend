@@ -34,7 +34,7 @@ public class MiddleUserRecommendPOServiceImpl extends ServiceImpl<MiddleUserReco
         implements MiddleUserRecommendService {
 
     @Override
-    public Set<Integer> haveUserId(Integer userId, Set<Integer> recommendUserIds) {
+    public Set<Long> haveUserId(Long userId, Set<Long> recommendUserIds) {
         if (CollUtil.isEmpty(recommendUserIds)) {
             return Collections.emptySet();
         }
@@ -50,8 +50,8 @@ public class MiddleUserRecommendPOServiceImpl extends ServiceImpl<MiddleUserReco
     }
 
     @Override
-    public Map<Integer, List<Integer>> userIdToRecommendUserId(Set<Integer> userIds, String date) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, List<Long>> userIdToRecommendUserId(Set<Long> userIds, String date) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -67,8 +67,8 @@ public class MiddleUserRecommendPOServiceImpl extends ServiceImpl<MiddleUserReco
     }
 
     @Override
-    public int set(Integer userId, String date, List<Integer> recommendUserIds) {
-        List<Integer> exists = userIdToRecommendUserId(Collections.singleton(userId), date).get(userId);
+    public int set(Long userId, String date, List<Long> recommendUserIds) {
+        List<Long> exists = userIdToRecommendUserId(Collections.singleton(userId), date).get(userId);
         if (exists == null) {
             return recommendUserIds.stream()
                     .map(n -> {
@@ -79,7 +79,7 @@ public class MiddleUserRecommendPOServiceImpl extends ServiceImpl<MiddleUserReco
                         return save(po);
                     })
                     .map(n -> n ? 1 : 0)
-                    .reduce((o1, o2) -> o1 + o2)
+                    .reduce(Integer::sum)
                     .orElse(0);
         } else {
             return 0;

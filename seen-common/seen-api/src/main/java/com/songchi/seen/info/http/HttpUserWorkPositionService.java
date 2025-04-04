@@ -23,8 +23,8 @@ import java.util.Set;
         contextId = "HttpUserWorkPositionService")
 public interface HttpUserWorkPositionService {
     @PostMapping("user-id-to-position")
-    Map<Integer, Integer> userIdToPosition(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToPosition(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId,@RequestParam("position") Integer position);
+    boolean set(@RequestParam("userId") Long userId,@RequestParam("position") Integer position);
 }

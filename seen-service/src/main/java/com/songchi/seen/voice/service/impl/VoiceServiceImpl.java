@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 public class VoiceServiceImpl extends ServiceImpl<VoiceMapper, Voice> implements IVoiceService {
     @Override
-    public Integer setPath(String path, Integer userId) {
+    public Integer setPath(String path, Long userId) {
         Voice entity = new Voice();
         entity.setPath(path);
         save(entity);

@@ -34,7 +34,7 @@ public class RecommendController implements HttpRecommendService {
      */
     @Override
     @PostMapping("create-recommend-user")
-    public List<Integer> createRecommendUser(@RequestParam("userId") Integer userId) {
+    public List<Long> createRecommendUser(@RequestParam("userId") Long userId) {
         return recommendService.createRecommendUser(userId);
     }
 }

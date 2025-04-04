@@ -13,7 +13,7 @@ import java.util.Set;
  */
 public interface EducationalService {
 
-    Map<Integer,Integer> userIdToEducational( Set<Integer> userIds);
+    Map<Long,Integer> userIdToEducational( Set<Long> userIds);
 
-    boolean set(Integer userId, Education education);
+    boolean set(Long userId, Education education);
 }

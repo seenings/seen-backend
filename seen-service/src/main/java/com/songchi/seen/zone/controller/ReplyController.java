@@ -34,7 +34,7 @@ public class ReplyController {
      * @return 新生成的回复ID
      */
     @PostMapping("publish-zone-comment")
-    public R<Integer> publishZoneComment(Integer zoneId, String message, @SessionAttribute Integer userId) {
+    public R<Integer> publishZoneComment(Integer zoneId, String message, @SessionAttribute Long userId) {
 
         Integer replyId = iReplyService.publishZoneComment(zoneId, userId, message);
         return ResUtils.ok(replyId);
@@ -49,7 +49,7 @@ public class ReplyController {
      * @return 新生成的回复ID
      */
     @PostMapping("publish-reply-comment")
-    public R<Integer> publishReplyComment(Integer replyId, String message, @SessionAttribute Integer userId) {
+    public R<Integer> publishReplyComment(Integer replyId, String message, @SessionAttribute Long userId) {
         Integer zoneId = iReplyService.idToZoneId(Collections.singleton(replyId)).get(replyId);
         Integer resultReplyId = iReplyService.publishReplyComment(zoneId, replyId, userId, message);
         return ResUtils.ok(resultReplyId);

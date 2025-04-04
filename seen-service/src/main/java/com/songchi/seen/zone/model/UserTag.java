@@ -12,7 +12,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class UserTag {
 
-    private Integer userId;
+    private Long userId;
     /**
      * 0=男，1=女
      */

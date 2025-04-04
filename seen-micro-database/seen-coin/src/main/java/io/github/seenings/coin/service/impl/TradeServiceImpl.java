@@ -28,7 +28,7 @@ public class TradeServiceImpl implements TradeService {
     private CoinAccountBalanceService coinAccountBalanceService;
 
     @Override
-    public Integer trade(Integer inAccountId, Integer outAccountId, Integer coinAmount, TradeType tradeType,
+    public Integer trade(Long inAccountId, Long outAccountId, Integer coinAmount, TradeType tradeType,
                          String description){
         //一笔交易
         //1.记录交易表
@@ -42,7 +42,7 @@ public class TradeServiceImpl implements TradeService {
         return tradeId;
     }
     @Override
-    public Integer sysInTrade(Integer inSysAccountId, Integer outAccountId, Integer coinAmount, TradeType tradeType, String description){
+    public Integer sysInTrade(Long inSysAccountId, Long outAccountId, Integer coinAmount, TradeType tradeType, String description){
         //一笔交易
         //1.记录交易表
         //2.出账户余额减少
@@ -55,7 +55,7 @@ public class TradeServiceImpl implements TradeService {
         return tradeId;
     }
     @Override
-    public Integer sysOutTrade(Integer inAccountId, Integer outSysAccountId, Integer coinAmount,  TradeType tradeType,String description){
+    public Integer sysOutTrade(Long inAccountId, Long outSysAccountId, Integer coinAmount,  TradeType tradeType,String description){
         //一笔交易
         //1.记录交易表
         //2.出账户余额减少
@@ -67,7 +67,7 @@ public class TradeServiceImpl implements TradeService {
         return tradeId;
     }
     @Override
-    public Integer sysTrade(Integer inSysAccountId, Integer outSysAccountId, Integer coinAmount, TradeType tradeType, String description){
+    public Integer sysTrade(Long inSysAccountId, Long outSysAccountId, Integer coinAmount, TradeType tradeType, String description){
         //一笔交易
         //1.记录交易表
         //2.出账户余额减少

@@ -24,13 +24,13 @@ public class StudentInfoController implements HttpStudentInfoService {
 
     @Override
     @PostMapping("user-id-school-id")
-    public Map<Integer, Integer> userIdToSchoolId(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToSchoolId(@RequestBody Set<Long> userIds) {
         return studentInfoService.userIdToSchoolId(userIds);
     }
 
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam("userId") Integer userId, @RequestParam("schoolId") Integer schoolId) {
+    public boolean set(@RequestParam("userId") Long userId, @RequestParam("schoolId") Integer schoolId) {
 
         return studentInfoService.set(userId, schoolId);
     }

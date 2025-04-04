@@ -23,8 +23,8 @@ import java.util.Set;
         path = SeenConstant.FEIGN_VERSION + "user/user-income")
 public interface HttpUserIncomeService {
     @PostMapping("user-id-to-annual-income")
-    Map<Integer, Integer> userIdToAnnualIncome(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToAnnualIncome(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("annualIncome") YearIncomeEnum annualIncome);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("annualIncome") YearIncomeEnum annualIncome);
 }

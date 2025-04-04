@@ -25,13 +25,13 @@ public class UserMaritalController implements HttpUserMaritalService {
 
     @Override
     @PostMapping("user-id-to-marital-status")
-    public Map<Integer, Integer> userIdToMaritalStatus(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToMaritalStatus(@RequestBody Set<Long> userIds) {
         return userMaritalService.userIdToMaritalStatus(userIds);
     }
 
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam("userId") Integer userId, @RequestParam("maritalStatus") Integer maritalStatus) {
+    public boolean set(@RequestParam("userId") Long userId, @RequestParam("maritalStatus") Integer maritalStatus) {
         return userMaritalService.set(userId, UserEnumUtils.indexToMaritalStatus(maritalStatus));
     }
 }

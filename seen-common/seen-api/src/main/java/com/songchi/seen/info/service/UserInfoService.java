@@ -15,11 +15,11 @@ import java.util.Set;
  * @since 2022-10-16
  */
 public interface UserInfoService {
-    Map<Integer, UserMainInfo> userIdToUserMainInfo(Set<Integer> userIds);
+    Map<Long, UserMainInfo> userIdToUserMainInfo(Set<Long> userIds);
 
-    void saveBasicInformation(Integer userId, BasicInformation basicInformation);
+    void saveBasicInformation(Long userId, BasicInformation basicInformation);
 
-    void saveEducationAndWork(Integer userId, EducationAndWork educationAndWork);
+    void saveEducationAndWork(Long userId, EducationAndWork educationAndWork);
 
-    void saveContactInformation(Integer userId, ContactInformation contactInformation);
+    void saveContactInformation(Long userId, ContactInformation contactInformation);
 }

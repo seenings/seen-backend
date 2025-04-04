@@ -29,17 +29,17 @@ public class UserApplyController implements HttpUserApplyService {
     @Override
     @PostMapping("set")
     public Integer set(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("textId") Integer textId,
-            @RequestParam("appliedUserId") Integer appliedUserId) {
+            @RequestParam("appliedUserId") Long appliedUserId) {
 
         return userApplyService.set(userId, textId, appliedUserId);
     }
 
     @Override
     @PostMapping("applied-user-id-to-apply-id")
-    public Map<Integer, Integer> appliedUserIdToApplyId(
-            @RequestBody Set<Integer> appliedUserIds, @RequestParam("userId") Integer userId) {
+    public Map<Long, Integer> appliedUserIdToApplyId(
+            @RequestBody Set<Long> appliedUserIds, @RequestParam("userId") Long userId) {
         return userApplyService.appliedUserIdToId(appliedUserIds, userId);
     }
 
@@ -51,12 +51,12 @@ public class UserApplyController implements HttpUserApplyService {
 
     @Override
     @PostMapping("apply-id-to-apply-user-id")
-    public Map<Integer, Integer> applyIdToApplyUserId(@RequestBody Set<Integer> applyIds) {
+    public Map<Integer, Long> applyIdToApplyUserId(@RequestBody Set<Integer> applyIds) {
         return userApplyService.idToApplyUserId(applyIds);
     }
     @Override
     @PostMapping("apply-id-to-applied-user-id")
-    public Map<Integer, Integer> applyIdToAppliedUserId(@RequestBody Set<Integer> applyIds) {
+    public Map<Integer, Long> applyIdToAppliedUserId(@RequestBody Set<Integer> applyIds) {
         return userApplyService.idToAppliedUserId(applyIds);
     }
 
@@ -92,14 +92,14 @@ public class UserApplyController implements HttpUserApplyService {
 
     @Override
     @PostMapping("applied-user-id-apply-id-by-page")
-    public List<Integer> appliedUserIdToApplyIdByPage(@RequestParam("appliedUserId") Integer appliedUserId,
+    public List<Integer> appliedUserIdToApplyIdByPage(@RequestParam("appliedUserId") Long appliedUserId,
                                                       @RequestParam("current")
                                                       int current, @RequestParam("size") int size) {
         return userApplyService.appliedUserIdToApplyIdByPage(appliedUserId, current, size);
     }
     @Override
     @PostMapping("apply-user-id-to-apply-id-by-page")
-    public List<Integer> applyUserIdToApplyIdByPage(@RequestParam("applyUserId") Integer applyUserId,
+    public List<Integer> applyUserIdToApplyIdByPage(@RequestParam("applyUserId") Long applyUserId,
                                                     @RequestParam("current")
                                                     int current, @RequestParam("size") int size) {
         return userApplyService.applyUserIdToApplyIdByPage(applyUserId, current, size);

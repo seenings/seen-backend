@@ -10,7 +10,7 @@ import java.util.Set;
  * @since 2022-10-16
  */
 public interface UserAuthService {
-    Map<Integer, Integer> userIdToUserAuth(Set<Integer> userIds);
+    Map<Long, Integer> userIdToUserAuth(Set<Long> userIds);
 
-    boolean set(Integer userId, Integer authStatus);
+    boolean set(Long userId, Integer authStatus);
 }

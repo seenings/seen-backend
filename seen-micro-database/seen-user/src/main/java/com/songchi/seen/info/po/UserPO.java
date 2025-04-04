@@ -21,7 +21,7 @@ public class UserPO {
      * 自增ID，用户ID
      */
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 手机号

@@ -32,12 +32,12 @@ interface UserWorkCompanyPOMapper extends BaseMapper<UserWorkCompanyPO> {}
 public class UserWorkCompanyPOServiceImpl extends ServiceImpl<UserWorkCompanyPOMapper, UserWorkCompanyPO>
         implements UserWorkCompanyService {
     @Override
-    public Map<Integer, String> userIdToCompanyName(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, String> userIdToCompanyName(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
-        SFunction<UserWorkCompanyPO, Integer> getKey = UserWorkCompanyPO::getUserId;
+        SFunction<UserWorkCompanyPO, Long> getKey = UserWorkCompanyPO::getUserId;
         SFunction<UserWorkCompanyPO, String> getValue = UserWorkCompanyPO::getCompanyName;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs ->
@@ -49,8 +49,8 @@ public class UserWorkCompanyPOServiceImpl extends ServiceImpl<UserWorkCompanyPOM
     }
 
     @Override
-    public boolean set(Integer userId, String companyName) {
-        Map<Integer, String> userIdToValueMap = userIdToCompanyName(Collections.singleton(userId));
+    public boolean set(Long userId, String companyName) {
+        Map<Long, String> userIdToValueMap = userIdToCompanyName(Collections.singleton(userId));
         String exists = userIdToValueMap.get(userId);
         UserWorkCompanyPO po = new UserWorkCompanyPO()
                 .setUserId(userId)

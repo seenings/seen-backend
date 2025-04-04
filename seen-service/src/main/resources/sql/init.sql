@@ -4,8 +4,8 @@ create table if not exists chat_history
 (
     id              int auto_increment comment 'ID'
         primary key,
-    from_user_id    int                                  not null comment '发送者-聊天用户',
-    to_user_id      int                                  not null comment '接收者-聊天用户',
+    from_user_id    bigint                                  not null comment '发送者-聊天用户',
+    to_user_id      bigint                                  not null comment '接收者-聊天用户',
     content_type_id int                                  not null comment '内容类型：1文本，2图片，3语音，4视频',
     content_id      int                                  not null comment '聊天内容ID，根据content_type_id决定是何种内容',
     sent            tinyint(1) default 1                 not null comment '已发送，默认是发送true',
@@ -17,8 +17,8 @@ create table if not exists chat_user
 (
     id             int auto_increment comment '自增ID'
         primary key,
-    user_id        int                                not null comment '本方用户',
-    friend_user_id int                                not null comment '朋友方用户',
+    user_id        bigint                                not null comment '本方用户',
+    friend_user_id bigint                                not null comment '朋友方用户',
     update_time    datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
     comment '可以聊天的用户列表';
@@ -112,7 +112,7 @@ create table if not exists user_info
 (
     id               int auto_increment comment '自增ID'
         primary key,
-    user_id          int                                not null comment '用户ID',
+    user_id          bigint                                not null comment '用户ID',
     name             varchar(30)                        not null comment '用户姓名',
     sex              tinyint                            not null comment '1男2女',
     profile_photo_id int                                not null comment '头像照片id',
@@ -129,7 +129,7 @@ create table if not exists zone
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '哪个用户发的空间',
+    user_id     bigint                                not null comment '哪个用户发的空间',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
     comment '空间';
@@ -151,7 +151,7 @@ create table if not exists zone_reply
     id              int auto_increment comment '自增ID'
         primary key,
     zone_id         int                                not null comment '回复哪一条空间',
-    user_id         int                                not null comment '发送用户',
+    user_id         bigint                                not null comment '发送用户',
     reply_id        int      default 0                 not null comment '回复哪一条空间回复，默认为0代表不是回复',
     zone_content_id int                                not null comment '回复的内容ID',
     update_time     datetime default CURRENT_TIMESTAMP not null comment '更新时间'
@@ -171,7 +171,7 @@ create table seen.tag_need
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int not null comment '用户ID',
+    user_id     bigint not null comment '用户ID',
     need_tag_id int not null comment '用户需求的ID'
 )
     comment '用户需求的标签类型';
@@ -188,7 +188,7 @@ create table seen.tag_user
 (
     id      int auto_increment comment '自增ID'
         primary key,
-    user_id int not null comment '用户ID',
+    user_id bigint not null comment '用户ID',
     tag_id  int not null comment '用户的标签ID'
 )
     comment '用户的标签';
@@ -223,8 +223,8 @@ create table seen.thumb_user
 (
     id              int auto_increment comment '自增ID'
         primary key,
-    thumbed_user_id int                                not null comment '被赞者',
-    thumb_user_id   int                                not null comment '点赞者',
+    thumbed_user_id bigint                                not null comment '被赞者',
+    thumb_user_id   bigint                                not null comment '点赞者',
     deleted     tinyint  default 0                 not null comment '是否删除0未删除',
     update_time     datetime default CURRENT_TIMESTAMP not null comment '更新时间',
     constraint thumb_user_thumb_user_id_thumbed_user_id_uindex
@@ -236,8 +236,8 @@ create table seen.focus_user
 (
     id              int auto_increment comment '自增ID'
         primary key,
-    focused_user_id int                                not null comment '被关注者',
-    focus_user_id   int                                not null comment '关注者',
+    focused_user_id bigint                                not null comment '被关注者',
+    focus_user_id   bigint                                not null comment '关注者',
     deleted     tinyint  default 0                 not null comment '是否删除0未删除',
     update_time     datetime default CURRENT_TIMESTAMP not null comment '更新时间',
     constraint focus_user_focused_user_id_focus_user_id_uindex
@@ -248,7 +248,7 @@ create table seen.user_sex
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     sex         tinyint                            not null comment '性别1（男），2（女）',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
@@ -257,7 +257,7 @@ create table seen.user_marital
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     marital_status         tinyint                 not null comment '婚姻状况，    ''0已婚'',
     ''1未婚'',
     ''2离异无孩'',
@@ -272,7 +272,7 @@ create table seen.user_birthday
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     year        int                                not null comment '出生年份',
     month       int                                null comment '出生月份',
     day         int                                null comment '出生日（所在月）',
@@ -284,7 +284,7 @@ create table seen.user_stature
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     stature_cm  int                                not null comment '身高（厘米）',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
@@ -294,7 +294,7 @@ create table seen.user_weight
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     weight_kg   int                                not null comment '体重（千克）',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
@@ -305,9 +305,9 @@ create table seen.middle_user_recommend
 (
     id                int auto_increment comment '自增ID'
         primary key,
-    user_id           int                                not null comment '用户ID',
+    user_id           bigint                                not null comment '用户ID',
     date              varchar(8)                         not null comment '日期YYYYMMDD格式',
-    recommend_user_id int                                not null comment '推荐的用户ID',
+    recommend_user_id bigint                                not null comment '推荐的用户ID',
     update_time       datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
     comment '用户推荐列表';
@@ -316,7 +316,7 @@ create table seen.user_work_position
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     position    int                                not null comment '职位',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
@@ -325,7 +325,7 @@ create table seen.user_work_company
 (
     id           int auto_increment comment '自增ID'
         primary key,
-    user_id      int                                not null comment '用户ID',
+    user_id      bigint                                not null comment '用户ID',
     company_name varchar(100)                       not null comment '公司名',
     update_time  datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
@@ -345,7 +345,7 @@ create table seen.user_income
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     annual_income         tinyint                 not null comment '年度收入
     YEAR_MIN_TO_5_W(0, "小于5W"),
     YEAR_5_TO_15_W(1, "5-15W"),
@@ -362,7 +362,7 @@ create table seen.user_current_residence
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     province_id int                                not null comment '省ID',
     city_id     int                                not null comment '市ID',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
@@ -374,7 +374,7 @@ create table seen.user_birth_place
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     province_id int                                not null comment '省ID',
     city_id     int                                not null comment '市ID',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
@@ -386,7 +386,7 @@ create table seen.user_auth
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     auth_status int                                not null comment '用户认证状态',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
@@ -396,7 +396,7 @@ create table seen.user_alias_name
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     alias_name  varchar(40)                        not null comment '用户呢称',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
@@ -407,7 +407,7 @@ create table if not exists seen.user_main_photo
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     photo_id    int                                not null comment '用户照片ID',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
@@ -417,7 +417,7 @@ create table if not exists seen.user_introduce
 (
     id             int auto_increment comment '自增ID'
         primary key,
-    user_id        int                                not null comment '用户ID',
+    user_id        bigint                                not null comment '用户ID',
     introduce_type int                                not null comment '介绍类型，IntroduceTypeEnum',
     text_id        int                                not null comment '文本ID，对应text',
     update_time    datetime default CURRENT_TIMESTAMP not null comment '更新时间',
@@ -428,7 +428,7 @@ create table if not exists seen.user_introduce_photo
 (
     id             int auto_increment comment '自增ID'
         primary key,
-    user_id        int                                not null comment '用户ID',
+    user_id        bigint                                not null comment '用户ID',
     introduce_type int                                not null comment '介绍类型，IntroduceTypeEnum',
     photo_id       int                                not null comment '照片ID，对应photo',
     order_num      int                                not null comment '顺序',
@@ -440,9 +440,9 @@ create table if not exists seen.user_apply
 (
     id              int auto_increment comment '自增ID，申请单ID'
         primary key,
-    user_id         int                                not null comment '用户ID',
+    user_id         bigint                                not null comment '用户ID',
     text_id         int                                not null comment '申请消息，对应text表',
-    applied_user_id int                                not null comment '被申请方用户ID',
+    applied_user_id bigint                                not null comment '被申请方用户ID',
     apply_time      datetime default CURRENT_TIMESTAMP not null comment '申请时间',
     create_time     datetime default CURRENT_TIMESTAMP not null comment '创建时间'
 )
@@ -490,10 +490,9 @@ create table if not exists seen.user_apply_look
 
 create table if not exists seen.coin_account
 (
-    id           int auto_increment comment '自增ID，账户ID'
+    id           bigint auto_increment comment '自增ID，账户ID'
         primary key,
     account_type int                                not null comment '账户类型',
-    description  varchar(100)                       not null comment '账户描述，非结构化字段',
     create_time  datetime default CURRENT_TIMESTAMP not null comment '创建时间'
 )
     comment '币账户';
@@ -504,10 +503,8 @@ alter table seen.coin_account
 
 create table if not exists seen.coin_account_user
 (
-    id          int auto_increment comment '自增ID'
-        primary key,
-    account_id  int                                not null comment '账户ID',
-    user_id     int                                not null comment '用户ID',
+    account_id  bigint                                not null comment '账户ID',
+    user_id     bigint                                not null comment '用户ID',
     create_time datetime default CURRENT_TIMESTAMP not null comment '创建时间'
 )
     comment '用户的账户';
@@ -517,8 +514,8 @@ create table if not exists seen.coin_trade
 (
     id             int auto_increment comment '自增ID，币流水ID'
         primary key,
-    in_account_id  int                                not null comment '进入账户ID，增加',
-    out_account_id int                                not null comment '出去账户ID，减少',
+    in_account_id  bigint                                not null comment '进入账户ID，增加',
+    out_account_id bigint                                not null comment '出去账户ID，减少',
     coin_amount    int                                not null comment '币个数',
     description    varchar(100)                       not null comment '交易描述，非结构化字段',
     trade_time     datetime default CURRENT_TIMESTAMP not null comment '交易时间',
@@ -529,7 +526,7 @@ create table if not exists seen.coin_account_balance
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    account_id  int                                not null comment '账户ID',
+    account_id  bigint                                not null comment '账户ID',
     coin_amount int                                not null comment '账户余额',
     change_time datetime default CURRENT_TIMESTAMP not null comment '余额变动时间',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间',
@@ -540,7 +537,7 @@ create table if not exists seen.coin_sys_account_balance
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    account_id  int                                not null comment '账户ID',
+    account_id  bigint                                not null comment '账户ID',
     coin_amount int                                not null comment '账户余额',
     change_time datetime default CURRENT_TIMESTAMP not null comment '余额变动时间',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间',
@@ -564,7 +561,7 @@ create table seen.coin_transfer
         primary key,
     channel_type    int                                not null comment '渠道类型',
     channel_account varchar(100)                       not null comment '渠道账号',
-    user_id         int                                not null comment '用户ID',
+    user_id         bigint                                not null comment '用户ID',
     money           int                                not null comment '充值金额',
     trade_time      datetime default CURRENT_TIMESTAMP not null comment '充值时间',
     trade_id        int                                null comment '交易ID',
@@ -576,7 +573,7 @@ create table seen.trade_register
 (
     id            int auto_increment comment '自增ID'
         primary key,
-    user_id       int                                not null comment '用户ID',
+    user_id       bigint                                not null comment '用户ID',
     register_time int                                not null comment '注册时间',
     trade_id      int                                not null comment '交易ID',
     create_time   datetime default CURRENT_TIMESTAMP not null comment '创建时间'

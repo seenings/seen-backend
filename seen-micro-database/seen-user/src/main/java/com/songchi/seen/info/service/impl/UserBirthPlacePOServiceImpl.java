@@ -33,13 +33,13 @@ public class UserBirthPlacePOServiceImpl extends ServiceImpl<UserBirthPlacePOMap
         implements UserBirthPlaceService {
 
     @Override
-    public Map<Integer, Integer> userIdToCityId(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToCityId(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<UserBirthPlacePO, Integer> getValue = UserBirthPlacePO::getCityId;
-        SFunction<UserBirthPlacePO, Integer> getKey = UserBirthPlacePO::getUserId;
+        SFunction<UserBirthPlacePO, Long> getKey = UserBirthPlacePO::getUserId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs ->
                         list(new LambdaQueryWrapper<UserBirthPlacePO>()
@@ -50,13 +50,13 @@ public class UserBirthPlacePOServiceImpl extends ServiceImpl<UserBirthPlacePOMap
     }
 
     @Override
-    public Map<Integer, Integer> userIdToProvinceId(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToProvinceId(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<UserBirthPlacePO, Integer> getValue = UserBirthPlacePO::getProvinceId;
-        SFunction<UserBirthPlacePO, Integer> getKey = UserBirthPlacePO::getUserId;
+        SFunction<UserBirthPlacePO, Long> getKey = UserBirthPlacePO::getUserId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs ->
                         list(new LambdaQueryWrapper<UserBirthPlacePO>()
@@ -67,7 +67,7 @@ public class UserBirthPlacePOServiceImpl extends ServiceImpl<UserBirthPlacePOMap
     }
 
     @Override
-    public boolean set(Integer userId, Integer provinceId, Integer cityId) {
+    public boolean set(Long userId, Integer provinceId, Integer cityId) {
         Integer exists = userIdToProvinceId(Collections.singleton(userId)).get(userId);
         var po = new UserBirthPlacePO()
                 .setUserId(userId)

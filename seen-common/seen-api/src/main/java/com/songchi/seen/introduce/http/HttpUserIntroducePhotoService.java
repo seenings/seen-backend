@@ -34,7 +34,7 @@ public interface HttpUserIntroducePhotoService extends HttpSeenArticleService {
      * @return 用户ID对应介绍照片信息
      */
     @PostMapping("user-id-to-introduce-type-and-photo")
-    Map<Integer, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhoto(@RequestBody Set<Integer> userIds);
+    Map<Long, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhoto(@RequestBody Set<Long> userIds);
 
     /**
      * 存入多个照片
@@ -46,5 +46,5 @@ public interface HttpUserIntroducePhotoService extends HttpSeenArticleService {
     @PostMapping("save-and-return-id")
     Set<Integer> saveAndReturnId(@RequestBody List<OrderAndPhotoId> orderAndPhotoIds,
             @RequestParam Integer max, @RequestParam IntroduceTypeEnum introduceTypeEnum,
-            @RequestParam("userId") Integer userId);
+            @RequestParam("userId") Long userId);
 }

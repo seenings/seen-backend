@@ -23,8 +23,8 @@ import static com.songchi.seen.sys.constant.SeenConstant.FEIGN_VERSION;
         path = FEIGN_VERSION + "user/user-marital")
 public interface HttpUserMaritalService {
     @PostMapping("user-id-to-marital-status")
-    Map<Integer, Integer> userIdToMaritalStatus(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToMaritalStatus(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("maritalStatus") Integer maritalStatus);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("maritalStatus") Integer maritalStatus);
 }

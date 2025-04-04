@@ -11,5 +11,5 @@ import java.util.Set;
  */
 public interface ITagNeedService extends IService<TagNeed> {
 
-    Map<Integer, Set<Integer>> userIdToNeedTagId(Set<Integer> userIds);
+    Map<Long, Set<Integer>> userIdToNeedTagId(Set<Long> userIds);
 }

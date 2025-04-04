@@ -38,9 +38,9 @@ public class CoinSysAccountBalancePOServiceImpl extends ServiceImpl<CoinSysAccou
      * @return 账户ID对应余额
      */
     @Override
-    public Map<Integer, Integer> accountIdCoinAmount(Set<Integer> accountIds) {
+    public Map<Long, Integer> accountIdCoinAmount(Set<Long> accountIds) {
 
-        List<Integer> list = CollUtils.valueIsNullToList(accountIds);
+        List<Long> list = CollUtils.valueIsNullToList(accountIds);
         if (CollUtils.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -63,7 +63,7 @@ public class CoinSysAccountBalancePOServiceImpl extends ServiceImpl<CoinSysAccou
      * @return 添加余额成功
      */
     @Override
-    public boolean add(Integer accountId, Integer offsetAmount) {
+    public boolean add(Long accountId, Integer offsetAmount) {
         Integer existsCoinAmount =
                 accountIdCoinAmount(Collections.singleton(accountId)).get(accountId);
         LocalDateTime now = LocalDateTime.now();

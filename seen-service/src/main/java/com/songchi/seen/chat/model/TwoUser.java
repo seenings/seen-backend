@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class TwoUser {
     private Integer fromUserId;
-    private Integer toUserId;
+    private Long toUserId;
 
 
 }
