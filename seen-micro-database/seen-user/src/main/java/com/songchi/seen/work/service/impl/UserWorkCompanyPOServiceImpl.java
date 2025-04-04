@@ -1,12 +1,11 @@
 package com.songchi.seen.work.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.work.po.UserWorkCompanyPO;
 import com.songchi.seen.work.service.UserWorkCompanyService;
 import org.apache.ibatis.annotations.Mapper;
@@ -33,8 +32,8 @@ public class UserWorkCompanyPOServiceImpl extends ServiceImpl<UserWorkCompanyPOM
         implements UserWorkCompanyService {
     @Override
     public Map<Long, String> userIdToCompanyName(Set<Long> userIds) {
-        List<Long> list = CollUtils.valueIsNullToList(userIds);
-        if (CollUtil.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(userIds);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<UserWorkCompanyPO, Long> getKey = UserWorkCompanyPO::getUserId;

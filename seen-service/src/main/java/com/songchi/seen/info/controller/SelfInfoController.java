@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.songchi.seen.address.http.HttpProvinceService;
 import com.songchi.seen.common.model.R;
 import com.songchi.seen.common.util.ResUtils;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.core.util.NumberUtils;
 import com.songchi.seen.info.http.HttpUserAliasNameService;
 import com.songchi.seen.info.http.HttpUserBirthPlaceService;
@@ -54,7 +54,6 @@ import com.songchi.seen.text.http.HttpTagService;
 import com.songchi.seen.work.http.HttpUserIncomeService;
 import com.songchi.seen.work.http.HttpUserWorkService;
 
-import cn.hutool.core.collection.CollUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -140,7 +139,7 @@ public class SelfInfoController {
         } else {
             String provinceCode = httpSchoolService.schoolIdToProvinceCode(Collections.singleton(schoolId)).get(schoolId);
             Integer provinceId = httpProvinceService.provinceCodeToProvinceId(Collections.singleton(provinceCode)).get(provinceCode);
-            highestSchoolId = CollUtil.newArrayList(NumberUtils.intToString(provinceId), NumberUtils.intToString(schoolId));
+            highestSchoolId = cn.hutool.core.collection.CollUtil.newArrayList(NumberUtils.intToString(provinceId), NumberUtils.intToString(schoolId));
         }
         Integer workPositionId = httpUserWorkPositionService.userIdToPosition(Collections.singleton(userId)).get(userId);
         String workCompany = httpUserWorkService.userIdToCompanyName(Collections.singleton(userId)).get(userId);
@@ -166,8 +165,8 @@ public class SelfInfoController {
         Integer birthPlaceProvinceId = httpUserBirthPlaceService.userIdToProvinceId(Collections.singleton(userId)).get(userId);
         Integer birthPlaceCityId = httpUserBirthPlaceService.userIdToCityId(Collections.singleton(userId)).get(userId);
 
-        List<String> currentResidence = CollUtil.newArrayList(currentResidenceProvinceId, currentResidenceCityId).stream().map(NumberUtils::intToString).collect(Collectors.toList());
-        List<String> birthPlace = CollUtil.newArrayList(birthPlaceProvinceId, birthPlaceCityId).stream().map(NumberUtils::intToString).collect(Collectors.toList());
+        List<String> currentResidence = cn.hutool.core.collection.CollUtil.newArrayList(currentResidenceProvinceId, currentResidenceCityId).stream().map(NumberUtils::intToString).collect(Collectors.toList());
+        List<String> birthPlace = cn.hutool.core.collection.CollUtil.newArrayList(birthPlaceProvinceId, birthPlaceCityId).stream().map(NumberUtils::intToString).collect(Collectors.toList());
         Integer maritalStatus = httpUserMaritalService.userIdToMaritalStatus(Collections.singleton(userId)).get(userId);
 
         BasicInformation result = new BasicInformation(aliasName, birthDate, sex, stature, weight, currentResidence, birthPlace, maritalStatus);
@@ -223,7 +222,7 @@ public class SelfInfoController {
             return ResponseEntity.internalServerError().header("msg", msg).build();
         }
         httpUserMainPhotoService.set(userId, mainPhotoId);
-        if (CollUtils.isNotEmpty(orderAndPhotoIds)) {
+        if (CollUtil.isNotEmpty(orderAndPhotoIds)) {
             // 按顺序存入，取出即有序
             httpUserIntroducePhotoService.saveAndReturnId(orderAndPhotoIds, max, IntroduceEnumUtils.indexToIntroduceTypeEnum(introduceTypeEnum), userId);
         }

@@ -1,12 +1,11 @@
 package com.songchi.seen.thumb.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.thumb.po.FocusUserPO;
 import com.songchi.seen.thumb.service.FocusUserPOService;
 import org.apache.ibatis.annotations.Mapper;
@@ -39,8 +38,8 @@ public class FocusUserPOServiceImpl extends ServiceImpl<FocusUserPOMapper, Focus
      */
     @Override
     public Map<Long, Boolean> focusedUserIdToTrue(Set<Long> focusedUserIds, Long focusUserId) {
-        List<Long> list = CollUtils.valueIsNullToList(focusedUserIds);
-        if (CollUtil.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(focusedUserIds);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()

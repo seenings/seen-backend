@@ -9,7 +9,7 @@ import com.songchi.seen.chat.model.ChatUser;
 import com.songchi.seen.chat.po.ChatUserPO;
 import com.songchi.seen.chat.service.ChatUserService;
 import com.songchi.seen.common.model.ResultPage;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
@@ -64,8 +64,8 @@ public class ChatUserPOServiceImpl extends ServiceImpl<ChatUserPOMapper, ChatUse
      */
     @Override
     public Map<Long, Boolean> friendUserIdIsFriend(Set<Long> friendUserIds, Long userId) {
-        List<Long> list = CollUtils.valueIsNullToList(friendUserIds);
-        if (CollUtils.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(friendUserIds);
+        if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         Map<Long, Boolean> friendUserIdToIsFriendMap = ListUtil.partition(list, 100).stream()

@@ -1,12 +1,11 @@
 package com.songchi.seen.auth.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.auth.po.UserAuthPO;
 import com.songchi.seen.info.service.UserAuthService;
 import org.apache.ibatis.annotations.Mapper;
@@ -33,8 +32,8 @@ public class UserAuthPOServiceImpl extends ServiceImpl<UserAuthPOMapper, UserAut
 
     @Override
     public Map<Long, Integer> userIdToUserAuth(Set<Long> userIds) {
-        List<Long> list = CollUtils.valueIsNullToList(userIds);
-        if (CollUtil.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(userIds);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<UserAuthPO, Integer> getValue = UserAuthPO::getAuthStatus;

@@ -5,8 +5,7 @@ import com.songchi.seen.article.enumeration.ContentType;
 import com.songchi.seen.chat.http.HttpChatHistoryService;
 import com.songchi.seen.chat.model.ChatContentAndTime;
 import com.songchi.seen.chat.service.ChatHistoryService;
-import com.songchi.seen.common.exception.SeenRuntimeException;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.sys.util.ListUtils;
 import com.songchi.seen.sys.constant.SeenConstant;
 import jakarta.annotation.Resource;
@@ -77,12 +76,12 @@ public class ChatHistoryController implements HttpChatHistoryService {
         Map<Integer, ChatContentAndTime> idToChatContentAndTimeMap = chatHistoryService.idToChatContentAndTime(ids);
         return userIds.stream().parallel().map(n -> {
             List<Integer> resultChatHistoryIds = fromUserIdToChatHistoryIdMap.get(n);
-            if (CollUtils.isNotEmpty(resultChatHistoryIds) && resultChatHistoryIds.size() == 1) {
-                Integer id = CollUtils.first(resultChatHistoryIds);
+            if (CollUtil.isNotEmpty(resultChatHistoryIds) && resultChatHistoryIds.size() == 1) {
+                Integer id = CollUtil.first(resultChatHistoryIds);
                 ChatContentAndTime chatContentAndTime = idToChatContentAndTimeMap.get(id);
                 return Pair.of(n, chatContentAndTime);
             } else {
-                String msg = String.format("聊天记录条数不对，个数：%s。", CollUtils.size(resultChatHistoryIds));
+                String msg = String.format("聊天记录条数不对，个数：%s。", CollUtil.size(resultChatHistoryIds));
                 log.error(msg);
                 return null;
             }

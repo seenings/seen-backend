@@ -9,9 +9,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
- * 日期工具类
+ * 日期工具类.
  */
-public class DateUtil {
+public final class DateUtil {
+    /**
+     * 隐藏构造器
+     */
+    private DateUtil() {
+
+    }
+
     public static ConstellationEnum monthAndDayToConstellationEnum(Integer month, Integer day) {
         if (month != null) {
             switch (month) {

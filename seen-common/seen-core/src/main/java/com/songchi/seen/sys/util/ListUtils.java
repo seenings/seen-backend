@@ -1,6 +1,6 @@
 package com.songchi.seen.sys.util;
 
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,7 +19,7 @@ public class ListUtils {
      * @return 列表
      */
     public static <T> List<T> valueIsNull(Set<T> set) {
-        if (CollUtils.isEmpty(set)) {
+        if (CollUtil.isEmpty(set)) {
             return Collections.emptyList();
         }
         return set.stream().filter(Objects::nonNull).collect(Collectors.toList());
@@ -32,10 +32,10 @@ public class ListUtils {
      * @param <T>   元素类型
      */
     public static <T> List<T> except(List<T> firstList, List<T> secondList) {
-        if (CollUtils.isEmpty(firstList)) {
+        if (CollUtil.isEmpty(firstList)) {
             return Collections.emptyList();
         }
-        if (CollUtils.isEmpty(secondList)) {
+        if (CollUtil.isEmpty(secondList)) {
             return new ArrayList<>(firstList);
         }
         return firstList.stream()
@@ -51,10 +51,10 @@ public class ListUtils {
      * @param <T>   元素类型
      */
     public static <T> List<T> union(List<T> firstList, List<T> secondList) {
-        if (CollUtils.isEmpty(firstList)) {
+        if (CollUtil.isEmpty(firstList)) {
             return new ArrayList<>(secondList);
         }
-        if (CollUtils.isEmpty(secondList)) {
+        if (CollUtil.isEmpty(secondList)) {
             return new ArrayList<>(firstList);
         }
         return Stream.of(firstList, secondList)
@@ -71,20 +71,20 @@ public class ListUtils {
      * @param <T>   元素类型
      */
     public static <T> List<T> interset(List<T> firstList, List<T> secondList) {
-        if (CollUtils.isEmpty(firstList)) {
+        if (CollUtil.isEmpty(firstList)) {
             return Collections.emptyList();
         }
-        if (CollUtils.isEmpty(secondList)) {
+        if (CollUtil.isEmpty(secondList)) {
             return Collections.emptyList();
         }
         return firstList.stream().parallel().filter(secondList::contains).collect(Collectors.toList());
     }
 
     public static <T> List<T> headSimple(List<T> firstList, List<T> secondList) {
-        if (CollUtils.isEmpty(firstList)) {
+        if (CollUtil.isEmpty(firstList)) {
             return Collections.emptyList();
         }
-        if (CollUtils.isEmpty(secondList)) {
+        if (CollUtil.isEmpty(secondList)) {
             return Collections.emptyList();
         }
         int minSize = Math.min(firstList.size(), secondList.size());

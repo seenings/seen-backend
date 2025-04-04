@@ -3,7 +3,7 @@ package com.songchi.seen.voice.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.sys.util.ListUtils;
 import com.songchi.seen.sys.constant.PublicConstant;
 import com.songchi.seen.voice.entity.Voice;
@@ -58,7 +58,7 @@ public class VoiceServiceImpl extends ServiceImpl<VoiceMapper, Voice> implements
     @Override
     public Map<Integer, String> voiceIdToPath(Set<Integer> voiceIds) {
         List<Integer> voiceIdList = ListUtils.valueIsNull(voiceIds);
-        if (CollUtils.isEmpty(voiceIdList)) {
+        if (CollUtil.isEmpty(voiceIdList)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(voiceIdList, 500).stream().flatMap(subs -> list(new QueryWrapper<Voice>().lambda().in(Voice::getId, subs).select(Voice::getId, Voice::getPath)).stream()).collect(Collectors.toMap(Voice::getId, Voice::getPath, (o1, o2) -> o2));

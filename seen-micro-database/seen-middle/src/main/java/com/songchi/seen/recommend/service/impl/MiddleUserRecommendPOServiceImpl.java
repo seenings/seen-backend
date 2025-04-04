@@ -13,10 +13,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.recommend.po.MiddleUserRecommendPO;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 
 /**
@@ -35,7 +34,7 @@ public class MiddleUserRecommendPOServiceImpl extends ServiceImpl<MiddleUserReco
 
     @Override
     public Set<Long> haveUserId(Long userId, Set<Long> recommendUserIds) {
-        if (CollUtil.isEmpty(recommendUserIds)) {
+        if (cn.hutool.core.collection.CollUtil.isEmpty(recommendUserIds)) {
             return Collections.emptySet();
         }
         return list(new QueryWrapper<MiddleUserRecommendPO>()
@@ -51,8 +50,8 @@ public class MiddleUserRecommendPOServiceImpl extends ServiceImpl<MiddleUserReco
 
     @Override
     public Map<Long, List<Long>> userIdToRecommendUserId(Set<Long> userIds, String date) {
-        List<Long> list = CollUtils.valueIsNullToList(userIds);
-        if (CollUtil.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(userIds);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 500).stream()

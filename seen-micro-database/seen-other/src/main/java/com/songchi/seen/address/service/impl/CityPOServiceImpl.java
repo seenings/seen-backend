@@ -1,6 +1,5 @@
 package com.songchi.seen.address.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -8,7 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.songchi.seen.address.po.CityPO;
 import com.songchi.seen.address.service.CityService;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +31,8 @@ public class CityPOServiceImpl extends ServiceImpl<CityPOMapper, CityPO> impleme
 
     @Override
     public Map<Integer, String> idToName(Set<Integer> ids) {
-        List<Integer> list = CollUtils.valueIsNullToList(ids);
-        if (CollUtil.isEmpty(list)) {
+        List<Integer> list = CollUtil.valueIsNullToList(ids);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<CityPO, String> getValue = CityPO::getName;
@@ -46,8 +45,8 @@ public class CityPOServiceImpl extends ServiceImpl<CityPOMapper, CityPO> impleme
 
     @Override
     public Map<String, String> codeToName(Set<String> codes) {
-        List<String> list = CollUtils.valueIsNullToList(codes);
-        if (CollUtil.isEmpty(list)) {
+        List<String> list = CollUtil.valueIsNullToList(codes);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<CityPO, String> getValue = CityPO::getName;
@@ -60,8 +59,8 @@ public class CityPOServiceImpl extends ServiceImpl<CityPOMapper, CityPO> impleme
 
     @Override
     public Map<String, List<String>> provinceCodeToCode(Set<String> provinceCodes) {
-        List<String> list = CollUtils.valueIsNullToList(provinceCodes);
-        if (CollUtil.isEmpty(list)) {
+        List<String> list = CollUtil.valueIsNullToList(provinceCodes);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<CityPO, String> getValue = CityPO::getCode;
@@ -75,8 +74,8 @@ public class CityPOServiceImpl extends ServiceImpl<CityPOMapper, CityPO> impleme
 
     @Override
     public Map<String, Integer> cityCodeToCityId(Set<String> cityCodes) {
-        List<String> list = CollUtils.valueIsNullToList(cityCodes);
-        if (CollUtil.isEmpty(list)) {
+        List<String> list = CollUtil.valueIsNullToList(cityCodes);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()

@@ -1,11 +1,10 @@
 package com.songchi.seen.school.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.school.po.StudentInfoPO;
 import com.songchi.seen.school.service.StudentInfoService;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,8 +33,8 @@ public class StudentInfoPOServiceImpl extends ServiceImpl<StudentInfoPOMapper, S
     @Override
     public Map<Long, Integer> userIdToSchoolId(Set<Long> userIds) {
 
-        List<Long> list = CollUtils.valueIsNullToList(userIds);
-        if (CollUtil.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(userIds);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()

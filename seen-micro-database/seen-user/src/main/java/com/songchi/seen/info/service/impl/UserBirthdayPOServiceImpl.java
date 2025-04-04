@@ -1,12 +1,11 @@
 package com.songchi.seen.info.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.songchi.seen.info.po.UserBirthdayPO;
-import com.songchi.seen.core.util.CollUtils;
+import com.songchi.seen.core.util.CollUtil;
 import com.songchi.seen.info.service.UserBirthdayService;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
@@ -33,8 +32,8 @@ public class UserBirthdayPOServiceImpl extends ServiceImpl<UserBirthdayPOMapper,
 
     @Override
     public Map<Long, Integer> userIdToYear(Set<Long> userIds) {
-        List<Long> list = CollUtils.valueIsNullToList(userIds);
-        if (CollUtil.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(userIds);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 500).stream()
@@ -47,8 +46,8 @@ public class UserBirthdayPOServiceImpl extends ServiceImpl<UserBirthdayPOMapper,
 
     @Override
     public Map<Long, Integer> userIdToMonth(Set<Long> userIds) {
-        List<Long> list = CollUtils.valueIsNullToList(userIds);
-        if (CollUtil.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(userIds);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 500).stream()
@@ -62,8 +61,8 @@ public class UserBirthdayPOServiceImpl extends ServiceImpl<UserBirthdayPOMapper,
 
     @Override
     public Map<Long, Integer> userIdToDay(Set<Long> userIds) {
-        List<Long> list = CollUtils.valueIsNullToList(userIds);
-        if (CollUtil.isEmpty(list)) {
+        List<Long> list = CollUtil.valueIsNullToList(userIds);
+        if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 500).stream()

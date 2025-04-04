@@ -20,10 +20,10 @@ public class SetUtils {
      * @param <T>   元素类型
      */
     public static <T> Set<T> except(Set<T> firstSet, Set<T> secondSet) {
-        if (CollUtils.isEmpty(firstSet)) {
+        if (CollUtil.isEmpty(firstSet)) {
             return Collections.emptySet();
         }
-        if (CollUtils.isEmpty(secondSet)) {
+        if (CollUtil.isEmpty(secondSet)) {
             return new HashSet<>(firstSet);
         }
         return firstSet.stream().parallel().filter(n -> !secondSet.contains(n)).collect(Collectors.toSet());
@@ -36,10 +36,10 @@ public class SetUtils {
      * @param <T>   元素类型
      */
     public static <T> Set<T> union(Collection<T> firstSet, Collection<T> secondSet) {
-        if (CollUtils.isEmpty(firstSet)) {
+        if (CollUtil.isEmpty(firstSet)) {
             return new HashSet<>(secondSet);
         }
-        if (CollUtils.isEmpty(secondSet)) {
+        if (CollUtil.isEmpty(secondSet)) {
             return new HashSet<>(firstSet);
         }
         return Stream.of(firstSet, secondSet)
@@ -55,10 +55,10 @@ public class SetUtils {
      * @param <T>   元素类型
      */
     public static <T> Set<T> interset(Set<T> firstSet, Set<T> secondSet) {
-        if (CollUtils.isEmpty(firstSet)) {
+        if (CollUtil.isEmpty(firstSet)) {
             return Collections.emptySet();
         }
-        if (CollUtils.isEmpty(secondSet)) {
+        if (CollUtil.isEmpty(secondSet)) {
             return Collections.emptySet();
         }
         return firstSet.stream().parallel().filter(secondSet::contains).collect(Collectors.toSet());
