@@ -22,11 +22,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ResultRecommendServiceImpl implements ResultRecommendService {
 
-
-    /**
-     * 当前时间组件
-     */
-    private NowComponent nowComponent;
     private AsyncCalcService asyncCalcService;
 
     private HttpMiddleUserRecommendService httpMiddleUserRecommendService;
@@ -34,8 +29,8 @@ public class ResultRecommendServiceImpl implements ResultRecommendService {
     private HttpRecommendService httpRecommendService;
 
     @Override
-    public List<Integer> userIdToRecommendUserId(Integer userId, String date) {
-        List<Integer> recommendUserIds = httpMiddleUserRecommendService.userIdToRecommendUserId(Collections.singleton(userId), date).get(userId);
+    public List<Long> userIdToRecommendUserId(Long userId, String date) {
+        List<Long> recommendUserIds = httpMiddleUserRecommendService.userIdToRecommendUserId(Collections.singleton(userId), date).get(userId);
         if (CollUtils.isNotEmpty(recommendUserIds)) {
             return recommendUserIds;
         } else {
@@ -47,11 +42,11 @@ public class ResultRecommendServiceImpl implements ResultRecommendService {
     }
 
     @Override
-    public List<Integer> userIdToRecommendUserId(Integer userId) {
+    public List<Long> userIdToRecommendUserId(Long userId) {
         // 每天的推荐数据在12点之后推送
         LocalDateTime now = LocalDateTime.now();
         boolean pm = DateUtil.isPM(io.github.seenings.time.util.DateUtil.localDateTimeToDate(now));
-        List<Integer> recommendUserIds;
+        List<Long> recommendUserIds;
         String date = io.github.seenings.time.util.DateUtil.localDateTimeToBasicIsoDate(now);
         if (pm) {
             // 如果是下午

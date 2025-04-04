@@ -24,5 +24,5 @@ public interface HttpRecommendService {
      * @return  被推荐的用户
      */
     @PostMapping("create-recommend-user")
-    List<Integer> createRecommendUser(@RequestParam("userId") Integer userId);
+    List<Long> createRecommendUser(@RequestParam("userId") Long userId);
 }

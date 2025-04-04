@@ -27,7 +27,7 @@ public class UserStaturePO implements Serializable {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 身高（厘米）

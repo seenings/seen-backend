@@ -24,13 +24,13 @@ public class UserAliasNameController implements HttpUserAliasNameService {
 
     @Override
     @PostMapping("user-id-to-alias-name")
-    public Map<Integer, String> userIdToAliasName(@RequestBody Set<Integer> userIds) {
+    public Map<Long, String> userIdToAliasName(@RequestBody Set<Long> userIds) {
         return userAliasNameService.userIdToAliasName(userIds);
     }
 
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam("userId") Integer userId, @RequestParam("aliasName") String aliasName) {
+    public boolean set(@RequestParam("userId") Long userId, @RequestParam("aliasName") String aliasName) {
         return userAliasNameService.set(userId, aliasName);
     }
 }

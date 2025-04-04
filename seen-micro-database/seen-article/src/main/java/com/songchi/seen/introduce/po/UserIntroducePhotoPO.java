@@ -18,7 +18,7 @@ public class UserIntroducePhotoPO {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    private Integer userId;
+    private Long userId;
     private Integer introduceType;
     /**
      * 顺序

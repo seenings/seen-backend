@@ -32,7 +32,7 @@ public class EducationalPOServiceImpl extends ServiceImpl<EducationalPOMapper, E
      * @return  用户ID对应学历
      */
     @Override
-    public Map<Integer, Integer> userIdToEducational(Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToEducational(Set<Long> userIds) {
         if (userIds.isEmpty()) {
             return Collections.emptyMap();
         }
@@ -52,8 +52,8 @@ public class EducationalPOServiceImpl extends ServiceImpl<EducationalPOMapper, E
      * @return  实际写入数据
      */
     @Override
-    public boolean set(Integer userId, Education education) {
-        Map<Integer, Integer> userIdToEducationalMap = userIdToEducational(Collections.singleton(userId));
+    public boolean set(Long userId, Education education) {
+        Map<Long, Integer> userIdToEducationalMap = userIdToEducational(Collections.singleton(userId));
         Integer educational = userIdToEducationalMap.get(userId);
         if (educational == null) {
             return save(new EducationalPO()

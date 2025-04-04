@@ -32,8 +32,8 @@ public class SchoolGraduatePOServiceImpl extends ServiceImpl<SchoolGraduatePOMap
         implements SchoolGraduateService {
 
     @Override
-    public Map<Integer, Integer> userIdToGraduated(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToGraduated(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -46,8 +46,8 @@ public class SchoolGraduatePOServiceImpl extends ServiceImpl<SchoolGraduatePOMap
     }
 
     @Override
-    public boolean set(Integer userId, Integer graduated) {
-        Map<Integer, Integer> userIdToGraduatedMap = userIdToGraduated(Collections.singleton(userId));
+    public boolean set(Long userId, Integer graduated) {
+        Map<Long, Integer> userIdToGraduatedMap = userIdToGraduated(Collections.singleton(userId));
         Integer exists = userIdToGraduatedMap.get(userId);
         SchoolGraduatePO po =
                 new SchoolGraduatePO().setUserId(userId).setGraduated(graduated).setUpdateTime(LocalDateTime.now());

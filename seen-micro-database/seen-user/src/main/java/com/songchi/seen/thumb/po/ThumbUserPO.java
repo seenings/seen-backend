@@ -25,12 +25,12 @@ public class ThumbUserPO {
     /**
      * 被赞者
      */
-    private Integer thumbedUserId;
+    private Long thumbedUserId;
 
     /**
      * 点赞者
      */
-    private Integer thumbUserId;
+    private Long thumbUserId;
 
     /**
      * 是否删除0未删除

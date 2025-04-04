@@ -26,9 +26,9 @@ public class AsyncCalcServiceImpl implements AsyncCalcService {
 
     @Async
     @Override
-    public CompletableFuture<List<Integer>> userIdToRecommendUserId(Integer userId, String date) {
+    public CompletableFuture<List<Long>> userIdToRecommendUserId(Long userId, String date) {
         // 生成
-        List<Integer> recommendUserIds = httpRecommendService.createRecommendUser(userId);
+        List<Long> recommendUserIds = httpRecommendService.createRecommendUser(userId);
         httpMiddleUserRecommendService.set(userId, date, recommendUserIds);
         return CompletableFuture.completedFuture(recommendUserIds);
     }

@@ -7,15 +7,18 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * CoinAccountService
- *
- * @author chixuehui
- * @since 2023-01-01
+ * 币账户
  */
 public interface CoinAccountService {
-    Map<Integer, List<Integer>> accountTypeToAccountId(Set<Integer> accountTypeIds);
+    Map<Integer, List<Long>> accountTypeToAccountId(Set<Integer> accountTypeIds);
 
-    Map<Integer, AccountType> accountIdToAccountType(Set<Integer> accountIds);
+    Map<Long, AccountType> accountIdToAccountType(Set<Long> accountIds);
 
-    Integer createAccount(String description, AccountType accountType);
+    /**
+     * 创建账户
+     *
+     * @param accountType 账户类型
+     * @return 账户号
+     */
+    Long createAccount(AccountType accountType);
 }

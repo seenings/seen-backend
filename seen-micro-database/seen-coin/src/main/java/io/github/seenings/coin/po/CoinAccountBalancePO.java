@@ -26,7 +26,7 @@ public class CoinAccountBalancePO {
     /**
      * 账户ID
      */
-    private Integer accountId;
+    private Long accountId;
 
     /**
      * 账户余额

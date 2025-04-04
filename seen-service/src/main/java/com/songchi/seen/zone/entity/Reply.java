@@ -28,7 +28,7 @@ public class Reply implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private Integer zoneId;
-    private Integer userId;
+    private Long userId;
     private Integer replyId;
     private Integer zoneContentId;
     private LocalDateTime updateTime;

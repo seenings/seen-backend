@@ -7,5 +7,5 @@ package com.songchi.seen.trade.service;
  * @since 2023-01-01
  */
 public interface CoinTradeService {
-    Integer addTrade(Integer inAccountId, Integer outAccountId, Integer coinAmount, String description);
+    Integer addTrade(Long inAccountId, Long outAccountId, Integer coinAmount, String description);
 }

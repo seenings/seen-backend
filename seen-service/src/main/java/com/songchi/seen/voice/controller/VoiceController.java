@@ -50,7 +50,7 @@ public class VoiceController {
     private NowComponent nowComponent;
 
     @PostMapping("upload")
-    public R<Integer> upload(MultipartFile file, @SessionAttribute(PublicConstant.USER_ID) Integer userId) {
+    public R<Integer> upload(MultipartFile file, @SessionAttribute(PublicConstant.USER_ID) Long userId) {
         if (file == null || file.isEmpty()) {
             String msg = "文件为空。";
             log.error(msg);

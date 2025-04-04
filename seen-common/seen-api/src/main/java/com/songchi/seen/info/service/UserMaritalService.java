@@ -13,9 +13,9 @@ import java.util.Set;
  * @since 2023-02-11
  */
 public interface UserMaritalService {
-    Map<Integer, Integer> userIdToMaritalStatus(Set<Integer> userIds);
+    Map<Long, Integer> userIdToMaritalStatus(Set<Long> userIds);
 
-    List<Integer> maritalStatusToUserId(MaritalStatus maritalStatus, int current, int size);
+    List<Long> maritalStatusToUserId(MaritalStatus maritalStatus, int current, int size);
 
-    boolean set(Integer userId, MaritalStatus maritalStatus);
+    boolean set(Long userId, MaritalStatus maritalStatus);
 }

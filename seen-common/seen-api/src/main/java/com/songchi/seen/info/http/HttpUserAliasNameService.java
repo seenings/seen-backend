@@ -23,8 +23,8 @@ import java.util.Set;
         contextId = "HttpUserAliasNameService")
 public interface HttpUserAliasNameService {
     @PostMapping("user-id-to-alias-name")
-    Map<Integer, String> userIdToAliasName(@RequestBody Set<Integer> userIds);
+    Map<Long, String> userIdToAliasName(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("aliasName") String aliasName);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("aliasName") String aliasName);
 }

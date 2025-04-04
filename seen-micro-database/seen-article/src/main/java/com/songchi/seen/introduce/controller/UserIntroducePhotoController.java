@@ -36,7 +36,7 @@ public class UserIntroducePhotoController implements HttpUserIntroducePhotoServi
      * @return 用户ID对应介绍信息对应关系
      */
     @Override
-    public Map<Integer, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhoto(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhoto(@RequestBody Set<Long> userIds) {
         return introducePhotoService.userIdToIntroduceTypeAndPhoto(userIds);
     }
 
@@ -50,7 +50,7 @@ public class UserIntroducePhotoController implements HttpUserIntroducePhotoServi
      */
     @Override
     @PostMapping("save-and-return-id")
-    public Set<Integer> saveAndReturnId(@RequestBody List<OrderAndPhotoId> orderAndPhotoIds, @RequestParam Integer max, @RequestParam IntroduceTypeEnum introduceTypeEnum, @RequestParam("userId") Integer userId) {
+    public Set<Integer> saveAndReturnId(@RequestBody List<OrderAndPhotoId> orderAndPhotoIds, @RequestParam Integer max, @RequestParam IntroduceTypeEnum introduceTypeEnum, @RequestParam("userId") Long userId) {
         return userIntroducePhotoService.saveAndReturnId(orderAndPhotoIds, max, introduceTypeEnum, userId);
     }
 }

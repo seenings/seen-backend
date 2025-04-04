@@ -35,7 +35,7 @@ public class UserCurrentResidencePOServiceImpl extends ServiceImpl<UserCurrentRe
         implements UserCurrentResidenceService {
 
     @Override
-    public List<Integer> currentResidenceCityToUserId(Integer cityId, int current, int size) {
+    public List<Long> currentResidenceCityToUserId(Integer cityId, int current, int size) {
         Page<UserCurrentResidencePO> page = page(
                 new Page<>(current, size),
                 new QueryWrapper<UserCurrentResidencePO>()
@@ -49,13 +49,13 @@ public class UserCurrentResidencePOServiceImpl extends ServiceImpl<UserCurrentRe
     }
 
     @Override
-    public Map<Integer, Integer> userIdToCityId(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToCityId(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<UserCurrentResidencePO, Integer> getValue = UserCurrentResidencePO::getCityId;
-        SFunction<UserCurrentResidencePO, Integer> getKey = UserCurrentResidencePO::getUserId;
+        SFunction<UserCurrentResidencePO, Long> getKey = UserCurrentResidencePO::getUserId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(
                         subs -> list(new LambdaQueryWrapper<UserCurrentResidencePO>()
@@ -66,13 +66,13 @@ public class UserCurrentResidencePOServiceImpl extends ServiceImpl<UserCurrentRe
     }
 
     @Override
-    public Map<Integer, Integer> userIdToProvinceId(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToProvinceId(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<UserCurrentResidencePO, Integer> getValue = UserCurrentResidencePO::getProvinceId;
-        SFunction<UserCurrentResidencePO, Integer> getKey = UserCurrentResidencePO::getUserId;
+        SFunction<UserCurrentResidencePO, Long> getKey = UserCurrentResidencePO::getUserId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(
                         subs -> list(new LambdaQueryWrapper<UserCurrentResidencePO>()
@@ -83,7 +83,7 @@ public class UserCurrentResidencePOServiceImpl extends ServiceImpl<UserCurrentRe
     }
 
     @Override
-    public boolean set(Integer userId, Integer provinceId, Integer cityId) {
+    public boolean set(Long userId, Integer provinceId, Integer cityId) {
         Integer exists = userIdToProvinceId(Collections.singleton(userId)).get(userId);
         var po = new UserCurrentResidencePO()
                 .setUserId(userId)

@@ -30,7 +30,7 @@ public class CoinTradePOServiceImpl extends ServiceImpl<CoinTradePOMapper, CoinT
      * @return  交易ID
      */
     @Override
-    public Integer addTrade(Integer inAccountId, Integer outAccountId, Integer coinAmount, String description) {
+    public Integer addTrade(Long inAccountId, Long outAccountId, Integer coinAmount, String description) {
         LocalDateTime now = LocalDateTime.now();
         CoinTradePO po = new CoinTradePO()
                 .setTradeTime(now)

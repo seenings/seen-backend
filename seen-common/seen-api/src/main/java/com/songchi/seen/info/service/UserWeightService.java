@@ -10,7 +10,7 @@ import java.util.Set;
  * @since 2022-10-16
  */
 public interface UserWeightService {
-    Map<Integer, Integer> userIdToWeightKg(Set<Integer> userIds);
+    Map<Long, Integer> userIdToWeightKg(Set<Long> userIds);
 
-    boolean set(Integer userId, Integer weightKg);
+    boolean set(Long userId, Integer weightKg);
 }

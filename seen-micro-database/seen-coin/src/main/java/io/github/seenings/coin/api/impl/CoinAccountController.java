@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,12 +35,12 @@ public class CoinAccountController implements HttpCoinAccountService {
 
     @Override
     @PostMapping("init-account")
-    public void initAccount(@RequestParam("userId") Integer userId) {
-        Integer userForeverAccountId = coinAccountService.createAccount("",
+    public void initAccount(@RequestParam("userId") Long userId) {
+        Long userForeverAccountId = coinAccountService.createAccount(
                 AccountType.USER_FOREVER);
-        Integer userTemporaryAccountId = coinAccountService.createAccount("",
+        Long userTemporaryAccountId = coinAccountService.createAccount(
                 AccountType.USER_TEMPORARY);
-        Integer userFreezeAccountId = coinAccountService.createAccount("",
+        Long userFreezeAccountId = coinAccountService.createAccount(
                 AccountType.USER_FREEZE);
 
         coinAccountUserService.set(userForeverAccountId, userId);
@@ -53,21 +54,24 @@ public class CoinAccountController implements HttpCoinAccountService {
 
     @Override
     @PostMapping("user-id-to-account-id")
-    public Map<Integer, Integer> userIdToAccountId(@RequestBody Set<Integer> userIds, @RequestParam("accountType") AccountType accountType) {
-        Map<Integer, Set<Integer>> userIdToAccountIdMap = coinAccountUserService
+    public Map<Long, Long> userIdToAccountId(@RequestBody Set<Long> userIds, @RequestParam("accountType") AccountType accountType) {
+        Map<Long, Set<Long>> userIdToAccountIdMap = coinAccountUserService
                 .userIdToAccountId(userIds);
 
-        Set<Integer> accountIds = userIdToAccountIdMap.values().stream().parallel()
+        Set<Long> accountIds = userIdToAccountIdMap.values().stream().parallel()
                 .flatMap(Collection::stream).collect(Collectors.toSet());
-        Map<Integer, AccountType> accountIdToAccountTypeMap = coinAccountService.accountIdToAccountType(accountIds);
+        Map<Long, AccountType> accountIdToAccountTypeMap = coinAccountService.accountIdToAccountType(accountIds);
         // 获取账户
         return userIds.stream().parallel()
                 .map(n -> {
-                    Set<Integer> resultAccountIds = userIdToAccountIdMap.get(n);
-                    Integer accountId = resultAccountIds.stream().parallel()
+                    Set<Long> resultAccountIds = userIdToAccountIdMap.get(n);
+                    Long accountId = resultAccountIds.stream().parallel()
                             .filter(l -> accountIdToAccountTypeMap.get(l) == accountType)
                             .findFirst().orElse(null);
-                    return Pair.of(n, accountId);
-                }).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+                    if (accountId == null) {
+                        return null;
+                    }
+                    return Map.entry(n, accountId);
+                }).filter(Objects::nonNull).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

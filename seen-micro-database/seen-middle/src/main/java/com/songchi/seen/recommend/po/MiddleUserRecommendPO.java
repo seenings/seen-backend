@@ -24,7 +24,7 @@ public class MiddleUserRecommendPO {
     /**
      * 给这个用户ID推荐
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 日期YYYYMMDD格式
@@ -34,7 +34,7 @@ public class MiddleUserRecommendPO {
     /**
      * 推荐的用户ID
      */
-    private Integer recommendUserId;
+    private Long recommendUserId;
 
     /**
      * 更新时间

@@ -10,7 +10,7 @@ import java.util.Set;
  * @since 2023-03-05
  */
 public interface CoinSysAccountBalanceService {
-    Map<Integer, Integer> accountIdCoinAmount(Set<Integer> accountIds);
+    Map<Long, Integer> accountIdCoinAmount(Set<Long> accountIds);
 
-    boolean add(Integer accountId, Integer offsetAmount);
+    boolean add(Long accountId, Integer offsetAmount);
 }

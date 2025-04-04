@@ -23,13 +23,13 @@ import java.util.Set;
 public interface HttpUserBirthPlaceService {
 
     @PostMapping("user-id-to-city-id")
-    Map<Integer, Integer> userIdToCityId(Set<Integer> userIds);
+    Map<Long, Integer> userIdToCityId(Set<Long> userIds);
 
     @PostMapping("user-id-to-province-id")
-    Map<Integer, Integer> userIdToProvinceId(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToProvinceId(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("provinceId") Integer provinceId,
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("provinceId") Integer provinceId,
                 @RequestParam("cityId")
                 Integer cityId);
 }

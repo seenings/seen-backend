@@ -34,7 +34,7 @@ public interface HttpChatUserService {
      */
     @PostMapping("page")
     ResultPage<ChatUser> page(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("current") int current,
             @RequestParam("size") int size);
 
@@ -45,8 +45,8 @@ public interface HttpChatUserService {
      * @return  朋友ID对应是否朋友
      */
     @PostMapping("friend-user-id-is-friend")
-    Map<Integer, Boolean> friendUserIdIsFriend(
-            @RequestBody Set<Integer> friendUserIds, @RequestParam("userId") Integer userId);
+    Map<Long, Boolean> friendUserIdIsFriend(
+            @RequestBody Set<Long> friendUserIds, @RequestParam("userId") Long userId);
 
     /**
      * 设置朋友关系
@@ -55,5 +55,5 @@ public interface HttpChatUserService {
      * @return  设置成功
      */
     @PostMapping("set")
-    boolean set(@RequestParam("friendUserId") Integer friendUserId, @RequestParam("userId") Integer userId);
+    boolean set(@RequestParam("friendUserId") Long friendUserId, @RequestParam("userId") Long userId);
 }

@@ -26,12 +26,12 @@ public class CoinTradePO {
     /**
      * 进入账户ID，增加
      */
-    private Integer inAccountId;
+    private Long inAccountId;
 
     /**
      * 出去账户ID，减少
      */
-    private Integer outAccountId;
+    private Long outAccountId;
 
     /**
      * 币个数

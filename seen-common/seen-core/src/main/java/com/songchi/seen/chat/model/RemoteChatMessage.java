@@ -18,9 +18,9 @@ public record RemoteChatMessage(
         int id,
         int contentTypeId,
         int contentId,
-        int fromUserId,
+        Long fromUserId,
         LocalDateTime sendTime,
         boolean sent,
-        int toUserId
+        Long toUserId
 ) {
 }

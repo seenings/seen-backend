@@ -21,9 +21,9 @@ public interface ChatUserService {
      * @param size    页大小
      * @return 聊天列表
      */
-    ResultPage<ChatUser> page(Integer userId, int current, int size);
+    ResultPage<ChatUser> page(Long userId, int current, int size);
 
-    Map<Integer,Boolean> friendUserIdIsFriend(Set<Integer> friendUserIds, Integer userId);
+    Map<Long,Boolean> friendUserIdIsFriend(Set<Long> friendUserIds, Long userId);
 
-    boolean set(Integer friendUserId, Integer userId);
+    boolean set(Long friendUserId, Long userId);
 }

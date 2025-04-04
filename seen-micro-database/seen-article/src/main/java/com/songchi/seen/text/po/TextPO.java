@@ -41,5 +41,5 @@ public class TextPO {
     /**
      * 更新用户
      */
-    private Integer updateUser;
+    private Long updateUser;
 }

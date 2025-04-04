@@ -45,7 +45,7 @@ public class BasicInfoController {
     private HttpCoinTradeService httpCoinTradeService;
 
     @PostMapping("save-basic-info")
-    public R<String> saveBasicInfo(@RequestBody BasicInfo basicInfo, @SessionAttribute Integer userId) {
+    public R<String> saveBasicInfo(@RequestBody BasicInfo basicInfo, @SessionAttribute Long userId) {
 
         httpEducationalService.set(basicInfo.getUserId(), basicInfo.getEducation());
         httpUserSexService.set(basicInfo.getUserId(), basicInfo.getSex());
@@ -67,7 +67,7 @@ public class BasicInfoController {
      * @return 用户ID对应基本信息
      */
     @PostMapping("user-id-to-basic-info")
-    public R<Map<Integer, BasicInfo>> userIdToBasicInfo(@RequestBody Set<Integer> userIds) {
+    public R<Map<Long, BasicInfo>> userIdToBasicInfo(@RequestBody Set<Long> userIds) {
         return ResUtils.ok(infoService.userIdToBasicInfo(userIds));
     }
 }

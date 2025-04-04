@@ -9,4 +9,4 @@ import java.time.LocalDateTime;
  * @author chixuehui
  * @since 2023-01-01
  */
-public record ChatUser(Integer id, Integer userId, Integer friendUserId, LocalDateTime updateTime) {}
+public record ChatUser(Integer id, Long userId, Long friendUserId, LocalDateTime updateTime) {}

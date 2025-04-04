@@ -41,7 +41,7 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, Reply> implements
      * @return 回复ID
      */
     @Override
-    public Integer publishZoneComment(Integer zoneId, Integer userId, String message) {
+    public Integer publishZoneComment(Integer zoneId, Long userId, String message) {
         Integer zoneContentId = httpTextService.saveAndReturnId(message);
         Reply reply = new Reply();
         reply.setZoneId(zoneId);
@@ -60,7 +60,7 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, Reply> implements
      * @return 回复ID
      */
     @Override
-    public Integer publishReplyComment(Integer zoneId, Integer replyId, Integer userId, String message) {
+    public Integer publishReplyComment(Integer zoneId, Integer replyId, Long userId, String message) {
         Integer zoneContentId = httpTextService.saveAndReturnId(message);
         Reply reply = new Reply();
         reply.setZoneId(zoneId);
@@ -141,9 +141,9 @@ public class ReplyServiceImpl extends ServiceImpl<ReplyMapper, Reply> implements
 
 
     @Override
-    public ZoneReply replyToZoneReply(Reply reply, Map<Integer, String> userIdToUserNameMap, Map<Integer, Set<Integer>> zoneContentIdToTextIdMap, Map<Integer, String> textIdToTextMap) {
+    public ZoneReply replyToZoneReply(Reply reply, Map<Long, String> userIdToUserNameMap, Map<Integer, Set<Integer>> zoneContentIdToTextIdMap, Map<Integer, String> textIdToTextMap) {
         //第一层评论
-        Integer userId = reply.getUserId();
+        Long userId = reply.getUserId();
         String userName = userIdToUserNameMap.get(userId);
         ZoneReply zoneReply = new ZoneReply().setId(reply.getId()).setReplyId(reply.getReplyId())
                 .setUserName(userName);

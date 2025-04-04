@@ -26,20 +26,20 @@ public class UserCurrentResidenceController implements HttpUserCurrentResidenceS
 
     @Override
     @PostMapping("user-id-to-city-id")
-    public Map<Integer, Integer> userIdToCityId(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToCityId(@RequestBody Set<Long> userIds) {
         return userCurrentResidenceService.userIdToCityId(userIds);
     }
 
     @Override
     @PostMapping("user-id-to-province-id")
-    public Map<Integer, Integer>userIdToProvinceId(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToProvinceId(@RequestBody Set<Long> userIds) {
         return userCurrentResidenceService.userIdToProvinceId(userIds);
     }
 
     @Override
     @PostMapping("set")
     public boolean set(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("provinceId") Integer provinceId,
             @RequestParam("cityId") Integer cityId) {
         return userCurrentResidenceService.set(userId, provinceId, cityId);
@@ -47,7 +47,7 @@ public class UserCurrentResidenceController implements HttpUserCurrentResidenceS
 
     @Override
     @PostMapping("current-residence-city-to-user-id")
-    public List<Integer> currentResidenceCityToUserId(
+    public List<Long> currentResidenceCityToUserId(
             @RequestParam("cityId") Integer cityId,
             @RequestParam("current") int current,
             @RequestParam("size") int size) {

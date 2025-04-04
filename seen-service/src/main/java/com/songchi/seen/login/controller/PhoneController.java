@@ -32,7 +32,7 @@ public class PhoneController {
     SendSmsService sendSmsService;
 
     @PostMapping("login/logout")
-    public R<String> logout(@SessionAttribute(required = false) Integer userId, HttpSession session) {
+    public R<String> logout(@SessionAttribute(required = false) Long userId, HttpSession session) {
         session.invalidate();
         log.info("用户{}注销登录成功。", userId);
         return ResUtils.ok("注销登录成功。");
@@ -47,12 +47,12 @@ public class PhoneController {
     private HttpCoinTradeService httpCoinTradeService;
 
     @PostMapping("login/phone")
-    public R<Integer> phone(@RequestBody SmsCode smsCode, HttpServletResponse response) {
+    public R<Long> phone(@RequestBody SmsCode smsCode, HttpServletResponse response) {
         boolean validate = iSmsCodeService.validate(smsCode.getPhone(), smsCode.getSmsId(), smsCode.getSmsCode());
         if (!validate) {
             return ResUtils.error("验证码校验失败");
         }
-        Integer userId = httpUserService.phoneNumberToUserId(Set.of(smsCode.getPhone())).get(smsCode.getPhone());
+        Long userId = httpUserService.phoneNumberToUserId(Set.of(smsCode.getPhone())).get(smsCode.getPhone());
         if (userId == null) { // 如果是第一次登录，则写入用户表
             userId = httpUserService.set(smsCode.getPhone());
             // 注册时，初始化虚拟币，并赠送玫瑰花个数50

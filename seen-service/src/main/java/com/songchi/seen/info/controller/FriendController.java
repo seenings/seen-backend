@@ -70,7 +70,7 @@ public class FriendController {
 
     @PostMapping("apply-friend")
     public R<Boolean> applyFriend(
-            @SessionAttribute Integer userId, @RequestParam("appliedUserId") Integer appliedUserId) {
+            @SessionAttribute Long userId, @RequestParam("appliedUserId") Long appliedUserId) {
 
         // 1.检查当前是否好友
         Boolean isFriend = httpChatUserService
@@ -104,7 +104,7 @@ public class FriendController {
     }
 
     @PostMapping("re-apply")
-    public R<Boolean> reApply(@SessionAttribute Integer userId, @RequestParam("pageUserId") Integer pageUserId) {
+    public R<Boolean> reApply(@SessionAttribute Long userId, @RequestParam("pageUserId") Long pageUserId) {
 
         // 1.检查当前是否好友
         Boolean isFriend = httpChatUserService
@@ -153,8 +153,8 @@ public class FriendController {
     }
 
     @PostMapping("agree")
-    public R<Integer> agree(@SessionAttribute Integer userId,
-                            @RequestParam("applyId") Integer applyId, @RequestParam("pageUserId") Integer pageUserId) {
+    public R<Integer> agree(@SessionAttribute Long userId,
+                            @RequestParam("applyId") Integer applyId, @RequestParam("pageUserId") Long pageUserId) {
 
         //1.冻结虚拟币转到系统账户中
         Integer tradeId = httpCoinTradeService.freezeToSysUse(pageUserId, ChatConstant.APPLY_SPEND_COIN_AMOUNT, TradeType.AGREE_DO_FRIEND, "同意");
@@ -176,7 +176,7 @@ public class FriendController {
     private HttpChatHistoryService httpChatHistoryService;
 
     @PostMapping("refuse")
-    public R<Integer> refuse(@RequestParam("applyId") Integer applyId, @RequestParam Integer pageUserId) {
+    public R<Integer> refuse(@RequestParam("applyId") Integer applyId, @RequestParam Long pageUserId) {
 
         //1.冻结虚拟币转到申请人的账户中
         //2.冻结虚拟币转到系统的账户中

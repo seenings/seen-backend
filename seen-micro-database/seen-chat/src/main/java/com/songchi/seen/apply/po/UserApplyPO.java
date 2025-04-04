@@ -26,7 +26,7 @@ public class UserApplyPO {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 申请消息，对应text表
@@ -36,7 +36,7 @@ public class UserApplyPO {
     /**
      * 被申请方用户ID
      */
-    private Integer appliedUserId;
+    private Long appliedUserId;
 
     /**
      * 申请时间

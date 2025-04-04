@@ -24,13 +24,13 @@ public class SchoolGraduateController implements HttpSchoolGraduateService {
 
     @Override
     @PostMapping("user-id-to-graduated")
-    public Map<Integer, Integer> userIdToGraduated(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToGraduated(@RequestBody Set<Long> userIds) {
         return schoolGraduateService.userIdToGraduated(userIds);
     }
 
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam("userId") Integer userId, @RequestParam("graduated") Integer graduated) {
+    public boolean set(@RequestParam("userId") Long userId, @RequestParam("graduated") Integer graduated) {
         return schoolGraduateService.set(userId, graduated);
     }
 }

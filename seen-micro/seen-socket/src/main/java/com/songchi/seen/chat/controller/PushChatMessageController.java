@@ -36,7 +36,7 @@ public class PushChatMessageController implements HttpPushChatMessageService {
         log.warn("发送消息：" + historyId);
         // 如果map中不含有队列，则新建队列
 
-        Integer otherUserId = httpChatHistoryService.idToToUserId(Set.of(historyId)).get(historyId);
+        Long otherUserId = httpChatHistoryService.idToToUserId(Set.of(historyId)).get(historyId);
         Queue<Integer> historyIdQueue = TwoChatSseController.userIdToHistoryIdMap.computeIfAbsent(otherUserId,
                 (key) -> {
                     return new ConcurrentLinkedQueue<>();

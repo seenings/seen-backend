@@ -24,23 +24,23 @@ import com.songchi.seen.info.model.UserIntroduceInfo;
  */
 public interface InfoService {
 
-    Map<Integer, UserInfo> userIdToUserInfo(Set<Integer> userIds);
+    Map<Long, UserInfo> userIdToUserInfo(Set<Long> userIds);
 
-    Map<Integer, String> userIdToUserName(Set<Integer> userIds);
+    Map<Long, String> userIdToUserName(Set<Long> userIds);
 
-    Map<Integer, Integer> userIdToProfilePhotoId(Set<Integer> userIds);
+    Map<Long, Integer> userIdToProfilePhotoId(Set<Long> userIds);
 
-    Map<Integer, Sex> userIdToSex(Set<Integer> userIds);
+    Map<Long, Sex> userIdToSex(Set<Long> userIds);
 
-    Map<Integer, LocalDateTime> newUserId(int top);
+    Map<Long, LocalDateTime> newUserId(int top);
 
-    Map<Integer, UserIntroduceInfo> userIdToUserIntroduceInfo(@RequestBody Set<Integer> userIds);
+    Map<Long, UserIntroduceInfo> userIdToUserIntroduceInfo(@RequestBody Set<Long> userIds);
 
-    Map<Integer, BasicInfo> userIdToBasicInfo(Set<Integer> userIds);
+    Map<Long, BasicInfo> userIdToBasicInfo(Set<Long> userIds);
 
-    Map<Integer, List<PersonIntroduce>> userIdToPersonIntroduce(Set<Integer> userIds);
+    Map<Long, List<PersonIntroduce>> userIdToPersonIntroduce(Set<Long> userIds);
 
-    Map<Integer, PersonIntroduce> introduceTypeIndexToPersonIntroduce(Set<Integer> introduceTypeIndexes, Integer userId);
+    Map<Integer, PersonIntroduce> introduceTypeIndexToPersonIntroduce(Set<Integer> introduceTypeIndexes, Long userId);
 
-    Map<Integer, UserChatInfo> userIdToUserChatInfo(Set<Integer> userIds, Integer selfUserId);
+    Map<Long, UserChatInfo> userIdToUserChatInfo(Set<Long> userIds, Long selfUserId);
 }

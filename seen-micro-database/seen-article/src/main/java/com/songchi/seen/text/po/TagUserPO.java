@@ -23,7 +23,7 @@ public class TagUserPO {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 用户的标签ID

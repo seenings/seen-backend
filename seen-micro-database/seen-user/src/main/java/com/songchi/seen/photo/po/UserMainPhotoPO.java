@@ -26,7 +26,7 @@ public class UserMainPhotoPO {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 用户照片ID

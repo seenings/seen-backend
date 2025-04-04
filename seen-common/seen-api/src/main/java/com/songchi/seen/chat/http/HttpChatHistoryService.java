@@ -31,8 +31,8 @@ public interface HttpChatHistoryService {
 
     @PostMapping("add")
     Integer add(@RequestParam("contentType") ContentType contentType, @RequestParam("contentId") Integer contentId,
-                @RequestParam("fromUserId") Integer fromUserId,
-                @RequestParam("toUserId") Integer toUserId,
+                @RequestParam("fromUserId") Long fromUserId,
+                @RequestParam("toUserId") Long toUserId,
                 @RequestParam("sent") Boolean sent,
                 @RequestParam("sendTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
                 LocalDateTime sendTime);
@@ -45,8 +45,8 @@ public interface HttpChatHistoryService {
      * @return 聊天记录ID
      */
     @PostMapping("page-user-id-to-history-id")
-    List<Integer> pageUserIdToHistoryId(@RequestParam("pageUserId") Integer pageUserId,
-                                        @RequestParam("selfUserId") Integer selfUserId);
+    List<Integer> pageUserIdToHistoryId(@RequestParam("pageUserId") Long pageUserId,
+                                        @RequestParam("selfUserId") Long selfUserId);
 
     /**
      * 根据ID获取聊天内容和时间
@@ -58,8 +58,8 @@ public interface HttpChatHistoryService {
     Map<Integer, ChatContentAndTime> idToChatContentAndTime(@RequestBody Set<Integer> ids);
 
     @PostMapping("user-id-to-chat-content-and-time")
-    Map<Integer, ChatContentAndTime> userIdToChatContentAndTime(
-            @RequestBody Set<Integer> userIds, @RequestParam("toUserId") Integer toUserId);
+    Map<Long, ChatContentAndTime> userIdToChatContentAndTime(
+            @RequestBody Set<Long> userIds, @RequestParam("toUserId") Long toUserId);
 
     @PostMapping("set-sent")
     boolean setSent(@RequestParam("id") Integer id);
@@ -71,7 +71,7 @@ public interface HttpChatHistoryService {
      * @return 聊天记录ID对应发送方ID
      */
     @PostMapping("id-to-from-user-id")
-    Map<Integer, Integer> idToFromUserId(@RequestBody Set<Integer> ids);
+    Map<Integer, Long> idToFromUserId(@RequestBody Set<Integer> ids);
 
     /**
      * 根据聊天记录ID获取是否发出
@@ -89,5 +89,5 @@ public interface HttpChatHistoryService {
      * @return 聊天记录ID对应接收方ID
      */
     @PostMapping("id-to-to-user-id")
-    Map<Integer, Integer> idToToUserId(@RequestBody Set<Integer> ids);
+    Map<Integer, Long> idToToUserId(@RequestBody Set<Integer> ids);
 }

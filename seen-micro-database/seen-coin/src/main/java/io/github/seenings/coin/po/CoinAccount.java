@@ -13,17 +13,17 @@ import lombok.experimental.Accessors;
 
 /**
  * 币账户
- *
  */
-@TableName(value = "coin_account")
+
 @Data
 @Accessors(chain = true)
-public class CoinAccountPO implements Serializable {
+@TableName(value = "coin_account")
+public class CoinAccount {
     /**
      * 自增ID，账户ID
      */
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 账户类型
@@ -31,15 +31,8 @@ public class CoinAccountPO implements Serializable {
     private Integer accountType;
 
     /**
-     * 账户描述，非结构化字段
-     */
-    private String description;
-
-    /**
      * 创建时间
      */
     private LocalDateTime createTime;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

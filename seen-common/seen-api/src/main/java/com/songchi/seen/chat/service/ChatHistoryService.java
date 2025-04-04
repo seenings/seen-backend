@@ -17,25 +17,25 @@ import java.util.Set;
  */
 public interface ChatHistoryService {
 
-    List<Integer> fromUserIdToId(Integer fromUserId, Integer toUserId, int current, int size);
+    List<Integer> fromUserIdToId(Long fromUserId, Long toUserId, int current, int size);
 
 
     Map<Integer, ChatContentAndTime> idToChatContentAndTime(Set<Integer> ids);
 
-    Map<Integer, Integer> idToFromUserId(Set<Integer> ids);
+    Map<Integer, Long> idToFromUserId(Set<Integer> ids);
 
     Map<Integer, LocalDateTime> idToSendTime(Set<Integer> ids);
 
     Map<Integer, Boolean> idToIsSent(Set<Integer> ids);
 
-    Map<Integer, Integer> idToToUserId(Set<Integer> ids);
+    Map<Integer, Long> idToToUserId(Set<Integer> ids);
 
     boolean add(ChatMessage chatMessage, LocalDateTime
             sendTime, boolean sent);
 
     Integer add(ContentType contentType, Integer contentId,
-                Integer fromUserId,
-                Integer toUserId, Boolean sent, LocalDateTime sendTime);
+                Long fromUserId,
+                Long toUserId, Boolean sent, LocalDateTime sendTime);
 
     boolean setSent(Integer id);
 }

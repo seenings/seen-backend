@@ -31,9 +31,9 @@ public class FocusUserController implements HttpFocusUserService {
      */
     @Override
     @PostMapping("focused-user-id-to-true")
-    public Map<Integer, Boolean> focusedUserIdToTrue(
-            @RequestBody Set<Integer> focusedUserIds, @RequestParam("focusUserId") Integer focusUserId) {
-        Map<Integer, Boolean> focusedUserIdToTrueMap =
+    public Map<Long, Boolean> focusedUserIdToTrue(
+            @RequestBody Set<Long> focusedUserIds, @RequestParam("focusUserId") Long focusUserId) {
+        Map<Long, Boolean> focusedUserIdToTrueMap =
                 focusUserPOService.focusedUserIdToTrue(focusedUserIds, focusUserId);
         return focusedUserIds.stream()
                 .parallel()
@@ -44,7 +44,7 @@ public class FocusUserController implements HttpFocusUserService {
     @Override
     @PostMapping("set")
     public boolean set(
-            @RequestParam("focusedUserId") Integer focusedUserId, @RequestParam("focusUserId") Integer focusUserId) {
+            @RequestParam("focusedUserId") Long focusedUserId, @RequestParam("focusUserId") Long focusUserId) {
         return focusUserPOService.set(focusedUserId, focusUserId);
     }
 }

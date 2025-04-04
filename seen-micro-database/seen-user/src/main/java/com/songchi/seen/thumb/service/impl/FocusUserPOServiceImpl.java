@@ -38,8 +38,8 @@ public class FocusUserPOServiceImpl extends ServiceImpl<FocusUserPOMapper, Focus
      * @return  被关注者对应是否关注
      */
     @Override
-    public Map<Integer, Boolean> focusedUserIdToTrue(Set<Integer> focusedUserIds, Integer focusUserId) {
-        List<Integer> list = CollUtils.valueIsNullToList(focusedUserIds);
+    public Map<Long, Boolean> focusedUserIdToTrue(Set<Long> focusedUserIds, Long focusUserId) {
+        List<Long> list = CollUtils.valueIsNullToList(focusedUserIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -53,8 +53,8 @@ public class FocusUserPOServiceImpl extends ServiceImpl<FocusUserPOMapper, Focus
     }
 
     @Override
-    public boolean set(Integer focusedUserId, Integer focusUserId) {
-        Map<Integer, Boolean> userIdToValueMap = focusedUserIdToTrue(Collections.singleton(focusedUserId), focusUserId);
+    public boolean set(Long focusedUserId, Long focusUserId) {
+        Map<Long, Boolean> userIdToValueMap = focusedUserIdToTrue(Collections.singleton(focusedUserId), focusUserId);
         Boolean focus = userIdToValueMap.get(focusedUserId);
         FocusUserPO po = new FocusUserPO()
                 .setFocusedUserId(focusedUserId)

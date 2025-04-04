@@ -28,9 +28,9 @@ public interface HttpThumbUserService {
      * @return  被点赞者对应是否点赞
      */
     @PostMapping("thumbed-user-id-to-true")
-    Map<Integer, Boolean> thumbedUserIdToTrue(
-            @RequestBody Set<Integer> thumbedUserIds, @RequestParam("thumbUserId") Integer thumbUserId);
+    Map<Long, Boolean> thumbedUserIdToTrue(
+            @RequestBody Set<Long> thumbedUserIds, @RequestParam("thumbUserId") Long thumbUserId);
 
     @PostMapping("set")
-    boolean set(@RequestParam("thumbedUserId") Integer thumbedUserId, @RequestParam("thumbUserId") Integer thumbUserId);
+    boolean set(@RequestParam("thumbedUserId") Long thumbedUserId, @RequestParam("thumbUserId") Long thumbUserId);
 }

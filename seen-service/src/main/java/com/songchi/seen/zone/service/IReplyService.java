@@ -17,9 +17,9 @@ import java.util.Set;
  */
 public interface IReplyService extends IService<Reply> {
 
-    Integer publishZoneComment(Integer zoneId, Integer userId, String message);
+    Integer publishZoneComment(Integer zoneId, Long userId, String message);
 
-    Integer publishReplyComment(Integer zoneId, Integer replyId, Integer userId, String message);
+    Integer publishReplyComment(Integer zoneId, Integer replyId, Long userId, String message);
 
     Map<Integer, Integer> idToZoneId(Set<Integer> ids);
 
@@ -29,5 +29,5 @@ public interface IReplyService extends IService<Reply> {
 
     Map<Integer, Reply> idToZoneReplySecond(Set<Integer> ids);
 
-    ZoneReply replyToZoneReply(Reply reply, Map<Integer, String> userIdToUserNameMap, Map<Integer, Set<Integer>> zoneContentIdToTextIdMap, Map<Integer, String> textIdToTextMap);
+    ZoneReply replyToZoneReply(Reply reply, Map<Long, String> userIdToUserNameMap, Map<Integer, Set<Integer>> zoneContentIdToTextIdMap, Map<Integer, String> textIdToTextMap);
 }

@@ -21,13 +21,13 @@ public interface IZoneService extends IService<Zone> {
 
     Map<Integer, LocalDateTime> zoneIdToPublishTime(Set<Integer> zoneIds);
 
-    Map<Integer, Integer> zoneIdToUserId(Set<Integer> zoneIds);
+    Map<Integer, Long> zoneIdToUserId(Set<Integer> zoneIds);
 
-    Map<Integer, Set<Integer>> userIdToZoneId(Set<Integer> userIds);
+    Map<Long, Set<Integer>> userIdToZoneId(Set<Long> userIds);
 
     boolean delete(Set<Integer> zoneIds);
 
-    Integer publish(List<ZoneContent> zoneContents, Integer userId);
+    Integer publish(List<ZoneContent> zoneContents, Long userId);
 
     Map<Integer, LocalDateTime> news(int current, int size);
 }

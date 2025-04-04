@@ -57,7 +57,7 @@ public class ZoneController {
      * @return 是否删除成功
      */
     @PostMapping("delete")
-    public R<Boolean> delete(@RequestBody Set<Integer> zoneIds, @SessionAttribute Integer userId) {
+    public R<Boolean> delete(@RequestBody Set<Integer> zoneIds, @SessionAttribute Long userId) {
         Set<Integer> enableZoneIds =
                 iZoneService.userIdToZoneId(Collections.singleton(userId)).get(userId);
         Set<Integer> deletingZoneIds = new HashSet<>(CollUtil.intersection(enableZoneIds, zoneIds));
@@ -71,7 +71,7 @@ public class ZoneController {
 
     @PostMapping("publish")
     public R<Integer> publish(
-            @RequestBody List<ZoneContent> zoneContents, @SessionAttribute(PublicConstant.USER_ID) Integer userId) {
+            @RequestBody List<ZoneContent> zoneContents, @SessionAttribute(PublicConstant.USER_ID) Long userId) {
 
         Integer zoneId = iZoneService.publish(zoneContents, userId);
         if (zoneId != null) {
@@ -87,7 +87,7 @@ public class ZoneController {
     private HttpTextService httpTextService;
 
     @PostMapping("my-zone-text")
-    public R<List<ZoneText>> myZoneText(@SessionAttribute Integer userId) {
+    public R<List<ZoneText>> myZoneText(@SessionAttribute Long userId) {
         Set<Integer> zoneIds =
                 iZoneService.userIdToZoneId(Collections.singleton(userId)).get(userId);
         Map<Integer, LocalDateTime> zoneIdToPublishTimeMap = iZoneService.zoneIdToPublishTime(zoneIds);
@@ -123,7 +123,7 @@ public class ZoneController {
      * @return 图片ID
      */
     @PostMapping("my-photo-album")
-    public R<List<Integer>> myPhotoAlbum(@SessionAttribute Integer userId) {
+    public R<List<Integer>> myPhotoAlbum(@SessionAttribute Long userId) {
 
         Set<Integer> zoneIds =
                 iZoneService.userIdToZoneId(Collections.singleton(userId)).get(userId);
@@ -162,7 +162,7 @@ public class ZoneController {
     @PostMapping("zone-id-to-zone-record")
     public R<Map<Integer, ZoneRecord>> zoneIdToZoneRecord(@RequestBody Set<Integer> zoneIds) {
         Map<Integer, LocalDateTime> zoneIdToPublishTimeMap = iZoneService.zoneIdToPublishTime(zoneIds);
-        Map<Integer, Integer> zoneIdToUserIdMap = iZoneService.zoneIdToUserId(zoneIds);
+        Map<Integer, Long> zoneIdToUserIdMap = iZoneService.zoneIdToUserId(zoneIds);
 
         Map<Integer, Set<Integer>> zoneIdToContentIdIsTextMap = iContentService.zoneIdToContentIdIsText(zoneIds);
 
@@ -189,7 +189,7 @@ public class ZoneController {
                 .collect(Collectors.toSet());
         Map<Integer, String> textIdToTextMap = httpTextService.textIdToText(textIds);
 
-        Set<Integer> userIds = Stream.concat(
+        Set<Long> userIds = Stream.concat(
                         zoneIdToUserIdMap.values().stream(),
                         // 空间发表用户
                         Stream.concat(
@@ -200,7 +200,7 @@ public class ZoneController {
                                         .map(Reply::getUserId) // 空间第二层评论用户
                                 ))
                 .collect(Collectors.toSet());
-        Map<Integer, Integer> userIdToProfilePhotoIdMap = infoService.userIdToProfilePhotoId(userIds);
+        Map<Long, Integer> userIdToProfilePhotoIdMap = infoService.userIdToProfilePhotoId(userIds);
         Set<Integer> photoIds = Stream.concat(
                         userIdToProfilePhotoIdMap.values().stream(),
                         zoneIdToContentIdIsImageMap.values().stream().flatMap(Collection::stream))
@@ -208,7 +208,7 @@ public class ZoneController {
 
         Map<Integer, String> photoIdToPhotoUrlMap = httpPhotoService.photoIdToPhotoUrl(photoIds);
 
-        Map<Integer, String> userIdToUserNameMap = infoService.userIdToUserName(userIds);
+        Map<Long, String> userIdToUserNameMap = infoService.userIdToUserName(userIds);
 
         // 第一层评论
         Map<Integer, ZoneReply> replyIdToZoneReplyMap = firstReplyIdToReply.entrySet().stream()
@@ -244,7 +244,7 @@ public class ZoneController {
                             if (textId != null) {
                                 text = textIdToTextMap.get(textId);
                             }
-                            Integer userId = zoneIdToUserIdMap.get(zoneId);
+                            Long userId = zoneIdToUserIdMap.get(zoneId);
                             String userName = userIdToUserNameMap.get(userId);
                             Integer profilePhotoId = userIdToProfilePhotoIdMap.get(userId);
                             String headUrl = photoIdToPhotoUrlMap.get(profilePhotoId);

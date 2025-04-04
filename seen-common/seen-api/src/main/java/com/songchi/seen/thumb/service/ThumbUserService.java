@@ -10,7 +10,7 @@ import java.util.Set;
  * @since 2023-01-23
  */
 public interface ThumbUserService {
-    Map<Integer, Boolean> thumbedUserIdToTrue(Set<Integer> thumbedUserId, Integer thumbUserId);
+    Map<Long, Boolean> thumbedUserIdToTrue(Set<Long> thumbedUserId, Long thumbUserId);
 
-    boolean set(Integer thumbedUserId, Integer thumbUserId);
+    boolean set(Long thumbedUserId, Long thumbUserId);
 }

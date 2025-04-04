@@ -11,5 +11,5 @@ package com.songchi.seen.chat.model;
  * @author chixuehui
  * @since 2023-03-05
  */
-public record RecInfo(Integer applyId, String mainPhotoUrl, String name, Integer applyStatus, Integer userId) {
+public record RecInfo(Integer applyId, String mainPhotoUrl, String name, Integer applyStatus, Long userId) {
 }

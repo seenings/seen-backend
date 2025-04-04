@@ -28,7 +28,7 @@ public class Zone implements Serializable {
     private Integer id;
 
     @Schema(name = "哪个用户发的空间")
-    private Integer userId;
+    private Long userId;
 
     @Schema(name = "更新时间")
     private LocalDateTime updateTime;

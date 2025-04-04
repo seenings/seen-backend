@@ -35,7 +35,7 @@ public class CoinTradeController implements HttpCoinTradeService {
     @Override
     @PostMapping("freeze-to-sys-use")
     public Integer freezeToSysUse(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("coinMount") int coinMount,
             @RequestParam("tradeType") TradeType tradeType,
             @RequestParam("description") String description) {
@@ -47,7 +47,7 @@ public class CoinTradeController implements HttpCoinTradeService {
     @Override
     @PostMapping("freeze-to-temporary")
     public Integer freezeToTemporary(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("coinMount") int coinMount,
             @RequestParam("tradeType") TradeType tradeType,
             @RequestParam("description") String description) {
@@ -64,7 +64,7 @@ public class CoinTradeController implements HttpCoinTradeService {
     @Override
     @PostMapping("check-enough-and-freeze")
     public Set<Integer> checkEnoughAndFreeze(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("coinMount") int coinMount,
             @RequestParam("tradeType") TradeType tradeType,
             @RequestParam("description") String description) {
@@ -81,7 +81,7 @@ public class CoinTradeController implements HttpCoinTradeService {
      */
     @Override
     @PostMapping("check-enough")
-    public Boolean checkEnough(@RequestParam("userId") Integer userId, @RequestParam("coinMount") int coinMount) {
+    public Boolean checkEnough(@RequestParam("userId") Long userId, @RequestParam("coinMount") int coinMount) {
 
         return freezeService.checkEnough(userId, coinMount);
     }
@@ -96,16 +96,16 @@ public class CoinTradeController implements HttpCoinTradeService {
 
     @Override
     @PostMapping("simple-trade-type-to")
-    public Integer simpleTradeTypeTo(@RequestParam("userId") Integer userId, @RequestParam("coinAmount") Integer coinAmount
+    public Integer simpleTradeTypeTo(@RequestParam("userId") Long userId, @RequestParam("coinAmount") Integer coinAmount
             , @RequestParam("tradeType") TradeType tradeType
     ) {
-        Integer temporaryAccountId = httpCoinAccountService
+        Long temporaryAccountId = httpCoinAccountService
                 .userIdToAccountId(Set.of(userId), AccountType.USER_TEMPORARY).get(userId);
         int sysRewardAccountTypeId =
                 AccountType.SYS_REWARD.getIndex();
-        List<Integer> accountIds = coinAccountService.accountTypeToAccountId(Collections.singleton(sysRewardAccountTypeId))
+        List<Long> accountIds = coinAccountService.accountTypeToAccountId(Collections.singleton(sysRewardAccountTypeId))
                 .get(sysRewardAccountTypeId);
-        Integer sysRewardAccountId = accountIds.stream().findFirst().orElse(null);
+        Long sysRewardAccountId = accountIds.stream().findFirst().orElse(null);
 
         return tradeService.sysOutTrade(temporaryAccountId, sysRewardAccountId, coinAmount, tradeType, tradeType.getLabel());
     }

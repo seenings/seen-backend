@@ -10,7 +10,7 @@ import java.util.Set;
  * @since 2023-01-23
  */
 public interface FocusUserPOService {
-    Map<Integer, Boolean> focusedUserIdToTrue(Set<Integer> focusedUserIds, Integer focusUserId);
+    Map<Long, Boolean> focusedUserIdToTrue(Set<Long> focusedUserIds, Long focusUserId);
 
-    boolean set(Integer focusedUserId, Integer focusUserId);
+    boolean set(Long focusedUserId, Long focusUserId);
 }

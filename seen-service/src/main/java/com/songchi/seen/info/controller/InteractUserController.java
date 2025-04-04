@@ -32,8 +32,8 @@ public class InteractUserController {
     private HttpFocusUserService httpFocusUserService;
 
     @PostMapping("focus-user")
-    public R<Map<Integer, Boolean>> focusUser(@RequestBody Set<Integer> destUserIds, @SessionAttribute Integer userId) {
-        Map<Integer, Boolean> result = destUserIds.stream()
+    public R<Map<Long, Boolean>> focusUser(@RequestBody Set<Long> destUserIds, @SessionAttribute Long userId) {
+        Map<Long, Boolean> result = destUserIds.stream()
                 .parallel()
                 .map(n -> Pair.of(n, httpFocusUserService.set(n, userId)))
                 .collect(Collectors.toMap(Pair::getKey, Pair::getValue, (o1, o2) -> o2));
@@ -41,8 +41,8 @@ public class InteractUserController {
     }
 
     @PostMapping("thumb-user")
-    public R<Map<Integer, Boolean>> thumbUser(@RequestBody Set<Integer> destUserIds, @SessionAttribute Integer userId) {
-        Map<Integer, Boolean> result = destUserIds.stream()
+    public R<Map<Long, Boolean>> thumbUser(@RequestBody Set<Long> destUserIds, @SessionAttribute Long userId) {
+        Map<Long, Boolean> result = destUserIds.stream()
                 .parallel()
                 .map(n -> Pair.of(n, httpThumbUserService.set(n, userId)))
                 .collect(Collectors.toMap(Pair::getKey, Pair::getValue, (o1, o2) -> o2));

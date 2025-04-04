@@ -32,13 +32,13 @@ interface UserMainPhotoPOMapper extends BaseMapper<UserMainPhotoPO> {}
 public class UserMainPhotoPOServiceImpl extends ServiceImpl<UserMainPhotoPOMapper, UserMainPhotoPO>
         implements UserMainPhotoService {
     @Override
-    public Map<Integer, Integer> userIdPhotoId(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdPhotoId(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<UserMainPhotoPO, Integer> getValue = UserMainPhotoPO::getPhotoId;
-        SFunction<UserMainPhotoPO, Integer> getKey = UserMainPhotoPO::getUserId;
+        SFunction<UserMainPhotoPO, Long> getKey = UserMainPhotoPO::getUserId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs ->
                         list(new LambdaQueryWrapper<UserMainPhotoPO>()
@@ -49,7 +49,7 @@ public class UserMainPhotoPOServiceImpl extends ServiceImpl<UserMainPhotoPOMappe
     }
 
     @Override
-    public boolean set(Integer userId, Integer photoId) {
+    public boolean set(Long userId, Integer photoId) {
         Integer exists = userIdPhotoId(Collections.singleton(userId)).get(userId);
         var po = new UserMainPhotoPO().setUserId(userId).setPhotoId(photoId).setUpdateTime(LocalDateTime.now());
         if (exists == null) {

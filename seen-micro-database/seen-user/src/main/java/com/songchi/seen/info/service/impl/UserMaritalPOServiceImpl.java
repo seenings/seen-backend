@@ -41,8 +41,8 @@ public class UserMaritalPOServiceImpl extends ServiceImpl<UserMaritalPOMapper, U
      * @return 用户ID对应婚姻状况
      */
     @Override
-    public Map<Integer, Integer> userIdToMaritalStatus(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToMaritalStatus(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -55,7 +55,7 @@ public class UserMaritalPOServiceImpl extends ServiceImpl<UserMaritalPOMapper, U
     }
 
     @Override
-    public List<Integer> maritalStatusToUserId(MaritalStatus maritalStatus, int current, int size) {
+    public List<Long> maritalStatusToUserId(MaritalStatus maritalStatus, int current, int size) {
         Page<UserMaritalPO> page = page(
                 new Page<>(current, size),
                 new QueryWrapper<UserMaritalPO>()
@@ -69,8 +69,8 @@ public class UserMaritalPOServiceImpl extends ServiceImpl<UserMaritalPOMapper, U
     }
 
     @Override
-    public boolean set(Integer userId, MaritalStatus maritalStatus) {
-        Map<Integer, Integer> userIdToMaritalStatusMap = userIdToMaritalStatus(Collections.singleton(userId));
+    public boolean set(Long userId, MaritalStatus maritalStatus) {
+        Map<Long, Integer> userIdToMaritalStatusMap = userIdToMaritalStatus(Collections.singleton(userId));
         Integer maritalStatusId = userIdToMaritalStatusMap.get(userId);
         UserMaritalPO po = new UserMaritalPO()
                 .setUserId(userId)

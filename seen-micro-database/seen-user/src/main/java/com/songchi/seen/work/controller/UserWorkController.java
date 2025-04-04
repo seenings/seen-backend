@@ -28,13 +28,13 @@ public class UserWorkController implements HttpUserWorkService {
 
     @Override
     @PostMapping("user-id-to-company-name")
-    public Map<Integer, String> userIdToCompanyName(Set<Integer> userIds) {
+    public Map<Long, String> userIdToCompanyName(Set<Long> userIds) {
         return userWorkCompanyService.userIdToCompanyName(userIds);
     }
 
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam("userId") Integer userId, @RequestParam("companyName") String companyName) {
+    public boolean set(@RequestParam("userId") Long userId, @RequestParam("companyName") String companyName) {
 
         return userWorkCompanyService.set(userId, companyName);
     }

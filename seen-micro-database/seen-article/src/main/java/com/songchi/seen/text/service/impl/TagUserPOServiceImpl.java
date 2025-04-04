@@ -36,7 +36,7 @@ public class TagUserPOServiceImpl extends ServiceImpl<TagUserPOMapper, TagUserPO
      * @return  用户标签的记录ID
      */
     @Override
-    public List<Integer> deleteAndSave(Integer userId, List<Integer> tagIds) {
+    public List<Integer> deleteAndSave(Long userId, List<Integer> tagIds) {
         remove(new QueryWrapper<TagUserPO>().lambda().eq(TagUserPO::getUserId, userId));
         return tagIds.stream()
                 .map(tagId -> {
@@ -54,8 +54,8 @@ public class TagUserPOServiceImpl extends ServiceImpl<TagUserPOMapper, TagUserPO
      * @return 用户ID对应标签ID
      */
     @Override
-    public Map<Integer, List<Integer>> userIdToTagId(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, List<Integer>> userIdToTagId(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -77,7 +77,7 @@ public class TagUserPOServiceImpl extends ServiceImpl<TagUserPOMapper, TagUserPO
      * @return 标签ID对应用户ID
      */
     @Override
-    public Map<Integer, Set<Integer>> tagIdToUserId(Set<Integer> tagIds) {
+    public Map<Integer, Set<Long>> tagIdToUserId(Set<Integer> tagIds) {
         List<Integer> list = CollUtils.valueIsNullToList(tagIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();

@@ -13,5 +13,5 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface AsyncCalcService {
     @Async
-    CompletableFuture<List<Integer>> userIdToRecommendUserId(Integer userId, String date);
+    CompletableFuture<List<Long>> userIdToRecommendUserId(Long userId, String date);
 }

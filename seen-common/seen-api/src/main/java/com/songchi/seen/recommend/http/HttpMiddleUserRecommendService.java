@@ -18,21 +18,14 @@ import static com.songchi.seen.sys.constant.SeenConstant.FEIGN_VERSION;
  * @author chixuehui
  * @since 2022-10-23
  */
-@FeignClient(
-        name = ServiceNameConstant.SERVICE_SEEN_MIDDLE,
-        contextId = "HttpMiddleUserRecommendService",
-        path = FEIGN_VERSION + "recommend/middle-user-recommend")
+@FeignClient(name = ServiceNameConstant.SERVICE_SEEN_MIDDLE, contextId = "HttpMiddleUserRecommendService", path = FEIGN_VERSION + "recommend/middle-user-recommend")
 public interface HttpMiddleUserRecommendService {
     @PostMapping("have-user-id")
-    Set<Integer> haveUserId(@RequestParam("userId") Integer userId, @RequestBody Set<Integer> recommendUserIds);
+    Set<Long> haveUserId(@RequestParam("userId") Long userId, @RequestBody Set<Long> recommendUserIds);
 
     @PostMapping("user-id-to-recommend-user-id")
-    Map<Integer, List<Integer>> userIdToRecommendUserId(
-            @RequestBody Set<Integer> userIds, @RequestParam("date") String date);
+    Map<Long, List<Long>> userIdToRecommendUserId(@RequestBody Set<Long> userIds, @RequestParam("date") String date);
 
     @PostMapping("set")
-    int set(
-            @RequestParam("userId") Integer userId,
-            @RequestParam("date") String date,
-            @RequestBody List<Integer> recommendUserIds);
+    int set(@RequestParam("userId") Long userId, @RequestParam("date") String date, @RequestBody List<Long> recommendUserIds);
 }

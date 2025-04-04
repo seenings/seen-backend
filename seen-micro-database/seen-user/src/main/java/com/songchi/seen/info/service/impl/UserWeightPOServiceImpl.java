@@ -33,13 +33,13 @@ public class UserWeightPOServiceImpl extends ServiceImpl<UserWeightPOMapper, Use
         implements UserWeightService {
 
     @Override
-    public Map<Integer, Integer> userIdToWeightKg(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToWeightKg(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<UserWeightPO, Integer> getValue = UserWeightPO::getWeightKg;
-        SFunction<UserWeightPO, Integer> getKey = UserWeightPO::getUserId;
+        SFunction<UserWeightPO, Long> getKey = UserWeightPO::getUserId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs ->
                         list(new LambdaQueryWrapper<UserWeightPO>()
@@ -50,7 +50,7 @@ public class UserWeightPOServiceImpl extends ServiceImpl<UserWeightPOMapper, Use
     }
 
     @Override
-    public boolean set(Integer userId, Integer weightKg) {
+    public boolean set(Long userId, Integer weightKg) {
         Integer exists = userIdToWeightKg(Collections.singleton(userId)).get(userId);
         var po = new UserWeightPO().setUserId(userId).setWeightKg(weightKg).setUpdateTime(LocalDateTime.now());
         if (exists == null) {

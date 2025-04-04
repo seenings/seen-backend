@@ -27,22 +27,22 @@ import com.songchi.seen.sys.constant.ServiceNameConstant;
 public interface HttpUserApplyService {
     @PostMapping("set")
     Integer set(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("textId") Integer textId,
-            @RequestParam("appliedUserId") Integer appliedUserId);
+            @RequestParam("appliedUserId") Long appliedUserId);
 
     @PostMapping("applied-user-id-to-apply-id")
-    Map<Integer, Integer> appliedUserIdToApplyId(
-            @RequestBody Set<Integer> appliedUserIds, @RequestParam("userId") Integer userId);
+    Map<Long, Integer> appliedUserIdToApplyId(
+            @RequestBody Set<Long> appliedUserIds, @RequestParam("userId") Long userId);
 
     @PostMapping("apply-id-to-text-id")
     Map<Integer, Integer> applyIdToTextId(@RequestBody Set<Integer> applyIds);
 
     @PostMapping("apply-id-to-apply-user-id")
-    Map<Integer, Integer> applyIdToApplyUserId(@RequestBody Set<Integer> applyIds);
+    Map<Integer, Long> applyIdToApplyUserId(@RequestBody Set<Integer> applyIds);
 
     @PostMapping("apply-id-to-applied-user-id")
-    Map<Integer, Integer> applyIdToAppliedUserId(@RequestBody Set<Integer> applyIds);
+    Map<Integer, Long> applyIdToAppliedUserId(@RequestBody Set<Integer> applyIds);
 
     @PostMapping("apply-id-to-create-time")
     Map<Integer, LocalDateTime> applyIdToCreateTime(@RequestBody Set<Integer> applyIds);
@@ -59,12 +59,12 @@ public interface HttpUserApplyService {
             @RequestBody Set<Integer> applyIds);
 
     @PostMapping("applied-user-id-apply-id-by-page")
-    List<Integer> appliedUserIdToApplyIdByPage(@RequestParam("appliedUserId") Integer appliedUserId,
+    List<Integer> appliedUserIdToApplyIdByPage(@RequestParam("appliedUserId") Long appliedUserId,
                                                @RequestParam("current")
                                                int current, @RequestParam("size") int size);
 
     @PostMapping("apply-user-id-to-apply-id-by-page")
-    List<Integer> applyUserIdToApplyIdByPage(@RequestParam("applyUserId") Integer applyUserId,
+    List<Integer> applyUserIdToApplyIdByPage(@RequestParam("applyUserId") Long applyUserId,
                                              @RequestParam("current")
                                              int current, @RequestParam("size") int size);
 }

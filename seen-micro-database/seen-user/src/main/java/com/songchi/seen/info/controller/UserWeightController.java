@@ -24,13 +24,13 @@ public class UserWeightController implements HttpUserWeightService {
 
     @Override
     @PostMapping("user-id-to-weight-kg")
-    public Map<Integer, Integer> userIdToWeightKg(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdToWeightKg(@RequestBody Set<Long> userIds) {
         return userWeightService.userIdToWeightKg(userIds);
     }
 
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam("userId") Integer userId, @RequestParam("weightKg") Integer weightKg) {
+    public boolean set(@RequestParam("userId") Long userId, @RequestParam("weightKg") Integer weightKg) {
         return userWeightService.set(userId, weightKg);
     }
 }

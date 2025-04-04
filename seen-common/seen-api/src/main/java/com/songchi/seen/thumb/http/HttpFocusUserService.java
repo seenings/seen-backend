@@ -28,9 +28,9 @@ public interface HttpFocusUserService {
      * @return  被关注者对应是否关注
      */
     @PostMapping("focused-user-id-to-true")
-    Map<Integer, Boolean> focusedUserIdToTrue(
-            @RequestBody Set<Integer> focusedUserIds, @RequestParam("focusUserId") Integer focusUserId);
+    Map<Long, Boolean> focusedUserIdToTrue(
+            @RequestBody Set<Long> focusedUserIds, @RequestParam("focusUserId") Long focusUserId);
 
     @PostMapping("set")
-    boolean set(@RequestParam("focusedUserId") Integer focusedUserId, @RequestParam("focusUserId") Integer focusUserId);
+    boolean set(@RequestParam("focusedUserId") Long focusedUserId, @RequestParam("focusUserId") Long focusUserId);
 }

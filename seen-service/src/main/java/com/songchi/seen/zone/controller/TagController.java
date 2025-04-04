@@ -31,14 +31,14 @@ public class TagController {
     private ResultRecommendService resultRecommendService;
 
     @PostMapping("user-id-to-recommend-user-id")
-    public R<List<Integer>> userIdToRecommendUserId(@SessionAttribute Integer userId) {
-        List<Integer> recommendUserIds = resultRecommendService.userIdToRecommendUserId(userId);
+    public R<List<Long>> userIdToRecommendUserId(@SessionAttribute Long userId) {
+        List<Long> recommendUserIds = resultRecommendService.userIdToRecommendUserId(userId);
         return ResUtils.ok(recommendUserIds);
     }
 
     @PostMapping("tag")
-    public R<Map<Integer, UserTag>> hotTag(@RequestBody Set<Integer> userIds) {
-        Map<Integer, UserTag> userIdToUserTag = tagService.userIdToUserTag(userIds);
+    public R<Map<Long, UserTag>> hotTag(@RequestBody Set<Long> userIds) {
+        Map<Long, UserTag> userIdToUserTag = tagService.userIdToUserTag(userIds);
         return ResUtils.ok(userIdToUserTag);
     }
 
@@ -50,7 +50,7 @@ public class TagController {
      */
     @PostMapping("tag-parent-name-to-tag-name")
     public R<Map<String, String>> tagParentNameToTagName(
-            @RequestBody Set<String> tagParentNames, @RequestParam Integer otherUserId) {
+            @RequestBody Set<String> tagParentNames, @RequestParam Long otherUserId) {
         Map<String, String> tagParentNameToTagName = tagService.tagParentNameToTagName(tagParentNames, otherUserId);
         return ResUtils.ok(tagParentNameToTagName);
     }

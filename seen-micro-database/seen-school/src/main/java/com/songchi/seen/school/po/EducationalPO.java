@@ -25,7 +25,7 @@ public class EducationalPO {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 学历（0：其他，1：大专，2：本科，3：硕士，4：博士）

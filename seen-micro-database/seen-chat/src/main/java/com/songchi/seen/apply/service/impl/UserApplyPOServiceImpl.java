@@ -35,55 +35,39 @@ public class UserApplyPOServiceImpl extends ServiceImpl<UserApplyPOMapper, UserA
 
     /**
      * 根据被申请人用户ID获取申请ID
-     * @param appliedUserId   被申请人用户ID
-     * @param current   当前页
-     * @param size  页大小
-     * @return  申请ID
+     *
+     * @param appliedUserId 被申请人用户ID
+     * @param current       当前页
+     * @param size          页大小
+     * @return 申请ID
      */
     @Override
-    public List<Integer> appliedUserIdToApplyIdByPage(Integer appliedUserId, int current, int size) {
-        Page<UserApplyPO> page = page(
-                new Page<>(current, size)
-                , new LambdaQueryWrapper<UserApplyPO>()
-                        .eq(UserApplyPO::getAppliedUserId, appliedUserId)
-                        .select(UserApplyPO::getId)
-                        .orderByDesc(UserApplyPO::getApplyTime)
-        );
+    public List<Integer> appliedUserIdToApplyIdByPage(Long appliedUserId, int current, int size) {
+        Page<UserApplyPO> page = page(new Page<>(current, size), new LambdaQueryWrapper<UserApplyPO>().eq(UserApplyPO::getAppliedUserId, appliedUserId).select(UserApplyPO::getId).orderByDesc(UserApplyPO::getApplyTime));
         return page.getRecords().stream().map(UserApplyPO::getId).collect(Collectors.toList());
     }
 
     /**
      * 根据申请人用户ID获取申请ID
-     * @param applyUserId   申请人用户ID
-     * @param current   当前页
-     * @param size  页大小
-     * @return  申请ID
+     *
+     * @param applyUserId 申请人用户ID
+     * @param current     当前页
+     * @param size        页大小
+     * @return 申请ID
      */
     @Override
-    public List<Integer> applyUserIdToApplyIdByPage(Integer applyUserId, int current, int size) {
-        Page<UserApplyPO> page = page(
-                new Page<>(current, size)
-                , new LambdaQueryWrapper<UserApplyPO>()
-                        .eq(UserApplyPO::getUserId, applyUserId)
-                        .select(UserApplyPO::getId)
-                        .orderByDesc(UserApplyPO::getApplyTime)
-        );
+    public List<Integer> applyUserIdToApplyIdByPage(Long applyUserId, int current, int size) {
+        Page<UserApplyPO> page = page(new Page<>(current, size), new LambdaQueryWrapper<UserApplyPO>().eq(UserApplyPO::getUserId, applyUserId).select(UserApplyPO::getId).orderByDesc(UserApplyPO::getApplyTime));
         return page.getRecords().stream().map(UserApplyPO::getId).collect(Collectors.toList());
     }
 
     @Override
-    public Map<Integer, Integer> appliedUserIdToId(Set<Integer> appliedUserIds, Integer userId) {
-        List<Integer> list = CollUtils.valueIsNullToList(appliedUserIds);
+    public Map<Long, Integer> appliedUserIdToId(Set<Long> appliedUserIds, Long userId) {
+        List<Long> list = CollUtils.valueIsNullToList(appliedUserIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>()
-                        .in(UserApplyPO::getAppliedUserId, subs)
-                        .eq(UserApplyPO::getUserId, userId)
-                        .select(UserApplyPO::getId, UserApplyPO::getAppliedUserId))
-                        .stream())
-                .collect(Collectors.toMap(UserApplyPO::getAppliedUserId, UserApplyPO::getId, (o1, o2) -> o2));
+        return ListUtil.partition(list, 100).stream().flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>().in(UserApplyPO::getAppliedUserId, subs).eq(UserApplyPO::getUserId, userId).select(UserApplyPO::getId, UserApplyPO::getAppliedUserId)).stream()).collect(Collectors.toMap(UserApplyPO::getAppliedUserId, UserApplyPO::getId, (o1, o2) -> o2));
     }
 
     @Override
@@ -92,39 +76,25 @@ public class UserApplyPOServiceImpl extends ServiceImpl<UserApplyPOMapper, UserA
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>()
-                        .in(UserApplyPO::getId, subs)
-                        .select(UserApplyPO::getId, UserApplyPO::getTextId))
-                        .stream())
-                .collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getTextId, (o1, o2) -> o2));
+        return ListUtil.partition(list, 100).stream().flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>().in(UserApplyPO::getId, subs).select(UserApplyPO::getId, UserApplyPO::getTextId)).stream()).collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getTextId, (o1, o2) -> o2));
     }
 
     @Override
-    public Map<Integer, Integer> idToApplyUserId(Set<Integer> ids) {
+    public Map<Integer, Long> idToApplyUserId(Set<Integer> ids) {
         List<Integer> list = CollUtils.valueIsNullToList(ids);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>()
-                        .in(UserApplyPO::getId, subs)
-                        .select(UserApplyPO::getId, UserApplyPO::getUserId))
-                        .stream())
-                .collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getUserId));
+        return ListUtil.partition(list, 100).stream().flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>().in(UserApplyPO::getId, subs).select(UserApplyPO::getId, UserApplyPO::getUserId)).stream()).collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getUserId));
     }
+
     @Override
-    public Map<Integer, Integer> idToAppliedUserId(Set<Integer> ids) {
+    public Map<Integer, Long> idToAppliedUserId(Set<Integer> ids) {
         List<Integer> list = CollUtils.valueIsNullToList(ids);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>()
-                        .in(UserApplyPO::getId, subs)
-                        .select(UserApplyPO::getId, UserApplyPO::getAppliedUserId))
-                        .stream())
-                .collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getAppliedUserId));
+        return ListUtil.partition(list, 100).stream().flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>().in(UserApplyPO::getId, subs).select(UserApplyPO::getId, UserApplyPO::getAppliedUserId)).stream()).collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getAppliedUserId));
     }
 
     @Override
@@ -133,12 +103,7 @@ public class UserApplyPOServiceImpl extends ServiceImpl<UserApplyPOMapper, UserA
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>()
-                        .in(UserApplyPO::getId, subs)
-                        .select(UserApplyPO::getId, UserApplyPO::getCreateTime))
-                        .stream())
-                .collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getCreateTime, (o1, o2) -> o2));
+        return ListUtil.partition(list, 100).stream().flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>().in(UserApplyPO::getId, subs).select(UserApplyPO::getId, UserApplyPO::getCreateTime)).stream()).collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getCreateTime, (o1, o2) -> o2));
     }
 
     @Override
@@ -147,22 +112,13 @@ public class UserApplyPOServiceImpl extends ServiceImpl<UserApplyPOMapper, UserA
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>()
-                        .in(UserApplyPO::getId, subs)
-                        .select(UserApplyPO::getId, UserApplyPO::getApplyTime))
-                        .stream())
-                .collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getApplyTime, (o1, o2) -> o2));
+        return ListUtil.partition(list, 100).stream().flatMap(subs -> list(new LambdaQueryWrapper<UserApplyPO>().in(UserApplyPO::getId, subs).select(UserApplyPO::getId, UserApplyPO::getApplyTime)).stream()).collect(Collectors.toMap(UserApplyPO::getId, UserApplyPO::getApplyTime, (o1, o2) -> o2));
     }
 
     @Override
-    public Integer set(Integer userId, Integer textId, Integer appliedUserId) {
+    public Integer set(Long userId, Integer textId, Long appliedUserId) {
 
-        UserApplyPO po = new UserApplyPO()
-                .setAppliedUserId(appliedUserId)
-                .setUserId(userId)
-                .setTextId(textId)
-                .setCreateTime(LocalDateTime.now());
+        UserApplyPO po = new UserApplyPO().setAppliedUserId(appliedUserId).setUserId(userId).setTextId(textId).setCreateTime(LocalDateTime.now());
         save(po);
         return po.getId();
     }

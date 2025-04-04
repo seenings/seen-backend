@@ -25,13 +25,13 @@ public class UserMainPhotoController implements HttpUserMainPhotoService {
 
     @Override
     @PostMapping("user-id-photo-id")
-    public Map<Integer, Integer> userIdPhotoId(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Integer> userIdPhotoId(@RequestBody Set<Long> userIds) {
         return userMainPhotoService.userIdPhotoId(userIds);
     }
 
     @Override
     @PostMapping("set")
-    public boolean set(@RequestParam("userId") Integer userId, @RequestParam("photoId") Integer photoId) {
+    public boolean set(@RequestParam("userId") Long userId, @RequestParam("photoId") Integer photoId) {
         return userMainPhotoService.set(userId, photoId);
     }
 }

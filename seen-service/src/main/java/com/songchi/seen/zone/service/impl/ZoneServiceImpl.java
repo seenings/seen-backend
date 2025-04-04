@@ -57,7 +57,7 @@ public class ZoneServiceImpl extends ServiceImpl<ZoneMapper, Zone> implements IZ
      * @return 空间ID对应用户ID
      */
     @Override
-    public Map<Integer, Integer> zoneIdToUserId(Set<Integer> zoneIds) {
+    public Map<Integer, Long> zoneIdToUserId(Set<Integer> zoneIds) {
         if (CollUtil.isEmpty(zoneIds)) {
             return Collections.emptyMap();
         }
@@ -78,7 +78,7 @@ public class ZoneServiceImpl extends ServiceImpl<ZoneMapper, Zone> implements IZ
      * @return 用户ID对应空间ID
      */
     @Override
-    public Map<Integer, Set<Integer>> userIdToZoneId(Set<Integer> userIds) {
+    public Map<Long, Set<Integer>> userIdToZoneId(Set<Long> userIds) {
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();
         }
@@ -108,7 +108,7 @@ public class ZoneServiceImpl extends ServiceImpl<ZoneMapper, Zone> implements IZ
      * @return 空间ID
      */
     @Override
-    public Integer publish(List<ZoneContent> zoneContents, Integer userId) {
+    public Integer publish(List<ZoneContent> zoneContents, Long userId) {
         Zone zone = new Zone().setUserId(userId).setPublishTime(LocalDateTime.now());
         boolean save = save(zone);
         if (save) {

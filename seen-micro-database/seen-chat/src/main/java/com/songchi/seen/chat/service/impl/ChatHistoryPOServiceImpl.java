@@ -46,7 +46,7 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
      * @return 聊天记录ID
      */
     @Override
-    public List<Integer> fromUserIdToId(Integer fromUserId, Integer toUserId, int current, int size) {
+    public List<Integer> fromUserIdToId(Long fromUserId, Long toUserId, int current, int size) {
 
         return page(new Page<>(current, size), new QueryWrapper<ChatHistoryPO>()
                 .lambda().eq(ChatHistoryPO::getFromUserId, fromUserId)
@@ -95,7 +95,7 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
      * @return 聊天记录ID对应发送方ID
      */
     @Override
-    public Map<Integer, Integer> idToFromUserId(Set<Integer> ids) {
+    public Map<Integer, Long> idToFromUserId(Set<Integer> ids) {
         List<Integer> list = CollUtils.valueIsNullToList(ids);
         if (CollUtils.isEmpty(list)) {
             return Collections.emptyMap();
@@ -172,7 +172,7 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
      * @return 聊天记录ID对应接收方ID
      */
     @Override
-    public Map<Integer, Integer> idToToUserId(Set<Integer> ids) {
+    public Map<Integer, Long> idToToUserId(Set<Integer> ids) {
         List<Integer> list = CollUtils.valueIsNullToList(ids);
         if (CollUtils.isEmpty(list)) {
             return Collections.emptyMap();
@@ -211,8 +211,8 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
 
     @Override
     public Integer add(ContentType contentType, Integer contentId,
-                       Integer fromUserId,
-                       Integer toUserId, Boolean sent, LocalDateTime sendTime) {
+                       Long fromUserId,
+                       Long toUserId, Boolean sent, LocalDateTime sendTime) {
         ChatHistoryPO history = new ChatHistoryPO();
         history.setFromUserId(fromUserId);
         history.setToUserId(toUserId);

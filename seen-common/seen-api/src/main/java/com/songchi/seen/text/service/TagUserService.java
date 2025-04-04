@@ -12,9 +12,9 @@ import java.util.Set;
  */
 public interface TagUserService {
 
-    List<Integer> deleteAndSave(Integer userId, List<Integer> tagIds);
+    List<Integer> deleteAndSave(Long userId, List<Integer> tagIds);
 
-    Map<Integer, List<Integer>> userIdToTagId(Set<Integer> userIds);
+    Map<Long, List<Integer>> userIdToTagId(Set<Long> userIds);
 
-    Map<Integer, Set<Integer>> tagIdToUserId(Set<Integer> tagIds);
+    Map<Integer, Set<Long>> tagIdToUserId(Set<Integer> tagIds);
 }

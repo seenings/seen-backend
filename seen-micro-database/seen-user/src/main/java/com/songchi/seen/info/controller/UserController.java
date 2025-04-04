@@ -25,19 +25,19 @@ public class UserController implements HttpUserService {
 
     @Override
     @PostMapping("user-id-to-phone-number")
-    public Map<Integer, String> userIdToPhoneNumber(@RequestBody Set<Integer> userIds) {
+    public Map<Long, String> userIdToPhoneNumber(@RequestBody Set<Long> userIds) {
         return userService.userIdToPhoneNumber(userIds);
     }
 
     @Override
     @PostMapping("phone-number-to-user-id")
-    public Map<String, Integer> phoneNumberToUserId(@RequestBody Set<String> phoneNumbers) {
+    public Map<String, Long> phoneNumberToUserId(@RequestBody Set<String> phoneNumbers) {
         return userService.phoneNumberToUserId(phoneNumbers);
     }
 
     @Override
     @PostMapping("set")
-    public Integer set(@RequestParam("phoneNumber") String phoneNumber) {
+    public Long set(@RequestParam("phoneNumber") String phoneNumber) {
         return userService.set(phoneNumber);
     }
 }

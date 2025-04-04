@@ -10,11 +10,11 @@ import java.util.Set;
  * @since 2022-10-07
  */
 public interface UserBirthdayService {
-    Map<Integer, Integer> userIdToYear(Set<Integer> userIds);
+    Map<Long, Integer> userIdToYear(Set<Long> userIds);
 
-    Map<Integer, Integer> userIdToMonth(Set<Integer> userIds);
+    Map<Long, Integer> userIdToMonth(Set<Long> userIds);
 
-    Map<Integer, Integer> userIdToDay(Set<Integer> userIds);
+    Map<Long, Integer> userIdToDay(Set<Long> userIds);
 
-    boolean set(Integer userId, Integer year, Integer month, Integer day);
+    boolean set(Long userId, Integer year, Integer month, Integer day);
 }

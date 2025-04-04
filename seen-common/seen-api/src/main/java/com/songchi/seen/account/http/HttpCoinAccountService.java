@@ -25,8 +25,8 @@ import static com.songchi.seen.sys.constant.SeenConstant.FEIGN_VERSION;
         contextId = "HttpCoinAccountService")
 public interface HttpCoinAccountService {
     @PostMapping("init-account")
-    void initAccount(@RequestParam("userId") Integer userId);
+    void initAccount(@RequestParam("userId") Long userId);
 
     @PostMapping("user-id-to-account-id")
-    Map<Integer, Integer> userIdToAccountId(@RequestBody Set<Integer> userIds, @RequestParam("accountType") AccountType accountType);
+    Map<Long, Long> userIdToAccountId(@RequestBody Set<Long> userIds, @RequestParam("accountType") AccountType accountType);
 }

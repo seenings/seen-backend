@@ -12,13 +12,13 @@ import java.util.Set;
  */
 public interface FreezeService {
 
-    Integer freezeToSysUse(Integer userId, int coinMount,
+    Integer freezeToSysUse(Long userId, int coinMount,
                            TradeType tradeType, String description);
 
-    Integer freezeToTemporary(Integer userId, int coinMount,
+    Integer freezeToTemporary(Long userId, int coinMount,
                               TradeType tradeType, String description);
 
-    Boolean checkEnough(Integer userId, int coinMount);
+    Boolean checkEnough(Long userId, int coinMount);
 
-    Set<Integer> checkEnoughAndFreeze(Integer userId, int coinMount, TradeType tradeType, String description);
+    Set<Integer> checkEnoughAndFreeze(Long userId, int coinMount, TradeType tradeType, String description);
 }

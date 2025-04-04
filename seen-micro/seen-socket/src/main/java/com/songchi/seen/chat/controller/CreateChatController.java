@@ -25,20 +25,16 @@ import com.songchi.seen.sys.constant.PublicConstant;
 public class CreateChatController {
 
     // 队列，后续使用redis
-    public static Map<Integer, Queue<NeedRecChatMessage>> userIdToNeedRecChatMessageMap = new ConcurrentHashMap<>();
+    public static Map<Long, Queue<NeedRecChatMessage>> userIdToNeedRecChatMessageMap = new ConcurrentHashMap<>();
 
     private static final ExecutorService ONE_TO_ONE_EXECUTOR_SERVICE = Executors.newSingleThreadExecutor();
 
     @PostMapping("send-message")
-    public boolean sendMessage(@SessionAttribute Integer userId) {
+    public boolean sendMessage(@SessionAttribute Long userId) {
         System.out.println("发送消息" + userId);
         // 如果map中不含有队列，则新建队列
-        Queue<NeedRecChatMessage> needRecChatMessageQueue = userIdToNeedRecChatMessageMap.computeIfAbsent(userId,
-                (key) -> {
-                    return new ConcurrentLinkedQueue<>();
-                });
-        var needRecChatMessage = new NeedRecChatMessage(100000001, 1,
-                2, LocalDateTime.now());
+        Queue<NeedRecChatMessage> needRecChatMessageQueue = userIdToNeedRecChatMessageMap.computeIfAbsent(userId, (key) -> new ConcurrentLinkedQueue<>());
+        var needRecChatMessage = new NeedRecChatMessage(100000001L, 1, 2, LocalDateTime.now());
         needRecChatMessageQueue.add(needRecChatMessage);
         System.out.println(needRecChatMessage);
         return true;
@@ -46,12 +42,12 @@ public class CreateChatController {
 
     /**
      * 一对一
-     * 
+     *
      * @param userId 用户
      * @return 返回sse
      */
     @GetMapping(value = "one-to-one", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter OneToOne(@SessionAttribute Integer userId) {
+    public SseEmitter OneToOne(@SessionAttribute Long userId) {
         System.out.println(userId);
         SseEmitter sseEmitter = new SseEmitter();
         ONE_TO_ONE_EXECUTOR_SERVICE.execute(() -> {

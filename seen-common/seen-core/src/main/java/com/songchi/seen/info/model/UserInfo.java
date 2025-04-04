@@ -10,5 +10,5 @@ import com.songchi.seen.info.enumeration.Sex;
  * @param sex         1男2女
  * @param mainPhotoId 头像照片ID
  */
-public record UserInfo(Integer userId, String aliasName, Sex sex, Integer mainPhotoId) {
+public record UserInfo(Long userId, String aliasName, Sex sex, Integer mainPhotoId) {
 }

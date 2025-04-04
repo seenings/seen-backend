@@ -32,13 +32,13 @@ interface UserAuthPOMapper extends BaseMapper<UserAuthPO> {}
 public class UserAuthPOServiceImpl extends ServiceImpl<UserAuthPOMapper, UserAuthPO> implements UserAuthService {
 
     @Override
-    public Map<Integer, Integer> userIdToUserAuth(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToUserAuth(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<UserAuthPO, Integer> getValue = UserAuthPO::getAuthStatus;
-        SFunction<UserAuthPO, Integer> getKey = UserAuthPO::getUserId;
+        SFunction<UserAuthPO, Long> getKey = UserAuthPO::getUserId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs ->
                         list(new LambdaQueryWrapper<UserAuthPO>()
@@ -49,7 +49,7 @@ public class UserAuthPOServiceImpl extends ServiceImpl<UserAuthPOMapper, UserAut
     }
 
     @Override
-    public boolean set(Integer userId, Integer authStatus) {
+    public boolean set(Long userId, Integer authStatus) {
         Integer exists = userIdToUserAuth(Collections.singleton(userId)).get(userId);
         var po = new UserAuthPO().setUserId(userId).setAuthStatus(authStatus).setUpdateTime(LocalDateTime.now());
         if (exists == null) {

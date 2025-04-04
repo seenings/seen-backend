@@ -25,7 +25,7 @@ public class UserWorkCompanyPO {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 公司名

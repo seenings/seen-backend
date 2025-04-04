@@ -24,12 +24,12 @@ public class ChatHistoryPO {
     /**
      * 发送者-聊天用户
      */
-    private Integer fromUserId;
+    private Long fromUserId;
 
     /**
      * 接收者-聊天用户
      */
-    private Integer toUserId;
+    private Long toUserId;
 
     /**
      * 内容类型：1文本，2图片，3语音，4视频

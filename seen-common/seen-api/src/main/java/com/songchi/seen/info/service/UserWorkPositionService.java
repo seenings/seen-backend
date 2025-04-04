@@ -10,7 +10,7 @@ import java.util.Set;
  * @since 2022-10-16
  */
 public interface UserWorkPositionService {
-    Map<Integer, Integer> userIdToPosition(Set<Integer> userIds);
+    Map<Long, Integer> userIdToPosition(Set<Long> userIds);
 
-    boolean set(Integer userId, Integer position);
+    boolean set(Long userId, Integer position);
 }

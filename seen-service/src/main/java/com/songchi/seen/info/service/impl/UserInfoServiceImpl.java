@@ -83,32 +83,32 @@ public class UserInfoServiceImpl implements UserInfoService {
     private HttpPhotoService httpPhotoService;
 
     @Override
-    public Map<Integer, UserMainInfo> userIdToUserMainInfo(Set<Integer> userIds) {
-        Map<Integer, Integer> userIdPhotoIdMap = httpUserMainPhotoService.userIdPhotoId(userIds);
+    public Map<Long, UserMainInfo> userIdToUserMainInfo(Set<Long> userIds) {
+        Map<Long, Integer> userIdPhotoIdMap = httpUserMainPhotoService.userIdPhotoId(userIds);
 
         Map<Integer, String> photoIdToPhotoUrlMap =
                 httpPhotoService.photoIdToPhotoUrl(new HashSet<>(userIdPhotoIdMap.values()));
-        Map<Integer, Integer> userIdToUserAuthMap = httpUserAuthService.userIdToUserAuth(userIds);
-        Map<Integer, String> userIdToAliasNameMap = httpUserAliasNameService.userIdToAliasName(userIds);
-        Map<Integer, Integer> userIdToCurrentResidenceProvinceIdMap =
+        Map<Long, Integer> userIdToUserAuthMap = httpUserAuthService.userIdToUserAuth(userIds);
+        Map<Long, String> userIdToAliasNameMap = httpUserAliasNameService.userIdToAliasName(userIds);
+        Map<Long, Integer> userIdToCurrentResidenceProvinceIdMap =
                 httpUserCurrentResidenceService.userIdToProvinceId(userIds);
-        Map<Integer, Integer> userIdToCurrentResidenceCityIdMap =
+        Map<Long, Integer> userIdToCurrentResidenceCityIdMap =
                 httpUserCurrentResidenceService.userIdToCityId(userIds);
-        Map<Integer, Integer> userIdToBirthPlaceProvinceIdMap = httpUserBirthPlaceService.userIdToProvinceId(userIds);
-        Map<Integer, Integer> userIdToBirthPlaceCityIdMap = httpUserBirthPlaceService.userIdToCityId(userIds);
+        Map<Long, Integer> userIdToBirthPlaceProvinceIdMap = httpUserBirthPlaceService.userIdToProvinceId(userIds);
+        Map<Long, Integer> userIdToBirthPlaceCityIdMap = httpUserBirthPlaceService.userIdToCityId(userIds);
         Set<Integer> cityIds = new HashSet<>(userIdToBirthPlaceCityIdMap.values());
         cityIds.addAll(new HashSet<>(userIdToCurrentResidenceCityIdMap.values()));
         Map<Integer, String> cityToNameMap = httpCityService.idToName(cityIds);
         Set<Integer> provinceIds = new HashSet<>(userIdToBirthPlaceProvinceIdMap.values());
         provinceIds.addAll(new HashSet<>(userIdToCurrentResidenceProvinceIdMap.values()));
         Map<Integer, String> provinceToNameMap = httpProvinceService.idToName(provinceIds);
-        Map<Integer, Integer> userIdToYearMap = httpUserBirthdayService.userIdToYear(userIds);
-        Map<Integer, Integer> userIdToWeightKgMap = httpUserWeightService.userIdToWeightKg(userIds);
-        Map<Integer, Integer> userIdToStatureCmMap = httpUserStatureService.userIdToStatureCm(userIds);
-        Map<Integer, Integer> userIdToPositionMap = httpUserWorkPositionService.userIdToPosition(userIds);
+        Map<Long, Integer> userIdToYearMap = httpUserBirthdayService.userIdToYear(userIds);
+        Map<Long, Integer> userIdToWeightKgMap = httpUserWeightService.userIdToWeightKg(userIds);
+        Map<Long, Integer> userIdToStatureCmMap = httpUserStatureService.userIdToStatureCm(userIds);
+        Map<Long, Integer> userIdToPositionMap = httpUserWorkPositionService.userIdToPosition(userIds);
         Map<Integer, String> positionIdToPositionNameMap =
                 httpWorkPositionService.positionIdToPositionName(new HashSet<>(userIdToPositionMap.values()));
-        Map<Integer, Integer> userIdToEducationalMap = httpEducationalService.userIdToEducational(userIds);
+        Map<Long, Integer> userIdToEducationalMap = httpEducationalService.userIdToEducational(userIds);
 
         return userIds.stream()
                 .parallel()
@@ -164,7 +164,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     private HttpUserWorkService httpUserWorkService;
 
     @Override
-    public void saveBasicInformation(Integer userId, BasicInformation basicInformation) {
+    public void saveBasicInformation(Long userId, BasicInformation basicInformation) {
 
         String aliasName = basicInformation.aliasName();
         LocalDate birthDate = basicInformation.birthDate();
@@ -193,7 +193,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     private HttpUserIncomeService httpUserIncomeService;
 
     @Override
-    public void saveEducationAndWork(Integer userId, EducationAndWork educationAndWork) {
+    public void saveEducationAndWork(Long userId, EducationAndWork educationAndWork) {
 
         httpEducationalService.set(userId, SchoolEnumUtils.indexToEducationEnum(educationAndWork.highestEducation()));
         httpStudentInfoService.set(
@@ -204,7 +204,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public void saveContactInformation(Integer userId, ContactInformation contactInformation) {
+    public void saveContactInformation(Long userId, ContactInformation contactInformation) {
 
         // 联系电话不能在这里修改
     }

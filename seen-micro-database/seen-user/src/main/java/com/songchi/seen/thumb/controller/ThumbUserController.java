@@ -31,9 +31,9 @@ public class ThumbUserController implements HttpThumbUserService {
      */
     @Override
     @PostMapping("thumbed-user-id-to-true")
-    public Map<Integer, Boolean> thumbedUserIdToTrue(
-            @RequestBody Set<Integer> thumbedUserIds, @RequestParam("thumbUserId") Integer thumbUserId) {
-        Map<Integer, Boolean> thumbedUserIdToTrueMap =
+    public Map<Long, Boolean> thumbedUserIdToTrue(
+            @RequestBody Set<Long> thumbedUserIds, @RequestParam("thumbUserId") Long thumbUserId) {
+        Map<Long, Boolean> thumbedUserIdToTrueMap =
                 thumbUserService.thumbedUserIdToTrue(thumbedUserIds, thumbUserId);
         return thumbedUserIds.stream()
                 .parallel()
@@ -44,7 +44,7 @@ public class ThumbUserController implements HttpThumbUserService {
     @Override
     @PostMapping("set")
     public boolean set(
-            @RequestParam("thumbedUserId") Integer thumbedUserId, @RequestParam("thumbUserId") Integer thumbUserId) {
+            @RequestParam("thumbedUserId") Long thumbedUserId, @RequestParam("thumbUserId") Long thumbUserId) {
         return thumbUserService.set(thumbedUserId, thumbUserId);
     }
 }

@@ -31,8 +31,8 @@ interface UserPOMapper extends BaseMapper<UserPO> {}
 public class UserPOServiceImpl extends ServiceImpl<UserPOMapper, UserPO> implements UserService {
 
     @Override
-    public Map<Integer, String> userIdToPhoneNumber(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, String> userIdToPhoneNumber(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -45,7 +45,7 @@ public class UserPOServiceImpl extends ServiceImpl<UserPOMapper, UserPO> impleme
     }
 
     @Override
-    public Map<String, Integer> phoneNumberToUserId(Set<String> phoneNumbers) {
+    public Map<String, Long> phoneNumberToUserId(Set<String> phoneNumbers) {
         List<String> list = CollUtils.valueIsNullToList(phoneNumbers);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
@@ -59,8 +59,8 @@ public class UserPOServiceImpl extends ServiceImpl<UserPOMapper, UserPO> impleme
     }
 
     @Override
-    public Integer set(String phoneNumber) {
-        Integer userId = phoneNumberToUserId(Collections.singleton(phoneNumber)).get(phoneNumber);
+    public Long set(String phoneNumber) {
+        Long userId = phoneNumberToUserId(Collections.singleton(phoneNumber)).get(phoneNumber);
         UserPO po = new UserPO().setPhone(phoneNumber).setUpdateTime(LocalDateTime.now());
         if (userId == null) {
             save(po);

@@ -32,8 +32,8 @@ public class UserBirthdayPOServiceImpl extends ServiceImpl<UserBirthdayPOMapper,
         implements UserBirthdayService {
 
     @Override
-    public Map<Integer, Integer> userIdToYear(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToYear(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -46,8 +46,8 @@ public class UserBirthdayPOServiceImpl extends ServiceImpl<UserBirthdayPOMapper,
     }
 
     @Override
-    public Map<Integer, Integer> userIdToMonth(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToMonth(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -61,8 +61,8 @@ public class UserBirthdayPOServiceImpl extends ServiceImpl<UserBirthdayPOMapper,
     }
 
     @Override
-    public Map<Integer, Integer> userIdToDay(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToDay(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -76,8 +76,8 @@ public class UserBirthdayPOServiceImpl extends ServiceImpl<UserBirthdayPOMapper,
     }
 
     @Override
-    public boolean set(Integer userId, Integer year, Integer month, Integer day) {
-        Map<Integer, Integer> userIdToYearMap = userIdToYear(Collections.singleton(userId));
+    public boolean set(Long userId, Integer year, Integer month, Integer day) {
+        Map<Long, Integer> userIdToYearMap = userIdToYear(Collections.singleton(userId));
         Integer existsYear = userIdToYearMap.get(userId);
         UserBirthdayPO po = new UserBirthdayPO()
                 .setUserId(userId)

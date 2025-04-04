@@ -23,14 +23,14 @@ import static com.songchi.seen.sys.constant.SeenConstant.FEIGN_VERSION;
 public interface HttpCoinTradeService {
     @PostMapping("freeze-to-sys-use")
     Integer freezeToSysUse(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("coinMount") int coinMount,
             @RequestParam("tradeType") TradeType tradeType,
             @RequestParam("description") String description);
 
     @PostMapping("freeze-to-temporary")
     Integer freezeToTemporary(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("coinMount") int coinMount,
             @RequestParam("tradeType") TradeType tradeType,
             @RequestParam("description") String description);
@@ -43,16 +43,16 @@ public interface HttpCoinTradeService {
      */
     @PostMapping("check-enough-and-freeze")
     Set<Integer> checkEnoughAndFreeze(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("coinMount") int coinMount,
             @RequestParam("tradeType") TradeType tradeType,
             @RequestParam("description") String description);
 
     @PostMapping("check-enough")
-    Boolean checkEnough(@RequestParam("userId") Integer userId, @RequestParam("coinMount") int coinMount);
+    Boolean checkEnough(@RequestParam("userId") Long userId, @RequestParam("coinMount") int coinMount);
 
     @PostMapping("simple-trade-type-to")
-    Integer simpleTradeTypeTo(@RequestParam("userId") Integer userId, @RequestParam("coinAmount") Integer coinAmount
+    Integer simpleTradeTypeTo(@RequestParam("userId") Long userId, @RequestParam("coinAmount") Integer coinAmount
             , @RequestParam("tradeType") TradeType tradeType
     );
 }

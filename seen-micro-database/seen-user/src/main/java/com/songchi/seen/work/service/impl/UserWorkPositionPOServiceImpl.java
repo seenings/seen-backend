@@ -33,13 +33,13 @@ public class UserWorkPositionPOServiceImpl extends ServiceImpl<UserWorkPositionP
         implements UserWorkPositionService {
 
     @Override
-    public Map<Integer, Integer> userIdToPosition(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, Integer> userIdToPosition(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<UserWorkPositionPO, Integer> getValue = UserWorkPositionPO::getPosition;
-        SFunction<UserWorkPositionPO, Integer> getKey = UserWorkPositionPO::getUserId;
+        SFunction<UserWorkPositionPO, Long> getKey = UserWorkPositionPO::getUserId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(
                         subs -> list(new LambdaQueryWrapper<UserWorkPositionPO>()
@@ -50,7 +50,7 @@ public class UserWorkPositionPOServiceImpl extends ServiceImpl<UserWorkPositionP
     }
 
     @Override
-    public boolean set(Integer userId, Integer position) {
+    public boolean set(Long userId, Integer position) {
         Integer exists = userIdToPosition(Collections.singleton(userId)).get(userId);
         var po =
                 new UserWorkPositionPO().setUserId(userId).setPosition(position).setUpdateTime(LocalDateTime.now());

@@ -23,8 +23,8 @@ import com.songchi.seen.sys.constant.ServiceNameConstant;
         contextId = "HttpUserWorkService")
 public interface HttpUserWorkService {
     @PostMapping("user-id-to-company-name")
-    Map<Integer, String> userIdToCompanyName(@RequestBody Set<Integer> userIds);
+    Map<Long, String> userIdToCompanyName(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("companyName") String companyName);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("companyName") String companyName);
 }

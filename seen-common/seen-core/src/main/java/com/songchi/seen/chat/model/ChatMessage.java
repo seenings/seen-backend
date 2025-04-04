@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * @param sent          是否已发送
  */
 public record ChatMessage(Integer id, Integer contentTypeId, Integer contentId,
-                          Integer fromUserId,
-                          Integer toUserId, Boolean sent, LocalDateTime sendTime) {
+                          Long fromUserId,
+                          Long toUserId, Boolean sent, LocalDateTime sendTime) {
 
 }

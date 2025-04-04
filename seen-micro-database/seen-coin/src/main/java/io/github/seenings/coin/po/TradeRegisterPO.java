@@ -26,7 +26,7 @@ public class TradeRegisterPO {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private Long userId;
     /**
      * 注册时间
      */

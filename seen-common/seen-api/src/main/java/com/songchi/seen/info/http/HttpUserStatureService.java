@@ -24,8 +24,8 @@ import static com.songchi.seen.sys.constant.SeenConstant.FEIGN_VERSION;
 public interface HttpUserStatureService {
 
     @PostMapping("user-id-to-stature-cm")
-    Map<Integer, Integer> userIdToStatureCm(@RequestBody Set<Integer> userIds);
+    Map<Long, Integer> userIdToStatureCm(@RequestBody Set<Long> userIds);
 
     @PostMapping("set")
-    boolean set(@RequestParam("userId") Integer userId, @RequestParam("statureCm") Integer statureCm);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("statureCm") Integer statureCm);
 }

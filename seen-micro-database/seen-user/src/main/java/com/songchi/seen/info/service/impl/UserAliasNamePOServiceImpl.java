@@ -33,13 +33,13 @@ public class UserAliasNamePOServiceImpl extends ServiceImpl<UserAliasNamePOMappe
         implements UserAliasNameService {
 
     @Override
-    public Map<Integer, String> userIdToAliasName(Set<Integer> userIds) {
-        List<Integer> list = CollUtils.valueIsNullToList(userIds);
+    public Map<Long, String> userIdToAliasName(Set<Long> userIds) {
+        List<Long> list = CollUtils.valueIsNullToList(userIds);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
         SFunction<UserAliasNamePO, String> getValue = UserAliasNamePO::getAliasName;
-        SFunction<UserAliasNamePO, Integer> getKey = UserAliasNamePO::getUserId;
+        SFunction<UserAliasNamePO, Long> getKey = UserAliasNamePO::getUserId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs ->
                         list(new LambdaQueryWrapper<UserAliasNamePO>()
@@ -50,8 +50,8 @@ public class UserAliasNamePOServiceImpl extends ServiceImpl<UserAliasNamePOMappe
     }
 
     @Override
-    public boolean set(Integer userId, String aliasName) {
-        Map<Integer, String> userIdToValueMap = userIdToAliasName(Collections.singleton(userId));
+    public boolean set(Long userId, String aliasName) {
+        Map<Long, String> userIdToValueMap = userIdToAliasName(Collections.singleton(userId));
         String exists = userIdToValueMap.get(userId);
         UserAliasNamePO po =
                 new UserAliasNamePO().setUserId(userId).setAliasName(aliasName).setUpdateTime(LocalDateTime.now());

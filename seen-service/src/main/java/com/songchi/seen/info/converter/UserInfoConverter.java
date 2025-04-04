@@ -13,7 +13,7 @@ public interface UserInfoConverter {
     UserInfoConverter INSTANCE = Mappers.getMapper(UserInfoConverter.class);
 
     UserMainInfo convert(
-            Integer userId,
+            Long userId,
             Integer mainPhotoId,
             String mainPhotoUrl,
             Integer userAuthId,

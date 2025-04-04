@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public interface ITagService {
 
-    Map<String, String> tagParentNameToTagName(Set<String> tagParentNames, Integer userId);
+    Map<String, String> tagParentNameToTagName(Set<String> tagParentNames, Long userId);
 
-    Map<Integer, UserTag> userIdToUserTag(Set<Integer> userIds);
+    Map<Long, UserTag> userIdToUserTag(Set<Long> userIds);
 }

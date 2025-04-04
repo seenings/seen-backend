@@ -10,7 +10,7 @@ import java.util.Set;
  * @since 2023-01-01
  */
 public interface CoinAccountUserService {
-    Map<Integer, Set<Integer>> userIdToAccountId(Set<Integer> userIds);
+    Map<Long, Set<Long>> userIdToAccountId(Set<Long> userIds);
 
-    boolean set(Integer accountId, Integer userId);
+    boolean set(Long accountId, Long userId);
 }

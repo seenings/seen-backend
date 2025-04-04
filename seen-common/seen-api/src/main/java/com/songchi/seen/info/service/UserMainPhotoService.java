@@ -10,7 +10,7 @@ import java.util.Set;
  * @since 2022-10-16
  */
 public interface UserMainPhotoService {
-    Map<Integer, Integer> userIdPhotoId(Set<Integer> userIds);
+    Map<Long, Integer> userIdPhotoId(Set<Long> userIds);
 
-    boolean set(Integer userId, Integer photoId);
+    boolean set(Long userId, Integer photoId);
 }

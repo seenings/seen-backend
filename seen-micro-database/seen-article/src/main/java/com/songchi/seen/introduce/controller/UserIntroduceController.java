@@ -32,7 +32,7 @@ public class UserIntroduceController implements HttpUserIntroduceService {
      */
     @Override
     @PostMapping("user-id-to-introduce-type-and-text")
-    public Map<Integer, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndText(@RequestBody Set<Integer> userIds) {
+    public Map<Long, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndText(@RequestBody Set<Long> userIds) {
         return userIntroduceService.userIdToIntroduceTypeAndText(userIds);
     }
 
@@ -48,7 +48,7 @@ public class UserIntroduceController implements HttpUserIntroduceService {
     @Override
     @PostMapping("save-and-return-id")
     public Integer saveAndReturnId(
-            @RequestParam("userId") Integer userId,
+            @RequestParam("userId") Long userId,
             @RequestParam("introduceTypeEnum") IntroduceTypeEnum introduceTypeEnum,
             @RequestParam("textId") Integer textId) {
         return userIntroduceService.saveAndReturnId(userId, introduceTypeEnum, textId);

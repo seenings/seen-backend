@@ -106,7 +106,7 @@ public class SelfInfoController {
     private HttpUserIntroducePhotoService httpUserIntroducePhotoService;
 
     @PostMapping("self-user-id-to-main-photo")
-    public ResponseEntity<R<PhotoUrl>> selfUserIdToMainPhoto(@SessionAttribute Integer userId) {
+    public ResponseEntity<R<PhotoUrl>> selfUserIdToMainPhoto(@SessionAttribute Long userId) {
         Integer photoId = httpUserMainPhotoService.userIdPhotoId(Collections.singleton(userId)).get(userId);
         if (photoId == null) {
             return ResponseEntity.noContent().build();
@@ -123,14 +123,14 @@ public class SelfInfoController {
      * @return 结果
      */
     @PostMapping("self-user-id-to-main-page-photo")
-    public R<Map<Integer, Integer>> selfUserIdToMainPagePhoto(@SessionAttribute Integer userId) {
+    public R<Map<Integer, Integer>> selfUserIdToMainPagePhoto(@SessionAttribute Long userId) {
         Set<IntroduceTypeAndPhoto> introduceTypeAndPhotos = httpUserIntroducePhotoService.userIdToIntroduceTypeAndPhoto(Collections.singleton(userId)).get(userId);
         Map<Integer, Integer> map = Optional.ofNullable(introduceTypeAndPhotos).map(m -> m.stream().parallel().filter(n -> n.introduceTypeEnum() == IntroduceTypeEnum.MAIN_PAGE).collect(Collectors.toMap(IntroduceTypeAndPhoto::order, IntroduceTypeAndPhoto::photoId))).orElseGet(Collections::emptyMap);
         return ResUtils.ok(map);
     }
 
     @PostMapping("self-user-id-to-education-and-work")
-    public R<EducationAndWork> selfUserIdToEducationAndWork(@SessionAttribute Integer userId) {
+    public R<EducationAndWork> selfUserIdToEducationAndWork(@SessionAttribute Long userId) {
 
         Integer highestEducation = httpEducationalService.userIdToEducational(Collections.singleton(userId)).get(userId);
         Integer schoolId = httpStudentInfoService.userIdToSchoolId(Collections.singleton(userId)).get(userId);
@@ -150,7 +150,7 @@ public class SelfInfoController {
     }
 
     @PostMapping("self-user-id-to-basic-information")
-    public R<BasicInformation> selfUserIdToBasicInformation(@SessionAttribute Integer userId) {
+    public R<BasicInformation> selfUserIdToBasicInformation(@SessionAttribute Long userId) {
 
         String aliasName = httpUserAliasNameService.userIdToAliasName(Collections.singleton(userId)).get(userId);
         Integer year = httpUserBirthdayService.userIdToYear(Collections.singleton(userId)).get(userId);
@@ -177,26 +177,26 @@ public class SelfInfoController {
     private HttpUserService httpUserService;
 
     @PostMapping("self-user-id-to-contact-information")
-    public R<ContactInformation> selfUserIdToContactInformation(@SessionAttribute Integer userId) {
+    public R<ContactInformation> selfUserIdToContactInformation(@SessionAttribute Long userId) {
         String photoNumber = httpUserService.userIdToPhoneNumber(Collections.singleton(userId)).get(userId);
         ContactInformation result = new ContactInformation(null, photoNumber);
         return ResUtils.ok(result);
     }
 
     @GetMapping("get-user-id")
-    public R<Integer> getUserId(@SessionAttribute Integer userId) {
+    public R<Long> getUserId(@SessionAttribute Long userId) {
         return ResUtils.ok(userId);
     }
 
     @PostMapping("check-self")
-    public R<Boolean> checkSelf(@RequestParam Integer pageUserId, @SessionAttribute Integer userId) {
+    public R<Boolean> checkSelf(@RequestParam Long pageUserId, @SessionAttribute Long userId) {
         return ResUtils.ok(Objects.equals(pageUserId, userId));
     }
 
     private UserInfoService userInfoService;
 
     @PostMapping("save-basic-information-all")
-    public R<Boolean> saveBasicInformationAll(@RequestBody BasicInformationAll basicInformationAll, @SessionAttribute Integer userId) {
+    public R<Boolean> saveBasicInformationAll(@RequestBody BasicInformationAll basicInformationAll, @SessionAttribute Long userId) {
         userInfoService.saveBasicInformation(userId, basicInformationAll.basicInformation());
         userInfoService.saveEducationAndWork(userId, basicInformationAll.educationAndWork());
         userInfoService.saveContactInformation(userId, basicInformationAll.contactInformation());
@@ -204,19 +204,19 @@ public class SelfInfoController {
     }
 
     @PostMapping("save-tag")
-    public R<List<Integer>> saveTag(@RequestBody List<Integer> tagIds, @SessionAttribute Integer userId) {
+    public R<List<Integer>> saveTag(@RequestBody List<Integer> tagIds, @SessionAttribute Long userId) {
         List<Integer> result = httpTagService.deleteAndSave(userId, tagIds);
         return ResUtils.ok(result);
     }
 
     @PostMapping("save-main-photo")
-    public R<Boolean> saveMainPhoto(@RequestParam("photoId") Integer photoId, @SessionAttribute Integer userId) {
+    public R<Boolean> saveMainPhoto(@RequestParam("photoId") Integer photoId, @SessionAttribute Long userId) {
         boolean set = httpUserMainPhotoService.set(userId, photoId);
         return ResUtils.ok(set);
     }
 
     @PostMapping("save-primary-photo")
-    public ResponseEntity<Boolean> savePrimaryPhoto(@RequestBody List<OrderAndPhotoId> orderAndPhotoIds, @RequestParam Integer mainPhotoId, @RequestParam Integer max, @RequestParam Integer introduceTypeEnum, @SessionAttribute Integer userId) {
+    public ResponseEntity<Boolean> savePrimaryPhoto(@RequestBody List<OrderAndPhotoId> orderAndPhotoIds, @RequestParam Integer mainPhotoId, @RequestParam Integer max, @RequestParam Integer introduceTypeEnum, @SessionAttribute Long userId) {
         if (mainPhotoId == null) {
             String msg = String.format("头像照片不存在，用户ID：%s。", userId);
             log.error(msg);
@@ -231,7 +231,7 @@ public class SelfInfoController {
     }
 
     @PostMapping("self-user-id-to-tag-id")
-    public R<List<Integer>> selfUserIdToTagId(@SessionAttribute Integer userId) {
+    public R<List<Integer>> selfUserIdToTagId(@SessionAttribute Long userId) {
 
         List<Integer> result = httpTagService.userIdToTagId(Collections.singleton(userId)).get(userId);
         return ResUtils.ok(result);
