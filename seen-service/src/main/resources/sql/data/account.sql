@@ -1,4 +1,3 @@
-use seen;
 insert into coin_account (id, account_type,  create_time)
 values (1,1,CURRENT_TIMESTAMP);
 insert into coin_account (id, account_type,  create_time)

@@ -1,14 +1,15 @@
 package io.github.seenings.coin.service.impl;
 
-import com.songchi.seen.account.http.HttpCoinAccountService;
-import com.songchi.seen.account.service.CoinAccountBalanceService;
-import com.songchi.seen.account.service.CoinAccountService;
-import com.songchi.seen.account.service.CoinAccountUserService;
-import com.songchi.seen.account.service.FreezeService;
-import com.songchi.seen.coin.enumeration.AccountType;
-import com.songchi.seen.coin.enumeration.TradeType;
-import com.songchi.seen.trade.service.TradeService;
+import io.github.seenings.account.service.CoinAccountBalanceService;
+import io.github.seenings.account.service.CoinAccountService;
+import io.github.seenings.account.service.CoinAccountUserService;
+import io.github.seenings.account.service.FreezeService;
+import io.github.seenings.coin.enumeration.AccountType;
+import io.github.seenings.coin.enumeration.TradeType;
+import io.github.seenings.trade.service.TradeService;
+import io.github.seenings.coin.api.CoinAccountApi;
 import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -25,6 +26,7 @@ import static cn.hutool.core.collection.CollUtil.newHashSet;
  * @since 2023-01-01
  */
 @Service
+@AllArgsConstructor
 public class FreezeServiceImpl implements FreezeService {
 
     @Resource
@@ -36,9 +38,10 @@ public class FreezeServiceImpl implements FreezeService {
     @Resource
     private CoinAccountBalanceService coinAccountBalanceService;
 
-    @Resource
-    private HttpCoinAccountService httpCoinAccountService;
-
+    /**
+     * 玫瑰币账户设置
+     */
+    private CoinAccountApi coinAccountApi;
 
     /**
      * 冻结账户转给系统使用账户
@@ -52,7 +55,7 @@ public class FreezeServiceImpl implements FreezeService {
     @Override
     public Integer freezeToSysUse(Long userId, int coinMount, TradeType tradeType, String description) {
 
-        Long freezeAccountId = httpCoinAccountService.userIdToAccountId(Collections.singleton(userId), AccountType.USER_FREEZE).get(userId);
+        Long freezeAccountId = coinAccountApi.userIdToAccountId(Collections.singleton(userId)).get(userId);
         int sysUseAccountTypeId = AccountType.SYS_USE.getIndex();
         List<Long> accountIds = coinAccountService.accountTypeToAccountId(Collections.singleton(sysUseAccountTypeId)).get(sysUseAccountTypeId);
         Long sysUseAccountId = accountIds.stream().findFirst().orElse(null);
@@ -63,8 +66,8 @@ public class FreezeServiceImpl implements FreezeService {
     @Override
     public Integer freezeToTemporary(Long userId, int coinMount, TradeType tradeType, String description) {
 
-        Long freezeAccountId = httpCoinAccountService.userIdToAccountId(Collections.singleton(userId), AccountType.USER_FREEZE).get(userId);
-        Long temporaryAccountId = httpCoinAccountService.userIdToAccountId(Collections.singleton(userId), AccountType.USER_TEMPORARY).get(userId);
+        Long freezeAccountId = coinAccountApi.userIdToAccountId(Collections.singleton(userId)).get(userId);
+        Long temporaryAccountId = coinAccountApi.userIdToAccountId(Collections.singleton(userId)).get(userId);
 
         return tradeService.trade(temporaryAccountId, freezeAccountId, coinMount, tradeType, description);
     }

@@ -1,8 +1,8 @@
 package io.github.seenings.coin.api;
 
 
-import com.songchi.seen.coin.enumeration.AccountType;
-import com.songchi.seen.sys.constant.SeenConstant;
+import io.github.seenings.coin.enumeration.AccountType;
+import io.github.seenings.sys.constant.SeenConstant;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.HttpExchange;

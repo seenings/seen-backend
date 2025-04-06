@@ -1,8 +1,16 @@
-version: "3"
+version: "3.8"
 services:
   minio:
-    image: minio:9.2.0
-    environment:
-      - MYSQL_ROOT_PASSWORD=root@songchi
+    image: quay.io/minio/minio
     ports:
-      - "3306:3306"
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ~/seen/minio/data-1/:/data-1
+      - ~/seen/minio/data-2/:/data-2
+      - ~/seen/minio/data-3/:/data-3
+      - ~/seen/minio/data-4/:/data-4
+      - ./minio.conf:/etc/config.env
+    environment:
+      - MINIO_CONFIG_ENV_FILE=/etc/config.env
+    command: server --console-address ":9001"

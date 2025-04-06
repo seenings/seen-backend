@@ -1,20 +1,13 @@
 package io.github.seenings.coin.api.impl;
 
-import cn.hutool.core.lang.Pair;
-import com.songchi.seen.account.http.HttpCoinAccountService;
-import com.songchi.seen.account.service.CoinAccountBalanceService;
-import com.songchi.seen.account.service.CoinAccountService;
-import com.songchi.seen.account.service.CoinAccountUserService;
-import com.songchi.seen.coin.enumeration.AccountType;
-import com.songchi.seen.sys.constant.SeenConstant;
+import io.github.seenings.account.http.HttpCoinAccountService;
+import io.github.seenings.account.service.CoinAccountBalanceService;
+import io.github.seenings.account.service.CoinAccountService;
+import io.github.seenings.account.service.CoinAccountUserService;
+import io.github.seenings.coin.enumeration.AccountType;
+import io.github.seenings.sys.constant.SeenConstant;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * CoinAccountController
@@ -52,26 +45,4 @@ public class CoinAccountController implements HttpCoinAccountService {
         coinAccountBalanceService.set(userFreezeAccountId, 0);
     }
 
-    @Override
-    @PostMapping("user-id-to-account-id")
-    public Map<Long, Long> userIdToAccountId(@RequestBody Set<Long> userIds, @RequestParam("accountType") AccountType accountType) {
-        Map<Long, Set<Long>> userIdToAccountIdMap = coinAccountUserService
-                .userIdToAccountId(userIds);
-
-        Set<Long> accountIds = userIdToAccountIdMap.values().stream().parallel()
-                .flatMap(Collection::stream).collect(Collectors.toSet());
-        Map<Long, AccountType> accountIdToAccountTypeMap = coinAccountService.accountIdToAccountType(accountIds);
-        // 获取账户
-        return userIds.stream().parallel()
-                .map(n -> {
-                    Set<Long> resultAccountIds = userIdToAccountIdMap.get(n);
-                    Long accountId = resultAccountIds.stream().parallel()
-                            .filter(l -> accountIdToAccountTypeMap.get(l) == accountType)
-                            .findFirst().orElse(null);
-                    if (accountId == null) {
-                        return null;
-                    }
-                    return Map.entry(n, accountId);
-                }).filter(Objects::nonNull).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-    }
 }

@@ -1,4 +1,3 @@
-use seen;
 insert into work_position (id, position_name, update_time) values (1, '程序员', '2023-01-22 11:42:57');
 insert into work_position (id, position_name, update_time) values (2, '教师', '2023-01-22 11:42:57');
 insert into work_position (id, position_name, update_time) values (3, '医生', '2023-01-22 11:42:57');

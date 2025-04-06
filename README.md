@@ -34,7 +34,7 @@ minikube && sudo mv minikube /usr/local/bin/
 
 ```shell
 ./mvnw clean
-./mvnw versions:set --define newVersion=0.1.56
+./mvnw versions:set --define newVersion=0.1.57
 ```
 
 ## 1.7 中间件启动

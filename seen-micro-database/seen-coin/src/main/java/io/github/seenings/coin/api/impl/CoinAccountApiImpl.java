@@ -1,8 +1,8 @@
 package io.github.seenings.coin.api.impl;
 
-import com.songchi.seen.account.service.CoinAccountService;
-import com.songchi.seen.account.service.CoinAccountUserService;
-import com.songchi.seen.coin.enumeration.AccountType;
+import io.github.seenings.account.service.CoinAccountService;
+import io.github.seenings.account.service.CoinAccountUserService;
+import io.github.seenings.coin.enumeration.AccountType;
 import io.github.seenings.coin.api.CoinAccountApi;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

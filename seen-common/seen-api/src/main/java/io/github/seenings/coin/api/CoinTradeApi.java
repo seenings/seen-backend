@@ -1,6 +1,6 @@
 package io.github.seenings.coin.api;
 
-import com.songchi.seen.sys.constant.SeenConstant;
+import io.github.seenings.sys.constant.SeenConstant;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
 

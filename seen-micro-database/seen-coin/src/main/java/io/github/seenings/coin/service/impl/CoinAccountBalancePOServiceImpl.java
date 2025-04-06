@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.coin.po.CoinAccountBalancePO;
-import com.songchi.seen.account.service.CoinAccountBalanceService;
-import com.songchi.seen.core.util.CollUtil;
+import io.github.seenings.account.service.CoinAccountBalanceService;
+import io.github.seenings.core.util.CollUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
