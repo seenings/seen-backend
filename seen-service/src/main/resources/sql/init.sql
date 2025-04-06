@@ -37,19 +37,6 @@ create table if not exists city
 )
     comment '城市';
 
-create table if not exists photo
-(
-    id          int auto_increment comment '自增ID'
-        primary key,
-    path        varchar(400)                       not null comment '图像路径',
-    deleted     tinyint  default 0                 not null comment '是否删除0未删除',
-    update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间',
-    update_user int      default 8888              not null comment '更新用户',
-    constraint photo_path_uindex
-        unique (path)
-)
-    comment '图像';
-
 create table if not exists province
 (
     id          int auto_increment comment '自增ID'
@@ -430,7 +417,6 @@ create table if not exists seen.user_introduce_photo
         primary key,
     user_id        bigint                                not null comment '用户ID',
     introduce_type int                                not null comment '介绍类型，IntroduceTypeEnum',
-    photo_id       int                                not null comment '照片ID，对应photo',
     order_num      int                                not null comment '顺序',
     update_time    datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
@@ -641,3 +627,52 @@ create table trade_and_busi
     trade_time  datetime not null comment '交易时间'
 )
     comment '交易与业务关系';
+
+
+create table seen.educational
+(
+    id          int auto_increment comment '自增ID'
+        primary key,
+    user_id     int                                not null comment '用户ID',
+    educational int                                not null comment '学历（0：其他，1：大专，2：本科，3：硕士，4：博士）',
+    update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
+)
+    comment '用户的学历';
+
+
+create table seen.school_graduate
+(
+    id          int auto_increment comment '自增ID'
+        primary key,
+    user_id     int                                not null comment '用户ID',
+    graduated   int                                not null comment '是否毕业0（否），1（是）',
+    update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
+)
+    comment '用户的毕业状态';
+
+
+create table seen.school
+(
+    id          int auto_increment comment '自增ID'
+        primary key,
+    school_name varchar(50)                        not null comment '学校全名',
+    area_id     varchar(6)                         not null comment '学校所属城市的id',
+    update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间',
+    update_user int      default 8888              not null comment '更新用户'
+)
+    comment '学校信息';
+
+create table  seen.student_info
+(
+    id              int auto_increment comment '自增ID'
+        primary key,
+    user_id         int                                not null comment '用户id',
+    school_id       int                                not null comment '学校id',
+    create_time     datetime default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time     datetime default CURRENT_TIMESTAMP not null,
+    update_user     int      default 8888              not null,
+    constraint student_info_user_id_uindex
+        unique (user_id)
+)
+    comment '学生信息表';
+

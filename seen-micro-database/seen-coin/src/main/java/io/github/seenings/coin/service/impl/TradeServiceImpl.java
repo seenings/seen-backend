@@ -1,11 +1,11 @@
 package io.github.seenings.coin.service.impl;
 
-import com.songchi.seen.account.service.CoinAccountBalanceService;
-import com.songchi.seen.account.service.CoinSysAccountBalanceService;
-import com.songchi.seen.coin.enumeration.TradeType;
-import com.songchi.seen.trade.service.CoinTradeService;
-import com.songchi.seen.trade.service.CoinTradeTypeService;
-import com.songchi.seen.trade.service.TradeService;
+import io.github.seenings.account.service.CoinAccountBalanceService;
+import io.github.seenings.account.service.CoinSysAccountBalanceService;
+import io.github.seenings.coin.enumeration.TradeType;
+import io.github.seenings.trade.service.CoinTradeService;
+import io.github.seenings.trade.service.CoinTradeTypeService;
+import io.github.seenings.trade.service.TradeService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 

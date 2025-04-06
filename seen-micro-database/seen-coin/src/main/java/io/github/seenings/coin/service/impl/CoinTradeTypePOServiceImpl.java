@@ -2,9 +2,9 @@ package io.github.seenings.coin.service.impl;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.songchi.seen.coin.enumeration.TradeType;
+import io.github.seenings.coin.enumeration.TradeType;
 import io.github.seenings.coin.po.CoinTradeTypePO;
-import com.songchi.seen.trade.service.CoinTradeTypeService;
+import io.github.seenings.trade.service.CoinTradeTypeService;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 

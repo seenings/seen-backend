@@ -3,7 +3,6 @@ package io.github.seenings.coin.po;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**

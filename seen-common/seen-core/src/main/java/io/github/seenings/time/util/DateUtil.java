@@ -1,6 +1,6 @@
 package io.github.seenings.time.util;
 
-import com.songchi.seen.core.enumeration.ConstellationEnum;
+import io.github.seenings.core.enumeration.ConstellationEnum;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

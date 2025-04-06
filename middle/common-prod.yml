@@ -1,2 +1,7 @@
+logging:
+  file:
+    name: ${user.home}/seen/logs/${spring.application.name}/${spring.application.name}.log
+  pattern:
+    correlation: "%line "
 server:
   port: 80

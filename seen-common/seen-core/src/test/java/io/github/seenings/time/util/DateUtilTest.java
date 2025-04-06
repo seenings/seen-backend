@@ -1,6 +1,6 @@
 package io.github.seenings.time.util;
 
-import com.songchi.seen.core.enumeration.ConstellationEnum;
+import io.github.seenings.core.enumeration.ConstellationEnum;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

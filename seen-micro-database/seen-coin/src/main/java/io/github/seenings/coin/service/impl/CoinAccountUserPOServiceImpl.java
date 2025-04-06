@@ -4,9 +4,9 @@ import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.github.seenings.coin.po.CoinAccountUserPO;
-import com.songchi.seen.account.service.CoinAccountUserService;
-import com.songchi.seen.core.util.CollUtil;
+import io.github.seenings.coin.po.CoinAccountUser;
+import io.github.seenings.account.service.CoinAccountUserService;
+import io.github.seenings.core.util.CollUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +24,10 @@ import java.util.stream.Collectors;
  * @since 2023-01-01
  */
 @Mapper
-interface CoinAccountUserPOMapper extends BaseMapper<CoinAccountUserPO> {}
+interface CoinAccountUserPOMapper extends BaseMapper<CoinAccountUser> {}
 
 @Service
-public class CoinAccountUserPOServiceImpl extends ServiceImpl<CoinAccountUserPOMapper, CoinAccountUserPO>
+public class CoinAccountUserPOServiceImpl extends ServiceImpl<CoinAccountUserPOMapper, CoinAccountUser>
         implements CoinAccountUserService {
 
     /**
@@ -44,14 +44,14 @@ public class CoinAccountUserPOServiceImpl extends ServiceImpl<CoinAccountUserPOM
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<CoinAccountUserPO>()
+                .flatMap(subs -> list(new QueryWrapper<CoinAccountUser>()
                                 .lambda()
-                                .in(CoinAccountUserPO::getUserId, subs)
-                                .select(CoinAccountUserPO::getUserId, CoinAccountUserPO::getAccountId))
+                                .in(CoinAccountUser::getUserId, subs)
+                                .select(CoinAccountUser::getUserId, CoinAccountUser::getAccountId))
                         .stream())
                 .collect(Collectors.groupingBy(
-                        CoinAccountUserPO::getUserId,
-                        Collectors.mapping(CoinAccountUserPO::getAccountId, Collectors.toSet())));
+                        CoinAccountUser::getUserId,
+                        Collectors.mapping(CoinAccountUser::getAccountId, Collectors.toSet())));
     }
 
     /**
@@ -66,7 +66,7 @@ public class CoinAccountUserPOServiceImpl extends ServiceImpl<CoinAccountUserPOM
                 userIdToAccountId(Collections.singleton(userId)).get(userId);
         boolean contains = CollUtil.contains(accountIds, accountId);
         if (!contains) {
-            CoinAccountUserPO po = new CoinAccountUserPO()
+            CoinAccountUser po = new CoinAccountUser()
                     .setUserId(userId)
                     .setAccountId(accountId)
                     .setCreateTime(LocalDateTime.now());

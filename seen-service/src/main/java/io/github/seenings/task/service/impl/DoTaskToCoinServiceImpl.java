@@ -1,6 +1,6 @@
 package io.github.seenings.task.service.impl;
 
-import com.songchi.seen.coin.enumeration.AccountType;
+import io.github.seenings.coin.enumeration.AccountType;
 import io.github.seenings.coin.api.CoinAccountApi;
 import io.github.seenings.coin.api.CoinTradeApi;
 import io.github.seenings.coin.enumeration.CommissionRate;
