@@ -16,6 +16,8 @@ spring:
           uri: http://localhost:8082
           predicates:
             - Path=/index.html,/**
+    zookeeper:
+      connect-string: localhost:12181,localhost:22181,localhost:32181
   profiles:
     active: chixuehui
 ---

@@ -10,6 +10,16 @@ seen:
     access-key: xNyo846jNZwvshpfchOM
     secret-key: erLtdmsgWmqXb64haSinr7496d29V4GSULdMXac1
 spring:
+  data:
+    redis:
+      cluster:
+        nodes:
+          - redis-node-1:7001
+          - redis-node-2:7002
+          - redis-node-3:7003
+          - redis-node-4:7004
+          - redis-node-5:7005
+          - redis-node-6:7006
   datasource:
     password: root@songchi
     url: jdbc:mysql://localhost:3306/seen
