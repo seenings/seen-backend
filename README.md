@@ -34,9 +34,15 @@ minikube && sudo mv minikube /usr/local/bin/
 
 ```shell
 ./mvnw clean
-./mvnw versions:set --define newVersion=0.1.57
+./mvnw versions:set --define newVersion=0.1.58
 ```
 
 ## 1.7 中间件启动
 
 [启动说明](./middle/README.md)
+
+分布式中间件,放在内部网络时,使用宣告域名和端口控制
+
+## 1.8 安装安全工具
+
+gpg工具下载地址https://gpgtools.org/

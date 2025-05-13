@@ -7,9 +7,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * SeenCalcApplication
- *
- * @author chixuehui
- * @since 2023-05-21
  */
 @EnableFeignClients
 @EnableDiscoveryClient
