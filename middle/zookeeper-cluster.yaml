@@ -1,5 +1,4 @@
 version: "3.8"
-
 services:
   zk-node1:
     image: zookeeper:3.9.3
@@ -14,7 +13,6 @@ services:
       - "13888:3888"    # 集群选举端口
     networks:
       - zk-cluster-net
-
   zk-node2:
     image: zookeeper:3.9.3
     container_name: zk-node2
@@ -28,7 +26,6 @@ services:
       - "23888:3888"    # 集群选举端口
     networks:
       - zk-cluster-net
-
   zk-node3:
     image: zookeeper:3.9.3
     container_name: zk-node3
@@ -42,7 +39,6 @@ services:
       - "33888:3888"    # 集群选举端口
     networks:
       - zk-cluster-net
-
 networks:
   zk-cluster-net:
     driver: bridge  # 统一网络确保容器互联:ml-citation{ref="4,7" data="citationList"}
