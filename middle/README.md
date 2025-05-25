@@ -14,7 +14,6 @@ docker-compose -f zookeeper.yaml up -d
 docker-compose -f zookeeper.yaml down
 ```
 
-
 ### zk集群启动
 
 ```shell
@@ -26,6 +25,7 @@ docker-compose -f zookeeper-cluster.yaml up -d
 ```shell
 docker-compose -f zookeeper-cluster.yaml down
 ```
+
 ## 数据库
 
 ### mysql启动
@@ -117,3 +117,31 @@ docker-compose -f minio.yaml up -d
 ```shell
 docker-compose -f minio.yaml down
 ```
+
+## nginx集群
+
+### nginx启动
+
+```shell
+docker-compose -f nginx-cluster.yaml up -d
+```
+
+### nginx停止
+
+```shell
+docker-compose -f nginx-cluster.yaml down
+```
+
+
+## 文件对象存储对象
+
+### minio启动
+
+```shell
+docker-compose -f minio-cluster.yaml up -d
+```
+
+### minio停止
+
+```shell
+docker-compose -f minio-cluster.yaml down
