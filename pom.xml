@@ -13,10 +13,10 @@
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.60</version>
+    <version>0.1.61</version>
     <properties>
         <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
-        <hutool-all.version>5.8.39</hutool-all.version>
+        <hutool-all.version>5.8.40</hutool-all.version>
         <jasypt-spring-boot.version>3.0.5</jasypt-spring-boot.version>
         <java.version>21</java.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
@@ -29,12 +29,12 @@
         <maven-jdeps-plugin.version>3.1.2</maven-jdeps-plugin.version>
         <maven-jxr-plugin.version>3.6.0</maven-jxr-plugin.version>
         <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
-        <maven-surefire-report-plugin.version>3.5.3</maven-surefire-report-plugin.version>
+        <maven-surefire-report-plugin.version>3.5.4</maven-surefire-report-plugin.version>
         <minio.version>8.5.17</minio.version>
-        <mybatis-plus.version>3.5.12</mybatis-plus.version>
+        <mybatis-plus.version>3.5.14</mybatis-plus.version>
         <seen.version>${project.version}</seen.version>
-        <spring-ai.version>1.0.1</spring-ai.version>
-        <springdoc-openapi.version>2.8.9</springdoc-openapi.version>
+        <spring-ai.version>1.0.2</spring-ai.version>
+        <springdoc-openapi.version>2.8.13</springdoc-openapi.version>
         <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
     </properties>
     <dependencyManagement>
