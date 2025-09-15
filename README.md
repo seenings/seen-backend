@@ -33,8 +33,17 @@ minikube && sudo mv minikube /usr/local/bin/
 ## 1.6 maven设置版本
 
 ```shell
+$Env:JAVA_HOME="C:\Users\PC\.jdks\ms-21.0.8"
+
 ./mvnw clean
-./mvnw versions:set --define newVersion=0.1.60
+
+./mvnw versions:set --define newVersion=0.1.61
+```
+
+```shell
+$Env:JAVA_HOME=C:\Users\PC\.jdks\ms-21.0.8
+
+.\mvnw.cmd versions:display-dependency-updates  
 ```
 
 ## 1.7 中间件启动
