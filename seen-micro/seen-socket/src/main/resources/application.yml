@@ -8,7 +8,7 @@ spring:
   config:
     activate:
       on-profile: chixuehui
-    import: file:/Users/chixuehui/IdeaProjects/seenings/seen-backend/middle/common-chixuehui.yml
+    import: file:C:\Users\PC\IdeaProjects\seenings/seen-backend/middle/common-chixuehui.yml
 server:
   port: 9202
 ---

@@ -1,5 +1,13 @@
 # 中间件
 
+```shell 批量启动
+docker-compose -f zookeeper.yaml up -d
+docker-compose -f mysql.yaml up -d
+docker-compose -f redis.yaml up -d
+docker-compose -f minio.yaml up -d
+docker-compose -f nginx-cluster.yaml up -d
+```
+
 ## 注册中心
 
 ### zk启动
@@ -145,3 +153,4 @@ docker-compose -f minio-cluster.yaml up -d
 
 ```shell
 docker-compose -f minio-cluster.yaml down
+```

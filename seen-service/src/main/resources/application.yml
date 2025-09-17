@@ -3,12 +3,19 @@ spring:
     name: seen-service
   profiles:
     active: chixuehui
+  sql:
+    init:
+#      data-locations:
+#        - classpath*:sql/data/*.sql
+      mode: always
+      schema-locations:
+        - classpath*:sql/schema/*.sql
 ---
 spring:
   config:
     activate:
       on-profile: chixuehui
-    import: file:/Users/chixuehui/IdeaProjects/seenings/seen-backend/middle/common-chixuehui.yml
+    import: file:C:\Users\PC\IdeaProjects\seenings/seen-backend/middle/common-chixuehui.yml
 server:
   port: 8081
 ---

@@ -1,4 +1,4 @@
-create schema seen;
+create schema if not exists seen;
 use seen;
 create table if not exists chat_history
 (
@@ -145,7 +145,7 @@ create table if not exists zone_reply
 )
     comment '空间回复';
 
-create table seen.tag
+create table if not exists seen.tag
 (
     id            int auto_increment comment '自增ID'
         primary key,
@@ -154,7 +154,7 @@ create table seen.tag
 )
     comment '标签';
 
-create table seen.tag_need
+create table if not exists seen.tag_need
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -163,7 +163,7 @@ create table seen.tag_need
 )
     comment '用户需求的标签类型';
 
-create table seen.tag_parent
+create table if not exists seen.tag_parent
 (
     id       int auto_increment comment '自增ID'
         primary key,
@@ -171,7 +171,7 @@ create table seen.tag_parent
 )
     comment '父级标签';
 
-create table seen.tag_user
+create table if not exists seen.tag_user
 (
     id      int auto_increment comment '自增ID'
         primary key,
@@ -180,7 +180,7 @@ create table seen.tag_user
 )
     comment '用户的标签';
 
-create table seen.voice
+create table if not exists seen.voice
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -195,7 +195,7 @@ create table seen.voice
 
 
 
-create table seen.file_content
+create table if not exists seen.file_content
 (
     id           int auto_increment comment '自增ID'
         primary key,
@@ -206,7 +206,7 @@ create table seen.file_content
     comment '文件内容';
 
 
-create table seen.thumb_user
+create table if not exists seen.thumb_user
 (
     id              int auto_increment comment '自增ID'
         primary key,
@@ -219,7 +219,7 @@ create table seen.thumb_user
 )
     comment '点赞用户';
 
-create table seen.focus_user
+create table if not exists seen.focus_user
 (
     id              int auto_increment comment '自增ID'
         primary key,
@@ -231,7 +231,7 @@ create table seen.focus_user
         unique (focused_user_id, focus_user_id)
 )
     comment '关注用户';
-create table seen.user_sex
+create table if not exists seen.user_sex
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -240,7 +240,7 @@ create table seen.user_sex
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
     comment '用户性别';
-create table seen.user_marital
+create table if not exists seen.user_marital
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -255,7 +255,7 @@ create table seen.user_marital
 )
     comment '婚姻状况';
 
-create table seen.user_birthday
+create table if not exists seen.user_birthday
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -267,7 +267,7 @@ create table seen.user_birthday
 )
     comment '用户出生年月日';
 
-create table seen.user_stature
+create table if not exists seen.user_stature
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -277,7 +277,7 @@ create table seen.user_stature
 )
     comment '用户身高';
 
-create table seen.user_weight
+create table if not exists seen.user_weight
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -288,7 +288,7 @@ create table seen.user_weight
     comment '用户的体重';
 
 
-create table seen.middle_user_recommend
+create table if not exists seen.middle_user_recommend
 (
     id                int auto_increment comment '自增ID'
         primary key,
@@ -299,7 +299,7 @@ create table seen.middle_user_recommend
 )
     comment '用户推荐列表';
 
-create table seen.user_work_position
+create table if not exists seen.user_work_position
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -308,7 +308,7 @@ create table seen.user_work_position
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
     comment '用户的工作职位';
-create table seen.user_work_company
+create table if not exists seen.user_work_company
 (
     id           int auto_increment comment '自增ID'
         primary key,
@@ -318,7 +318,7 @@ create table seen.user_work_company
 )
     comment '用户的工作公司';
 
-create table seen.work_position
+create table if not exists seen.work_position
 (
     id            int auto_increment comment '自增ID'
         primary key,
@@ -328,7 +328,7 @@ create table seen.work_position
     comment '工作职位';
 
 
-create table seen.user_income
+create table if not exists seen.user_income
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -345,7 +345,7 @@ create table seen.user_income
 )
     comment '年度收入';
 
-create table seen.user_current_residence
+create table if not exists seen.user_current_residence
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -357,7 +357,7 @@ create table seen.user_current_residence
     comment '现居地';
 
 
-create table seen.user_birth_place
+create table if not exists seen.user_birth_place
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -369,7 +369,7 @@ create table seen.user_birth_place
     comment '出生地';
 
 
-create table seen.user_auth
+create table if not exists seen.user_auth
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -379,7 +379,7 @@ create table seen.user_auth
 )
     comment '用户认证';
 
-create table seen.user_alias_name
+create table if not exists seen.user_alias_name
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -531,7 +531,7 @@ create table if not exists seen.coin_sys_account_balance
 )
     comment '系统币账户余额';
 
-create table seen.coin_trade_type
+create table if not exists seen.coin_trade_type
 (
     id            int auto_increment comment '自增ID'
         primary key,
@@ -541,7 +541,7 @@ create table seen.coin_trade_type
 )
     comment '交易类型';
 
-create table seen.coin_transfer
+create table if not exists seen.coin_transfer
 (
     id              int auto_increment comment '自增ID，充值单ID'
         primary key,
@@ -555,7 +555,7 @@ create table seen.coin_transfer
 )
     comment '用户充值';
 
-create table seen.trade_register
+create table if not exists seen.trade_register
 (
     id            int auto_increment comment '自增ID'
         primary key,
@@ -567,7 +567,7 @@ create table seen.trade_register
     comment '用户注册信息';
 
 -- 照片
-create table user_introduce_photo_to_photo
+create table if not exists user_introduce_photo_to_photo
 (
     user_introduce_photo_id int not null,
     photo_id                int not null,
@@ -577,7 +577,7 @@ create table user_introduce_photo_to_photo
 comment '介绍的图片对应关系';
 
 -- 照片
-create table main_photo
+create table if not exists main_photo
 (
     id      int auto_increment comment '照片ID'
         primary key,
@@ -586,7 +586,7 @@ create table main_photo
     comment '主要的照片';
 
 -- 文件
-create table file
+create table if not exists file
 (
     id           int auto_increment comment '文件ID'
         primary key,
@@ -597,7 +597,7 @@ create table file
     comment '文件';
 
 -- 玫瑰币记账
-create table coin_book
+create table if not exists coin_book
 (
     trade_id         bigint auto_increment comment '交易ID'
         primary key,
@@ -609,7 +609,7 @@ create table coin_book
     comment '玫瑰币记账';
 
 -- 玫瑰币余额
-create table coin_balance
+create table if not exists coin_balance
 (
     debit_or_credit_id         bigint not null comment '借方/贷方ID'
        primary key,
@@ -619,7 +619,7 @@ create table coin_balance
     comment '玫瑰币余额';
 
 -- 交易与业务关系
-create table trade_and_busi
+create table if not exists trade_and_busi
 (
     trade_id    bigint not null comment '交易ID'
         primary key,
@@ -629,7 +629,7 @@ create table trade_and_busi
     comment '交易与业务关系';
 
 
-create table seen.educational
+create table if not exists seen.educational
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -640,7 +640,7 @@ create table seen.educational
     comment '用户的学历';
 
 
-create table seen.school_graduate
+create table if not exists seen.school_graduate
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -651,7 +651,7 @@ create table seen.school_graduate
     comment '用户的毕业状态';
 
 
-create table seen.school
+create table if not exists seen.school
 (
     id          int auto_increment comment '自增ID'
         primary key,
@@ -662,7 +662,7 @@ create table seen.school
 )
     comment '学校信息';
 
-create table  seen.student_info
+create table  if not exists seen.student_info
 (
     id              int auto_increment comment '自增ID'
         primary key,
