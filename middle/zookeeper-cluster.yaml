@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   zk-node1:
-    image: zookeeper:3.9.3
+    image: zookeeper:3.9
     container_name: zk-node1
     hostname: zk-node1  # 主机名用于集群通信
     environment:
@@ -14,7 +14,7 @@ services:
     networks:
       - zk-cluster-net
   zk-node2:
-    image: zookeeper:3.9.3
+    image: zookeeper:3.9
     container_name: zk-node2
     hostname: zk-node2
     environment:
@@ -27,7 +27,7 @@ services:
     networks:
       - zk-cluster-net
   zk-node3:
-    image: zookeeper:3.9.3
+    image: zookeeper:3.9
     container_name: zk-node3
     hostname: zk-node3
     environment:

@@ -13,7 +13,5 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class SeenServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(SeenServiceApplication.class, args);
-        System.getProperties().forEach((key, value) -> log.warn(key + "=" + value));
-        log.warn("应用启动成功。");
     }
 }

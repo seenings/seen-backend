@@ -3,5 +3,8 @@ logging:
     name: ${user.home}/seen/logs/${spring.application.name}/${spring.application.name}.log
   pattern:
     correlation: "%line "
+seen:
+  env-config:
+    env: ${spring.profiles.active}
 server:
   port: 80
