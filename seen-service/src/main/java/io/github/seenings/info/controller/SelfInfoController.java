@@ -196,6 +196,9 @@ public class SelfInfoController {
 
     @PostMapping("save-basic-information-all")
     public R<Boolean> saveBasicInformationAll(@RequestBody BasicInformationAll basicInformationAll, @SessionAttribute Long userId) {
+        if (basicInformationAll.basicInformation().stature() == null) {
+            return ResUtils.error("身高未设置");
+        }
         userInfoService.saveBasicInformation(userId, basicInformationAll.basicInformation());
         userInfoService.saveEducationAndWork(userId, basicInformationAll.educationAndWork());
         userInfoService.saveContactInformation(userId, basicInformationAll.contactInformation());
