@@ -10,6 +10,10 @@ public enum Env {
     /**
      * 本地docker环境
      */
+    CHIXUEHUIDOCKER,
+    /**
+     * 本地docker环境
+     */
     CHIXH_DOCKER,
     /**
      * 本地环境

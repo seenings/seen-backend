@@ -14,3 +14,8 @@ services:
     environment:
       - MINIO_CONFIG_ENV_FILE=/etc/config.env
     command: server --console-address ":9001"
+    networks:
+      - chixuehuidocker
+networks:
+  chixuehuidocker:
+    external: true

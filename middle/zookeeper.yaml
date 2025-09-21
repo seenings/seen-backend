@@ -4,3 +4,8 @@ services:
     image: zookeeper:3.9
     ports:
       - "2181:2181"
+    networks:
+      - chixuehuidocker
+networks:
+  chixuehuidocker:
+    external: true

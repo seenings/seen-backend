@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.63</version>
+        <version>0.1.64</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-service</artifactId>
@@ -149,6 +149,10 @@
                         <exclude>bootstrap.yml</exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

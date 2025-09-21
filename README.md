@@ -35,7 +35,7 @@ minikube && sudo mv minikube /usr/local/bin/
 ```shell
 $Env:JAVA_HOME="C:\Users\PC\.jdks\openjdk-25"
 ./mvnw clean
-./mvnw versions:set --define newVersion=0.1.63
+./mvnw versions:set --define newVersion=0.1.64
 ./mvnw versions:commit
 ```
 
