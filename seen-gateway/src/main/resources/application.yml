@@ -27,7 +27,7 @@ spring:
       ignored-interfaces:
         - vEthernet
 server:
-  port: 80
+  port: 8082
 ---
 spring:
   config:
