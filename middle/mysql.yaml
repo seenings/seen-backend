@@ -6,3 +6,8 @@ services:
       - MYSQL_ROOT_PASSWORD=root@songchi
     ports:
       - "3306:3306"
+    networks:
+      - chixuehuidocker
+networks:
+  chixuehuidocker:
+    external: true

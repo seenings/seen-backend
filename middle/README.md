@@ -1,6 +1,10 @@
 # 中间件
 
-```shell 批量启动
+## 批量启动
+
+
+```shell
+#docker network create chixuehuidocker
 docker-compose -f zookeeper.yaml up -d
 docker-compose -f mysql.yaml up -d
 docker-compose -f redis.yaml up -d
@@ -139,7 +143,6 @@ docker-compose -f nginx-cluster.yaml up -d
 ```shell
 docker-compose -f nginx-cluster.yaml down
 ```
-
 
 ## 文件对象存储对象
 
