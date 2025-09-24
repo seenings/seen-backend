@@ -32,11 +32,24 @@ minikube && sudo mv minikube /usr/local/bin/
 
 ## 1.6 maven设置版本
 
+### 发布
+
 ```shell
+$Env:SEEN_VERSION = "0.1.66"
 $Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 ./mvnw clean
-./mvnw versions:set --define newVersion=0.1.65
+./mvnw versions:set --define newVersion=$Env:SEEN_VERSION
 ./mvnw versions:commit
+```
+
+```shell
+git add .
+git commit -m "#66 修复发布不成功，增加TAG版本"
+```
+
+```shell
+git tag -a v$Env:SEEN_VERSION -m "发布版本$Env:SEEN_VERSION"
+git push origin v$Env:SEEN_VERSION
 ```
 
 ```shell
