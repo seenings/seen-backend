@@ -11,18 +11,16 @@
     </parent>
     <groupId>io.github.seenings</groupId>
     <artifactId>seen-backend</artifactId>
-    <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.64</version>
+    <version>0.1.65</version>
     <properties>
-        <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
+        <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
         <hutool-all.version>5.8.40</hutool-all.version>
         <jasypt-spring-boot.version>3.0.5</jasypt-spring-boot.version>
         <java.version>25</java.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
-        <maven-changelog-plugin.version>2.3</maven-changelog-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
         <maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
         <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
@@ -153,11 +151,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-changelog-plugin</artifactId>
-                <version>${maven-changelog-plugin.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${maven-deploy-plugin.version}</version>
             </plugin>
@@ -251,14 +244,19 @@
                     <autoPublish>true</autoPublish>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-publish-plugin</artifactId>
+                <version>3.3.0</version> <!-- 使用最新版本 -->
+                <configuration>
+                    <scmBranch>gh-pages</scmBranch> <!-- GitHub Pages 分支 -->
+                    <!-- 其他配置 -->
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <reporting>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-changelog-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -281,6 +279,12 @@
             </plugin>
         </plugins>
     </reporting>
+    <distributionManagement>
+        <site>
+            <id>github</id>
+            <url>scm:git:https://github.com/seenings/seen-backend.git</url>
+        </site>
+    </distributionManagement>
     <modules>
         <module>seen-common</module>
         <module>seen-gateway</module>
