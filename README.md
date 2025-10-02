@@ -32,10 +32,20 @@ minikube && sudo mv minikube /usr/local/bin/
 
 ## 1.6 maven设置版本
 
+### Maco OS发布
+
+```shell
+SEEN_VERSION="0.1.67"
+JAVA_HOME="~/Library/Java/JavaVirtualMachines/openjdk-25/Contents/Home"
+./mvnw clean
+./mvnw versions:set --define newVersion=${SEEN_VERSION}
+./mvnw versions:commit
+```
+
 ### 发布
 
 ```shell
-$Env:SEEN_VERSION = "0.1.66"
+$Env:SEEN_VERSION = "0.1.67"
 $Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 ./mvnw clean
 ./mvnw versions:set --define newVersion=$Env:SEEN_VERSION
@@ -44,7 +54,7 @@ $Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 
 ```shell
 git add .
-git commit -m "#66 修复发布不成功，增加TAG版本"
+git commit -m "#67 增加Mac OS适配"
 ```
 
 ```shell
