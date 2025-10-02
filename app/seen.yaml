@@ -1,19 +1,23 @@
 version: '3'
 services:
   seen-gateway:
+    entrypoint: [ "java", "-jar", "/app/seen-gateway/target/seen-gateway-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
     volumes:
-      - /Users/chixuehui/IdeaProjects/seenings/seen-backend/:/app/
-    networks:
-      - chixuehuidocker
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
     environment:
       - TZ=Asia/Shanghai
-    entrypoint: [ "java", "-jar", "/app/seen-gateway/target/seen-gateway-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
+    networks:
+      - chixuehuidocker
   seen-service:
     entrypoint: [ "java", "-jar", "/app/seen-service/target/seen-service-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
+    ports:
+      - "8081:8080"
+    depends_on:
+      - seen-gateway
     image: openjdk:25
     volumes:
-      - /Users/chixuehui/IdeaProjects/seenings/seen-backend/:/app/
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
     environment:
       - TZ=Asia/Shanghai
     networks:
@@ -22,7 +26,9 @@ services:
     entrypoint: [ "java", "-jar", "/app/seen-micro/seen-calc/target/seen-calc-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
     volumes:
-      - /Users/chixuehui/IdeaProjects/seenings/seen-backend/:/app/
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    depends_on:
+      - seen-service
     environment:
       - TZ=Asia/Shanghai
     networks:
@@ -31,7 +37,9 @@ services:
     entrypoint: [ "java", "-jar", "/app/seen-micro/seen-socket/target/seen-socket-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
     volumes:
-      - /Users/chixuehui/IdeaProjects/seenings/seen-backend/:/app/
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    depends_on:
+      - seen-service
     environment:
       - TZ=Asia/Shanghai
     networks:
@@ -40,7 +48,9 @@ services:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-article/target/seen-article-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
     volumes:
-      - /Users/chixuehui/IdeaProjects/seenings/seen-backend/:/app/
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    depends_on:
+      - seen-service
     environment:
       - TZ=Asia/Shanghai
     networks:
@@ -49,7 +59,9 @@ services:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-chat/target/seen-chat-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
     volumes:
-      - /Users/chixuehui/IdeaProjects/seenings/seen-backend/:/app/
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    depends_on:
+      - seen-service
     environment:
       - TZ=Asia/Shanghai
     networks:
@@ -58,7 +70,9 @@ services:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-coin/target/seen-coin-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
     volumes:
-      - /Users/chixuehui/IdeaProjects/seenings/seen-backend/:/app/
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    depends_on:
+      - seen-service
     environment:
       - TZ=Asia/Shanghai
     networks:
@@ -67,7 +81,9 @@ services:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-file/target/seen-file-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
     volumes:
-      - /Users/chixuehui/IdeaProjects/seenings/seen-backend/:/app/
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    depends_on:
+      - seen-service
     environment:
       - TZ=Asia/Shanghai
     networks:
@@ -76,7 +92,9 @@ services:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-middle/target/seen-middle-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
     volumes:
-      - /Users/chixuehui/IdeaProjects/seenings/seen-backend/:/app/
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    depends_on:
+      - seen-service
     environment:
       - TZ=Asia/Shanghai
     networks:
@@ -85,7 +103,9 @@ services:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-other/target/seen-other-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
     volumes:
-      - /Users/chixuehui/IdeaProjects/seenings/seen-backend/:/app/
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    depends_on:
+      - seen-service
     environment:
       - TZ=Asia/Shanghai
     networks:
@@ -94,7 +114,9 @@ services:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-school/target/seen-school-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
     volumes:
-      - /Users/chixuehui/IdeaProjects/seenings/seen-backend/:/app/
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    depends_on:
+      - seen-service
     environment:
       - TZ=Asia/Shanghai
     networks:
@@ -103,7 +125,9 @@ services:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-user/target/seen-user-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
     volumes:
-      - /Users/chixuehui/IdeaProjects/seenings/seen-backend/:/app/
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    depends_on:
+      - seen-service
     environment:
       - TZ=Asia/Shanghai
     networks:

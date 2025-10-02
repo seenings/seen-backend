@@ -5,7 +5,7 @@ services:
       replicas: 1
     image: nginx:1
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - ~/IdeaProjects/seenings/seen-font-end/dist:/usr/share/nginx/html
       - ~/IdeaProjects/seenings/seen-font-end/deploy/nginx.conf:/etc/nginx/nginx.conf
