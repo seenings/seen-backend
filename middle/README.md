@@ -1,7 +1,12 @@
 # 中间件
 
-## 批量启动
+## 卡夫卡
 
+```shell
+docker run -p 9092:9092 -d apache/kafka-native:4.1.0
+```
+
+## 批量启动
 
 ```shell
 #docker network create chixuehuidocker
