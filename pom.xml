@@ -13,7 +13,7 @@
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.67</version>
+    <version>0.1.68</version>
     <properties>
         <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
         <hutool-all.version>5.8.40</hutool-all.version>
@@ -29,10 +29,10 @@
         <maven-jxr-plugin.version>3.6.0</maven-jxr-plugin.version>
         <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
         <maven-surefire-report-plugin.version>3.5.4</maven-surefire-report-plugin.version>
-        <minio.version>8.5.17</minio.version>
+        <minio.version>8.6.0</minio.version>
         <mybatis-plus.version>3.5.14</mybatis-plus.version>
         <seen.version>${project.version}</seen.version>
-        <spring-ai.version>1.0.2</spring-ai.version>
+        <spring-ai.version>1.0.3</spring-ai.version>
         <springdoc-openapi.version>2.8.13</springdoc-openapi.version>
         <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
     </properties>
@@ -318,7 +318,6 @@
         <system>Seen</system>
         <url>https://github.com/seenings/seen-backend/issues</url>
     </issueManagement>
-
     <repositories>
         <repository>
             <id>central</id>

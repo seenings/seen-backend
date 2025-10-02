@@ -6,10 +6,15 @@
 docker run -p 9092:9092 -d apache/kafka-native:4.1.0
 ```
 
+## 创建网络
+
+```shell
+docker network create chixuehuidocker
+```
+
 ## 批量启动
 
 ```shell
-#docker network create chixuehuidocker
 docker-compose -f zookeeper.yaml up -d
 docker-compose -f mysql.yaml up -d
 docker-compose -f redis.yaml up -d

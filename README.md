@@ -35,42 +35,53 @@ minikube && sudo mv minikube /usr/local/bin/
 ### Maco OS发布
 
 ```shell
-SEEN_VERSION="0.1.67"
+SEEN_VERSION="0.1.68"
 JAVA_HOME="~/Library/Java/JavaVirtualMachines/openjdk-25/Contents/Home"
 ./mvnw clean
 ./mvnw versions:set --define newVersion=${SEEN_VERSION}
 ./mvnw versions:commit
 ```
 
-### 发布
+### Windows 11发布
 
 ```shell
-$Env:SEEN_VERSION = "0.1.67"
-$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
+git add .
+```
+
+```shell
+$$Env:SEEN_VERSION = "0.1.68"
+$$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 ./mvnw clean
 ./mvnw versions:set --define newVersion=$Env:SEEN_VERSION
 ./mvnw versions:commit
 ```
 
 ```shell
+$$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
+./mvnw versions:display-dependency-updates
+```
+
+```shell
+$$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
+./mvnw -Preporting site site:stage
+./mvnw scm-publish:publish-scm
+```
+
+```shell
 git add .
-git commit -m "#67 增加Mac OS适配"
+git commit -m "#68 部署本机"
 ```
 
 ```shell
 git tag -a v$Env:SEEN_VERSION -m "发布版本$Env:SEEN_VERSION"
+```
+
+```shell
 git push origin v$Env:SEEN_VERSION
 ```
 
 ```shell
-$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
-.\mvnw.cmd versions:display-dependency-updates
-```
-
-```shell
-$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
-.\mvnw.cmd -Preporting site site:stage
-.\mvnw.cmd scm-publish:publish-scm
+git push origin dev_chixh
 ```
 
 ## 1.7 中间件启动
