@@ -4,7 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import io.github.seenings.file.enumeration.StorageType;
 import io.github.seenings.file.model.StorageTypeAndPath;
 import io.github.seenings.file.service.FilePOService;
-import io.github.seenings.photo.service.MainPhotoPOService;
+import io.github.seenings.photo.service.PhotoPOService;
 import io.github.seenings.photo.http.HttpPhotoService;
 import io.github.seenings.photo.service.PhotoDoService;
 import io.github.seenings.sys.constant.PublicConstant;
@@ -40,7 +40,7 @@ public class PhotoHttpImpl implements HttpPhotoService {
     /**
      * 照片
      */
-    private MainPhotoPOService mainPhotoPOService;
+    private PhotoPOService photoPOService;
 
     /**
      * 根据照片ID获取照片路径
@@ -85,7 +85,22 @@ public class PhotoHttpImpl implements HttpPhotoService {
     public Integer setPath(@RequestParam("path") String path, @RequestParam("userId") Long userId) {
         //不考虑事务,使用分布式回滚法
         Integer fileId = filePOService.set(StorageType.LOCAL, path, FileUtil.getName(path));
-        return mainPhotoPOService.set(fileId);
+        return photoPOService.set(fileId);
+    }
+
+    /**
+     * 设置路径
+     *
+     * @param path   路径
+     * @param userId 用户
+     * @return 路径ID
+     */
+    @Override
+    @PostMapping("set-path-minio")
+    public Integer setPathByMinio(@RequestParam("path") String path, @RequestParam("userId") Long userId) {
+        //不考虑事务,使用分布式回滚法
+        Integer fileId = filePOService.set(StorageType.MINIO, path, FileUtil.getName(path));
+        return photoPOService.set(fileId);
     }
 
     /**

@@ -4,8 +4,8 @@ import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.github.seenings.photo.po.MainPhotoPO;
-import io.github.seenings.photo.service.MainPhotoPOService;
+import io.github.seenings.photo.po.PhotoPO;
+import io.github.seenings.photo.service.PhotoPOService;
 import io.github.seenings.sys.util.ListUtils;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
@@ -18,14 +18,14 @@ import java.util.stream.Collectors;
  * 照片
  */
 @Mapper
-interface MainPhotoPOMapper extends BaseMapper<MainPhotoPO> {
+interface PhotoPOMapper extends BaseMapper<PhotoPO> {
 }
 
 /**
  * 照片
  */
 @Service
-public class MainPhotoPOServiceImpl extends ServiceImpl<MainPhotoPOMapper, MainPhotoPO> implements MainPhotoPOService {
+public class PhotoPOServiceImpl extends ServiceImpl<PhotoPOMapper, PhotoPO> implements PhotoPOService {
 
     /**
      * 根据照片ID获取文件ID
@@ -36,7 +36,9 @@ public class MainPhotoPOServiceImpl extends ServiceImpl<MainPhotoPOMapper, MainP
     @Override
     public Map<Integer, Integer> idToFileId(Set<Integer> ids) {
 
-        return ListUtil.partition(ListUtils.valueIsNull(ids), 100).parallelStream().flatMap(subs -> list(new LambdaQueryWrapper<MainPhotoPO>().in(MainPhotoPO::getId, subs).select(MainPhotoPO::getId, MainPhotoPO::getFileId)).stream()).collect(Collectors.toMap(MainPhotoPO::getId, MainPhotoPO::getFileId));
+        return ListUtil.partition(ListUtils.valueIsNull(ids), 100).parallelStream()
+                .flatMap(subs -> list(new LambdaQueryWrapper<PhotoPO>().in(PhotoPO::getId, subs)
+                        .select(PhotoPO::getId, PhotoPO::getFileId)).stream()).collect(Collectors.toMap(PhotoPO::getId, PhotoPO::getFileId));
     }
 
 
@@ -48,7 +50,7 @@ public class MainPhotoPOServiceImpl extends ServiceImpl<MainPhotoPOMapper, MainP
      */
     @Override
     public Integer set(Integer fileId) {
-        MainPhotoPO entity = new MainPhotoPO();
+        PhotoPO entity = new PhotoPO();
         entity.setFileId(fileId);
         save(entity);
         return entity.getId();

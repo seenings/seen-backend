@@ -9,6 +9,7 @@ import io.github.seenings.file.po.FilePO;
 import io.github.seenings.file.service.FilePOService;
 import io.github.seenings.sys.util.ListUtils;
 import io.github.seenings.sys.util.ToEnumerationUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ interface FilePOMapper extends BaseMapper<FilePO> {
 /**
  * 文件
  */
+@Slf4j
 @Service
 public class FilePOServiceImpl extends ServiceImpl<FilePOMapper, FilePO> implements FilePOService {
 
@@ -80,6 +82,7 @@ public class FilePOServiceImpl extends ServiceImpl<FilePOMapper, FilePO> impleme
         entity.setPath(path);
         entity.setName(name);
         save(entity);
+        log.info("entity:{}", entity);
         return entity.getId();
     }
 }

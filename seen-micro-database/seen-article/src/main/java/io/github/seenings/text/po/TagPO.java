@@ -20,7 +20,6 @@ public class TagPO {
     /**
      * 自增ID
      */
-    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

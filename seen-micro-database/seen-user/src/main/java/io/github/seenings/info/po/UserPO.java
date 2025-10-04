@@ -20,7 +20,6 @@ public class UserPO {
     /**
      * 自增ID，用户ID
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**

@@ -21,7 +21,6 @@ public class UserCurrentResidencePO implements Serializable {
     /**
      * 自增ID
      */
-    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

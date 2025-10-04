@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,6 @@ import io.github.seenings.photo.http.HttpPhotoService;
 import io.github.seenings.sys.constant.PublicConstant;
 
 import cn.hutool.core.lang.Pair;
-import jakarta.annotation.Resource;
 
 /**
  * ArticleController
@@ -31,15 +31,13 @@ import jakarta.annotation.Resource;
  * @since 2023-01-22
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping(PublicConstant.REST + "user/article")
 public class ArticleController {
-    @Resource
     private HttpUserIntroducePhotoService httpUserIntroducePhotoService;
 
-    @Resource
     private HttpPhotoService httpPhotoService;
 
-    @Resource
     private HttpUserMainPhotoService httpUserMainPhotoService;
 
     @PostMapping("user-id-to-primary-photo-id")

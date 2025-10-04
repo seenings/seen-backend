@@ -577,13 +577,13 @@ create table if not exists user_introduce_photo_to_photo
 comment '介绍的图片对应关系';
 
 -- 照片
-create table if not exists main_photo
+create table if not exists seen.photo
 (
     id      int auto_increment comment '照片ID'
         primary key,
     file_id int null comment '文件ID'
 )
-    comment '主要的照片';
+    comment '照片';
 
 -- 文件
 create table if not exists file
