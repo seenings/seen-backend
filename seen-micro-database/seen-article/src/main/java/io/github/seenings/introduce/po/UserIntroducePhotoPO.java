@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName(value = "user_introduce_photo")
 public class UserIntroducePhotoPO {
-    @TableId(type = IdType.AUTO)
     private Integer id;
 
     private Long userId;

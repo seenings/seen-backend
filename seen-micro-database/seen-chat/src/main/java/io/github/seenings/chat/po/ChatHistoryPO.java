@@ -18,7 +18,6 @@ public class ChatHistoryPO {
     /**
      * ID
      */
-    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

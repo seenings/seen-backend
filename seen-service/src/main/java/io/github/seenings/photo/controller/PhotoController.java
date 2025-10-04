@@ -68,16 +68,12 @@ public class PhotoController {
             log.error("", e);
             return ResUtils.error(e.getMessage());
         }
-        Integer pathId = httpPhotoService.setPath(relativePath, userId);
-
-        //TODO
         SeenMinioConfig seenMinioConfig = seenConfig.getSeenMinioConfig();
         try (MinioClient minioClient = MinioClient.builder().endpoint(seenMinioConfig.getEndpoint()).credentials(seenMinioConfig.getAccessKey(), seenMinioConfig.getSecretKey()).build()) {
             // Make 'asiatrip' bucket if not exist.
             boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(MinioConstant.BUCKET_NAME).build());
             if (!found) {
-                log.warn("Bucket '{} 'not exists.", BUCKET_NAME);
-                // Make a new bucket called 'asiatrip'.
+                log.warn("Bucket '{} 'not exists, Make a new bucket called '{}'", BUCKET_NAME, BUCKET_NAME);
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(MinioConstant.BUCKET_NAME).build());
             }
             // Upload '/home/user/Photos/asiaphotos.zip' as object name 'asiaphotos-2015.zip' to bucket
@@ -87,7 +83,9 @@ public class PhotoController {
             log.error("", e);
             return ResUtils.error(e.getMessage());
         }
-
+        //做成事务，如果存储成功，则写表记录成功
+        Integer pathId = httpPhotoService.setPathByMinio(relativePath, userId);
+        log.info("存储成功，pathId：{}，relativePath：{}", pathId, relativePath);
         return ResUtils.ok(pathId);
     }
 

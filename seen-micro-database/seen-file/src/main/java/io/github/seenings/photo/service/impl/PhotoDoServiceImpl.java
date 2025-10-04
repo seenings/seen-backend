@@ -3,7 +3,7 @@ package io.github.seenings.photo.service.impl;
 import io.github.seenings.file.enumeration.StorageType;
 import io.github.seenings.file.model.StorageTypeAndPath;
 import io.github.seenings.file.service.FilePOService;
-import io.github.seenings.photo.service.MainPhotoPOService;
+import io.github.seenings.photo.service.PhotoPOService;
 import io.github.seenings.photo.service.PhotoDoService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class PhotoDoServiceImpl implements PhotoDoService {
     /**
      * 照片
      */
-    private MainPhotoPOService mainPhotoPOService;
+    private PhotoPOService photoPOService;
 
     /**
      * 根据照片ID获取照片路径
@@ -37,7 +37,7 @@ public class PhotoDoServiceImpl implements PhotoDoService {
      */
     @Override
     public Map<Integer, String> photoIdToPhotoUrl(Set<Integer> photoIds) {
-        Map<Integer, Integer> photoIdToFileIdMap = mainPhotoPOService.idToFileId(photoIds);
+        Map<Integer, Integer> photoIdToFileIdMap = photoPOService.idToFileId(photoIds);
         Set<Integer> fileIds = new HashSet<>(photoIdToFileIdMap.values());
         Map<Integer, String> fileIdToPathMap = filePOService.idToPath(fileIds);
         return photoIds.stream().parallel().map(n -> {
@@ -54,7 +54,7 @@ public class PhotoDoServiceImpl implements PhotoDoService {
      */
     @Override
     public Map<Integer, StorageTypeAndPath> photoIdToStorageTypeAndPath(Set<Integer> photoIds) {
-        Map<Integer, Integer> photoIdToFileIdMap = mainPhotoPOService.idToFileId(photoIds);
+        Map<Integer, Integer> photoIdToFileIdMap = photoPOService.idToFileId(photoIds);
         Set<Integer> fileIds = new HashSet<>(photoIdToFileIdMap.values());
         Map<Integer, String> fileIdToPathMap = filePOService.idToPath(fileIds);
         Map<Integer, StorageType> fileIdToStorageTypeMap =
@@ -76,7 +76,7 @@ public class PhotoDoServiceImpl implements PhotoDoService {
      */
     @Override
     public Map<Integer, String> photoIdToFileName(Set<Integer> photoIds) {
-        Map<Integer, Integer> photoIdToFileIdMap = mainPhotoPOService.idToFileId(photoIds);
+        Map<Integer, Integer> photoIdToFileIdMap = photoPOService.idToFileId(photoIds);
         Set<Integer> fileIds = new HashSet<>(photoIdToFileIdMap.values());
         Map<Integer, String> fileIdToNameMap = filePOService.idToName(fileIds);
 

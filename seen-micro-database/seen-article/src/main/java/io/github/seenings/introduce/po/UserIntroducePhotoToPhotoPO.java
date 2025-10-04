@@ -14,7 +14,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName(value = "user_introduce_photo_to_photo")
 public class UserIntroducePhotoToPhotoPO {
-    @TableId(type = IdType.AUTO)
     private Integer userIntroducePhotoId;
     /**
      * 照片ID

@@ -17,7 +17,6 @@ public class CoinTransferPO {
     /**
      * 自增ID，充值单ID
      */
-    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

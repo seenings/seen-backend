@@ -22,7 +22,6 @@ public class ChatUserPO {
     /**
      * 自增ID
      */
-    @TableId(type = IdType.AUTO)
     private Integer id;
     /**
      * 用户ID

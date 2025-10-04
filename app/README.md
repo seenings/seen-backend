@@ -1,27 +1,27 @@
 # 应用
 
-## Mac OS启动
+## Mac OS的前期准备
 
 ```shell
 export SEEN_VERSION=0.1.68
-docker-compose -f seen.yaml up -d
+SEEN_VERSION
 ```
-## Mac OS停止
 
-```shell
-export SEEN_VERSION=0.1.68
-docker-compose -f seen.yaml down
-```
-## Windows 11启动
+## Windows 11的前期准备
 
 ```shell
 $$Env:SEEN_VERSION="0.1.68"
-docker compose -f seen.yaml up -d
+$$Env:SEEN_VERSION
 ```
 
-## indows 11停止
+## 应用启动
 
 ```shell
-$$Env:SEEN_VERSION="0.1.68"
-docker-compose -f seen.yaml down
+docker compose up -d
+```
+
+## 应用停止
+
+```shell
+docker-compose down
 ```
