@@ -1,8 +1,6 @@
 package io.github.seenings.file.po;
 
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.github.seenings.file.enumeration.StorageType;
 import lombok.Data;
@@ -17,7 +15,6 @@ public class FilePO {
     /**
      * 文件ID
      */
-    @TableId(type = IdType.AUTO)
     private Integer id;
     /**
      * 文件存储类型

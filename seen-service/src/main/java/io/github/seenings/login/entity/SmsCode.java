@@ -26,7 +26,6 @@ import java.time.LocalDateTime;
 public class SmsCode implements Serializable {
 
     @Schema(name = "ID")
-    @TableId(type = IdType.AUTO)
     private Integer id;
 
     @Schema(name = "手机号码")

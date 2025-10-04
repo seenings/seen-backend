@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * 照片
  */
-public interface MainPhotoPOService {
+public interface PhotoPOService {
 
     /**
      * 根据照片ID获取文件ID

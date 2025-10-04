@@ -20,7 +20,6 @@ public class UserApplyPO {
     /**
      * 自增ID，申请单ID
      */
-    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

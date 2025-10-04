@@ -32,44 +32,44 @@ minikube && sudo mv minikube /usr/local/bin/
 
 ## 1.6 maven设置版本
 
-### Maco OS发布
+### Maco OS预先配置
 
 ```shell
-SEEN_VERSION="0.1.68"
+SEEN_VERSION="0.1.69"
 JAVA_HOME="~/Library/Java/JavaVirtualMachines/openjdk-25/Contents/Home"
-./mvnw clean
-./mvnw versions:set --define newVersion=${SEEN_VERSION}
-./mvnw versions:commit
+$SEEN_VERSION
+$JAVA_HOME
 ```
 
-### Windows 11发布
+### Windows 11预先配置
 
 ```shell
-git add .
-```
-
-```shell
-$$Env:SEEN_VERSION = "0.1.68"
+$$Env:SEEN_VERSION = "0.1.69"
+$$Env:SEEN_VERSION
 $$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
+$$Env:JAVA_HOME
+```
+
+### 发布
+
+```shell
 ./mvnw clean
 ./mvnw versions:set --define newVersion=$Env:SEEN_VERSION
 ./mvnw versions:commit
 ```
 
 ```shell
-$$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 ./mvnw versions:display-dependency-updates
 ```
 
 ```shell
-$$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 ./mvnw -Preporting site site:stage
 ./mvnw scm-publish:publish-scm
 ```
 
 ```shell
 git add .
-git commit -m "#68 部署本机"
+git commit -m "#69 数据库调整"
 ```
 
 ```shell
@@ -93,3 +93,5 @@ git push origin dev_chixh
 ## 1.8 安装安全工具
 
 gpg工具下载地址https://gpgtools.org/
+
+## 1.9 照片ID就是文件ID

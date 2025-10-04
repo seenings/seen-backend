@@ -22,7 +22,6 @@ public class CoinAccount {
     /**
      * 自增ID，账户ID
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**

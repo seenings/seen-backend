@@ -20,7 +20,6 @@ public class CoinTradePO {
     /**
      * 自增ID，币流水ID
      */
-    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

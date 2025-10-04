@@ -15,10 +15,8 @@ spring:
     zookeeper:
       connect-string: zk:2181
   datasource:
-    hikari:
-      schema: seen
     password: root@songchi
-    url: jdbc:mysql://mysql:3306/seen
+    url: jdbc:mysql://mysql:3306/seen?createDatabaseIfNotExist=true
     username: root
   sql:
     init:

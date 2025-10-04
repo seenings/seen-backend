@@ -1,4 +1,4 @@
-version: '3'
+version: "3.8"
 services:
   seen-gateway:
     entrypoint: [ "java", "-jar", "/app/seen-gateway/target/seen-gateway-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]

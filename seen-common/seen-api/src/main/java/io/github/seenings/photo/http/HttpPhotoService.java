@@ -51,6 +51,9 @@ public interface HttpPhotoService {
     @PostMapping("set-path")
     Integer setPath(@RequestParam("path") String path, @RequestParam("userId") Long userId);
 
+    @PostMapping("set-path-minio")
+    Integer setPathByMinio(@RequestParam("path") String path, @RequestParam("userId") Long userId);
+
     @PostMapping("photo-id-to-storage-type-and-path")
     Map<Integer, StorageTypeAndPath> photoIdToStorageTypeAndPath(@RequestBody Set<Integer> photoIds);
 
