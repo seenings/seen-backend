@@ -13,13 +13,14 @@ import lombok.experimental.Accessors;
  * 用户标
  *
  */
-@TableName(value = "user")
 @Data
 @Accessors(chain = true)
+@TableName(value = "user")
 public class UserPO {
     /**
      * 自增ID，用户ID
      */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**

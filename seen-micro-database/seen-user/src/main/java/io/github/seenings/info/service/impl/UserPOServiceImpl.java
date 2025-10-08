@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.core.util.CollUtil;
 import io.github.seenings.info.po.UserPO;
 import io.github.seenings.info.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,10 @@ import java.util.stream.Collectors;
  * @since 2023-02-11
  */
 @Mapper
-interface UserPOMapper extends BaseMapper<UserPO> {}
+interface UserPOMapper extends BaseMapper<UserPO> {
+}
 
+@Slf4j
 @Service
 public class UserPOServiceImpl extends ServiceImpl<UserPOMapper, UserPO> implements UserService {
 
@@ -37,8 +40,8 @@ public class UserPOServiceImpl extends ServiceImpl<UserPOMapper, UserPO> impleme
         }
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs -> list(new LambdaQueryWrapper<UserPO>()
-                                .in(UserPO::getId, subs)
-                                .select(UserPO::getId, UserPO::getPhone))
+                        .in(UserPO::getId, subs)
+                        .select(UserPO::getId, UserPO::getPhone))
                         .stream())
                 .collect(Collectors.toMap(UserPO::getId, UserPO::getPhone));
     }
@@ -51,8 +54,8 @@ public class UserPOServiceImpl extends ServiceImpl<UserPOMapper, UserPO> impleme
         }
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs -> list(new LambdaQueryWrapper<UserPO>()
-                                .in(UserPO::getPhone, subs)
-                                .select(UserPO::getId, UserPO::getPhone))
+                        .in(UserPO::getPhone, subs)
+                        .select(UserPO::getId, UserPO::getPhone))
                         .stream())
                 .collect(Collectors.toMap(UserPO::getPhone, UserPO::getId));
     }
@@ -63,6 +66,7 @@ public class UserPOServiceImpl extends ServiceImpl<UserPOMapper, UserPO> impleme
         UserPO po = new UserPO().setPhone(phoneNumber).setUpdateTime(LocalDateTime.now());
         if (userId == null) {
             save(po);
+            log.info("{}", po);
             return po.getId();
         } else {
             // 已存在该电话号码

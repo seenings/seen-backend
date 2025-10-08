@@ -4,20 +4,17 @@ import io.github.seenings.common.model.EnvConfig;
 import io.github.seenings.common.model.PathConfig;
 import io.github.seenings.sys.model.SeenMinioConfig;
 import lombok.Data;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
-import org.springframework.context.annotation.Configuration;
 
 import static io.github.seenings.sys.constant.PublicConstant.SMALL_SEEN;
 
 /**
  * 自定义配置
- *
- * @author chixuehui
- * @since 2022-02-19
  */
 @Data
-@Configuration
+@AutoConfiguration
 @ConfigurationProperties(SMALL_SEEN)
 public class SeenConfig {
 

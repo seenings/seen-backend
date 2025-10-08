@@ -15,13 +15,14 @@ import lombok.experimental.Accessors;
  * 用户认证
  *
  */
-@TableName(value ="user_auth")
+@TableName(value = "user_auth")
 @Data
 @Accessors(chain = true)
 public class UserAuthPO implements Serializable {
     /**
      * 自增ID
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

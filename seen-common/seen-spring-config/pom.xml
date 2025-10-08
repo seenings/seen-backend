@@ -5,26 +5,41 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-common</artifactId>
-        <version>0.1.69</version>
+        <version>0.1.70</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-spring-config</artifactId>
     <name>seen-spring-config</name>
     <description>seen-spring-config</description>
     <dependencies>
-        <!--引入工具包-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.github.seenings</groupId>
-            <artifactId>seen-core</artifactId>
+            <artifactId>seen-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.seenings</groupId>
+            <artifactId>seen-extra</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-commons</artifactId>
         </dependency>
     </dependencies>
 </project>

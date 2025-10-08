@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 @Schema(name = "Voice对象", description = "语音")
 public class Voice implements Serializable {
 
+    @TableId(type = IdType.AUTO)
     private Integer id;
     private String path;
     private Integer deleted;

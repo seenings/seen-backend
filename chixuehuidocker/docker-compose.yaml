@@ -1,5 +1,59 @@
 version: "3.8"
 services:
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ~/seen/minio/data-1/:/mnt/minio/data-1
+      - ~/seen/minio/data-2/:/mnt/minio/data-2
+      - ~/seen/minio/data-3/:/mnt/minio/data-3
+      - ~/seen/minio/data-4/:/mnt/minio/data-4
+      - ./minio.config.env:/etc/config.env
+    environment:
+      - MINIO_CONFIG_ENV_FILE=/etc/config.env
+    command: server --console-address ":9001"
+    networks:
+      - chixuehuidocker
+    restart: unless-stopped
+  mysql:
+    image: mysql:9
+    environment:
+      - MYSQL_ROOT_PASSWORD=root@songchi
+    ports:
+      - "3306:3306"
+    networks:
+      - chixuehuidocker
+    restart: unless-stopped
+    volumes:
+      - ~/seen/mysql2:/var/lib/mysql
+  nginx:
+    image: nginx:1
+    ports:
+      - "8080:80"
+    volumes:
+      - ~/IdeaProjects/seenings/seen-font-end/dist:/usr/share/nginx/html
+      - ~/IdeaProjects/seenings/seen-font-end/deploy/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - seen-gateway
+    networks:
+      - chixuehuidocker
+    restart: unless-stopped
+  redis:
+    image: redis:8
+    ports:
+      - "6379:6379"
+    networks:
+      - chixuehuidocker
+    restart: unless-stopped
+  zk:
+    image: zookeeper:3.9
+    ports:
+      - "2181:2181"
+    networks:
+      - chixuehuidocker
+    restart: unless-stopped
   seen-gateway:
     entrypoint: [ "java", "-jar", "/app/seen-gateway/target/seen-gateway-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
@@ -9,6 +63,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - chixuehuidocker
+    restart: unless-stopped
   seen-service:
     entrypoint: [ "java", "-jar", "/app/seen-service/target/seen-service-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     ports:
@@ -22,6 +77,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - chixuehuidocker
+    restart: unless-stopped
   seen-calc:
     entrypoint: [ "java", "-jar", "/app/seen-micro/seen-calc/target/seen-calc-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
@@ -33,6 +89,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - chixuehuidocker
+    restart: unless-stopped
   seen-socket:
     entrypoint: [ "java", "-jar", "/app/seen-micro/seen-socket/target/seen-socket-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
@@ -44,6 +101,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - chixuehuidocker
+    restart: unless-stopped
   seen-article:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-article/target/seen-article-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
@@ -55,6 +113,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - chixuehuidocker
+    restart: unless-stopped
   seen-chat:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-chat/target/seen-chat-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
@@ -66,6 +125,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - chixuehuidocker
+    restart: unless-stopped
   seen-coin:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-coin/target/seen-coin-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
@@ -77,6 +137,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - chixuehuidocker
+    restart: unless-stopped
   seen-file:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-file/target/seen-file-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
@@ -88,6 +149,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - chixuehuidocker
+    restart: unless-stopped
   seen-middle:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-middle/target/seen-middle-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
@@ -99,6 +161,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - chixuehuidocker
+    restart: unless-stopped
   seen-other:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-other/target/seen-other-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
@@ -110,6 +173,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - chixuehuidocker
+    restart: unless-stopped
   seen-school:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-school/target/seen-school-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
@@ -121,6 +185,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - chixuehuidocker
+    restart: unless-stopped
   seen-user:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-user/target/seen-user-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
@@ -132,6 +197,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - chixuehuidocker
+    restart: unless-stopped
 networks:
   chixuehuidocker:
     external: true

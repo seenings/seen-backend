@@ -18,6 +18,7 @@ public class MiddleUserRecommendPO {
     /**
      * 自增ID
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

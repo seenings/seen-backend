@@ -19,6 +19,7 @@ public class UserApplyRefusePO {
     /**
      * 自增ID
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

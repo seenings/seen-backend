@@ -21,6 +21,7 @@ public class UserBirthdayPO {
     /**
      * 自增ID
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     private Long userId;

@@ -1,19 +1,15 @@
 package io.github.seenings.sys.interceptor;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import io.github.seenings.common.exception.SeenException;
-import io.github.seenings.common.util.ResUtils;
 import io.github.seenings.core.util.StrUtils;
 import io.github.seenings.extra.util.JwtUtils;
 import io.github.seenings.sys.constant.PublicConstant;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.ContentType;
 import cn.hutool.http.HttpStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

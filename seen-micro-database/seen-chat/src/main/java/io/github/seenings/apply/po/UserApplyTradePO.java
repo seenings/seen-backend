@@ -21,6 +21,7 @@ public class UserApplyTradePO {
     /**
      * 自增ID
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

@@ -28,6 +28,7 @@ public class Info implements Serializable {
     public static final String USER_ID = "USER_ID";
     public static final String CREATE_TIME = "CREATE_TIME";
 
+    @TableId(type = IdType.AUTO)
     private Integer id;
     private Long userId;
     private String name;

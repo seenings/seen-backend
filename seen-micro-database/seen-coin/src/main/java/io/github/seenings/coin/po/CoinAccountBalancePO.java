@@ -20,6 +20,7 @@ public class CoinAccountBalancePO {
     /**
      * 自增ID
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

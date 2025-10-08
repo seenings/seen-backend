@@ -13,7 +13,7 @@
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.69</version>
+    <version>0.1.70</version>
     <properties>
         <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
         <hutool-all.version>5.8.40</hutool-all.version>
@@ -27,6 +27,7 @@
         <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
         <maven-jdeps-plugin.version>3.1.2</maven-jdeps-plugin.version>
         <maven-jxr-plugin.version>3.6.0</maven-jxr-plugin.version>
+        <maven-scm-publish-plugin.version>3.3.0</maven-scm-publish-plugin.version>
         <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
         <maven-surefire-report-plugin.version>3.5.4</maven-surefire-report-plugin.version>
         <minio.version>8.6.0</minio.version>
@@ -248,7 +249,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-publish-plugin</artifactId>
-                <version>3.3.0</version> <!-- 使用最新版本 -->
+                <version>${maven-scm-publish-plugin.version}</version> <!-- 使用最新版本 -->
                 <configuration>
                     <scmBranch>gh-pages</scmBranch> <!-- GitHub Pages 分支 -->
                     <!-- 其他配置 -->

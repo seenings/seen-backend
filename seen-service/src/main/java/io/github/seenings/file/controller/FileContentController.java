@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.util.Map;
 import java.util.Set;
 
+import io.github.seenings.file.model.StorageTypeAndPath;
 import io.github.seenings.file.service.PhotoResourceService;
 import org.springframework.core.io.AbstractResource;
 import org.springframework.core.io.ByteArrayResource;
@@ -94,20 +95,29 @@ public class FileContentController {
      */
     @GetMapping("photo-id-to-resources-by-compress")
     public ResponseEntity<AbstractResource> photoIdToResourcesByCompress(@RequestParam Integer photoId) {
-        String photoPath = httpPhotoService.photoIdToPhotoUrl(Set.of(photoId)).get(photoId);
+        StorageTypeAndPath storageTypeAndPath = httpPhotoService.photoIdToStorageTypeAndPath(Set.of(photoId)).get(photoId);
+        String photoPath = storageTypeAndPath.path();
+        if (photoPath == null) {
+            log.warn("找不到照片，照片ID：{}", photoId);
+            return ResponseEntity.noContent().build();
+        }
         InputStream inputStream = photoResourceService.photoIdToInputStream(photoId);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             boolean compress = imageCompressService.compress(inputStream, byteArrayOutputStream);
             if (!compress) {
-                log.warn("图片压缩失败,文件路径:{}", photoPath);
-                return ResponseEntity.noContent().build();
+                log.warn("压缩失败，路径：{}", storageTypeAndPath);
+                inputStream = photoResourceService.photoIdToInputStream(photoId);
+                if (inputStream == null) {
+                    return ResponseEntity.notFound().build();
+                }
+                return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofDays(1L))).body(new InputStreamResource(inputStream));
             }
         } catch (IOException e) {
             log.error("", e);
             return ResponseEntity.noContent().build();
         }
-        ByteArrayResource byteArrayResource = new ByteArrayResource(byteArrayOutputStream.toByteArray());
-        return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofDays(1L))).body(byteArrayResource);
+        return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofDays(1L)))
+                .body(new ByteArrayResource(byteArrayOutputStream.toByteArray()));
     }
 }
