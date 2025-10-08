@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.69</version>
+        <version>0.1.70</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-micro</artifactId>
@@ -27,12 +27,6 @@
         <dependency>
             <groupId>io.github.seenings</groupId>
             <artifactId>seen-spring-config</artifactId>
-        </dependency>
-        <!--单元测试-->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
         </dependency>
         <!--健康检查-->
         <dependency>
@@ -72,14 +66,6 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>io.github.seenings</groupId>
-            <artifactId>seen-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
         <!--连接注册中心-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -115,16 +101,6 @@
                             <version>${lombok-mapstruct-binding.version}</version>
                         </path>
                     </annotationProcessorPaths>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>bootstrap.yml</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
             <plugin>

@@ -41,7 +41,8 @@ public class JwtUtils {
      */
     public static final String TOKEN_PASSWORD = "seen2021";
 
-    private JwtUtils() {}
+    private JwtUtils() {
+    }
 
     /**
      * 创建token
@@ -111,7 +112,7 @@ public class JwtUtils {
         }
         String newToken = createToken(userId, effectiveTime);
         return UserIdAndToken.builder()
-                .userId(Integer.parseInt(userId))
+                .userId(Long.parseLong(userId))
                 .token(newToken)
                 .build();
     }

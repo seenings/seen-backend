@@ -5,12 +5,11 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-micro-database</artifactId>
-        <version>0.1.69</version>
+        <version>0.1.70</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-middle</artifactId>
     <name>seen-middle</name>
-    <description>seen-middle</description>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

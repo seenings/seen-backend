@@ -28,14 +28,15 @@ minikube && sudo mv minikube /usr/local/bin/
 
 ## 1.5 图片压缩
 
-1. webp图片不可压缩
+1. webp图片不可压缩；
+2. 图片压缩问题多多，重新整理。
 
 ## 1.6 maven设置版本
 
 ### Maco OS预先配置
 
 ```shell
-SEEN_VERSION="0.1.69"
+SEEN_VERSION="0.1.70"
 JAVA_HOME="~/Library/Java/JavaVirtualMachines/openjdk-25/Contents/Home"
 $SEEN_VERSION
 $JAVA_HOME
@@ -44,13 +45,13 @@ $JAVA_HOME
 ### Windows 11预先配置
 
 ```shell
-$$Env:SEEN_VERSION = "0.1.69"
+$$Env:SEEN_VERSION = "0.1.70"
 $$Env:SEEN_VERSION
 $$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 $$Env:JAVA_HOME
 ```
 
-### 发布
+### 开始新的开发
 
 ```shell
 ./mvnw clean
@@ -58,9 +59,13 @@ $$Env:JAVA_HOME
 ./mvnw versions:commit
 ```
 
+### 版本升级检查
+
 ```shell
 ./mvnw versions:display-dependency-updates
 ```
+
+### 文档发布
 
 ```shell
 ./mvnw -Preporting site site:stage
@@ -69,7 +74,7 @@ $$Env:JAVA_HOME
 
 ```shell
 git add .
-git commit -m "#69 数据库调整"
+git commit -m "#70 照片上传下载调通"
 ```
 
 ```shell
@@ -95,3 +100,9 @@ git push origin dev_chixh
 gpg工具下载地址https://gpgtools.org/
 
 ## 1.9 照片ID就是文件ID
+
+# 2 问题记录
+
+| 序号 | 项         | 解决 |
+|----|-----------|----|
+| 1  | 数据库ID自增失效 |    |

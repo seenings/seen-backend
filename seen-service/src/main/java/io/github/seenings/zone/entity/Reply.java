@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 public class Reply implements Serializable {
 
 
+    @TableId(type = IdType.AUTO)
     private Integer id;
     private Integer zoneId;
     private Long userId;

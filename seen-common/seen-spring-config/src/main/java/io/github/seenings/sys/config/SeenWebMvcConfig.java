@@ -3,9 +3,10 @@ package io.github.seenings.sys.config;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.util.unit.DataSize;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -16,17 +17,15 @@ import org.springframework.web.util.UrlPathHelper;
 import io.github.seenings.sys.constant.PublicConstant;
 import io.github.seenings.sys.interceptor.TokenInterceptor;
 
-import jakarta.annotation.Resource;
 import jakarta.servlet.MultipartConfigElement;
 
 /**
- * @author chixuehui
- *         2021-05-09
+ * 网络控制的配置
  */
-@Configuration
+@AutoConfiguration
+@AllArgsConstructor
 public class SeenWebMvcConfig implements WebMvcConfigurer {
 
-    @Resource
     private SeenConfig seenConfig;
 
     @Override

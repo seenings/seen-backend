@@ -80,9 +80,9 @@ create table if not exists text
 )
     comment '文本';
 
-create table if not exists user
+create table seen.user
 (
-    id          int auto_increment comment '自增ID'
+    id          bigint auto_increment comment '自增ID'
         primary key,
     phone       varchar(20)                        not null comment '手机号码',
     update_time datetime default CURRENT_TIMESTAMP not null,
@@ -92,7 +92,7 @@ create table if not exists user
 )
     comment '用户主表';
 
-alter table user
+alter table seen.user
     auto_increment = 10000000;
 
 create table if not exists user_info
@@ -633,7 +633,7 @@ create table if not exists seen.educational
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     educational int                                not null comment '学历（0：其他，1：大专，2：本科，3：硕士，4：博士）',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
@@ -644,7 +644,7 @@ create table if not exists seen.school_graduate
 (
     id          int auto_increment comment '自增ID'
         primary key,
-    user_id     int                                not null comment '用户ID',
+    user_id     bigint                                not null comment '用户ID',
     graduated   int                                not null comment '是否毕业0（否），1（是）',
     update_time datetime default CURRENT_TIMESTAMP not null comment '更新时间'
 )
@@ -666,7 +666,7 @@ create table  if not exists seen.student_info
 (
     id              int auto_increment comment '自增ID'
         primary key,
-    user_id         int                                not null comment '用户id',
+    user_id         bigint                                not null comment '用户id',
     school_id       int                                not null comment '学校id',
     create_time     datetime default CURRENT_TIMESTAMP null comment '创建时间',
     update_time     datetime default CURRENT_TIMESTAMP not null,

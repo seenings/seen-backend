@@ -1,8 +1,14 @@
 logging:
   file:
     name: ${user.home}/seen/logs/${spring.application.name}/${spring.application.name}.log
+  level:
+    org.springframework.jdbc.datasource.init: DEBUG
   pattern:
     correlation: "%line "
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
 seen:
   env-config:
     env: ${spring.profiles.active}

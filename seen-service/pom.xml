@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.69</version>
+        <version>0.1.70</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-service</artifactId>
@@ -33,15 +33,7 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>io.github.seenings</groupId>
-            <artifactId>seen-extra</artifactId>
-        </dependency>
         <!-- jdk 11+ 引入可选模块 -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-jsqlparser</artifactId>
-        </dependency>
         <!--mybatis plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -75,12 +67,6 @@
             <groupId>com.github.therapi</groupId>
             <artifactId>therapi-runtime-javadoc</artifactId>
         </dependency>
-        <!--单元测试-->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
         <!--健康检查-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -103,10 +89,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.github.seenings</groupId>
-            <artifactId>seen-api</artifactId>
         </dependency>
     </dependencies>
     <build>

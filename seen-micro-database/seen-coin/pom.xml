@@ -5,17 +5,13 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-micro-database</artifactId>
-        <version>0.1.69</version>
+        <version>0.1.70</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-coin</artifactId>
     <name>seen-coin</name>
     <description>seen-coin</description>
     <dependencies>
-        <dependency>
-            <groupId>io.github.seenings</groupId>
-            <artifactId>seen-extra</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>

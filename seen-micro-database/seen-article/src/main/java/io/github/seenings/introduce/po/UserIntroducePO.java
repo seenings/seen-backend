@@ -21,6 +21,7 @@ public class UserIntroducePO {
     /**
      * 自增ID
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

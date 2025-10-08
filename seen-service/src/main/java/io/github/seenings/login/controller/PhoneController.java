@@ -6,7 +6,7 @@ import io.github.seenings.coin.enumeration.TradeType;
 import io.github.seenings.common.model.R;
 import io.github.seenings.common.util.ResUtils;
 import io.github.seenings.extra.util.JwtUtils;
-import io.github.seenings.info.http.HttpUserService;
+import io.github.seenings.info.http.UserController;
 import io.github.seenings.login.entity.SmsCode;
 import io.github.seenings.login.service.ISmsCodeService;
 import io.github.seenings.login.service.SendSmsService;
@@ -15,6 +15,7 @@ import io.github.seenings.trade.http.HttpCoinTradeService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ import java.util.Set;
 
 @Slf4j
 @RestController
+@AllArgsConstructor
 @RequestMapping(PublicConstant.PUBLIC)
 public class PhoneController {
     @Resource
@@ -37,8 +39,11 @@ public class PhoneController {
         return ResUtils.ok("注销登录成功。");
     }
 
-    @Resource
-    private HttpUserService httpUserService;
+    /**
+     * 用户信息
+     *
+     */
+    private UserController userController;
 
     @Resource
     private HttpCoinAccountService httpCoinAccountService;
@@ -47,13 +52,16 @@ public class PhoneController {
 
     @PostMapping("login/phone")
     public R<Long> phone(@RequestBody SmsCode smsCode, HttpServletResponse response) {
+        log.info("smsCode={}", smsCode);
         boolean validate = iSmsCodeService.validate(smsCode.getPhone(), smsCode.getSmsId(), smsCode.getSmsCode());
         if (!validate) {
             return ResUtils.error("验证码校验失败");
         }
-        Long userId = httpUserService.phoneNumberToUserId(Set.of(smsCode.getPhone())).get(smsCode.getPhone());
+        Long userId = userController.phoneNumberToUserId(Set.of(smsCode.getPhone())).get(smsCode.getPhone());
         if (userId == null) { // 如果是第一次登录，则写入用户表
-            userId = httpUserService.set(smsCode.getPhone());
+            log.debug("如果是第一次登录，则写入用户表");
+            userId = userController.set(smsCode.getPhone());
+            log.debug("用户ID：{}", userId);
             // 注册时，初始化虚拟币，并赠送玫瑰花个数50
             httpCoinAccountService.initAccount(userId);
             httpCoinTradeService.simpleTradeTypeTo(userId, CoinConstant.SIGN_UP_COIN_AMOUNT, TradeType.SIGN_UP);

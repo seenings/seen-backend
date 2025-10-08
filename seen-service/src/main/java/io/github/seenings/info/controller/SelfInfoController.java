@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import io.github.seenings.info.http.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,17 +24,6 @@ import io.github.seenings.common.model.R;
 import io.github.seenings.common.util.ResUtils;
 import io.github.seenings.core.util.CollUtil;
 import io.github.seenings.core.util.NumberUtils;
-import io.github.seenings.info.http.HttpUserAliasNameService;
-import io.github.seenings.info.http.HttpUserBirthPlaceService;
-import io.github.seenings.info.http.HttpUserBirthdayService;
-import io.github.seenings.info.http.HttpUserCurrentResidenceService;
-import io.github.seenings.info.http.HttpUserMainPhotoService;
-import io.github.seenings.info.http.HttpUserMaritalService;
-import io.github.seenings.info.http.HttpUserService;
-import io.github.seenings.info.http.HttpUserSexService;
-import io.github.seenings.info.http.HttpUserStatureService;
-import io.github.seenings.info.http.HttpUserWeightService;
-import io.github.seenings.info.http.HttpUserWorkPositionService;
 import io.github.seenings.info.model.BasicInformation;
 import io.github.seenings.info.model.BasicInformationAll;
 import io.github.seenings.info.model.ContactInformation;
@@ -103,6 +93,11 @@ public class SelfInfoController {
     private HttpPhotoService httpPhotoService;
 
     private HttpUserIntroducePhotoService httpUserIntroducePhotoService;
+    /**
+     * 用户信息
+     *
+     */
+    private UserController userController;
 
     @PostMapping("self-user-id-to-main-photo")
     public ResponseEntity<R<PhotoUrl>> selfUserIdToMainPhoto(@SessionAttribute Long userId) {
@@ -173,11 +168,10 @@ public class SelfInfoController {
         return ResUtils.ok(result);
     }
 
-    private HttpUserService httpUserService;
 
     @PostMapping("self-user-id-to-contact-information")
     public R<ContactInformation> selfUserIdToContactInformation(@SessionAttribute Long userId) {
-        String photoNumber = httpUserService.userIdToPhoneNumber(Collections.singleton(userId)).get(userId);
+        String photoNumber = userController.userIdToPhoneNumber(Collections.singleton(userId)).get(userId);
         ContactInformation result = new ContactInformation(null, photoNumber);
         return ResUtils.ok(result);
     }
@@ -189,6 +183,7 @@ public class SelfInfoController {
 
     @PostMapping("check-self")
     public R<Boolean> checkSelf(@RequestParam Long pageUserId, @SessionAttribute Long userId) {
+        log.info("页面ID：{}，认证ID：{}", pageUserId, userId);
         return ResUtils.ok(Objects.equals(pageUserId, userId));
     }
 
