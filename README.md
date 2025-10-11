@@ -77,6 +77,9 @@ $$Env:JAVA_HOME
 
 ```shell
 git add .
+```
+
+```shell
 git commit -m "#72 申请添加好友调通"
 ```
 

@@ -2,12 +2,12 @@ spring:
   application:
     name: seen-busi
   profiles:
-    active: chixuehui
+    active: localtest
 ---
 spring:
   config:
     activate:
-      on-profile: chixuehui
-    import: file:C:\Users\PC\IdeaProjects\seenings/seen-backend/app/common-chixuehui.yml
+      on-profile: localtest
+    import: file:C:\Users\PC\IdeaProjects\seenings/seen-backend/localtest/common.yml
 server:
   port: 9102
