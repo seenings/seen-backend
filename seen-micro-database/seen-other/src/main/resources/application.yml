@@ -10,7 +10,7 @@ spring:
       on-profile: chixuehui
     import: file:C:\Users\PC\IdeaProjects\seenings/seen-backend/app/common-chixuehui.yml
 server:
-  port: 9106
+  port: 9107
 ---
 spring:
   config:

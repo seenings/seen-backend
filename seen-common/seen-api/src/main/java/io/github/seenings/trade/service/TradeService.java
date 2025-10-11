@@ -1,6 +1,6 @@
 package io.github.seenings.trade.service;
 
-import io.github.seenings.coin.enumeration.TradeType;
+import io.github.seenings.coin.enumeration.BusiType;
 
 /**
  * TradeService
@@ -9,12 +9,11 @@ import io.github.seenings.coin.enumeration.TradeType;
  * @since 2023-03-11
  */
 public interface TradeService {
-    Integer trade(Long inAccountId, Long outAccountId, Integer coinAmount, TradeType tradeType,
+    Long trade(Long inAccountId, Long outAccountId, Long coinAmount, BusiType busiType,
                   String description);
 
-    Integer sysInTrade(Long inSysAccountId, Long outAccountId, Integer coinAmount, TradeType tradeType, String description);
+    Long sysInTrade(Long inSysAccountId, Long outAccountId, Long coinAmount, BusiType busiType, String description);
 
-    Integer sysOutTrade(Long inAccountId, Long outSysAccountId, Integer coinAmount, TradeType tradeType, String description);
+    Long sysOutTrade(Long inAccountId, Long outSysAccountId, Long coinAmount, BusiType busiType, String description);
 
-    Integer sysTrade(Long inSysAccountId, Long outSysAccountId, Integer coinAmount, TradeType tradeType, String description);
 }

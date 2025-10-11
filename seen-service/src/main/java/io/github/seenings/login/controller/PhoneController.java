@@ -1,8 +1,12 @@
 package io.github.seenings.login.controller;
 
-import io.github.seenings.account.http.HttpCoinAccountService;
+import io.github.seenings.busi.controller.BusiController;
+import io.github.seenings.busi.controller.BusiRegisterController;
+import io.github.seenings.busi.model.Busi;
+import io.github.seenings.busi.model.BusiRegister;
+import io.github.seenings.coin.api.CoinAccountApi;
 import io.github.seenings.coin.constant.CoinConstant;
-import io.github.seenings.coin.enumeration.TradeType;
+import io.github.seenings.coin.enumeration.BusiType;
 import io.github.seenings.common.model.R;
 import io.github.seenings.common.util.ResUtils;
 import io.github.seenings.extra.util.JwtUtils;
@@ -11,33 +15,24 @@ import io.github.seenings.login.entity.SmsCode;
 import io.github.seenings.login.service.ISmsCodeService;
 import io.github.seenings.login.service.SendSmsService;
 import io.github.seenings.sys.constant.PublicConstant;
-import io.github.seenings.trade.http.HttpCoinTradeService;
-import jakarta.annotation.Resource;
+import io.github.seenings.task.api.DoTaskApi;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Slf4j
 @RestController
 @AllArgsConstructor
-@RequestMapping(PublicConstant.PUBLIC)
+@RequestMapping(PublicConstant.PUBLIC + "login")
 public class PhoneController {
-    @Resource
     ISmsCodeService iSmsCodeService;
 
-    @Resource
     SendSmsService sendSmsService;
-
-    @PostMapping("login/logout")
-    public R<String> logout(@SessionAttribute(required = false) Long userId, HttpSession session) {
-        session.invalidate();
-        log.info("用户{}注销登录成功。", userId);
-        return ResUtils.ok("注销登录成功。");
-    }
 
     /**
      * 用户信息
@@ -45,12 +40,32 @@ public class PhoneController {
      */
     private UserController userController;
 
-    @Resource
-    private HttpCoinAccountService httpCoinAccountService;
-    @Resource
-    private HttpCoinTradeService httpCoinTradeService;
+    /**
+     * 玫瑰币账户设置
+     */
+    private CoinAccountApi coinAccountApi;
+    /**
+     * 业务
+     */
+    private BusiController busiController;
+    /**
+     * 用户注册
+     */
+    private BusiRegisterController busiRegisterController;
+    /**
+     * 做任务
+     */
+    private DoTaskApi doTaskApi;
 
-    @PostMapping("login/phone")
+    @PostMapping("logout")
+    public R<String> logout(@SessionAttribute(required = false) Long userId, HttpSession session) {
+        session.invalidate();
+        log.info("用户{}注销登录成功。", userId);
+        return ResUtils.ok("注销登录成功。");
+    }
+
+
+    @PostMapping("phone")
     public R<Long> phone(@RequestBody SmsCode smsCode, HttpServletResponse response) {
         log.info("smsCode={}", smsCode);
         boolean validate = iSmsCodeService.validate(smsCode.getPhone(), smsCode.getSmsId(), smsCode.getSmsCode());
@@ -62,10 +77,13 @@ public class PhoneController {
             log.debug("如果是第一次登录，则写入用户表");
             userId = userController.set(smsCode.getPhone());
             log.debug("用户ID：{}", userId);
-            // 注册时，初始化虚拟币，并赠送玫瑰花个数50
-            httpCoinAccountService.initAccount(userId);
-            httpCoinTradeService.simpleTradeTypeTo(userId, CoinConstant.SIGN_UP_COIN_AMOUNT, TradeType.SIGN_UP);
-
+            // 注册时，初始化虚拟币，并赠送玫瑰花个数50  TODO
+            coinAccountApi.initAccount(userId);
+            LocalDateTime now = LocalDateTime.now();
+            long busiId = busiController.insert(new Busi().setBusiTime(now).setBusiTypeId(BusiType.SIGN_UP.getIndex()));
+            busiRegisterController.insert(new BusiRegister().setBusiId(busiId)
+                    .setUserId(userId).setRegisterTime(now));
+            doTaskApi.doTaskGetCoin(userId, busiId, (long) CoinConstant.SIGN_UP_COIN_AMOUNT);
         }
         String token = JwtUtils.createToken(String.valueOf(userId), JwtUtils.EFFECTIVE_TIME);
         response.setHeader(PublicConstant.TOKEN_NAME, token);
@@ -73,7 +91,7 @@ public class PhoneController {
     }
 
     //        phone: this.phone,
-    @PostMapping("login/send-code")
+    @PostMapping("send-code")
     public R<Integer> sendCode(@RequestParam String phone) {
         // 生成验证码id
         int smsId = sendSmsService.generateCode(phone);

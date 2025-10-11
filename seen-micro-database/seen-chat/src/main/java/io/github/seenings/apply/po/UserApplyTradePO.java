@@ -32,7 +32,7 @@ public class UserApplyTradePO {
     /**
      * 交易ID
      */
-    private Integer tradeId;
+    private Long tradeId;
 
     /**
      * 创建时间

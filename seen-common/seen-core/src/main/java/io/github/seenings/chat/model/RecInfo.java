@@ -1,15 +1,14 @@
 package io.github.seenings.chat.model;
 
 /**
- * RecInfo
+ * 接收信息
  *
- * @param applyId      申请单ID
- * @param mainPhotoUrl 照片URL
- * @param name         名字
- * @param applyStatus  申请状态
- * @param userId       用户ID
- * @author chixuehui
- * @since 2023-03-05
+ * @param mainPhotoId 主照片ID
+ * @param applyId     申请单ID
+ * @param name        名字
+ * @param applyStatus 申请状态
+ * @param userId      用户ID
  */
-public record RecInfo(Integer applyId, String mainPhotoUrl, String name, Integer applyStatus, Long userId) {
+public record RecInfo(Integer mainPhotoId,
+                      Integer applyId, String name, Integer applyStatus, Long userId) {
 }

@@ -32,7 +32,7 @@ public class UserApplyTradePOServiceImpl extends ServiceImpl<UserApplyTradePOMap
 
 
     @Override
-    public Map<Integer, List<Integer>> applyIdToTradeId(Set<Integer> applyIds) {
+    public Map<Integer, List<Long>> applyIdToTradeId(Set<Integer> applyIds) {
         List<Integer> list = CollUtil.valueIsNullToList(applyIds);
         if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
@@ -46,8 +46,8 @@ public class UserApplyTradePOServiceImpl extends ServiceImpl<UserApplyTradePOMap
     }
 
     @Override
-    public Map<Integer, Integer> tradeIdToApplyId(Set<Integer> tradeIds) {
-        List<Integer> list = CollUtil.valueIsNullToList(tradeIds);
+    public Map<Long, Integer> tradeIdToApplyId(Set<Long> tradeIds) {
+        List<Long> list = CollUtil.valueIsNullToList(tradeIds);
         if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
@@ -60,7 +60,7 @@ public class UserApplyTradePOServiceImpl extends ServiceImpl<UserApplyTradePOMap
     }
 
     @Override
-    public List<Integer> set(Integer applyId, List<Integer> tradeIds) {
+    public List<Integer> set(Integer applyId, List<Long> tradeIds) {
 
         return tradeIds.stream().map(tradeId -> {
             UserApplyTradePO po = new UserApplyTradePO()

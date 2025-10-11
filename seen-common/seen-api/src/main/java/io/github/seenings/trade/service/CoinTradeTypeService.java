@@ -1,6 +1,6 @@
 package io.github.seenings.trade.service;
 
-import io.github.seenings.coin.enumeration.TradeType;
+import io.github.seenings.coin.enumeration.BusiType;
 
 /**
  * CoinTradeTypeService
@@ -9,5 +9,5 @@ import io.github.seenings.coin.enumeration.TradeType;
  * @since 2023-03-05
  */
 public interface CoinTradeTypeService {
-    Integer addTradeType(Integer tradeId, TradeType tradeType);
+    Integer addTradeType(Integer tradeId, BusiType busiType);
 }

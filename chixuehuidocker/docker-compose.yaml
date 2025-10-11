@@ -66,8 +66,6 @@ services:
     restart: unless-stopped
   seen-service:
     entrypoint: [ "java", "-jar", "/app/seen-service/target/seen-service-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
-    ports:
-      - "8081:8080"
     depends_on:
       - seen-gateway
     image: openjdk:25
@@ -188,6 +186,18 @@ services:
     restart: unless-stopped
   seen-user:
     entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-user/target/seen-user-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
+    image: openjdk:25
+    volumes:
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    depends_on:
+      - seen-service
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - chixuehuidocker
+    restart: unless-stopped
+  seen-busi:
+    entrypoint: [ "java", "-jar", "/app/seen-micro-database/seen-busi/target/seen-busi-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
     image: openjdk:25
     volumes:
       - ~/IdeaProjects/seenings/seen-backend/:/app/

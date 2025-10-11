@@ -36,7 +36,7 @@ minikube && sudo mv minikube /usr/local/bin/
 ### Maco OS预先配置
 
 ```shell
-SEEN_VERSION="0.1.71"
+SEEN_VERSION="0.1.72"
 JAVA_HOME="~/Library/Java/JavaVirtualMachines/openjdk-25/Contents/Home"
 $SEEN_VERSION
 $JAVA_HOME
@@ -45,7 +45,7 @@ $JAVA_HOME
 ### Windows 11预先配置
 
 ```shell
-$$Env:SEEN_VERSION = "0.1.71"
+$$Env:SEEN_VERSION = "0.1.72"
 $$Env:SEEN_VERSION
 $$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 $$Env:JAVA_HOME
@@ -77,7 +77,7 @@ $$Env:JAVA_HOME
 
 ```shell
 git add .
-git commit -m "#71 照片上传下载去除移动端不支持的数据库"
+git commit -m "#72 申请添加好友调通"
 ```
 
 ```shell
@@ -106,6 +106,8 @@ gpg工具下载地址https://gpgtools.org/
 
 # 2 问题记录
 
-| 序号 | 项         | 解决 |
-|----|-----------|----|
-| 1  | 数据库ID自增失效 |    |
+| 序号 | 项                       | 解决        |
+|----|-------------------------|-----------|
+| 1  | 数据库ID自增失效               | 清理数据库存储介质 |
+| 2  | 业务有类型交易没有类型，一笔业务对应多笔币交易 |           |
+| 3  | 同意加好友是否可以获得玫瑰币          |           |

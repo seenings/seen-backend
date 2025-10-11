@@ -58,8 +58,6 @@ public class FriendInfoController {
         Map<Long, String> userIdToAliasNameMap = httpUserAliasNameService.userIdToAliasName(userIds);
         Map<Long, Integer> userIdToPhotoIdMap = httpUserMainPhotoService
                 .userIdPhotoId(userIds);
-        Map<Integer, String> photoIdToLongPhotoUrlMap = httpPhotoService
-                .photoIdToLongPhotoUrl(new HashSet<>(userIdToPhotoIdMap.values()));
 
         Map<Integer, LocalDateTime> applyIdToApplyTimeMap = httpUserApplyService.applyIdToApplyTime(applyIdSet);
         Map<Integer, ApplyStatus> applyIdToApplyStatusMap = applyService.applyIdToApplyStatus(applyIdSet);
@@ -69,9 +67,8 @@ public class FriendInfoController {
                     ApplyStatus applyStatus = applyIdToApplyStatusMap.get(applyId);
                     String name = userIdToAliasNameMap.get(recUserId);
                     Integer photoId = userIdToPhotoIdMap.get(recUserId);
-                    String mainPhotoUrl = photoIdToLongPhotoUrlMap.get(photoId);
                     LocalDateTime applyTime = applyIdToApplyTimeMap.get(applyId);
-                    return new SendInfo(applyId, mainPhotoUrl, name, applyStatus.getIndex(), recUserId,
+                    return new SendInfo(photoId, applyId, name, applyStatus.getIndex(), recUserId,
                             applyTime
                     );
                 }).collect(Collectors.toList());
@@ -88,8 +85,6 @@ public class FriendInfoController {
         Map<Long, String> userIdToAliasNameMap = httpUserAliasNameService.userIdToAliasName(userIds);
         Map<Long, Integer> userIdToPhotoIdMap = httpUserMainPhotoService
                 .userIdPhotoId(userIds);
-        Map<Integer, String> photoIdToLongPhotoUrlMap = httpPhotoService
-                .photoIdToLongPhotoUrl(new HashSet<>(userIdToPhotoIdMap.values()));
         Map<Integer, ApplyStatus> applyIdToApplyStatusMap = applyService.applyIdToApplyStatus(applyIdSet);
         List<RecInfo> result = applyIds.stream()
                 .map(applyId -> {
@@ -97,8 +92,7 @@ public class FriendInfoController {
                     ApplyStatus applyStatus = applyIdToApplyStatusMap.get(applyId);
                     String name = userIdToAliasNameMap.get(recUserId);
                     Integer photoId = userIdToPhotoIdMap.get(recUserId);
-                    String mainPhotoUrl = photoIdToLongPhotoUrlMap.get(photoId);
-                    return new RecInfo(applyId, mainPhotoUrl, name, applyStatus.getIndex(), recUserId);
+                    return new RecInfo(photoId, applyId, name, applyStatus.getIndex(), recUserId);
                 }).collect(Collectors.toList());
         return ResUtils.ok(result);
     }

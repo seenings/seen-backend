@@ -1,7 +1,9 @@
 package io.github.seenings.info.controller;
 
+import io.github.seenings.busi.controller.BusiController;
+import io.github.seenings.busi.model.Busi;
 import io.github.seenings.coin.constant.CoinConstant;
-import io.github.seenings.coin.enumeration.TradeType;
+import io.github.seenings.coin.enumeration.BusiType;
 import io.github.seenings.common.model.R;
 import io.github.seenings.common.util.ResUtils;
 import io.github.seenings.info.http.HttpUserBirthdayService;
@@ -11,10 +13,11 @@ import io.github.seenings.info.service.InfoService;
 import io.github.seenings.school.http.HttpEducationalService;
 import io.github.seenings.school.http.HttpSchoolGraduateService;
 import io.github.seenings.sys.constant.PublicConstant;
-import io.github.seenings.trade.http.HttpCoinTradeService;
-import jakarta.annotation.Resource;
+import io.github.seenings.task.api.DoTaskApi;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,24 +28,28 @@ import java.util.Set;
  * @since 2022-10-06
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping(PublicConstant.REST + "user/basic-info")
 public class BasicInfoController {
 
-    @Resource
     private HttpEducationalService httpEducationalService;
 
-    @Resource
     private HttpUserSexService httpUserSexService;
 
-    @Resource
     private HttpUserBirthdayService httpUserBirthdayService;
 
-    @Resource
     private HttpSchoolGraduateService httpSchoolGraduateService;
 
+    private InfoService infoService;
 
-    @Resource
-    private HttpCoinTradeService httpCoinTradeService;
+    /**
+     * 业务
+     */
+    private BusiController busiController;
+    /**
+     * 做任务
+     */
+    private DoTaskApi doTaskApi;
 
     @PostMapping("save-basic-info")
     public R<String> saveBasicInfo(@RequestBody BasicInfo basicInfo, @SessionAttribute Long userId) {
@@ -52,13 +59,13 @@ public class BasicInfoController {
         httpUserBirthdayService.set(basicInfo.getUserId(), basicInfo.getBirthYear(), null, null);
         httpSchoolGraduateService.set(basicInfo.getUserId(), basicInfo.getGraduated() ? 1 : 0);
         // 填入基本信息时，初始化虚拟币，并赠送玫瑰花个数50
-        httpCoinTradeService.simpleTradeTypeTo(userId, CoinConstant.FILL_BASIC_INFO_SPEND_COIN_AMOUNT, TradeType.FILL_BASIC_INFO);
+        //TODO 业务处理
+        long busiId = busiController.insert(new Busi().setBusiTime(LocalDateTime.now()).setBusiTypeId(BusiType.FILL_BASIC_INFO.getIndex()));
+        doTaskApi.doTaskGetCoin(userId, busiId, (long) CoinConstant.FILL_BASIC_INFO_SPEND_COIN_AMOUNT);
 
         return ResUtils.ok(null);
     }
 
-    @Resource
-    private InfoService infoService;
 
     /**
      * 根据用户ID获取基本信息
