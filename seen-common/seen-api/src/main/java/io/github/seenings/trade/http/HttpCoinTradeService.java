@@ -1,6 +1,6 @@
 package io.github.seenings.trade.http;
 
-import io.github.seenings.coin.enumeration.TradeType;
+import io.github.seenings.coin.enumeration.BusiType;
 import io.github.seenings.sys.constant.ServiceNameConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,17 +22,17 @@ import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
         contextId = "HttpCoinTradeService")
 public interface HttpCoinTradeService {
     @PostMapping("freeze-to-sys-use")
-    Integer freezeToSysUse(
+    Long freezeToSysUse(
             @RequestParam("userId") Long userId,
-            @RequestParam("coinMount") int coinMount,
-            @RequestParam("tradeType") TradeType tradeType,
+            @RequestParam("coinMount") Long coinMount,
+            @RequestParam("busiType") BusiType busiType,
             @RequestParam("description") String description);
 
     @PostMapping("freeze-to-temporary")
-    Integer freezeToTemporary(
+    Long freezeToTemporary(
             @RequestParam("userId") Long userId,
-            @RequestParam("coinMount") int coinMount,
-            @RequestParam("tradeType") TradeType tradeType,
+            @RequestParam("coinMount") Long coinMount,
+            @RequestParam("busiType") BusiType busiType,
             @RequestParam("description") String description);
 
     /**
@@ -42,17 +42,17 @@ public interface HttpCoinTradeService {
      * @return  冻结的交易ID，资金不够时返回空
      */
     @PostMapping("check-enough-and-freeze")
-    Set<Integer> checkEnoughAndFreeze(
+    Set<Long> checkEnoughAndFreeze(
             @RequestParam("userId") Long userId,
-            @RequestParam("coinMount") int coinMount,
-            @RequestParam("tradeType") TradeType tradeType,
+            @RequestParam("coinMount") Long coinMount,
+            @RequestParam("busiType") BusiType busiType,
             @RequestParam("description") String description);
 
     @PostMapping("check-enough")
-    Boolean checkEnough(@RequestParam("userId") Long userId, @RequestParam("coinMount") int coinMount);
+    Boolean checkEnough(@RequestParam("userId") Long userId, @RequestParam("coinMount") Long coinMount);
 
     @PostMapping("simple-trade-type-to")
-    Integer simpleTradeTypeTo(@RequestParam("userId") Long userId, @RequestParam("coinAmount") Integer coinAmount
-            , @RequestParam("tradeType") TradeType tradeType
+    Long simpleTradeTypeTo(@RequestParam("userId") Long userId, @RequestParam("coinAmount") Long coinAmount
+            , @RequestParam("busiType") BusiType busiType
     );
 }

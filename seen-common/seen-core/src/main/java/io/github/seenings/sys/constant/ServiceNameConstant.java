@@ -17,6 +17,10 @@ public class ServiceNameConstant {
      */
     public static final String SERVICE_SEEN_ARTICLE = "seen-article";
     /**
+     * 交易类业务
+     */
+    public static final String SERVICE_SEEN_BUSI = "seen-busi";
+    /**
      * 计算服务
      */
     public static final String SERVICE_SEEN_CALC = "seen-calc";

@@ -1,3 +1,4 @@
+io.github.seenings.sys.config.BusiAutoConfig
 io.github.seenings.sys.config.CoinAutoConfig
 io.github.seenings.sys.config.MicroAutoConfig
 io.github.seenings.sys.config.MybatisPlusConfig

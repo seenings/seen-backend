@@ -32,9 +32,9 @@ public class TradeRegisterPO {
      */
     private LocalDateTime registerTime;
     /**
-     * 交易ID
+     * 业务ID
      */
-    private Integer tradeId;
+    private Integer busiId;
     /**
      * 创建时间
      */

@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: seen-busi
+  profiles:
+    active: chixuehui
+---
+spring:
+  config:
+    activate:
+      on-profile: chixuehui
+    import: file:C:\Users\PC\IdeaProjects\seenings/seen-backend/app/common-chixuehui.yml
+server:
+  port: 9102

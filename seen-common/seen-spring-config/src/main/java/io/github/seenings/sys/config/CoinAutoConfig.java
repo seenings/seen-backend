@@ -2,6 +2,7 @@ package io.github.seenings.sys.config;
 
 import io.github.seenings.coin.api.CoinAccountApi;
 import io.github.seenings.coin.api.CoinTradeApi;
+import io.github.seenings.coin.controller.CoinBalanceController;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -36,5 +37,15 @@ public class CoinAutoConfig {
     @Bean
     public CoinTradeApi coinTradeApi() {
         return httpServiceProxyFactoryBySeenCoin.createClient(CoinTradeApi.class);
+    }
+
+    /**
+     * 玫瑰币余额
+     *
+     * @return 玫瑰币余额
+     */
+    @Bean
+    public CoinBalanceController coinBalanceController() {
+        return httpServiceProxyFactoryBySeenCoin.createClient(CoinBalanceController.class);
     }
 }

@@ -1,11 +1,10 @@
 package io.github.seenings.coin.api.impl;
 
-import io.github.seenings.account.http.HttpCoinAccountService;
 import io.github.seenings.account.service.CoinAccountService;
 import io.github.seenings.account.service.CoinAccountUserService;
 import io.github.seenings.account.service.FreezeService;
 import io.github.seenings.coin.enumeration.AccountType;
-import io.github.seenings.coin.enumeration.TradeType;
+import io.github.seenings.coin.enumeration.BusiType;
 import io.github.seenings.trade.http.HttpCoinTradeService;
 import io.github.seenings.trade.service.TradeService;
 import jakarta.annotation.Resource;
@@ -36,16 +35,16 @@ public class CoinTradeController implements HttpCoinTradeService {
 
     @Override
     @PostMapping("freeze-to-sys-use")
-    public Integer freezeToSysUse(@RequestParam("userId") Long userId, @RequestParam("coinMount") int coinMount, @RequestParam("tradeType") TradeType tradeType, @RequestParam("description") String description) {
+    public Long freezeToSysUse(@RequestParam("userId") Long userId, @RequestParam("coinMount") Long coinMount, @RequestParam("busiType") BusiType busiType, @RequestParam("description") String description) {
 
-        return freezeService.freezeToSysUse(userId, coinMount, tradeType, description);
+        return freezeService.freezeToSysUse(userId, coinMount, busiType, description);
 
     }
 
     @Override
     @PostMapping("freeze-to-temporary")
-    public Integer freezeToTemporary(@RequestParam("userId") Long userId, @RequestParam("coinMount") int coinMount, @RequestParam("tradeType") TradeType tradeType, @RequestParam("description") String description) {
-        return freezeService.freezeToTemporary(userId, coinMount, tradeType, description);
+    public Long freezeToTemporary(@RequestParam("userId") Long userId, @RequestParam("coinMount") Long coinMount, @RequestParam("busiType") BusiType busiType, @RequestParam("description") String description) {
+        return freezeService.freezeToTemporary(userId, coinMount, busiType, description);
     }
 
     /**
@@ -57,9 +56,9 @@ public class CoinTradeController implements HttpCoinTradeService {
      */
     @Override
     @PostMapping("check-enough-and-freeze")
-    public Set<Integer> checkEnoughAndFreeze(@RequestParam("userId") Long userId, @RequestParam("coinMount") int coinMount, @RequestParam("tradeType") TradeType tradeType, @RequestParam("description") String description) {
+    public Set<Long> checkEnoughAndFreeze(@RequestParam("userId") Long userId, @RequestParam("coinMount") Long coinMount, @RequestParam("busiType") BusiType busiType, @RequestParam("description") String description) {
 
-        return freezeService.checkEnoughAndFreeze(userId, coinMount, tradeType, description);
+        return freezeService.checkEnoughAndFreeze(userId, coinMount, busiType, description);
     }
 
     /**
@@ -71,7 +70,7 @@ public class CoinTradeController implements HttpCoinTradeService {
      */
     @Override
     @PostMapping("check-enough")
-    public Boolean checkEnough(@RequestParam("userId") Long userId, @RequestParam("coinMount") int coinMount) {
+    public Boolean checkEnough(@RequestParam("userId") Long userId, @RequestParam("coinMount") Long coinMount) {
 
         return freezeService.checkEnough(userId, coinMount);
     }
@@ -86,12 +85,12 @@ public class CoinTradeController implements HttpCoinTradeService {
 
     @Override
     @PostMapping("simple-trade-type-to")
-    public Integer simpleTradeTypeTo(@RequestParam("userId") Long userId, @RequestParam("coinAmount") Integer coinAmount, @RequestParam("tradeType") TradeType tradeType) {
+    public Long simpleTradeTypeTo(@RequestParam("userId") Long userId, @RequestParam("coinAmount") Long coinAmount, @RequestParam("busiType") BusiType busiType) {
         Long temporaryAccountId = coinAccountUserService.userIdToAccountId(Set.of(userId)).get(userId).stream().findFirst().orElse(null);
         int sysRewardAccountTypeId = AccountType.SYS_REWARD.getIndex();
         List<Long> accountIds = coinAccountService.accountTypeToAccountId(Collections.singleton(sysRewardAccountTypeId)).get(sysRewardAccountTypeId);
         Long sysRewardAccountId = Optional.ofNullable(accountIds).orElse(Collections.emptyList()).stream().findFirst().orElse(null);
 
-        return tradeService.sysOutTrade(temporaryAccountId, sysRewardAccountId, coinAmount, tradeType, tradeType.getLabel());
+        return tradeService.sysOutTrade(temporaryAccountId, sysRewardAccountId, coinAmount, busiType, busiType.getLabel());
     }
 }

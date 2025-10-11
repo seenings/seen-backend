@@ -11,9 +11,9 @@ import java.util.Set;
  * @since 2023-03-05
  */
 public interface UserApplyTradeService {
-    Map<Integer, List<Integer>> applyIdToTradeId(Set<Integer> applyIds);
+    Map<Integer, List<Long>> applyIdToTradeId(Set<Integer> applyIds);
 
-    Map<Integer, Integer> tradeIdToApplyId(Set<Integer> tradeIds);
+    Map<Long, Integer> tradeIdToApplyId(Set<Long> tradeIds);
 
-    List<Integer> set(Integer applyId, List<Integer> tradeIds);
+    List<Integer> set(Integer applyId, List<Long> tradeIds);
 }

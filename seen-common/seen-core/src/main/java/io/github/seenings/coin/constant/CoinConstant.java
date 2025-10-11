@@ -1,10 +1,8 @@
 package io.github.seenings.coin.constant;
 
 /**
- * CoinConstant
+ * 玫瑰币常量
  *
- * @author chixuehui
- * @since 2023-03-05
  */
 public class CoinConstant {
 
@@ -16,4 +14,17 @@ public class CoinConstant {
      * 填入基本信息得倒的虚拟币数量
      */
     public static final int FILL_BASIC_INFO_SPEND_COIN_AMOUNT = 50;
+    /**
+     * 完善基本信息得倒的虚拟币数量
+     */
+    public static final int FILL_FULL_BASIC_INFO_SPEND_COIN_AMOUNT = 100;
+
+    /**
+     * 申请好友花费玫瑰数
+     */
+    public static final int APPLY_SPEND_COIN_AMOUNT = 100;
+    /**
+     * 申请好友，被拒绝花费的虚拟币数
+     */
+    public static final int REJECT_COIN_AMOUNT = 50;
 }

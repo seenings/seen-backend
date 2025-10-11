@@ -1,6 +1,6 @@
 package io.github.seenings.account.service;
 
-import io.github.seenings.coin.enumeration.TradeType;
+import io.github.seenings.coin.enumeration.BusiType;
 
 import java.util.Set;
 
@@ -12,13 +12,13 @@ import java.util.Set;
  */
 public interface FreezeService {
 
-    Integer freezeToSysUse(Long userId, int coinMount,
-                           TradeType tradeType, String description);
+    Long freezeToSysUse(Long userId, Long coinMount,
+                           BusiType busiType, String description);
 
-    Integer freezeToTemporary(Long userId, int coinMount,
-                              TradeType tradeType, String description);
+    Long freezeToTemporary(Long userId, Long coinMount,
+                              BusiType busiType, String description);
 
-    Boolean checkEnough(Long userId, int coinMount);
+    Boolean checkEnough(Long userId, Long coinMount);
 
-    Set<Integer> checkEnoughAndFreeze(Long userId, int coinMount, TradeType tradeType, String description);
+    Set<Long> checkEnoughAndFreeze(Long userId, Long coinMount, BusiType busiType, String description);
 }

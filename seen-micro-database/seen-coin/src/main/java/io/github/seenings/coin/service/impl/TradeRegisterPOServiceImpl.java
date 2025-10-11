@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
  * @since 2023-02-19
  */
 @Mapper
-interface TradeRegisterPOMapper extends BaseMapper<TradeRegisterPO> {}
+interface TradeRegisterPOMapper extends BaseMapper<TradeRegisterPO> {
+}
 
 @Service
 public class TradeRegisterPOServiceImpl extends ServiceImpl<TradeRegisterPOMapper, TradeRegisterPO>
         implements TradeRegisterService {
-
 
 
 }

@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.71</version>
+        <version>0.1.72</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-micro-database</artifactId>
@@ -15,6 +15,7 @@
     <description>微服务依赖，含数据库</description>
     <modules>
         <module>seen-article</module>
+        <module>seen-busi</module>
         <module>seen-chat</module>
         <module>seen-coin</module>
         <module>seen-file</module>
@@ -38,12 +39,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- jdk 11+ 引入可选模块 -->
-        <!--mybatis plus-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>
@@ -74,10 +69,6 @@
         <dependency>
             <groupId>com.github.therapi</groupId>
             <artifactId>therapi-runtime-javadoc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

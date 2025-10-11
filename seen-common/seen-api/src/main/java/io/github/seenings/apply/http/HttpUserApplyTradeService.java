@@ -23,5 +23,5 @@ import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
         contextId = "HttpUserApplyTradeService")
 public interface HttpUserApplyTradeService {
     @PostMapping("set")
-    List<Integer> set(@RequestParam("applyId") Integer applyId, @RequestBody List<Integer> tradeIds);
+    List<Integer> set(@RequestParam("applyId") Integer applyId, @RequestBody List<Long> tradeIds);
 }

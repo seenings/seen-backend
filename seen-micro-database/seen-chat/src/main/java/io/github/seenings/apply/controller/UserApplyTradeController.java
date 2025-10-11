@@ -23,7 +23,7 @@ public class UserApplyTradeController implements HttpUserApplyTradeService {
 
     @Override
     @PostMapping("set")
-    public List<Integer> set(@RequestParam("applyId") Integer applyId, @RequestBody List<Integer> tradeIds) {
+    public List<Integer> set(@RequestParam("applyId") Integer applyId, @RequestBody List<Long> tradeIds) {
         return userApplyTradeService.set(applyId, tradeIds);
     }
 }

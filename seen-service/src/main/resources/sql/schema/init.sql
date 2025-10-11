@@ -531,16 +531,6 @@ create table if not exists seen.coin_sys_account_balance
 )
     comment '系统币账户余额';
 
-create table if not exists seen.coin_trade_type
-(
-    id            int auto_increment comment '自增ID'
-        primary key,
-    trade_id      int                                not null comment '交易ID，对应coin_trade',
-    trade_type_id int                                not null comment '交易类型ID',
-    create_time   datetime default CURRENT_TIMESTAMP not null comment '创建时间'
-)
-    comment '交易类型';
-
 create table if not exists seen.coin_transfer
 (
     id              int auto_increment comment '自增ID，充值单ID'
@@ -555,13 +545,13 @@ create table if not exists seen.coin_transfer
 )
     comment '用户充值';
 
-create table if not exists seen.trade_register
+create table if not exists seen.busi_register
 (
-    id            int auto_increment comment '自增ID'
+    id            bigint auto_increment comment '自增ID'
         primary key,
     user_id       bigint                                not null comment '用户ID',
-    register_time int                                not null comment '注册时间',
-    trade_id      int                                not null comment '交易ID',
+    register_time datetime default CURRENT_TIMESTAMP                                not null comment '注册时间',
+    busi_id      int                                not null comment '业务ID',
     create_time   datetime default CURRENT_TIMESTAMP not null comment '创建时间'
 )
     comment '用户注册信息';
@@ -627,6 +617,16 @@ create table if not exists trade_and_busi
     trade_time  datetime not null comment '交易时间'
 )
     comment '交易与业务关系';
+
+-- 业务
+create table if not exists busi
+(
+    busi_id    bigint auto_increment comment '业务ID'
+        primary key,
+    busi_type_id int not null comment '业务类型ID',
+    busi_time  datetime not null comment '业务时间'
+)
+    comment '业务';
 
 
 create table if not exists seen.educational

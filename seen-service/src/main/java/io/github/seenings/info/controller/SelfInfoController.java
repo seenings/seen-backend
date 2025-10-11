@@ -1,6 +1,7 @@
 package io.github.seenings.info.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import io.github.seenings.busi.controller.BusiController;
+import io.github.seenings.busi.model.Busi;
+import io.github.seenings.coin.constant.CoinConstant;
+import io.github.seenings.coin.enumeration.BusiType;
 import io.github.seenings.info.http.*;
+import io.github.seenings.task.api.DoTaskApi;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -188,6 +194,14 @@ public class SelfInfoController {
     }
 
     private UserInfoService userInfoService;
+    /**
+     * 业务
+     */
+    private BusiController busiController;
+    /**
+     * 做任务
+     */
+    private DoTaskApi doTaskApi;
 
     @PostMapping("save-basic-information-all")
     public R<Boolean> saveBasicInformationAll(@RequestBody BasicInformationAll basicInformationAll, @SessionAttribute Long userId) {
@@ -197,6 +211,10 @@ public class SelfInfoController {
         userInfoService.saveBasicInformation(userId, basicInformationAll.basicInformation());
         userInfoService.saveEducationAndWork(userId, basicInformationAll.educationAndWork());
         userInfoService.saveContactInformation(userId, basicInformationAll.contactInformation());
+        // 填入基本信息时，初始化虚拟币，并赠送玫瑰花个数50
+        //TODO 业务处理
+        long busiId = busiController.insert(new Busi().setBusiTime(LocalDateTime.now()).setBusiTypeId(BusiType.FILL_FULL_BASIC_INFO.getIndex()));
+        doTaskApi.doTaskGetCoin(userId, busiId, (long) CoinConstant.FILL_FULL_BASIC_INFO_SPEND_COIN_AMOUNT);
         return ResUtils.ok(true);
     }
 
