@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,12 +29,12 @@ public class BusiRegisterRepositoryImpl implements BusiRegisterController {
      * 数据表元数据
      */
     public static class Meta {
-        public static Table<Record> TABLE_NAME = table("busi_register");
-        public static Field<Long> ID = field("id", SQLDataType.BIGINT.identity(true));
-        public static Field<Long> USER_ID = field("user_id", Long.class);
-        public static Field<Long> BUSI_ID = field("busi_id", Long.class);
-        public static Field<Timestamp> REGISTER_TIME = field("register_time", Timestamp.class);
-        public static Field<Timestamp> CREATE_TIME = field("create_time", Timestamp.class);
+        public static Table<Record> TABLE_NAME = table("BUSI_REGISTER");
+        public static Field<Long> REGISTER_ID = field("REGISTER_ID", SQLDataType.BIGINT.identity(true));
+        public static Field<Long> USER_ID = field("USER_ID", Long.class);
+        public static Field<Long> BUSI_ID = field("BUSI_ID", Long.class);
+        public static Field<Timestamp> REGISTER_TIME = field("REGISTER_TIME", Timestamp.class);
+        public static Field<Timestamp> CREATE_TIME = field("CREATE_TIME", Timestamp.class);
     }
 
     /**
@@ -51,10 +50,8 @@ public class BusiRegisterRepositoryImpl implements BusiRegisterController {
     @Override
     public List<BusiRegister> select() {
         return dslContext.selectFrom(TABLE_NAME)
-                .fetch()
-                .stream()
-                .map(record -> new BusiRegister()
-                        .setId(record.get(ID))
+                .stream().map(record -> new BusiRegister()
+                        .setRegisterId(record.get(REGISTER_ID))
                         .setUserId(record.get(USER_ID))
                         .setBusiId(record.get(BUSI_ID))
                         .setRegisterTime(record.get(REGISTER_TIME).toLocalDateTime())
@@ -66,17 +63,18 @@ public class BusiRegisterRepositoryImpl implements BusiRegisterController {
     /**
      * 增加用户注册
      *
-     * @param busiRegister 用户注册信息
+     * @param entity 用户注册信息
      * @return 用户注册ID
      */
     @Override
-    public Long insert(BusiRegister busiRegister) {
+    public Long insert(BusiRegister entity) {
         return dslContext.insertInto(TABLE_NAME)
-                .set(USER_ID, busiRegister.getUserId())
-                .set(BUSI_ID, busiRegister.getBusiId())
-                .set(REGISTER_TIME, Timestamp.valueOf(busiRegister.getRegisterTime()))
+                .set(USER_ID, entity.getUserId())
+                .set(BUSI_ID, entity.getBusiId())
+                .set(REGISTER_TIME, Timestamp.valueOf(entity.getRegisterTime()))
                 .set(CREATE_TIME, Timestamp.valueOf(LocalDateTime.now()))
-                .returningResult(ID).fetch().map(n -> n.getValue(ID)).getFirst();
+                .returningResult(REGISTER_ID)
+                .fetchOptional().map(n -> n.getValue(REGISTER_ID)).orElse(null);
     }
 
 }

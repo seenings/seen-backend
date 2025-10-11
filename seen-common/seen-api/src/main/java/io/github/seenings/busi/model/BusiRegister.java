@@ -15,7 +15,7 @@ public class BusiRegister {
     /**
      * 自增ID
      */
-    private Long id;
+    private Long registerId;
 
     /**
      * 用户ID

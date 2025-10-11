@@ -12,9 +12,9 @@ public enum Env {
      */
     CHIXUEHUIDOCKER,
     /**
-     * 本地docker环境
+     * 本地联调环境
      */
-    CHIXH_DOCKER,
+    LOCALTEST,
     /**
      * 本地环境
      */
@@ -82,7 +82,7 @@ public enum Env {
      * @return 是
      */
     public static boolean isDev(Env env) {
-        return env == LOCAL || env == DEV || env == CHIXUEHUI;
+        return env == LOCAL || env == DEV || env == CHIXUEHUI || env == LOCALTEST;
     }
 
 }

@@ -12,7 +12,6 @@ import org.jooq.impl.SQLDataType;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
-import java.time.ZoneOffset;
 
 import static io.github.seenings.busi.repository.impl.BusiRepositoryImpl.Meta.*;
 import static org.jooq.impl.DSL.field;
