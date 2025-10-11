@@ -8,6 +8,6 @@ spring:
   config:
     activate:
       on-profile: localtest
-    import: file:C:\Users\PC\IdeaProjects\seenings/seen-backend/localtest/common.yml
+    import: file:../../localtest/common.yml
 server:
   port: 9102
