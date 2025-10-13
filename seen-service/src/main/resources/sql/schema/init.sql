@@ -609,7 +609,7 @@ create table if not exists coin_balance
     comment '玫瑰币余额';
 
 -- 交易与业务关系
-create table if not exists trade_and_busi
+create table trade_and_busi
 (
     trade_id    bigint not null comment '交易ID'
         primary key,

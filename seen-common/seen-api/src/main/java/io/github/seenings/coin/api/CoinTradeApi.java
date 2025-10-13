@@ -1,6 +1,7 @@
 package io.github.seenings.coin.api;
 
 import io.github.seenings.sys.constant.SeenConstant;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
 
@@ -21,6 +22,9 @@ public interface CoinTradeApi {
      * @return 成交时间
      */
     @GetExchange("trade-to-trade-time")
-    LocalDateTime tradeToTradeTime(Long debitId, Long creditId, Long amount, Long busiId);
+    LocalDateTime tradeToTradeTime(@RequestParam("debitId") Long debitId,
+                                   @RequestParam("creditId") Long creditId,
+                                   @RequestParam("amount") Long amount,
+                                   @RequestParam("busiId") Long busiId);
 
 }
