@@ -1,5 +1,7 @@
 package io.github.seenings.coin.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,6 +17,7 @@ public class CoinBook {
     /**
      * 交易ID
      */
+    @TableId(type = IdType.AUTO)
     private Long tradeId;
     /**
      * 数量
