@@ -2,9 +2,6 @@ package io.github.seenings.sys.constant;
 
 /**
  * 公共常量
- *
- * @author chixuehui
- * @since 2022-02-19
  */
 public class PublicConstant {
 
