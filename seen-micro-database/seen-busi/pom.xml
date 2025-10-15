@@ -5,11 +5,11 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-micro-database</artifactId>
-        <version>0.1.73</version>
+        <version>0.1.74</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-busi</artifactId>
-    <name>sseen-busi</name>
+    <name>seen-busi</name>
     <dependencies>
         <dependency>
             <groupId>com.h2database</groupId>

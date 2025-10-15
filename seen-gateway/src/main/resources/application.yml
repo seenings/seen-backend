@@ -8,12 +8,19 @@ spring:
           routes:
             - id: seen-service
               predicates:
-                - Path=/seen/public-v1/**,/seen/rest-v1/**,/seen/photo-v1/**,/seen/voice-v1/**
+                - args:
+                    key0: /seen/public-v1/**
+                    key1: /seen/rest-v1/**
+                    key2: /seen/photo-v1/**
+                    key3: /seen/voice-v1/**
+                  name: Path
               uri: lb://seen-service
-            - id: sockjs-ws
-              uri: lb://seen-socket
+            - id: seen-socket
               predicates:
-                - Path=/seen/websocket-v1/**
+                - args:
+                    key0: /seen/sse-v1/**
+                  name: Path
+              uri: lb://seen-socket
   profiles:
     active: chixuehui
 ---

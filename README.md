@@ -36,7 +36,7 @@ minikube && sudo mv minikube /usr/local/bin/
 ### Maco OS预先配置
 
 ```shell
-SEEN_VERSION="0.1.73"
+SEEN_VERSION="0.1.74"
 JAVA_HOME="~/Library/Java/JavaVirtualMachines/openjdk-25/Contents/Home"
 $SEEN_VERSION
 $JAVA_HOME
@@ -45,7 +45,7 @@ $JAVA_HOME
 ### Windows 11预先配置
 
 ```shell
-$$Env:SEEN_VERSION = "0.1.73"
+$$Env:SEEN_VERSION = "0.1.74"
 $$Env:SEEN_VERSION
 $$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 $$Env:JAVA_HOME
@@ -70,7 +70,7 @@ git add .
 ```
 
 ```shell
-git commit -m "#73 调通新增用户"
+git commit -m "#74 增加应用二维码分享"
 ```
 
 ```shell
@@ -84,6 +84,7 @@ git push origin v$Env:SEEN_VERSION
 ```shell
 git push origin dev_chixh
 
+```
 
 ### 文档发布
 
@@ -95,11 +96,9 @@ git push origin dev_chixh
 ./mvnw scm-publish:publish-scm
 ```
 
-```
+## 1.7 启动
 
-## 1.7 中间件启动
-
-[启动说明](./middle/README.md)
+[启动说明](./chixuehuidocker/README.md)
 
 分布式中间件,放在内部网络时,使用宣告域名和端口控制
 
@@ -111,9 +110,10 @@ gpg工具下载地址https://gpgtools.org/
 
 # 2 问题记录
 
-| 序号 | 项                       | 解决        |
-|----|-------------------------|-----------|
-| 1  | 数据库ID自增失效               | 清理数据库存储介质 |
-| 2  | 业务有类型交易没有类型，一笔业务对应多笔币交易 |           |
-| 3  | 同意加好友是否可以获得玫瑰币          |           |
-| 4  | url生成二维码链接              |           |
+| 序号 | 项                                  | 解决        |
+|----|------------------------------------|-----------|
+| 1  | 数据库ID自增失效                          | 清理数据库存储介质 |
+| 2  | 业务有类型交易没有类型，一笔业务对应多笔币交易            |           |
+| 3  | 同意加好友是否可以获得玫瑰币                     |           |
+| 4  | url生成二维码链接                         |           |
+| 5  | sse连接绘画，注销时要退出，打开聊天窗口时应该判断是否有过连接会话 |           |
