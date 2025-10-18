@@ -89,7 +89,11 @@ git push origin dev_chixh
 ### 文档发布
 
 ```shell
-./mvnw site:site site:stage
+./mvnw site:site
+```
+
+```shell
+./mvnw site:stage
 ```
 
 ```shell
