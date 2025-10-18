@@ -5,7 +5,7 @@ name: Site Github Pages
 
 on:
   push:
-    tags: [ 'v.*' ]
+    tags: [ 'v*' ]
 jobs:
   build:
 
