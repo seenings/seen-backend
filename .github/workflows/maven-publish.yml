@@ -6,7 +6,7 @@ name: Site Github Pages
 on:
   push:
     tags:
-     - main
+      - 'v*'
 jobs:
   build:
 
