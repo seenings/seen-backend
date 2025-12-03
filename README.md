@@ -36,7 +36,7 @@ minikube && sudo mv minikube /usr/local/bin/
 ### Maco OS预先配置
 
 ```shell
-SEEN_VERSION="0.1.74"
+SEEN_VERSION="0.1.75"
 JAVA_HOME="~/Library/Java/JavaVirtualMachines/openjdk-25/Contents/Home"
 $SEEN_VERSION
 $JAVA_HOME
@@ -45,7 +45,7 @@ $JAVA_HOME
 ### Windows 11预先配置
 
 ```shell
-$$Env:SEEN_VERSION = "0.1.74"
+$$Env:SEEN_VERSION = "0.1.75"
 $$Env:SEEN_VERSION
 $$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 $$Env:JAVA_HOME
@@ -70,7 +70,7 @@ git add .
 ```
 
 ```shell
-git commit -m "#74 增加应用二维码分享"
+git commit -m "#75 清理github工作流的脚本"
 ```
 
 ```shell
