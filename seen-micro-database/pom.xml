@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.75</version>
+        <version>0.1.76</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-micro-database</artifactId>
@@ -25,6 +25,12 @@
         <module>seen-user</module>
     </modules>
     <dependencies>
+        <!-- jdk 11+ 引入可选模块 -->
+        <!--mybatis plus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot4-starter</artifactId>
+        </dependency>
         <!--seen spring-->
         <dependency>
             <groupId>io.github.seenings</groupId>

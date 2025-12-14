@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.address.http.HttpCityService;
 import io.github.seenings.address.http.HttpProvinceService;
@@ -20,7 +19,6 @@ import io.github.seenings.time.util.DateUtil;
 import io.github.seenings.core.util.NumberUtils;
 import io.github.seenings.core.util.SetUtils;
 import io.github.seenings.info.entity.Info;
-import io.github.seenings.info.enumeration.Sex;
 import io.github.seenings.info.http.HttpUserAliasNameService;
 import io.github.seenings.info.http.HttpUserBirthPlaceService;
 import io.github.seenings.info.http.HttpUserBirthdayService;
@@ -121,31 +119,6 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
         return ListUtil.partition(new ArrayList<>(userIds), 100).parallelStream().flatMap(subs -> list(new QueryWrapper<Info>().lambda().in(Info::getUserId, subs).select(Info::getUserId, Info::getProfilePhotoId)).stream()).collect(Collectors.toMap(Info::getUserId, Info::getProfilePhotoId, (o1, o2) -> o2));
     }
 
-    /**
-     * 根据用户ID获取性别
-     *
-     * @param userIds 用户ID
-     * @return 用户ID对应性别
-     */
-    @Override
-    public Map<Long, Sex> userIdToSex(Set<Long> userIds) {
-        if (CollUtil.isEmpty(userIds)) {
-            return Collections.emptyMap();
-        }
-        return ListUtil.partition(new ArrayList<>(userIds), 100).parallelStream().flatMap(subs -> list(new QueryWrapper<Info>().lambda().in(Info::getUserId, subs).select(Info::getUserId, Info::getSex)).stream()).collect(Collectors.toMap(Info::getUserId, n -> UserEnumUtils.indexToSexEnum(n.getSex()), (o1, o2) -> o2));
-    }
-
-    /**
-     * 获取最新注册的用户，填写了用户信息
-     *
-     * @param top 个数
-     * @return 用户ID对应填写用户信息时间
-     */
-    @Override
-    public Map<Long, LocalDateTime> newUserId(int top) {
-        Page<Info> page = page(new Page<>(1, top), new QueryWrapper<Info>().lambda().select(Info::getUserId, Info::getCreateTime).orderByDesc(Info::getCreateTime));
-        return page.getRecords().stream().parallel().collect(Collectors.toMap(Info::getUserId, Info::getCreateTime, (o1, o2) -> o2));
-    }
 
     private HttpUserAliasNameService httpUserAliasNameService;
 

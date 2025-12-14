@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  zk:
+    image: zookeeper:3.9
+    ports:
+      - "2181:2181"
+    networks:
+      - chixuehuidocker
+  seen-gateway:
+    entrypoint: [ "java", "-jar", "/app/seen-gateway/target/seen-gateway-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
+    image: openjdk:25
+    volumes:
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - chixuehuidocker
+  seen-service:
+    entrypoint: [ "java", "-jar", "/app/seen-service/target/seen-service-${SEEN_VERSION}.jar","--spring.profiles.active=chixuehuidocker" ]
+    depends_on:
+      - seen-gateway
+    image: openjdk:25
+    volumes:
+      - ~/IdeaProjects/seenings/seen-backend/:/app/
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - chixuehuidocker
+networks:
+  chixuehuidocker:
+    external: true

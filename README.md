@@ -45,7 +45,7 @@ $JAVA_HOME
 ### Windows 11预先配置
 
 ```shell
-$$Env:SEEN_VERSION = "0.1.75"
+$$Env:SEEN_VERSION = "0.1.76"
 $$Env:SEEN_VERSION
 $$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 $$Env:JAVA_HOME
@@ -62,7 +62,7 @@ $$Env:JAVA_HOME
 ### 版本升级检查
 
 ```shell
-./mvnw versions:display-dependency-updates
+./mvnw versions:dependency-updates-report
 ```
 
 ```shell
@@ -70,7 +70,7 @@ git add .
 ```
 
 ```shell
-git commit -m "#75 清理github工作流的脚本"
+git commit -m "#76 升级到spring boot4"
 ```
 
 ```shell

@@ -1,23 +1,15 @@
 package io.github.seenings.sys.config;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.util.unit.DataSize;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.util.UrlPathHelper;
 
 import io.github.seenings.sys.constant.PublicConstant;
 import io.github.seenings.sys.interceptor.TokenInterceptor;
-
-import jakarta.servlet.MultipartConfigElement;
 
 /**
  * 网络控制的配置
@@ -46,23 +38,5 @@ public class SeenWebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler(PublicConstant.VOICE_VERSION + "**")
                 .addResourceLocations("file://" + seenConfig.getPathConfig().getVoicePath());
         WebMvcConfigurer.super.addResourceHandlers(registry);
-    }
-
-    /* 更改程序映射请求路径默认策略 */
-    @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
-        UrlPathHelper urlPathHelper = new UrlPathHelper();
-        urlPathHelper.setUrlDecode(false);
-        urlPathHelper.setDefaultEncoding(StandardCharsets.UTF_8.name());
-        configurer.setUrlPathHelper(urlPathHelper);
-    }
-
-    @Bean
-    public MultipartConfigElement multipartConfigElement() {
-
-        MultipartConfigFactory multipartConfigFactory = new MultipartConfigFactory();
-        multipartConfigFactory.setMaxFileSize(DataSize.ofMegabytes(100));
-        multipartConfigFactory.setMaxRequestSize(DataSize.ofMegabytes(100));
-        return multipartConfigFactory.createMultipartConfig();
     }
 }

@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.75</version>
+        <version>0.1.76</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-service</artifactId>
@@ -42,7 +42,7 @@
         <!--mybatis plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <artifactId>mybatis-plus-spring-boot4-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>

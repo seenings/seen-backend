@@ -24,6 +24,10 @@ spring:
     password: root@songchi
     url: jdbc:mysql://mysql:3306/seen?createDatabaseIfNotExist=true
     username: root
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   sql:
     init:
       mode: never

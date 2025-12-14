@@ -7,7 +7,7 @@ import io.github.seenings.text.http.HttpTagService;
 import io.github.seenings.zone.model.UserTag;
 import io.github.seenings.zone.service.ITagParentService;
 import io.github.seenings.zone.service.ITagService;
-import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -18,15 +18,16 @@ import java.util.stream.Collectors;
  *
  */
 @Service
+@AllArgsConstructor
 public class TagServiceImpl implements ITagService {
 
-    @Resource
+
     private InfoService infoService;
 
-    @Resource
+
     private HttpTagService httpTagService;
 
-    @Resource
+
     private ITagParentService iTagParentService;
 
     /**

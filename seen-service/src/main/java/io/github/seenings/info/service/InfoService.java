@@ -30,10 +30,6 @@ public interface InfoService {
 
     Map<Long, Integer> userIdToProfilePhotoId(Set<Long> userIds);
 
-    Map<Long, Sex> userIdToSex(Set<Long> userIds);
-
-    Map<Long, LocalDateTime> newUserId(int top);
-
     Map<Long, UserIntroduceInfo> userIdToUserIntroduceInfo(@RequestBody Set<Long> userIds);
 
     Map<Long, BasicInfo> userIdToBasicInfo(Set<Long> userIds);
