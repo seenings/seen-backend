@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.76</version>
+        <version>0.1.77</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-micro</artifactId>
@@ -51,6 +51,11 @@
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
+        </dependency>
+        <!-- 必须保留 JSON 消息转换器依赖（Boot 4.0 需显式引入） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-json</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
