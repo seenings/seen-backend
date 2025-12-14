@@ -45,7 +45,7 @@ $JAVA_HOME
 ### Windows 11预先配置
 
 ```shell
-$$Env:SEEN_VERSION = "0.1.76"
+$$Env:SEEN_VERSION = "0.1.77"
 $$Env:SEEN_VERSION
 $$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 $$Env:JAVA_HOME
@@ -70,7 +70,7 @@ git add .
 ```
 
 ```shell
-git commit -m "#76 升级到spring boot4"
+git commit -m "#77 修复缺失json依赖的问题"
 ```
 
 ```shell
