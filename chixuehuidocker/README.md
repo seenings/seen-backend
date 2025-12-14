@@ -31,7 +31,7 @@ cd ..
 ```
 
 ```shell
-./mvnw package
+./mvnw install
 ```
 
 ```shell
