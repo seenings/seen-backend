@@ -21,6 +21,10 @@ spring:
   datasource:
     url: jdbc:h2:mem:seen
     username: root
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   sql:
     init:
       mode: always

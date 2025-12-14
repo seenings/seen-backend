@@ -18,7 +18,7 @@ $JAVA_HOME
 ### Windows 11预先配置
 
 ```shell
-$$Env:SEEN_VERSION = "0.1.74"
+$$Env:SEEN_VERSION = "0.1.76"
 $$Env:SEEN_VERSION
 $$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
 $$Env:JAVA_HOME
@@ -35,6 +35,10 @@ cd ..
 ```
 
 ```shell
+cd chixuehuidocker
+```
+
+```shell
 docker compose up -d
 ```
 
@@ -42,4 +46,10 @@ docker compose up -d
 
 ```shell
 docker compose down
+```
+
+## 单个调试
+
+```shell
+docker compose -f single.yaml up -d
 ```
