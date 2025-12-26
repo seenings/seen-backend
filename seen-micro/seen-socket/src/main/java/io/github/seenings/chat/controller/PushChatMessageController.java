@@ -32,7 +32,7 @@ public class PushChatMessageController implements HttpPushChatMessageService {
     @Override
     @PostMapping("send")
     public boolean send(@RequestParam("id") Integer id) {
-        log.warn("发送消息：" + id);
+        log.warn("发送消息：{}", id);
         // 如果map中不含有队列，则新建队列
 
         Long otherUserId = httpChatHistoryService.idToToUserId(Set.of(id)).get(id);

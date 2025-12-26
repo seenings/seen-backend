@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import io.github.seenings.common.exception.SeenException;
@@ -24,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {
         // 1.通过session获取用户ID，如有则验证成功
         HttpSession session = request.getSession();
         if (session != null) {

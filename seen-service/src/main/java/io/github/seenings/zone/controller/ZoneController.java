@@ -232,7 +232,7 @@ public class ZoneController {
                         (o1, o2) -> o2));
 
         Map<Integer, ZoneRecord> zoneIdToZoneRecordMap = zoneIdToPublishTimeMap.entrySet().stream()
-                .sorted(Comparator.comparing(Map.Entry::getValue))
+                .sorted(Map.Entry.comparingByValue())
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         n -> {

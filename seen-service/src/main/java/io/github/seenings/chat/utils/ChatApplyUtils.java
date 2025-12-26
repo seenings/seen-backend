@@ -34,7 +34,7 @@ public class ChatApplyUtils {
         if (refuseTime != null) {
             return ApplyStatus.REFUSE;
         }
-        if (applyTime.plus(ChatConstant.EXPIRE_DAYS, ChronoUnit.DAYS).isBefore(now)) {
+        if (applyTime.plusDays(ChatConstant.EXPIRE_DAYS).isBefore(now)) {
             return ApplyStatus.EXPIRE;
         }
         if (lookTime != null) {

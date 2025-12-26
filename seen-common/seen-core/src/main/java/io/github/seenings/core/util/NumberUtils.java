@@ -8,10 +8,7 @@ package io.github.seenings.core.util;
  */
 public class NumberUtils {
     public static String intToString(Integer value) {
-        if (value == null) {
-            return null;
-        }
-        return String.valueOf(value);
+        return StrUtils.objectToString(value);
     }
 
     /**

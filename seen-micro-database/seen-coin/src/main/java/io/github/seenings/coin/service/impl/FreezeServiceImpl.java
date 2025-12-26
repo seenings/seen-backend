@@ -131,12 +131,12 @@ public class FreezeServiceImpl implements FreezeService {
         if (temporaryCoinAmount >= coinMount) {
             // 临时够，冻结账户增加，临时账户减少
 
-            Long temporaryTradeId = tradeService.trade(freezeAccountId, temporaryAccountId, (long) coinMount, BusiType.APPLY_DO_FRIEND, description);
+            Long temporaryTradeId = tradeService.trade(freezeAccountId, temporaryAccountId, coinMount, BusiType.APPLY_DO_FRIEND, description);
             tradeIds = newHashSet(temporaryTradeId);
         } else {
             // 临时不够，还要扣永久，冻结账户增加，临时账户减少到0，永久账户继续减少
             Long temporaryTradeId = tradeService.trade(freezeAccountId, temporaryAccountId, Long.valueOf(temporaryCoinAmount), BusiType.APPLY_DO_FRIEND, description);
-            Long foreverTradeId = tradeService.trade(freezeAccountId, foreverAccountId, (long) (coinMount - temporaryCoinAmount), BusiType.APPLY_DO_FRIEND, description);
+            Long foreverTradeId = tradeService.trade(freezeAccountId, foreverAccountId, coinMount - temporaryCoinAmount, BusiType.APPLY_DO_FRIEND, description);
             tradeIds = newHashSet(temporaryTradeId, foreverTradeId);
         }
         return tradeIds;

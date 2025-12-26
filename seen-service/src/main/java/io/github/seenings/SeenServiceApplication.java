@@ -11,7 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @SpringBootApplication
 public class SeenServiceApplication {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SpringApplication.run(SeenServiceApplication.class, args);
     }
 }
