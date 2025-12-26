@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @TableName(value ="city")
 @Data
-public class CityPO implements Serializable {
+public class CityPO {
     /**
      * 自增ID
      */
@@ -46,6 +46,4 @@ public class CityPO implements Serializable {
      */
     private Long updateUser;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

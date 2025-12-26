@@ -30,14 +30,12 @@ public class ResultRecommendServiceImpl implements ResultRecommendService {
     @Override
     public List<Long> userIdToRecommendUserId(Long userId, String date) {
         List<Long> recommendUserIds = httpMiddleUserRecommendService.userIdToRecommendUserId(Collections.singleton(userId), date).get(userId);
-        if (CollUtil.isNotEmpty(recommendUserIds)) {
-            return recommendUserIds;
-        } else {
+        if (!CollUtil.isNotEmpty(recommendUserIds)) {
             // 生成
             recommendUserIds = httpRecommendService.createRecommendUser(userId);
             httpMiddleUserRecommendService.set(userId, date, recommendUserIds);
-            return recommendUserIds;
         }
+        return recommendUserIds;
     }
 
     @Override

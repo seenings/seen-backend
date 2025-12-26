@@ -55,9 +55,7 @@ public class UserIntroducePhotoPOServiceImpl extends ServiceImpl<UserIntroducePh
     @Override
     public Set<Integer> saveAndReturnId(List<OrderAndPhotoId> orderAndPhotoIds, Integer max,
             IntroduceTypeEnum introduceTypeEnum, Long userId) {
-        Map<Integer, Integer> orderIdToPhotoIdMap = orderAndPhotoIds.stream().map(n -> {
-            return Map.entry(n.order(), n.photoId());
-        }).collect(Collectors.toMap(n -> n.getKey(), n -> n.getValue()));
+        Map<Integer, Integer> orderIdToPhotoIdMap = orderAndPhotoIds.stream().map(n -> Map.entry(n.order(), n.photoId())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         Set<Integer> all = IntStream.range(1, max + 1).boxed().collect(Collectors.toSet());
         return all.stream().map(order -> {
             Integer photoId = orderIdToPhotoIdMap.get(order);
