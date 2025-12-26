@@ -10,7 +10,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 @SpringBootApplication
 public class SeenSocketApplication {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SpringApplication.run(SeenSocketApplication.class, args);
     }
 

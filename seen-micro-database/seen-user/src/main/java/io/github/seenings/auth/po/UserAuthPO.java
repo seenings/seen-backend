@@ -1,10 +1,8 @@
 package io.github.seenings.auth.po;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -18,7 +16,7 @@ import lombok.experimental.Accessors;
 @TableName(value = "user_auth")
 @Data
 @Accessors(chain = true)
-public class UserAuthPO implements Serializable {
+public class UserAuthPO   {
     /**
      * 自增ID
      */
@@ -39,7 +37,4 @@ public class UserAuthPO implements Serializable {
      * 更新时间
      */
     private LocalDateTime updateTime;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

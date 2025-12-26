@@ -13,7 +13,7 @@ public class SeenBusiApplication {
      *
      * @param args 命令行参数
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SpringApplication.run(SeenBusiApplication.class, args);
     }
 }
