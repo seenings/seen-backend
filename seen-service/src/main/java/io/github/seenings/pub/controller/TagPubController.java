@@ -5,6 +5,7 @@ import io.github.seenings.common.util.ResUtils;
 import io.github.seenings.sys.constant.PublicConstant;
 import io.github.seenings.text.http.HttpTagService;
 import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,10 +20,10 @@ import java.util.Map;
  * @since 2023-02-13
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping(PublicConstant.PUBLIC + "pub/tag")
 public class TagPubController {
 
-    @Resource
     private HttpTagService httpTagService;
 
     @GetMapping("to-parent-id-to-parent-name")

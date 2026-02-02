@@ -3,23 +3,12 @@ package io.github.seenings.calc.controller;
 import io.github.seenings.calc.http.HttpRecommendService;
 import io.github.seenings.calc.service.RecommendService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
-
-/**
- * RecommendController
- *
- * @author chixuehui
- * @since 2023-05-21
- */
+/// 推荐
 @RestController
-@RequestMapping(FEIGN_VERSION + "calc/recommend")
 @AllArgsConstructor
 public class RecommendController implements HttpRecommendService {
 
@@ -33,8 +22,7 @@ public class RecommendController implements HttpRecommendService {
      * @return 被推荐的用户
      */
     @Override
-    @PostMapping("create-recommend-user")
-    public List<Long> createRecommendUser(@RequestParam("userId") Long userId) {
+    public List<Long> createRecommendUser(Long userId) {
         return recommendService.createRecommendUser(userId);
     }
 }

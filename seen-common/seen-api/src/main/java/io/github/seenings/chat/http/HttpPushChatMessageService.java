@@ -7,15 +7,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import io.github.seenings.sys.constant.ServiceNameConstant;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
 /**
  * HttpPushChatMessageService
  *
  */
 
-@FeignClient(name = ServiceNameConstant.SERVICE_SEEN_SOCKET, path = FEIGN_VERSION
-        + "chat/push-chat-message", contextId = "HttpPushChatMessageService")
+@HttpExchange( FEIGN_VERSION
+        + "chat/push-chat-message" )
 public interface HttpPushChatMessageService {
-    @PostMapping("send")
+    @PostExchange("send")
     boolean send(@RequestParam("id") Integer id);
 }

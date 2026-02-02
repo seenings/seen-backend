@@ -6,6 +6,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.List;
 import java.util.Map;
@@ -17,18 +19,15 @@ import java.util.Set;
  * @author chixuehui
  * @since 2023-01-23
  */
-@FeignClient(
-        name = ServiceNameConstant.SERVICE_SEEN_ARTICLE,
-        path = SeenConstant.FEIGN_VERSION + "text/tag",
-        contextId = "HttpTagService")
+@HttpExchange(SeenConstant.FEIGN_VERSION + "text/tag")
 public interface HttpTagService {
-    @PostMapping("user-id-to-tag-id")
+    @PostExchange("user-id-to-tag-id")
     Map<Long, List<Integer>> userIdToTagId(@RequestBody Set<Long> userIds);
 
-    @PostMapping("tag-id-to-user-id")
+    @PostExchange("tag-id-to-user-id")
     Map<Integer, Set<Long>> tagIdToUserId(@RequestBody Set<Integer> tagIds);
 
-    @PostMapping("user-id-to-tag-name")
+    @PostExchange("user-id-to-tag-name")
     Map<Long, Set<String>> userIdToTagName(@RequestBody Set<Long> userIds);
 
     /**
@@ -37,21 +36,21 @@ public interface HttpTagService {
      * @param tagIds 标签ID
      * @return 标签ID对应标签名
      */
-    @PostMapping("tag-id-to-tag-name")
+    @PostExchange("tag-id-to-tag-name")
     Map<Integer, String> tagIdToTagName(@RequestBody Set<Integer> tagIds);
 
-    @PostMapping("to-parent-id-to-parent-name")
+    @PostExchange("to-parent-id-to-parent-name")
     Map<Integer, String> toParentIdToParentName();
 
-    @PostMapping("to-parent-id-to-tag-id")
+    @PostExchange("to-parent-id-to-tag-id")
     Map<Integer, List<Integer>> toParentIdToTagId();
 
-    @PostMapping("to-tag-id-to-tag-name")
+    @PostExchange("to-tag-id-to-tag-name")
     Map<Integer, String> toTagIdToTagName();
 
-    @PostMapping("tag-id-to-parent-tag-id")
+    @PostExchange("tag-id-to-parent-tag-id")
     Map<Integer, Integer> tagIdToParentTagId(@RequestBody Set<Integer> tagIds);
 
-    @PostMapping("delete-and-save")
+    @PostExchange("delete-and-save")
     List<Integer> deleteAndSave(@RequestParam("userId") Long userId, @RequestBody List<Integer> tagIds);
 }

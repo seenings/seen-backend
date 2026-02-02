@@ -4,8 +4,7 @@ import io.github.seenings.introduce.enumeration.IntroduceTypeEnum;
 import io.github.seenings.introduce.http.HttpUserIntroduceService;
 import io.github.seenings.introduce.model.IntroduceTypeAndText;
 import io.github.seenings.introduce.service.UserIntroduceService;
-import io.github.seenings.sys.constant.SeenConstant;
-import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -18,10 +17,9 @@ import java.util.Set;
  * @since 2022-11-27
  */
 @RestController
-@RequestMapping(SeenConstant.FEIGN_VERSION + "introduce/user-introduce")
+@AllArgsConstructor
 public class UserIntroduceController implements HttpUserIntroduceService {
 
-    @Resource
     private UserIntroduceService userIntroduceService;
 
     /**
@@ -31,8 +29,7 @@ public class UserIntroduceController implements HttpUserIntroduceService {
      * @return 用户ID对应介绍文本
      */
     @Override
-    @PostMapping("user-id-to-introduce-type-and-text")
-    public Map<Long, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndText(@RequestBody Set<Long> userIds) {
+    public Map<Long, Set<IntroduceTypeAndText>> userIdToIntroduceTypeAndText(Set<Long> userIds) {
         return userIntroduceService.userIdToIntroduceTypeAndText(userIds);
     }
 
@@ -46,11 +43,7 @@ public class UserIntroduceController implements HttpUserIntroduceService {
      * @return 用户介绍ID
      */
     @Override
-    @PostMapping("save-and-return-id")
-    public Integer saveAndReturnId(
-            @RequestParam("userId") Long userId,
-            @RequestParam("introduceTypeEnum") IntroduceTypeEnum introduceTypeEnum,
-            @RequestParam("textId") Integer textId) {
+    public Integer saveAndReturnId(Long userId, IntroduceTypeEnum introduceTypeEnum, Integer textId) {
         return userIntroduceService.saveAndReturnId(userId, introduceTypeEnum, textId);
     }
 }

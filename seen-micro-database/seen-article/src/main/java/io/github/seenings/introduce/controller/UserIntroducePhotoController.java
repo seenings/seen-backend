@@ -6,7 +6,6 @@ import io.github.seenings.introduce.model.IntroduceTypeAndPhoto;
 import io.github.seenings.introduce.model.OrderAndPhotoId;
 import io.github.seenings.introduce.service.IntroducePhotoService;
 import io.github.seenings.introduce.service.UserIntroducePhotoService;
-import io.github.seenings.sys.constant.SeenConstant;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +21,6 @@ import java.util.Set;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping(SeenConstant.FEIGN_VERSION + "introduce/user-introduce-photo")
 public class UserIntroducePhotoController implements HttpUserIntroducePhotoService {
 
     private UserIntroducePhotoService userIntroducePhotoService;
@@ -36,7 +34,7 @@ public class UserIntroducePhotoController implements HttpUserIntroducePhotoServi
      * @return 用户ID对应介绍信息对应关系
      */
     @Override
-    public Map<Long, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhoto(@RequestBody Set<Long> userIds) {
+    public Map<Long, Set<IntroduceTypeAndPhoto>> userIdToIntroduceTypeAndPhoto(Set<Long> userIds) {
         return introducePhotoService.userIdToIntroduceTypeAndPhoto(userIds);
     }
 
@@ -49,8 +47,7 @@ public class UserIntroducePhotoController implements HttpUserIntroducePhotoServi
      * @return 存入的介绍照片信息ID
      */
     @Override
-    @PostMapping("save-and-return-id")
-    public Set<Integer> saveAndReturnId(@RequestBody List<OrderAndPhotoId> orderAndPhotoIds, @RequestParam Integer max, @RequestParam IntroduceTypeEnum introduceTypeEnum, @RequestParam("userId") Long userId) {
+    public Set<Integer> saveAndReturnId(List<OrderAndPhotoId> orderAndPhotoIds, Integer max, IntroduceTypeEnum introduceTypeEnum, Long userId) {
         return userIntroducePhotoService.saveAndReturnId(orderAndPhotoIds, max, introduceTypeEnum, userId);
     }
 }

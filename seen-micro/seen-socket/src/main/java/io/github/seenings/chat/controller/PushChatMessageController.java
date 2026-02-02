@@ -1,20 +1,15 @@
 package io.github.seenings.chat.controller;
 
-import static io.github.seenings.sys.constant.SeenConstant.*;
-
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.seenings.chat.http.HttpChatHistoryService;
 import io.github.seenings.chat.http.HttpPushChatMessageService;
 
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -23,15 +18,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
-@RequestMapping(FEIGN_VERSION + "chat/push-chat-message")
+@AllArgsConstructor
 public class PushChatMessageController implements HttpPushChatMessageService {
 
-    @Resource
     private HttpChatHistoryService httpChatHistoryService;
 
     @Override
-    @PostMapping("send")
-    public boolean send(@RequestParam("id") Integer id) {
+    public boolean send( Integer id) {
         log.warn("发送消息：{}", id);
         // 如果map中不含有队列，则新建队列
 
