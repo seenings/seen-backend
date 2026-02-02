@@ -1,11 +1,10 @@
 package io.github.seenings.text.http;
 
 import io.github.seenings.sys.constant.SeenConstant;
-import io.github.seenings.sys.constant.ServiceNameConstant;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.Map;
 import java.util.Set;
@@ -16,15 +15,12 @@ import java.util.Set;
  * @author chixuehui
  * @since 2022-10-16
  */
-@FeignClient(
-        name = ServiceNameConstant.SERVICE_SEEN_ARTICLE,
-        path = SeenConstant.FEIGN_VERSION + "text/text",
-        contextId = "HttpTextService")
+@HttpExchange(  SeenConstant.FEIGN_VERSION + "text/text" )
 public interface HttpTextService {
 
-    @PostMapping("save-and-return-id")
+    @PostExchange("save-and-return-id")
     Integer saveAndReturnId(@RequestParam("text") String text);
 
-    @PostMapping("text-id-to-text")
+    @PostExchange("text-id-to-text")
     Map<Integer, String> textIdToText(@RequestBody Set<Integer> textIds);
 }

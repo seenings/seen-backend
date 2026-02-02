@@ -15,23 +15,18 @@
 
 除非正式上线前有功能实现不了，否则目前的技术架构在商业上线时不做修改
 
-## 1.3 安装minikube
-
-curl -Lo minikube https://github.com/kubernetes/minikube/releases/download/v1.27.1/minikube-linux-amd64 && chmod +x
-minikube && sudo mv minikube /usr/local/bin/
-
-## 1.4 数据库存储新思路
+## 1.3 数据库存储新思路
 
 1. 区块链式存储
     1. 小粒度保持过往的数据
 2. 带时态的数据存储方法
 
-## 1.5 图片压缩
+## 1.4 图片压缩
 
 1. webp图片不可压缩；
 2. 图片压缩问题多多，重新整理。
 
-## 1.6 maven设置版本
+## 1.5 maven设置版本
 
 ### Maco OS预先配置
 
@@ -45,9 +40,9 @@ $JAVA_HOME
 ### Windows 11预先配置
 
 ```shell
-$$Env:SEEN_VERSION = "0.1.78"
+$$Env:SEEN_VERSION = "0.1.79"
 $$Env:SEEN_VERSION
-$$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25"
+$$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25.0.2"
 $$Env:JAVA_HOME
 ```
 
@@ -70,7 +65,7 @@ git add .
 ```
 
 ```shell
-git commit -m "#78 升级spring boot到4.0.1"
+git commit -m "修改为HttpExchange #50"
 ```
 
 ```shell
