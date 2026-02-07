@@ -40,7 +40,7 @@ $JAVA_HOME
 ### Windows 11预先配置
 
 ```shell
-$$Env:SEEN_VERSION = "0.1.82"
+$$Env:SEEN_VERSION = "0.1.83"
 $$env:JAVA_HOME = $env:USERPROFILE+"\.jdks\openjdk-25.0.2"
 ```
 
@@ -68,7 +68,7 @@ git add .
 ```
 
 ```shell
-git commit -m "修复推荐使用HttpExchange #52"
+git commit -m "修复推荐使用HttpExchange #53"
 ```
 
 ```shell

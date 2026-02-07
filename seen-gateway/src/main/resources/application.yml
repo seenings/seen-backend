@@ -36,7 +36,7 @@ spring:
   config:
     activate:
       on-profile: chixuehuidocker
-    import: file:/app/chixuehuidocker/common-chixuehuidocker.yml
+    import: file:/deploy/chixuehuidocker/common-chixuehuidocker.yml
 ---
 spring:
   config:
