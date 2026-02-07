@@ -7,8 +7,7 @@ import io.github.seenings.chat.model.ChatContentAndTime;
 import io.github.seenings.chat.service.ChatHistoryService;
 import io.github.seenings.core.util.CollUtil;
 import io.github.seenings.sys.util.ListUtils;
-import io.github.seenings.sys.constant.SeenConstant;
-import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -25,16 +24,15 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @RestController
-@RequestMapping(SeenConstant.FEIGN_VERSION + "chat/chat-history")
+@AllArgsConstructor
 public class ChatHistoryController implements HttpChatHistoryService {
 
-    @Resource
     private ChatHistoryService chatHistoryService;
 
 
     @Override
-    @PostMapping("add")
-    public Integer add(@RequestParam("contentType") ContentType contentType, @RequestParam("contentId") Integer contentId, @RequestParam("fromUserId") Long fromUserId, @RequestParam("toUserId") Long toUserId, @RequestParam("sent") Boolean sent, @RequestParam("sendTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime sendTime) {
+    public Integer add(ContentType contentType, Integer contentId, Long fromUserId, Long toUserId, Boolean sent,
+                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime sendTime) {
         return chatHistoryService.add(contentType, contentId, fromUserId, toUserId, sent, sendTime);
     }
 
@@ -46,7 +44,6 @@ public class ChatHistoryController implements HttpChatHistoryService {
      * @return 聊天记录ID
      */
     @Override
-    @PostMapping("page-user-id-to-history-id")
     public List<Integer> pageUserIdToHistoryId(@RequestParam("pageUserId") Long pageUserId, @RequestParam("selfUserId") Long selfUserId) {
         List<Integer> toIds = chatHistoryService.fromUserIdToId(pageUserId, selfUserId, 1, 10);
         List<Integer> fromIds = chatHistoryService.fromUserIdToId(selfUserId, pageUserId, 1, 10);
@@ -63,13 +60,12 @@ public class ChatHistoryController implements HttpChatHistoryService {
      * @return 聊天记录ID对应聊天内容和时间
      */
     @Override
-    @PostMapping("id-to-chat-content-and-time")
+
     public Map<Integer, ChatContentAndTime> idToChatContentAndTime(@RequestBody Set<Integer> ids) {
         return chatHistoryService.idToChatContentAndTime(ids);
     }
 
     @Override
-    @PostMapping("user-id-to-chat-content-and-time")
     public Map<Long, ChatContentAndTime> userIdToChatContentAndTime(@RequestBody Set<Long> userIds, @RequestParam("toUserId") Long toUserId) {
         Map<Long, List<Integer>> fromUserIdToChatHistoryIdMap = userIds.stream().parallel().map(fromUserId -> Pair.of(fromUserId, chatHistoryService.fromUserIdToId(fromUserId, toUserId, 1, 1))).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
         Set<Integer> ids = fromUserIdToChatHistoryIdMap.values().stream().parallel().flatMap(Collection::stream).collect(Collectors.toSet());
@@ -90,7 +86,7 @@ public class ChatHistoryController implements HttpChatHistoryService {
 
 
     @Override
-    @PostMapping("set-sent")
+
     public boolean setSent(@RequestParam("id") Integer id) {
         return chatHistoryService.setSent(id);
     }
@@ -103,7 +99,7 @@ public class ChatHistoryController implements HttpChatHistoryService {
      * @return 聊天记录ID对应发送方ID
      */
     @Override
-    @PostMapping("id-to-from-user-id")
+
     public Map<Integer, Long> idToFromUserId(@RequestBody Set<Integer> ids) {
         return chatHistoryService.idToFromUserId(ids);
     }
@@ -116,7 +112,7 @@ public class ChatHistoryController implements HttpChatHistoryService {
      * @return 聊天记录ID对应是否发出
      */
     @Override
-    @PostMapping("id-to-is-sent")
+
     public Map<Integer, Boolean> idToIsSent(@RequestBody Set<Integer> ids) {
         return chatHistoryService.idToIsSent(ids);
     }
@@ -128,7 +124,7 @@ public class ChatHistoryController implements HttpChatHistoryService {
      * @return 聊天记录ID对应接收方ID
      */
     @Override
-    @PostMapping("id-to-to-user-id")
+
     public Map<Integer, Long> idToToUserId(@RequestBody Set<Integer> ids) {
         return chatHistoryService.idToToUserId(ids);
     }

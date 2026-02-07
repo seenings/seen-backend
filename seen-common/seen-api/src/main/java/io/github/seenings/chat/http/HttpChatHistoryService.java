@@ -7,15 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import io.github.seenings.article.enumeration.ContentType;
 import io.github.seenings.chat.model.ChatContentAndTime;
-import io.github.seenings.sys.constant.ServiceNameConstant;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
 /**
  * HttpChatHistoryService
@@ -23,13 +22,10 @@ import io.github.seenings.sys.constant.ServiceNameConstant;
  * @author chixuehui
  * @since 2022-10-09
  */
-@FeignClient(
-        name = ServiceNameConstant.SERVICE_SEEN_CHAT,
-        path = FEIGN_VERSION + "chat/chat-history",
-        contextId = "HttpChatHistoryService")
+@HttpExchange(  FEIGN_VERSION + "chat/chat-history" )
 public interface HttpChatHistoryService {
 
-    @PostMapping("add")
+    @PostExchange("add")
     Integer add(@RequestParam("contentType") ContentType contentType, @RequestParam("contentId") Integer contentId,
                 @RequestParam("fromUserId") Long fromUserId,
                 @RequestParam("toUserId") Long toUserId,
@@ -44,7 +40,7 @@ public interface HttpChatHistoryService {
      * @param selfUserId 自己用户ID
      * @return 聊天记录ID
      */
-    @PostMapping("page-user-id-to-history-id")
+    @PostExchange("page-user-id-to-history-id")
     List<Integer> pageUserIdToHistoryId(@RequestParam("pageUserId") Long pageUserId,
                                         @RequestParam("selfUserId") Long selfUserId);
 
@@ -54,14 +50,14 @@ public interface HttpChatHistoryService {
      * @param ids 聊天记录ID
      * @return 聊天记录ID对应聊天内容和时间
      */
-    @PostMapping("id-to-chat-content-and-time")
+    @PostExchange("id-to-chat-content-and-time")
     Map<Integer, ChatContentAndTime> idToChatContentAndTime(@RequestBody Set<Integer> ids);
 
-    @PostMapping("user-id-to-chat-content-and-time")
+    @PostExchange("user-id-to-chat-content-and-time")
     Map<Long, ChatContentAndTime> userIdToChatContentAndTime(
             @RequestBody Set<Long> userIds, @RequestParam("toUserId") Long toUserId);
 
-    @PostMapping("set-sent")
+    @PostExchange("set-sent")
     boolean setSent(@RequestParam("id") Integer id);
 
     /**
@@ -70,7 +66,7 @@ public interface HttpChatHistoryService {
      * @param ids 聊天记录ID
      * @return 聊天记录ID对应发送方ID
      */
-    @PostMapping("id-to-from-user-id")
+    @PostExchange("id-to-from-user-id")
     Map<Integer, Long> idToFromUserId(@RequestBody Set<Integer> ids);
 
     /**
@@ -79,7 +75,7 @@ public interface HttpChatHistoryService {
      * @param ids 聊天记录ID
      * @return 聊天记录ID对应是否发出
      */
-    @PostMapping("id-to-is-sent")
+    @PostExchange("id-to-is-sent")
     Map<Integer, Boolean> idToIsSent(@RequestBody Set<Integer> ids);
 
     /**
@@ -88,6 +84,6 @@ public interface HttpChatHistoryService {
      * @param ids 聊天记录ID
      * @return 聊天记录ID对应接收方ID
      */
-    @PostMapping("id-to-to-user-id")
+    @PostExchange("id-to-to-user-id")
     Map<Integer, Long> idToToUserId(@RequestBody Set<Integer> ids);
 }
