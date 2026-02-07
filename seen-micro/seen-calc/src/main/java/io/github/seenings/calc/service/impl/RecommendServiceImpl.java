@@ -10,7 +10,7 @@ import io.github.seenings.info.http.HttpUserSexService;
 import io.github.seenings.info.util.UserEnumUtils;
 import io.github.seenings.recommend.constant.RecommendConstant;
 import io.github.seenings.recommend.http.HttpMiddleUserRecommendService;
-import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -25,15 +25,12 @@ import java.util.stream.Collectors;
  * @since 2023-05-21
  */
 @Service
+@AllArgsConstructor
 public class RecommendServiceImpl implements RecommendService {
 
-    @Resource
     private HttpUserCurrentResidenceService httpUserCurrentResidenceService;
-    @Resource
     private HttpUserMainPhotoService httpUserMainPhotoService;
-    @Resource
     private HttpMiddleUserRecommendService httpMiddleUserRecommendService;
-    @Resource
     private HttpUserSexService httpUserSexService;
 
     /**

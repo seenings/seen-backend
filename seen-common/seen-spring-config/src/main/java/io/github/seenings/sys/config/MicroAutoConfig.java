@@ -75,6 +75,7 @@ public class MicroAutoConfig {
         RestClient restClient = restClientBuilder.baseUrl("http://" + ServiceNameConstant.SERVICE_SEEN_ARTICLE).build();
         return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient)).build();
     }
+
     /*
      * 套接字
      *
@@ -83,6 +84,28 @@ public class MicroAutoConfig {
     @Bean
     public HttpServiceProxyFactory httpServiceProxyFactoryBySeenSocket() {
         RestClient restClient = restClientBuilder.baseUrl("http://" + ServiceNameConstant.SERVICE_SEEN_SOCKET).build();
+        return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient)).build();
+    }
+
+    /*
+     * 中间结果
+     *
+     * @return 代理
+     */
+    @Bean
+    public HttpServiceProxyFactory httpServiceProxyFactoryBySeenMiddle() {
+        RestClient restClient = restClientBuilder.baseUrl("http://" + ServiceNameConstant.SERVICE_SEEN_MIDDLE).build();
+        return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient)).build();
+    }
+
+    /*
+     * 聊天
+     *
+     * @return 代理
+     */
+    @Bean
+    public HttpServiceProxyFactory httpServiceProxyFactoryBySeenChat() {
+        RestClient restClient = restClientBuilder.baseUrl("http://" + ServiceNameConstant.SERVICE_SEEN_CHAT).build();
         return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient)).build();
     }
 }

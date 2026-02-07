@@ -1,10 +1,9 @@
 package io.github.seenings.recommend.http;
 
-import io.github.seenings.sys.constant.ServiceNameConstant;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.List;
 import java.util.Map;
@@ -18,14 +17,14 @@ import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
  * @author chixuehui
  * @since 2022-10-23
  */
-@FeignClient(name = ServiceNameConstant.SERVICE_SEEN_MIDDLE, contextId = "HttpMiddleUserRecommendService", path = FEIGN_VERSION + "recommend/middle-user-recommend")
+@HttpExchange(FEIGN_VERSION + "recommend/middle-user-recommend")
 public interface HttpMiddleUserRecommendService {
-    @PostMapping("have-user-id")
+    @PostExchange("have-user-id")
     Set<Long> haveUserId(@RequestParam("userId") Long userId, @RequestBody Set<Long> recommendUserIds);
 
-    @PostMapping("user-id-to-recommend-user-id")
+    @PostExchange("user-id-to-recommend-user-id")
     Map<Long, List<Long>> userIdToRecommendUserId(@RequestBody Set<Long> userIds, @RequestParam("date") String date);
 
-    @PostMapping("set")
+    @PostExchange("set")
     int set(@RequestParam("userId") Long userId, @RequestParam("date") String date, @RequestBody List<Long> recommendUserIds);
 }

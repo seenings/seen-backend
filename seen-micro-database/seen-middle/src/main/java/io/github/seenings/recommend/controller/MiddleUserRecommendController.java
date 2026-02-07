@@ -3,13 +3,12 @@ package io.github.seenings.recommend.controller;
 import io.github.seenings.recommend.http.HttpMiddleUserRecommendService;
 import io.github.seenings.recommend.service.impl.MiddleUserRecommendService;
 import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
 
 /**
  * MiddleUserRecommendController
@@ -18,31 +17,25 @@ import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
  * @since 2022-10-23
  */
 @RestController
-@RequestMapping(FEIGN_VERSION + "recommend/middle-user-recommend")
+@AllArgsConstructor
 public class MiddleUserRecommendController implements HttpMiddleUserRecommendService {
 
     @Resource
     private MiddleUserRecommendService middleUserRecommendService;
 
     @Override
-    @PostMapping("have-user-id")
-    public Set<Long> haveUserId(@RequestParam("userId") Long userId, @RequestBody Set<Long> recommendUserIds) {
+    public Set<Long> haveUserId(Long userId, Set<Long> recommendUserIds) {
         return middleUserRecommendService.haveUserId(userId, recommendUserIds);
     }
 
     @Override
-    @PostMapping("user-id-to-recommend-user-id")
-    public Map<Long, List<Long>> userIdToRecommendUserId(
-            @RequestBody Set<Long> userIds, @RequestParam("date") String date) {
+    public Map<Long, List<Long>> userIdToRecommendUserId(Set<Long> userIds, String date) {
         return middleUserRecommendService.userIdToRecommendUserId(userIds, date);
     }
 
     @Override
-    @PostMapping("set")
-    public int set(
-            @RequestParam("userId") Long userId,
-            @RequestParam("date") String date,
-            @RequestBody List<Long> recommendUserIds) {
+    public int set(Long userId,
+                   String date, List<Long> recommendUserIds) {
         return middleUserRecommendService.set(userId, date, recommendUserIds);
     }
 }
