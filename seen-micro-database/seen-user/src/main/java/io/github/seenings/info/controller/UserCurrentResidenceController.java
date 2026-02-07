@@ -5,6 +5,7 @@ import io.github.seenings.info.service.UserCurrentResidenceService;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.annotation.Resource;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,39 +19,30 @@ import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
  * @since 2022-10-16
  */
 @RestController
-@RequestMapping(FEIGN_VERSION + "user/user-current-residence")
 public class UserCurrentResidenceController implements HttpUserCurrentResidenceService {
 
     @Resource
     private UserCurrentResidenceService userCurrentResidenceService;
 
     @Override
-    @PostMapping("user-id-to-city-id")
-    public Map<Long, Integer> userIdToCityId(@RequestBody Set<Long> userIds) {
+    public Map<Long, Integer> userIdToCityId(Set<Long> userIds) {
         return userCurrentResidenceService.userIdToCityId(userIds);
     }
 
     @Override
-    @PostMapping("user-id-to-province-id")
-    public Map<Long, Integer> userIdToProvinceId(@RequestBody Set<Long> userIds) {
+    public Map<Long, Integer> userIdToProvinceId(Set<Long> userIds) {
         return userCurrentResidenceService.userIdToProvinceId(userIds);
     }
 
     @Override
-    @PostMapping("set")
-    public boolean set(
-            @RequestParam("userId") Long userId,
-            @RequestParam("provinceId") Integer provinceId,
-            @RequestParam("cityId") Integer cityId) {
+    public boolean set(Long userId, Integer provinceId, Integer cityId) {
         return userCurrentResidenceService.set(userId, provinceId, cityId);
     }
 
     @Override
-    @PostMapping("current-residence-city-to-user-id")
     public List<Long> currentResidenceCityToUserId(
-            @RequestParam("cityId") Integer cityId,
-            @RequestParam("current") int current,
-            @RequestParam("size") int size) {
+            Integer cityId,
+            int current, int size) {
         return userCurrentResidenceService.currentResidenceCityToUserId(cityId, current, size);
     }
 }
