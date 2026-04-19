@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
  * @author chixuehui
  * @since 2023-12-03
  */
-class JwtUtilsTest {
+class JwtUtilTest {
 
     @Test
     void createToken() {
 
-        String token = JwtUtils.createToken("10000000", 1000 * 3600 * 24 * 7L);
+        String token = JwtUtil.createToken("10000000", 1000 * 3600 * 24 * 7L);
         System.out.println(token);
     }
 }

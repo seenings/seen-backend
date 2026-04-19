@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-common</artifactId>
-        <version>0.1.84</version>
+        <version>0.1.85</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-api</artifactId>
@@ -26,6 +26,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <!--网络-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

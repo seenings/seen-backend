@@ -9,7 +9,7 @@ import io.github.seenings.coin.constant.CoinConstant;
 import io.github.seenings.coin.enumeration.BusiType;
 import io.github.seenings.common.model.R;
 import io.github.seenings.common.util.ResUtils;
-import io.github.seenings.extra.util.JwtUtils;
+import io.github.seenings.extra.util.JwtUtil;
 import io.github.seenings.info.http.UserController;
 import io.github.seenings.login.entity.SmsCode;
 import io.github.seenings.login.service.ISmsCodeService;
@@ -85,7 +85,7 @@ public class PhoneController {
                     .setUserId(userId).setRegisterTime(now));
             doTaskApi.doTaskGetCoin(userId, busiId, (long) CoinConstant.SIGN_UP_COIN_AMOUNT);
         }
-        String token = JwtUtils.createToken(String.valueOf(userId), JwtUtils.EFFECTIVE_TIME);
+        String token = JwtUtil.createToken(String.valueOf(userId), JwtUtil.EFFECTIVE_TIME);
         response.setHeader(PublicConstant.TOKEN_NAME, token);
         return ResUtils.ok(userId, "登录成功");
     }

@@ -2,37 +2,28 @@ package io.github.seenings.apply.controller;
 
 import io.github.seenings.apply.http.HttpUserApplyRefuseService;
 import io.github.seenings.apply.service.UserApplyRefuseService;
-import io.github.seenings.sys.constant.SeenConstant;
-import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * UserApplyAgreeController
- *
- * @author chixuehui
- * @since 2023-03-05
- */
+/// 拒绝申请
 @RestController
-@RequestMapping(SeenConstant.FEIGN_VERSION + "chat/apply-refuse")
+@AllArgsConstructor
 public class UserApplyRefuseController implements HttpUserApplyRefuseService {
 
-    @Resource
     private UserApplyRefuseService userApplyRefuseService;
 
 
     @Override
-    @PostMapping("apply-id-to-refuse-time")
-    public Map<Integer, LocalDateTime> applyIdToRefuseTime(@RequestBody Set<Integer> applyIds ) {
+    public Map<Integer, LocalDateTime> applyIdToRefuseTime(Set<Integer> applyIds) {
         return userApplyRefuseService.applyIdToRefuseTime(applyIds);
     }
 
     @Override
-    @PostMapping("add")
-    public Integer add(@RequestParam("applyId") Integer applyId, @RequestParam("textId") Integer textId) {
+    public Integer add(Integer applyId, Integer textId) {
         return userApplyRefuseService.add(applyId, textId);
     }
 

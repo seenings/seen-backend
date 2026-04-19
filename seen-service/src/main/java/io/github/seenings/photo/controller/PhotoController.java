@@ -78,7 +78,7 @@ public class PhotoController {
             }
             // Upload '/home/user/Photos/asiaphotos.zip' as object name 'asiaphotos-2015.zip' to bucket
             // 'asiatrip'.
-            minioClient.putObject(PutObjectArgs.builder().bucket(BUCKET_NAME).stream(FileUtil.getInputStream(realPath), size, -1).object(relativePath).build());
+            minioClient.putObject(PutObjectArgs.builder().bucket(BUCKET_NAME).stream(FileUtil.getInputStream(realPath), size, -1L).object(relativePath).build());
         } catch (Exception e) {
             log.error("", e);
             return ResUtils.error(e.getMessage());

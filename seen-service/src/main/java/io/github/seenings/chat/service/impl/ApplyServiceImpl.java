@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import io.github.seenings.apply.http.HttpUserApplyAgreeService;
@@ -25,17 +26,14 @@ import jakarta.annotation.Resource;
  * @since 2023-03-05
  */
 @Service
+@AllArgsConstructor
 public class ApplyServiceImpl implements ApplyService {
 
-    @Resource
     private HttpUserApplyService httpUserApplyService;
 
-    @Resource
     private HttpUserApplyAgreeService httpUserApplyAgreeService;
 
-    @Resource
     private HttpUserApplyLookService httpUserApplyLookService;
-    @Resource
     private HttpUserApplyRefuseService httpUserApplyRefuseService;
 
     @Override
