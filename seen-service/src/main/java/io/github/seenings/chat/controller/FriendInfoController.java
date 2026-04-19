@@ -9,9 +9,9 @@ import io.github.seenings.common.model.R;
 import io.github.seenings.common.util.ResUtils;
 import io.github.seenings.info.http.HttpUserAliasNameService;
 import io.github.seenings.info.http.HttpUserMainPhotoService;
-import io.github.seenings.photo.http.HttpPhotoService;
 import io.github.seenings.sys.constant.PublicConstant;
 import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,18 +31,17 @@ import java.util.stream.Collectors;
  * @since 2023-03-05
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping(PublicConstant.REST + "chat/friend-info")
 public class FriendInfoController {
 
-    @Resource
+    /// 申请好友
     private HttpUserApplyService httpUserApplyService;
     @Resource
     private HttpUserAliasNameService httpUserAliasNameService;
 
     @Resource
     private HttpUserMainPhotoService httpUserMainPhotoService;
-    @Resource
-    private HttpPhotoService httpPhotoService;
 
     @Resource
     private ApplyService applyService;

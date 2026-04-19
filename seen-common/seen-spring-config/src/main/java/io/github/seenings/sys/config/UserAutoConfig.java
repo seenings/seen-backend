@@ -1,9 +1,6 @@
 package io.github.seenings.sys.config;
 
-import io.github.seenings.info.http.HttpUserCurrentResidenceService;
-import io.github.seenings.info.http.HttpUserMainPhotoService;
-import io.github.seenings.info.http.HttpUserSexService;
-import io.github.seenings.info.http.UserController;
+import io.github.seenings.info.http.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -60,5 +57,14 @@ public class UserAutoConfig {
     @Bean
     public HttpUserSexService httpUserSexService() {
         return httpServiceProxyFactoryBySeenUser.createClient(HttpUserSexService.class);
+    }
+    /**
+     * 昵称
+     *
+     * @return 接口实例
+     */
+    @Bean
+    public HttpUserAliasNameService httpUserAliasNameService() {
+        return httpServiceProxyFactoryBySeenUser.createClient(HttpUserAliasNameService.class);
     }
 }

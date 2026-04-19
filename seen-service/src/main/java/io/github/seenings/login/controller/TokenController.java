@@ -1,7 +1,7 @@
 package io.github.seenings.login.controller;
 
 import cn.hutool.core.util.StrUtil;
-import io.github.seenings.extra.util.JwtUtils;
+import io.github.seenings.extra.util.JwtUtil;
 import io.github.seenings.common.exception.SeenException;
 import io.github.seenings.common.model.R;
 import io.github.seenings.common.model.UserIdAndToken;
@@ -36,7 +36,14 @@ public class TokenController {
         }
         UserIdAndToken userIdAndToken;
         try {
-            userIdAndToken = JwtUtils.refreshToken(token, JwtUtils.EFFECTIVE_TIME);
+            String userId = JwtUtil.validateToken(token);
+            if (StrUtil.isBlank(userId)) {
+                String msg = "用户ID不存在";
+                log.error(msg);
+                return ResUtils.error("验证令牌失效，请重新登录！");
+            }
+            String newToken = JwtUtil.createToken(userId, JwtUtil.EFFECTIVE_TIME);
+            userIdAndToken = UserIdAndToken.builder().userId(Long.parseLong(userId)).token(newToken).build();
         } catch (SeenException e) {
             log.error("", e);
             return ResUtils.error("验证令牌失效，请重新登录！");

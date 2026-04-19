@@ -1,6 +1,8 @@
 logging:
   file:
     name: ${user.home}/seen/logs/${spring.application.name}/${spring.application.name}.log
+  level:
+    org.springframework.cloud.gateway: debug
   pattern:
     correlation: "%line "
 seen:
@@ -10,6 +12,9 @@ seen:
     access-key: xNyo846jNZwvshpfchOM
     secret-key: erLtdmsgWmqXb64haSinr7496d29V4GSULdMXac1
 spring:
+  cloud:
+    zookeeper:
+      connect-string: localhost:32181
   datasource:
     hikari:
       schema: seen
@@ -20,3 +25,6 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+  sql:
+    init:
+      mode: never

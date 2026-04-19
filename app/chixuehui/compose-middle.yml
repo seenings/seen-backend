@@ -1,0 +1,11 @@
+networks:
+  chixuehui:
+    external: true
+services:
+  zk:
+    image: zookeeper:3.9
+    ports:
+      - "32181:2181"
+      - "38080:8080"
+    networks:
+      - chixuehui

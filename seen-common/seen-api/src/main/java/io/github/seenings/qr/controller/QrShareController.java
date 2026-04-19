@@ -10,7 +10,7 @@ import org.springframework.web.service.annotation.HttpExchange;
 /**
  * 二维码分享
  */
-@HttpExchange(PublicConstant.REST + "/qr/qr-share")
+@HttpExchange(PublicConstant.REST + "qr/qr-share")
 public interface QrShareController {
     /**
      * 根据地址获取二维码图片
@@ -19,5 +19,5 @@ public interface QrShareController {
      * @return 二维码图片
      */
     @GetExchange("origin-url-to-stream")
-    ResponseEntity<InputStreamResource> originUrlToStream(@RequestParam("originUrl") String originUrl);
+    ResponseEntity<InputStreamResource> originUrlToStream(@RequestParam String originUrl);
 }

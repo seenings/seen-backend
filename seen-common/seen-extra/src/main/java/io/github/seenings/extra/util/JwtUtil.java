@@ -17,11 +17,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author chixh
- * @since 2021-05-08
+ * 令牌工具
  */
 @Slf4j
-public class JwtUtils {
+public class JwtUtil {
 
     /**
      * 公司
@@ -41,7 +40,7 @@ public class JwtUtils {
      */
     public static final String TOKEN_PASSWORD = "seen2021";
 
-    private JwtUtils() {
+    private JwtUtil() {
     }
 
     /**
@@ -93,27 +92,5 @@ public class JwtUtils {
             log.error("校验token失败", e);
             throw new SeenException(e);
         }
-    }
-
-    /**
-     * 刷新token
-     *
-     * @param token         token
-     * @param effectiveTime 有效时长
-     * @return 用户ID和token
-     * @throws SeenException token校验或生成失败异常
-     */
-    public static UserIdAndToken refreshToken(String token, long effectiveTime) throws SeenException {
-        String userId = validateToken(token);
-        if (StrUtil.isBlank(userId)) {
-            String msg = "用户ID不存在";
-            log.error(msg);
-            throw new SeenException(msg);
-        }
-        String newToken = createToken(userId, effectiveTime);
-        return UserIdAndToken.builder()
-                .userId(Long.parseLong(userId))
-                .token(newToken)
-                .build();
     }
 }

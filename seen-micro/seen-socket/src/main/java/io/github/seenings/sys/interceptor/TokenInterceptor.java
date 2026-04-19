@@ -10,7 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import io.github.seenings.common.exception.SeenException;
 import io.github.seenings.common.util.ResUtils;
 import io.github.seenings.core.util.StrUtils;
-import io.github.seenings.extra.util.JwtUtils;
+import io.github.seenings.extra.util.JwtUtil;
 import io.github.seenings.sys.constant.PublicConstant;
 
 import cn.hutool.core.util.StrUtil;
@@ -41,7 +41,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         if (StrUtil.isNotBlank(token)) {
             String userIdString;
             try {
-                userIdString = JwtUtils.validateToken(token);
+                userIdString = JwtUtil.validateToken(token);
             } catch (SeenException e) {
                 writeError(request, response);
                 return false;
