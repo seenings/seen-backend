@@ -4,7 +4,7 @@ import io.github.seenings.address.http.HttpProvinceService;
 import io.github.seenings.address.service.CityService;
 import io.github.seenings.address.service.ProvinceService;
 import io.github.seenings.common.model.CascaderString;
-import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -13,44 +13,34 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
-
 /**
- * ProvinceController
- *
- * @author chixuehui
- * @since 2022-10-16
+ * 省份
  */
 @RestController
-@RequestMapping(FEIGN_VERSION + "address/province")
+@AllArgsConstructor
 public class ProvinceController implements HttpProvinceService {
 
-    @Resource
     private ProvinceService provinceService;
 
+    private CityService cityService;
+
     @Override
-    @PostMapping("province-code-to-province-id")
-    public Map<String, Integer> provinceCodeToProvinceId(@RequestBody Set<String> provinceCodes) {
+    public Map<String, Integer> provinceCodeToProvinceId(Set<String> provinceCodes) {
         return provinceService.provinceCodeToProvinceId(provinceCodes);
     }
 
     @Override
-    @PostMapping("id-to-name")
-    public Map<Integer, String> idToName(@RequestBody Set<Integer> ids) {
+    public Map<Integer, String> idToName(Set<Integer> ids) {
         return provinceService.idToName(ids);
     }
 
     @Override
-    @PostMapping("list-all")
     public List<Map.Entry<String, String>> listAll() {
         return provinceService.listAll();
     }
 
-    @Resource
-    private CityService cityService;
 
     @Override
-    @GetMapping("to-province-and-city")
     public List<CascaderString> toProvinceAndCity() {
         List<Map.Entry<String, String>> entries = provinceService.listAll();
         Set<String> provinceCodes =

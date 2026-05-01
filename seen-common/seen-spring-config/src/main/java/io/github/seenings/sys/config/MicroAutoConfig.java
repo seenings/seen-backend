@@ -108,4 +108,15 @@ public class MicroAutoConfig {
         RestClient restClient = restClientBuilder.baseUrl("http://" + ServiceNameConstant.SERVICE_SEEN_CHAT).build();
         return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient)).build();
     }
+
+    /*
+     * 其他
+     *
+     * @return 代理
+     */
+    @Bean
+    public HttpServiceProxyFactory httpServiceProxyFactoryBySeenOther() {
+        RestClient restClient = restClientBuilder.baseUrl("http://" + ServiceNameConstant.SERVICE_SEEN_OTHER).build();
+        return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient)).build();
+    }
 }

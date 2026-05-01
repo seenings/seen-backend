@@ -31,22 +31,25 @@
 ### Maco OS预先配置
 
 ```shell
-SEEN_VERSION="0.1.78"
+export SEEN_VERSION=$(cat version.txt | tr -d '\n' | tr -d ' ')
 JAVA_HOME="~/Library/Java/JavaVirtualMachines/openjdk-25/Contents/Home"
-$SEEN_VERSION
-$JAVA_HOME
+```
+
+```shell
+echo SEEN_VERSION
+echo $JAVA_HOME
 ```
 
 ### Windows 11预先配置
 
 ```shell
-$$Env:SEEN_VERSION = "0.1.85"
-$$env:JAVA_HOME = $env:USERPROFILE+"\.jdks\openjdk-25.0.2"
+$$Env:SEEN_VERSION = (Get-Content "./version.txt" -Raw).Trim()
+$$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25.0.2"
 ```
 
 ```shell
-$$Env:SEEN_VERSION
-$$Env:JAVA_HOME
+echo "已设置版本：$Env:SEEN_VERSION"
+echo "已设置JAVA_HOME：$Env:JAVA_HOME"
 ```
 
 ### 开始新的开发
@@ -68,7 +71,7 @@ git add .
 ```
 
 ```shell
-git commit -m "常规升级 #85"
+git commit -m "常规升级 #86"
 ```
 
 ```shell
