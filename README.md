@@ -73,7 +73,11 @@ git add .
 ```
 
 ```shell
-git commit -m "修复收入接口实例缺失 #88"
+git commit -m "未拉取最新分支 #89"
+```
+
+```shell
+git pull origin main --rebase
 ```
 
 ```shell
