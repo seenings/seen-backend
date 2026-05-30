@@ -3,6 +3,7 @@ package io.github.seenings.sys.config;
 import io.github.seenings.info.http.*;
 import io.github.seenings.thumb.http.HttpFocusUserService;
 import io.github.seenings.thumb.http.HttpThumbUserService;
+import io.github.seenings.work.http.HttpUserIncomeService;
 import io.github.seenings.work.http.HttpUserWorkService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -157,5 +158,13 @@ public class UserAutoConfig {
     @Bean
     public HttpUserBirthPlaceService httpUserBirthPlaceService() {
         return httpServiceProxyFactoryBySeenUser.createClient(HttpUserBirthPlaceService.class);
+    }/**
+     * 收入
+     *
+     * @return 接口实例
+     */
+    @Bean
+    public HttpUserIncomeService httpUserIncomeService() {
+        return httpServiceProxyFactoryBySeenUser.createClient(HttpUserIncomeService.class);
     }
 }

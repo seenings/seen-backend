@@ -73,7 +73,7 @@ git add .
 ```
 
 ```shell
-git commit -m "去除openfeign #87"
+git commit -m "修复收入接口实例缺失 #88"
 ```
 
 ```shell
