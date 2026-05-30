@@ -1,9 +1,8 @@
 package io.github.seenings.sys.config;
 
-import io.github.seenings.apply.http.HttpUserApplyLookService;
-import io.github.seenings.apply.http.HttpUserApplyRefuseService;
-import io.github.seenings.apply.http.HttpUserApplyService;
+import io.github.seenings.apply.http.*;
 import io.github.seenings.chat.http.HttpChatHistoryService;
+import io.github.seenings.chat.http.HttpChatUserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -59,6 +58,33 @@ public class ChatAutoConfig {
     @Bean
     public HttpUserApplyLookService httpUserApplyLookService() {
         return httpServiceProxyFactoryBySeenChat.createClient(HttpUserApplyLookService.class);
+    }
+    /**
+     * 同意申请
+     *
+     * @return 接口实例
+     */
+    @Bean
+    public HttpUserApplyAgreeService httpUserApplyAgreeService() {
+        return httpServiceProxyFactoryBySeenChat.createClient(HttpUserApplyAgreeService.class);
+    }
+    /**
+     * 交易
+     *
+     * @return 接口实例
+     */
+    @Bean
+    public HttpUserApplyTradeService httpUserApplyTradeService() {
+        return httpServiceProxyFactoryBySeenChat.createClient(HttpUserApplyTradeService.class);
+    }
+    /**
+     * 交易
+     *
+     * @return 接口实例
+     */
+    @Bean
+    public HttpChatUserService httpChatUserService() {
+        return httpServiceProxyFactoryBySeenChat.createClient(HttpChatUserService.class);
     }
 
 }

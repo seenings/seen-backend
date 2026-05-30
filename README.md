@@ -43,8 +43,12 @@ echo $JAVA_HOME
 ### Windows 11预先配置
 
 ```shell
+cd ~\IdeaProjects\seenings\seen-backend
+```
+
+```shell
 $$Env:SEEN_VERSION = (Get-Content "./version.txt" -Raw).Trim()
-$$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-25.0.2"
+$$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-26.0.1"
 ```
 
 ```shell
@@ -55,9 +59,7 @@ echo "已设置JAVA_HOME：$Env:JAVA_HOME"
 ### 开始新的开发
 
 ```shell
-./mvnw clean
 ./mvnw versions:set --define newVersion=$Env:SEEN_VERSION
-./mvnw versions:commit
 ```
 
 ### 版本升级检查
@@ -71,7 +73,7 @@ git add .
 ```
 
 ```shell
-git commit -m "常规升级 #86"
+git commit -m "去除openfeign #87"
 ```
 
 ```shell
@@ -115,10 +117,10 @@ gpg工具下载地址https://gpgtools.org/
 
 # 2 问题记录
 
-| 序号 | 项                                  | 解决        |
-|----|------------------------------------|-----------|
-| 1  | 数据库ID自增失效                          | 清理数据库存储介质 |
-| 2  | 业务有类型交易没有类型，一笔业务对应多笔币交易            |           |
-| 3  | 同意加好友是否可以获得玫瑰币                     |           |
-| 4  | url生成二维码链接                         |           |
-| 5  | sse连接绘画，注销时要退出，打开聊天窗口时应该判断是否有过连接会话 |           |
+| 序号 | 项                                                                | 解决               |
+|------|-------------------------------------------------------------------|--------------------|
+| 1    | 数据库ID自增失效                                                  | 清理数据库存储介质 |
+| 2    | 业务有类型交易没有类型，一笔业务对应多笔币交易                    |                    |
+| 3    | 同意加好友是否可以获得玫瑰币                                      |                    |
+| 4    | url生成二维码链接                                                 |                    |
+| 5    | sse连接绘画，注销时要退出，打开聊天窗口时应该判断是否有过连接会话 |                    |

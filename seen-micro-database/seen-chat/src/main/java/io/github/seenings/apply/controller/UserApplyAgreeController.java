@@ -4,18 +4,11 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.seenings.apply.http.HttpUserApplyAgreeService;
 import io.github.seenings.apply.service.UserApplyAgreeService;
-import io.github.seenings.sys.constant.SeenConstant;
-
-import jakarta.annotation.Resource;
 
 /**
  * UserApplyAgreeController
@@ -24,22 +17,18 @@ import jakarta.annotation.Resource;
  * @since 2023-03-05
  */
 @RestController
-@RequestMapping(SeenConstant.FEIGN_VERSION + "chat/apply-agree")
+@AllArgsConstructor
 public class UserApplyAgreeController implements HttpUserApplyAgreeService {
 
-    @Resource
     private UserApplyAgreeService userApplyAgreeService;
 
     @Override
-    @PostMapping("apply-id-to-agree-time")
-    public Map<Integer, LocalDateTime> applyIdToAgreeTime(@RequestBody Set<Integer> applyIds) {
+    public Map<Integer, LocalDateTime> applyIdToAgreeTime( Set<Integer> applyIds) {
         return userApplyAgreeService.applyIdToAgreeTime(applyIds);
     }
 
     @Override
-    @PostMapping("set")
-    public Integer set(@RequestParam("applyId") Integer applyId,
-            @RequestParam("agreeTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime agreeTime) {
+    public Integer set(  Integer applyId,  LocalDateTime agreeTime) {
         return userApplyAgreeService.set(applyId, agreeTime);
     }
 

@@ -1,11 +1,9 @@
 package io.github.seenings.info.http;
 
-import io.github.seenings.sys.constant.ServiceNameConstant;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.Map;
 import java.util.Set;
@@ -18,20 +16,18 @@ import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
  * @author chixuehui
  * @since 2022-10-16
  */
-@FeignClient(
-        name = ServiceNameConstant.SERVICE_SEEN_USER,
-        path = FEIGN_VERSION + "user/work-position",
-        contextId = "HttpWorkPositionService")
+@HttpExchange(
+        value = FEIGN_VERSION + "user/work-position")
 public interface HttpWorkPositionService {
-    @PostMapping("position-id-to-position-name")
+    @PostExchange("position-id-to-position-name")
     Map<Integer, String> positionIdToPositionName(@RequestBody Set<Integer> ids);
 
-    @PostMapping("exists")
+    @PostExchange("exists")
     boolean exists(@RequestParam("positionName") String positionName);
 
-    @PostMapping("set")
+    @PostExchange("set")
     boolean set(@RequestParam("positionName") String positionName);
 
-    @GetMapping("work-position")
+    @PostExchange("work-position")
     Map<Integer, String> workPosition();
 }

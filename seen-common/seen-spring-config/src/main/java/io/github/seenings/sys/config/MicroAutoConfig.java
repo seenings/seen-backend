@@ -119,4 +119,24 @@ public class MicroAutoConfig {
         RestClient restClient = restClientBuilder.baseUrl("http://" + ServiceNameConstant.SERVICE_SEEN_OTHER).build();
         return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient)).build();
     }
+    /*
+     * 学校
+     *
+     * @return 代理
+     */
+    @Bean
+    public HttpServiceProxyFactory httpServiceProxyFactoryBySeenSchool() {
+        RestClient restClient = restClientBuilder.baseUrl("http://" + ServiceNameConstant.SERVICE_SEEN_SCHOOL).build();
+        return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient)).build();
+    }
+    /*
+     * 文件
+     *
+     * @return 代理
+     */
+    @Bean
+    public HttpServiceProxyFactory httpServiceProxyFactoryBySeenFile() {
+        RestClient restClient = restClientBuilder.baseUrl("http://" + ServiceNameConstant.SERVICE_SEEN_FILE).build();
+        return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(restClient)).build();
+    }
 }

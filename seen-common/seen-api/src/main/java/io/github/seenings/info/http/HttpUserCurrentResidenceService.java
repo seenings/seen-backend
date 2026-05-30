@@ -1,9 +1,6 @@
 package io.github.seenings.info.http;
 
 import io.github.seenings.sys.constant.SeenConstant;
-import io.github.seenings.sys.constant.ServiceNameConstant;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.HttpExchange;

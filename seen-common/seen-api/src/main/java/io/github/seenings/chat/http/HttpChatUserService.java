@@ -2,11 +2,10 @@ package io.github.seenings.chat.http;
 
 import io.github.seenings.chat.model.ChatUser;
 import io.github.seenings.common.model.ResultPage;
-import io.github.seenings.sys.constant.ServiceNameConstant;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.Map;
 import java.util.Set;
@@ -19,10 +18,8 @@ import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
  * @author chixuehui
  * @since 2023-01-01
  */
-@FeignClient(
-        name = ServiceNameConstant.SERVICE_SEEN_CHAT,
-        path = FEIGN_VERSION + "chat/chat",
-        contextId = "HttpChatUserService")
+@HttpExchange(
+        value = FEIGN_VERSION + "chat/chat")
 public interface HttpChatUserService {
     /**
      * 分页获取聊天列表
@@ -32,7 +29,7 @@ public interface HttpChatUserService {
      * @param size    页大小
      * @return 聊天列表
      */
-    @PostMapping("page")
+    @PostExchange("page")
     ResultPage<ChatUser> page(
             @RequestParam("userId") Long userId,
             @RequestParam("current") int current,
@@ -44,7 +41,7 @@ public interface HttpChatUserService {
      * @param userId 用户ID
      * @return  朋友ID对应是否朋友
      */
-    @PostMapping("friend-user-id-is-friend")
+    @PostExchange("friend-user-id-is-friend")
     Map<Long, Boolean> friendUserIdIsFriend(
             @RequestBody Set<Long> friendUserIds, @RequestParam("userId") Long userId);
 
@@ -54,6 +51,6 @@ public interface HttpChatUserService {
      * @param userId    用户ID
      * @return  设置成功
      */
-    @PostMapping("set")
+    @PostExchange("set")
     boolean set(@RequestParam("friendUserId") Long friendUserId, @RequestParam("userId") Long userId);
 }
