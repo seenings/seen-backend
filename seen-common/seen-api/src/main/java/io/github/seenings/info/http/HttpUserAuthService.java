@@ -1,11 +1,10 @@
 package io.github.seenings.info.http;
 
 import io.github.seenings.sys.constant.SeenConstant;
-import io.github.seenings.sys.constant.ServiceNameConstant;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.Map;
 import java.util.Set;
@@ -16,14 +15,12 @@ import java.util.Set;
  * @author chixuehui
  * @since 2022-10-16
  */
-@FeignClient(
-        name = ServiceNameConstant.SERVICE_SEEN_USER,
-        path = SeenConstant.FEIGN_VERSION + "user/user-auth",
-        contextId = "HttpUserAuthService")
+@HttpExchange(
+        value = SeenConstant.FEIGN_VERSION + "user/user-auth")
 public interface HttpUserAuthService {
-    @PostMapping("user-id-to-user-auth")
+    @PostExchange("user-id-to-user-auth")
     Map<Long, Integer> userIdToUserAuth(@RequestBody Set<Long> userIds);
 
-    @PostMapping("set")
+    @PostExchange("set")
     boolean set(@RequestParam("userId") Long userId, @RequestParam("authStatus") Integer authStatus);
 }

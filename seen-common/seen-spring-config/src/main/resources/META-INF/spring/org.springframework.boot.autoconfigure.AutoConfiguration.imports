@@ -3,10 +3,12 @@ io.github.seenings.sys.config.BusiAutoConfig
 io.github.seenings.sys.config.CalcAutoConfig
 io.github.seenings.sys.config.ChatAutoConfig
 io.github.seenings.sys.config.CoinAutoConfig
+io.github.seenings.sys.config.FileAutoConfig
 io.github.seenings.sys.config.MicroAutoConfig
 io.github.seenings.sys.config.MiddleAutoConfig
 io.github.seenings.sys.config.MybatisPlusConfig
 io.github.seenings.sys.config.OtherAutoConfig
+io.github.seenings.sys.config.SchoolAutoConfig
 io.github.seenings.sys.config.SeenConfig
 io.github.seenings.sys.config.SeenSpringAutoConfiguration
 io.github.seenings.sys.config.SeenWebMvcConfig

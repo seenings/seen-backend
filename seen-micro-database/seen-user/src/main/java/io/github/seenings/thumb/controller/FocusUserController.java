@@ -1,10 +1,9 @@
 package io.github.seenings.thumb.controller;
 
 import cn.hutool.core.lang.Pair;
-import io.github.seenings.sys.constant.SeenConstant;
 import io.github.seenings.thumb.http.HttpFocusUserService;
 import io.github.seenings.thumb.service.FocusUserPOService;
-import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -18,9 +17,8 @@ import java.util.stream.Collectors;
  * @since 2023-01-23
  */
 @RestController
-@RequestMapping(SeenConstant.FEIGN_VERSION + "thumb/focus")
+@AllArgsConstructor
 public class FocusUserController implements HttpFocusUserService {
-    @Resource
     private FocusUserPOService focusUserPOService;
 
     /**
@@ -30,7 +28,6 @@ public class FocusUserController implements HttpFocusUserService {
      * @return  被关注者对应是否关注
      */
     @Override
-    @PostMapping("focused-user-id-to-true")
     public Map<Long, Boolean> focusedUserIdToTrue(
             @RequestBody Set<Long> focusedUserIds, @RequestParam("focusUserId") Long focusUserId) {
         Map<Long, Boolean> focusedUserIdToTrueMap =
@@ -38,11 +35,10 @@ public class FocusUserController implements HttpFocusUserService {
         return focusedUserIds.stream()
                 .parallel()
                 .map(n -> Pair.of(n, focusedUserIdToTrueMap.getOrDefault(n, false)))
-                .collect(Collectors.toMap(Pair::getKey, Pair::getValue, (o1, o2) -> o2));
+                .collect(Collectors.toMap(Pair::getKey, Pair::getValue, (_, o2) -> o2));
     }
 
     @Override
-    @PostMapping("set")
     public boolean set(
             @RequestParam("focusedUserId") Long focusedUserId, @RequestParam("focusUserId") Long focusUserId) {
         return focusUserPOService.set(focusedUserId, focusUserId);

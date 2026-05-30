@@ -3,6 +3,7 @@ package io.github.seenings.sys.config;
 import io.github.seenings.coin.api.CoinAccountApi;
 import io.github.seenings.coin.api.CoinTradeApi;
 import io.github.seenings.coin.controller.CoinBalanceController;
+import io.github.seenings.trade.http.HttpCoinTradeService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -47,5 +48,14 @@ public class CoinAutoConfig {
     @Bean
     public CoinBalanceController coinBalanceController() {
         return httpServiceProxyFactoryBySeenCoin.createClient(CoinBalanceController.class);
+    }
+    /**
+     * 玫瑰币交易
+     *
+     * @return 接口实例
+     */
+    @Bean
+    public HttpCoinTradeService httpCoinTradeService() {
+        return httpServiceProxyFactoryBySeenCoin.createClient(HttpCoinTradeService.class);
     }
 }

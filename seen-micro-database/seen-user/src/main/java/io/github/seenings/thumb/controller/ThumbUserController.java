@@ -1,10 +1,9 @@
 package io.github.seenings.thumb.controller;
 
 import cn.hutool.core.lang.Pair;
-import io.github.seenings.sys.constant.SeenConstant;
 import io.github.seenings.thumb.http.HttpThumbUserService;
 import io.github.seenings.thumb.service.ThumbUserService;
-import jakarta.annotation.Resource;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -18,9 +17,8 @@ import java.util.stream.Collectors;
  * @since 2023-01-23
  */
 @RestController
-@RequestMapping(SeenConstant.FEIGN_VERSION + "thumb/thumb")
+@AllArgsConstructor
 public class ThumbUserController implements HttpThumbUserService {
-    @Resource
     private ThumbUserService thumbUserService;
 
     /**
@@ -30,7 +28,6 @@ public class ThumbUserController implements HttpThumbUserService {
      * @return  被点赞者对应是否点赞
      */
     @Override
-    @PostMapping("thumbed-user-id-to-true")
     public Map<Long, Boolean> thumbedUserIdToTrue(
             @RequestBody Set<Long> thumbedUserIds, @RequestParam("thumbUserId") Long thumbUserId) {
         Map<Long, Boolean> thumbedUserIdToTrueMap =
@@ -42,7 +39,6 @@ public class ThumbUserController implements HttpThumbUserService {
     }
 
     @Override
-    @PostMapping("set")
     public boolean set(
             @RequestParam("thumbedUserId") Long thumbedUserId, @RequestParam("thumbUserId") Long thumbUserId) {
         return thumbUserService.set(thumbedUserId, thumbUserId);

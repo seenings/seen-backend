@@ -7,9 +7,7 @@ import io.github.seenings.coin.enumeration.AccountType;
 import io.github.seenings.coin.enumeration.BusiType;
 import io.github.seenings.trade.http.HttpCoinTradeService;
 import io.github.seenings.trade.service.TradeService;
-import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +16,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
-
 /**
  * CoinTradeController
  *
@@ -27,14 +23,12 @@ import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
  * @since 2023-01-01
  */
 @RestController
-@RequestMapping(FEIGN_VERSION + "coin/trade")
+@AllArgsConstructor
 public class CoinTradeController implements HttpCoinTradeService {
 
-    @Resource
     private FreezeService freezeService;
 
     @Override
-    @PostMapping("freeze-to-sys-use")
     public Long freezeToSysUse(@RequestParam("userId") Long userId, @RequestParam("coinMount") Long coinMount, @RequestParam("busiType") BusiType busiType, @RequestParam("description") String description) {
 
         return freezeService.freezeToSysUse(userId, coinMount, busiType, description);
@@ -42,7 +36,6 @@ public class CoinTradeController implements HttpCoinTradeService {
     }
 
     @Override
-    @PostMapping("freeze-to-temporary")
     public Long freezeToTemporary(@RequestParam("userId") Long userId, @RequestParam("coinMount") Long coinMount, @RequestParam("busiType") BusiType busiType, @RequestParam("description") String description) {
         return freezeService.freezeToTemporary(userId, coinMount, busiType, description);
     }
@@ -55,7 +48,6 @@ public class CoinTradeController implements HttpCoinTradeService {
      * @return 冻结的交易ID，资金不够时返回空
      */
     @Override
-    @PostMapping("check-enough-and-freeze")
     public Set<Long> checkEnoughAndFreeze(@RequestParam("userId") Long userId, @RequestParam("coinMount") Long coinMount, @RequestParam("busiType") BusiType busiType, @RequestParam("description") String description) {
 
         return freezeService.checkEnoughAndFreeze(userId, coinMount, busiType, description);
@@ -69,22 +61,17 @@ public class CoinTradeController implements HttpCoinTradeService {
      * @return 是否足够
      */
     @Override
-    @PostMapping("check-enough")
     public Boolean checkEnough(@RequestParam("userId") Long userId, @RequestParam("coinMount") Long coinMount) {
 
         return freezeService.checkEnough(userId, coinMount);
     }
 
-    @Resource
     private CoinAccountService coinAccountService;
 
-    @Resource
     private TradeService tradeService;
-    @Resource
     private CoinAccountUserService coinAccountUserService;
 
     @Override
-    @PostMapping("simple-trade-type-to")
     public Long simpleTradeTypeTo(@RequestParam("userId") Long userId, @RequestParam("coinAmount") Long coinAmount, @RequestParam("busiType") BusiType busiType) {
         Long temporaryAccountId = coinAccountUserService.userIdToAccountId(Set.of(userId)).get(userId).stream().findFirst().orElse(null);
         int sysRewardAccountTypeId = AccountType.SYS_REWARD.getIndex();

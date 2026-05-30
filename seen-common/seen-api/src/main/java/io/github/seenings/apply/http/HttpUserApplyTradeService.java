@@ -1,10 +1,9 @@
 package io.github.seenings.apply.http;
 
-import io.github.seenings.sys.constant.ServiceNameConstant;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.List;
 
@@ -17,11 +16,9 @@ import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
  * @since 2023-03-05
  */
 
-@FeignClient(
-        name = ServiceNameConstant.SERVICE_SEEN_CHAT,
-        path = FEIGN_VERSION + "chat/apply-trade",
-        contextId = "HttpUserApplyTradeService")
+@HttpExchange(
+        value = FEIGN_VERSION + "chat/apply-trade")
 public interface HttpUserApplyTradeService {
-    @PostMapping("set")
+    @PostExchange("set")
     List<Integer> set(@RequestParam("applyId") Integer applyId, @RequestBody List<Long> tradeIds);
 }

@@ -1,10 +1,9 @@
 package io.github.seenings.trade.http;
 
 import io.github.seenings.coin.enumeration.BusiType;
-import io.github.seenings.sys.constant.ServiceNameConstant;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.Set;
 
@@ -16,19 +15,17 @@ import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
  * @author chixuehui
  * @since 2023-01-01
  */
-@FeignClient(
-        name = ServiceNameConstant.SERVICE_SEEN_COIN,
-        path = FEIGN_VERSION + "coin/trade",
-        contextId = "HttpCoinTradeService")
+@HttpExchange(
+        value = FEIGN_VERSION + "coin/trade")
 public interface HttpCoinTradeService {
-    @PostMapping("freeze-to-sys-use")
+    @PostExchange("freeze-to-sys-use")
     Long freezeToSysUse(
             @RequestParam("userId") Long userId,
             @RequestParam("coinMount") Long coinMount,
             @RequestParam("busiType") BusiType busiType,
             @RequestParam("description") String description);
 
-    @PostMapping("freeze-to-temporary")
+    @PostExchange("freeze-to-temporary")
     Long freezeToTemporary(
             @RequestParam("userId") Long userId,
             @RequestParam("coinMount") Long coinMount,
@@ -41,17 +38,17 @@ public interface HttpCoinTradeService {
      * @param coinMount 虚拟币个数
      * @return  冻结的交易ID，资金不够时返回空
      */
-    @PostMapping("check-enough-and-freeze")
+    @PostExchange("check-enough-and-freeze")
     Set<Long> checkEnoughAndFreeze(
             @RequestParam("userId") Long userId,
             @RequestParam("coinMount") Long coinMount,
             @RequestParam("busiType") BusiType busiType,
             @RequestParam("description") String description);
 
-    @PostMapping("check-enough")
+    @PostExchange("check-enough")
     Boolean checkEnough(@RequestParam("userId") Long userId, @RequestParam("coinMount") Long coinMount);
 
-    @PostMapping("simple-trade-type-to")
+    @PostExchange("simple-trade-type-to")
     Long simpleTradeTypeTo(@RequestParam("userId") Long userId, @RequestParam("coinAmount") Long coinAmount
             , @RequestParam("busiType") BusiType busiType
     );

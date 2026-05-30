@@ -1,9 +1,8 @@
 package io.github.seenings.school.http;
 
-import io.github.seenings.sys.constant.ServiceNameConstant;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.List;
 import java.util.Map;
@@ -17,17 +16,15 @@ import static io.github.seenings.sys.constant.SeenConstant.FEIGN_VERSION;
  * @author chixuehui
  * @since 2022-12-03
  */
-@FeignClient(
-        name = ServiceNameConstant.SERVICE_SEEN_SCHOOL,
-        path = FEIGN_VERSION + "school/school",
-        contextId = "HttpSchoolService")
+@HttpExchange(
+        value = FEIGN_VERSION + "school/school")
 public interface HttpSchoolService {
-    @PostMapping("id-to-school-name")
+    @PostExchange("id-to-school-name")
     Map<Integer, String> idToSchoolName(@RequestBody Set<Integer> ids);
 
-    @PostMapping("province-code-to-school-id")
+    @PostExchange("province-code-to-school-id")
     Map<String, List<Integer>> provinceCodeToSchoolId(@RequestBody Set<String> provinceCodes);
 
-    @PostMapping("school-id-to-province-code")
+    @PostExchange("school-id-to-province-code")
     Map<Integer, String> schoolIdToProvinceCode(@RequestBody Set<Integer> schoolIds);
 }
