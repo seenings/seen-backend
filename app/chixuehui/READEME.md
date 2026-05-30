@@ -9,7 +9,8 @@ docker network create chixuehui
 ### 中间件启动
 
 ```shell
-docker compose -f compose-middle.yml up -d
+cd ~/IdeaProjects/seenings/seen-backend/app/chixuehui/
+docker compose -f .\compose-middle.yml up -d
 ```
 
 ```shell
