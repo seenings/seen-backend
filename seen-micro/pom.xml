@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.89</version>
+        <version>0.1.90</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-micro</artifactId>
@@ -18,11 +18,6 @@
         <module>seen-calc</module>
     </modules>
     <dependencies>
-        <!--配置文件加密-->
-        <dependency>
-            <groupId>com.github.ulisesbocchio</groupId>
-            <artifactId>jasypt-spring-boot</artifactId>
-        </dependency>
         <!--seen spring-->
         <dependency>
             <groupId>io.github.seenings</groupId>

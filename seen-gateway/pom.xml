@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.89</version>
+        <version>0.1.90</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-gateway</artifactId>
@@ -17,11 +17,6 @@
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
-        </dependency>
-        <!--配置文件加密-->
-        <dependency>
-            <groupId>com.github.ulisesbocchio</groupId>
-            <artifactId>jasypt-spring-boot</artifactId>
         </dependency>
         <!--单元测试-->
         <dependency>

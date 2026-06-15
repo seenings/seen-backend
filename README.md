@@ -48,7 +48,7 @@ cd ~\IdeaProjects\seenings\seen-backend
 
 ```shell
 $$Env:SEEN_VERSION = (Get-Content "./version.txt" -Raw).Trim()
-$$Env:JAVA_HOME = "C:\Users\PC\.jdks\openjdk-26.0.1"
+$$Env:JAVA_HOME = "C:\Users\chixu\.jdks\openjdk-26.0.1"
 ```
 
 ```shell
@@ -73,7 +73,7 @@ git add .
 ```
 
 ```shell
-git commit -m "未拉取最新分支 #89"
+git commit -m "升级版本 #90"
 ```
 
 ```shell
