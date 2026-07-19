@@ -4,11 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.text.po.TextPO;
 import io.github.seenings.text.service.TextService;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,8 +25,11 @@ import java.util.stream.Collectors;
 @Mapper
 interface TextPOMapper extends BaseMapper<TextPO> {}
 
-@Service
-public class TextPOServiceImpl extends ServiceImpl<TextPOMapper, TextPO> implements TextService {
+@AllArgsConstructor
+@Repository
+public class TextPOServiceImpl implements TextService {
+
+    private TextPOMapper textPOMapper;
 
     /**
      * 保存文本
@@ -36,7 +39,7 @@ public class TextPOServiceImpl extends ServiceImpl<TextPOMapper, TextPO> impleme
     @Override
     public Integer saveAndReturnId(String text) {
         TextPO po = new TextPO().setText(text);
-        save(po);
+        textPOMapper.insert(po);
         return po.getId();
     }
 
@@ -54,7 +57,7 @@ public class TextPOServiceImpl extends ServiceImpl<TextPOMapper, TextPO> impleme
         return ListUtil.partition(new ArrayList<>(textIds), 100).stream()
                 .parallel()
                 .flatMap(
-                        subs -> list(new QueryWrapper<TextPO>()
+                        subs -> textPOMapper.selectList(new QueryWrapper<TextPO>()
                                         .lambda()
                                         .in(TextPO::getId, subs)
                                         .eq(TextPO::getDeleted, false))

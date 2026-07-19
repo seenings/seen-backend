@@ -5,13 +5,18 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-micro</artifactId>
-        <version>0.1.90</version>
+        <version>0.1.91</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-socket</artifactId>
     <name>seen-socket</name>
     <description>seen-socket</description>
     <dependencies>
+        <!--seen spring-->
+        <dependency>
+            <groupId>io.github.seenings</groupId>
+            <artifactId>seen-spring-config</artifactId>
+        </dependency>
         <!--websocket-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -3,12 +3,12 @@ package io.github.seenings.text.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.core.util.CollUtil;
 import io.github.seenings.text.po.TagUserPO;
 import io.github.seenings.text.service.TagUserService;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,9 +25,11 @@ import java.util.stream.Collectors;
 @Mapper
 interface TagUserPOMapper extends BaseMapper<TagUserPO> {}
 
-@Service
-public class TagUserPOServiceImpl extends ServiceImpl<TagUserPOMapper, TagUserPO> implements TagUserService {
+@AllArgsConstructor
+@Repository
+public class TagUserPOServiceImpl   implements TagUserService {
 
+    private TagUserPOMapper tagUserPOMapper;
     /**
      * 保存用户标签
      * @param userId    用户ID
@@ -36,11 +38,11 @@ public class TagUserPOServiceImpl extends ServiceImpl<TagUserPOMapper, TagUserPO
      */
     @Override
     public List<Integer> deleteAndSave(Long userId, List<Integer> tagIds) {
-        remove(new QueryWrapper<TagUserPO>().lambda().eq(TagUserPO::getUserId, userId));
+        tagUserPOMapper.delete(new QueryWrapper<TagUserPO>().lambda().eq(TagUserPO::getUserId, userId));
         return tagIds.stream()
                 .map(tagId -> {
                     TagUserPO po = new TagUserPO().setUserId(userId).setTagId(tagId);
-                    save(po);
+                    tagUserPOMapper.insert(po);
                     return po.getId();
                 })
                 .collect(Collectors.toList());
@@ -60,7 +62,7 @@ public class TagUserPOServiceImpl extends ServiceImpl<TagUserPOMapper, TagUserPO
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<TagUserPO>()
+                .flatMap(subs -> tagUserPOMapper.selectList(new QueryWrapper<TagUserPO>()
                                 .lambda()
                                 .in(TagUserPO::getUserId, subs)
                                 .select(TagUserPO::getUserId, TagUserPO::getTagId))
@@ -83,7 +85,7 @@ public class TagUserPOServiceImpl extends ServiceImpl<TagUserPOMapper, TagUserPO
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<TagUserPO>()
+                .flatMap(subs -> tagUserPOMapper.selectList(new QueryWrapper<TagUserPO>()
                                 .lambda()
                                 .in(TagUserPO::getTagId, subs)
                                 .select(TagUserPO::getUserId, TagUserPO::getTagId))

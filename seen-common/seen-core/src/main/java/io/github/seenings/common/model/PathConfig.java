@@ -3,10 +3,7 @@ package io.github.seenings.common.model;
 import lombok.Data;
 
 /**
- * PathConfig
- *
- * @author chixuehui
- * @since 2022-05-04
+ * 路径配置
  */
 @Data
 public class PathConfig {

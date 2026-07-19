@@ -3,15 +3,15 @@ package io.github.seenings.file.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.file.enumeration.StorageType;
 import io.github.seenings.file.po.FilePO;
 import io.github.seenings.file.service.FilePOService;
 import io.github.seenings.sys.util.ListUtils;
 import io.github.seenings.sys.util.ToEnumerationUtil;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 import java.util.Set;
@@ -27,9 +27,12 @@ interface FilePOMapper extends BaseMapper<FilePO> {
 /**
  * 文件
  */
+@AllArgsConstructor
+@Repository
 @Slf4j
-@Service
-public class FilePOServiceImpl extends ServiceImpl<FilePOMapper, FilePO> implements FilePOService {
+public class FilePOServiceImpl implements FilePOService {
+
+    private FilePOMapper filePOMapper;
 
     /**
      * 根据文件ID获取存储类型
@@ -40,7 +43,7 @@ public class FilePOServiceImpl extends ServiceImpl<FilePOMapper, FilePO> impleme
     @Override
     public Map<Integer, StorageType> idToStorageType(Set<Integer> ids) {
 
-        return ListUtil.partition(ListUtils.valueIsNull(ids), 100).parallelStream().flatMap(subs -> list(new LambdaQueryWrapper<FilePO>().in(FilePO::getId, subs).select(FilePO::getId, FilePO::getStorageType)).stream()).collect(Collectors.toMap(FilePO::getId, n -> ToEnumerationUtil.indexToEnum(StorageType.class, n.getStorageType())));
+        return ListUtil.partition(ListUtils.valueIsNull(ids), 100).parallelStream().flatMap(subs -> filePOMapper.selectList(new LambdaQueryWrapper<FilePO>().in(FilePO::getId, subs).select(FilePO::getId, FilePO::getStorageType)).stream()).collect(Collectors.toMap(FilePO::getId, n -> ToEnumerationUtil.indexToEnum(StorageType.class, n.getStorageType())));
     }
 
     /**
@@ -52,7 +55,7 @@ public class FilePOServiceImpl extends ServiceImpl<FilePOMapper, FilePO> impleme
     @Override
     public Map<Integer, String> idToName(Set<Integer> ids) {
 
-        return ListUtil.partition(ListUtils.valueIsNull(ids), 100).parallelStream().flatMap(subs -> list(new LambdaQueryWrapper<FilePO>().in(FilePO::getId, subs).select(FilePO::getId, FilePO::getName)).stream()).collect(Collectors.toMap(FilePO::getId, FilePO::getName));
+        return ListUtil.partition(ListUtils.valueIsNull(ids), 100).parallelStream().flatMap(subs -> filePOMapper.selectList(new LambdaQueryWrapper<FilePO>().in(FilePO::getId, subs).select(FilePO::getId, FilePO::getName)).stream()).collect(Collectors.toMap(FilePO::getId, FilePO::getName));
     }
 
     /**
@@ -64,7 +67,7 @@ public class FilePOServiceImpl extends ServiceImpl<FilePOMapper, FilePO> impleme
     @Override
     public Map<Integer, String> idToPath(Set<Integer> ids) {
 
-        return ListUtil.partition(ListUtils.valueIsNull(ids), 100).parallelStream().flatMap(subs -> list(new LambdaQueryWrapper<FilePO>().in(FilePO::getId, subs).select(FilePO::getId, FilePO::getPath)).stream()).collect(Collectors.toMap(FilePO::getId, FilePO::getPath));
+        return ListUtil.partition(ListUtils.valueIsNull(ids), 100).parallelStream().flatMap(subs -> filePOMapper.selectList(new LambdaQueryWrapper<FilePO>().in(FilePO::getId, subs).select(FilePO::getId, FilePO::getPath)).stream()).collect(Collectors.toMap(FilePO::getId, FilePO::getPath));
     }
 
     /**
@@ -81,7 +84,7 @@ public class FilePOServiceImpl extends ServiceImpl<FilePOMapper, FilePO> impleme
         entity.setStorageType(storageType.getIndex());
         entity.setPath(path);
         entity.setName(name);
-        save(entity);
+        filePOMapper.insert(entity);
         log.info("entity:{}", entity);
         return entity.getId();
     }

@@ -1,8 +1,5 @@
 package io.github.seenings.zone.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import io.github.seenings.zone.entity.Content;
-
 import java.util.Map;
 import java.util.Set;
 
@@ -14,7 +11,7 @@ import java.util.Set;
  * @author chixh
  * @since 2021-07-25
  */
-public interface IContentService extends IService<Content> {
+public interface IContentService  {
 
     Map<Integer, Set<Integer>> zoneIdToContentIdIsImage(Set<Integer> zoneIds);
 

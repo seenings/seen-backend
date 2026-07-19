@@ -1,9 +1,9 @@
 package io.github.seenings.coin.repository.impl;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.repository.CrudRepository;
 import io.github.seenings.coin.po.TradeAndBusi;
 import io.github.seenings.coin.repository.TradeAndBusiRepository;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -17,8 +17,11 @@ interface TradeAndBusiMapper extends BaseMapper<TradeAndBusi>{}
 /**
  * 交易与业务关系
  */
+@AllArgsConstructor
 @Repository
-public class TradeAndBusiRepositoryImpl extends CrudRepository<TradeAndBusiMapper,TradeAndBusi> implements TradeAndBusiRepository {
+public class TradeAndBusiRepositoryImpl implements TradeAndBusiRepository {
+
+    private TradeAndBusiMapper tradeAndBusiMapper;
     /**
      * 增加交易与业务关系
      * @param tradeTime 交易时间
@@ -31,6 +34,6 @@ public class TradeAndBusiRepositoryImpl extends CrudRepository<TradeAndBusiMappe
         TradeAndBusi entity = new TradeAndBusi().setTradeTime(tradeTime)
                 .setBusiId(busiId)
                 .setTradeId(tradeId);
-        return save(entity);
+        return tradeAndBusiMapper.insert(entity)>0;
     }
 }

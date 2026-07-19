@@ -3,12 +3,12 @@ package io.github.seenings.photo.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.photo.po.PhotoPO;
 import io.github.seenings.photo.service.PhotoPOService;
 import io.github.seenings.sys.util.ListUtils;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 import java.util.Set;
@@ -24,9 +24,11 @@ interface PhotoPOMapper extends BaseMapper<PhotoPO> {
 /**
  * 照片
  */
-@Service
-public class PhotoPOServiceImpl extends ServiceImpl<PhotoPOMapper, PhotoPO> implements PhotoPOService {
+@AllArgsConstructor
+@Repository
+public class PhotoPOServiceImpl  implements PhotoPOService {
 
+    private PhotoPOMapper photoPOMapper;
     /**
      * 根据照片ID获取文件ID
      *
@@ -37,7 +39,7 @@ public class PhotoPOServiceImpl extends ServiceImpl<PhotoPOMapper, PhotoPO> impl
     public Map<Integer, Integer> idToFileId(Set<Integer> ids) {
 
         return ListUtil.partition(ListUtils.valueIsNull(ids), 100).parallelStream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<PhotoPO>().in(PhotoPO::getId, subs)
+                .flatMap(subs -> photoPOMapper.selectList(new LambdaQueryWrapper<PhotoPO>().in(PhotoPO::getId, subs)
                         .select(PhotoPO::getId, PhotoPO::getFileId)).stream()).collect(Collectors.toMap(PhotoPO::getId, PhotoPO::getFileId));
     }
 
@@ -52,7 +54,7 @@ public class PhotoPOServiceImpl extends ServiceImpl<PhotoPOMapper, PhotoPO> impl
     public Integer set(Integer fileId) {
         PhotoPO entity = new PhotoPO();
         entity.setFileId(fileId);
-        save(entity);
+        photoPOMapper.insert(entity);
         return entity.getId();
     }
 }

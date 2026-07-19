@@ -15,9 +15,9 @@ spring:
   config:
     activate:
       on-profile: chixuehui
-    import: file:C:\Users\PC\IdeaProjects\seenings/seen-backend/app/common-chixuehui.yml
+    import: file:C:\Users\chixu\IdeaProjects\seenings/local-config/common-chixuehui.yml
 server:
-  port: 8081
+  port: 9081
 ---
 spring:
   config:

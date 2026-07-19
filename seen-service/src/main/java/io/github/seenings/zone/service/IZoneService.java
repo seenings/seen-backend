@@ -1,6 +1,5 @@
 package io.github.seenings.zone.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import io.github.seenings.zone.entity.Zone;
 import io.github.seenings.zone.model.ZoneContent;
 
@@ -17,7 +16,7 @@ import java.util.Set;
  * @author chixh
  * @since 2021-07-25
  */
-public interface IZoneService extends IService<Zone> {
+public interface IZoneService  {
 
     Map<Integer, LocalDateTime> zoneIdToPublishTime(Set<Integer> zoneIds);
 

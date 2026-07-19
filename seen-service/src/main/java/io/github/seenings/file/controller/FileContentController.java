@@ -2,7 +2,6 @@ package io.github.seenings.file.controller;
 
 import java.io.*;
 import java.time.Duration;
-import java.util.Map;
 import java.util.Set;
 
 import io.github.seenings.file.model.StorageTypeAndPath;
@@ -14,10 +13,6 @@ import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import io.github.seenings.common.model.R;
-import io.github.seenings.common.util.ResUtils;
-import io.github.seenings.file.model.FileContent;
-import io.github.seenings.file.service.FileContentPoService;
 import io.github.seenings.file.service.ImageCompressService;
 import io.github.seenings.photo.http.HttpPhotoService;
 import io.github.seenings.sys.constant.PublicConstant;
@@ -42,8 +37,6 @@ public class FileContentController {
      */
     private ImageCompressService imageCompressService;
 
-    private FileContentPoService fileContentPoService;
-
     /**
      * 照片资源
      */
@@ -66,11 +59,6 @@ public class FileContentController {
     }
 
 
-    @PostMapping("file-id-to-file-content")
-    public R<Map<Integer, FileContent>> fileIdToFileContent(@RequestBody Set<Integer> fileIds) {
-        Map<Integer, FileContent> fileIdToFileContentMap = fileContentPoService.fileIdToFileContent(fileIds);
-        return ResUtils.ok(fileIdToFileContentMap);
-    }
 
     /**
      * 根据照片ID获取文件流

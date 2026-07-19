@@ -3,12 +3,12 @@ package io.github.seenings.school.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.core.util.CollUtil;
 import io.github.seenings.school.po.StudentInfoPO;
 import io.github.seenings.school.service.StudentInfoService;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -26,9 +26,12 @@ import java.util.stream.Collectors;
 @Mapper
 interface StudentInfoPOMapper extends BaseMapper<StudentInfoPO> {}
 
-@Service
-public class StudentInfoPOServiceImpl extends ServiceImpl<StudentInfoPOMapper, StudentInfoPO>
+@AllArgsConstructor
+@Repository
+public class StudentInfoPOServiceImpl
         implements StudentInfoService {
+
+    private StudentInfoPOMapper studentInfoPOMapper;
 
     @Override
     public Map<Long, Integer> userIdToSchoolId(Set<Long> userIds) {
@@ -38,7 +41,7 @@ public class StudentInfoPOServiceImpl extends ServiceImpl<StudentInfoPOMapper, S
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<StudentInfoPO>()
+                .flatMap(subs -> studentInfoPOMapper.selectList(new LambdaQueryWrapper<StudentInfoPO>()
                                 .in(StudentInfoPO::getUserId, subs)
                                 .select(StudentInfoPO::getUserId, StudentInfoPO::getSchoolId))
                         .stream())
@@ -56,13 +59,13 @@ public class StudentInfoPOServiceImpl extends ServiceImpl<StudentInfoPOMapper, S
                 .setUpdateUser(userId);
         if (exists == null) {
             po.setCreateTime(LocalDateTime.now());
-            return save(po);
+            return studentInfoPOMapper.insert(po)>0;
         } else {
-            return update(
+            return studentInfoPOMapper.update(
                     po,
                     new LambdaQueryWrapper<StudentInfoPO>()
                             .eq(StudentInfoPO::getUserId, userId)
-                            .eq(StudentInfoPO::getSchoolId, exists));
+                            .eq(StudentInfoPO::getSchoolId, exists))>0;
         }
     }
 }

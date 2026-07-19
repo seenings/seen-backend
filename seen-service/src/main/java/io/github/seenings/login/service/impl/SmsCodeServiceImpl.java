@@ -1,13 +1,12 @@
 package io.github.seenings.login.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.login.entity.SmsCode;
 import io.github.seenings.login.mapper.SmsCodeMapper;
 import io.github.seenings.login.service.ISmsCodeService;
 import io.github.seenings.sys.service.SysService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -17,9 +16,11 @@ import org.springframework.stereotype.Service;
  * @author chixh
  * @since 2021-05-08
  */
-@Service
 @AllArgsConstructor
-public class SmsCodeServiceImpl extends ServiceImpl<SmsCodeMapper, SmsCode> implements ISmsCodeService {
+@Repository
+public class SmsCodeServiceImpl  implements ISmsCodeService {
+
+    private  SmsCodeMapper smsCodeMapper;
 
     private SysService sysService;
 
@@ -29,7 +30,7 @@ public class SmsCodeServiceImpl extends ServiceImpl<SmsCodeMapper, SmsCode> impl
         if (!sysService.isProd()) {
             return true;
         }
-        Long integer = this.baseMapper.selectCount(new QueryWrapper<SmsCode>().lambda()
+        Long integer = smsCodeMapper.selectCount(new QueryWrapper<SmsCode>().lambda()
                 .eq(SmsCode::getPhone, phone)
                 .eq(SmsCode::getSmsId, smsId)
                 .eq(SmsCode::getSmsCode, smsCode)

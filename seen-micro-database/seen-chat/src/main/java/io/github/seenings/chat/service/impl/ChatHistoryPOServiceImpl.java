@@ -4,7 +4,6 @@ import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.article.enumeration.ContentType;
 import io.github.seenings.article.util.ArticleEnumUtils;
 import io.github.seenings.chat.model.ChatContentAndTime;
@@ -12,8 +11,9 @@ import io.github.seenings.chat.model.ChatMessage;
 import io.github.seenings.chat.po.ChatHistoryPO;
 import io.github.seenings.chat.service.ChatHistoryService;
 import io.github.seenings.core.util.CollUtil;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -32,9 +32,11 @@ import java.util.stream.Collectors;
 interface ChatHistoryPOMapper extends BaseMapper<ChatHistoryPO> {
 }
 
-@Service
-public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, ChatHistoryPO>
-        implements ChatHistoryService {
+@AllArgsConstructor
+@Repository
+public class ChatHistoryPOServiceImpl implements ChatHistoryService {
+
+    private ChatHistoryPOMapper chatHistoryPOMapper;
 
     /**
      * 根据发送方用户和接收方用户获取聊天记录ID
@@ -48,7 +50,7 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
     @Override
     public List<Integer> fromUserIdToId(Long fromUserId, Long toUserId, int current, int size) {
 
-        return page(new Page<>(current, size), new QueryWrapper<ChatHistoryPO>()
+        return chatHistoryPOMapper.selectPage(new Page<>(current, size), new QueryWrapper<ChatHistoryPO>()
                 .lambda().eq(ChatHistoryPO::getFromUserId, fromUserId)
                 .eq(ChatHistoryPO::getToUserId, toUserId)
                 .orderByDesc(ChatHistoryPO::getSendTime)
@@ -71,14 +73,14 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<ChatHistoryPO>()
-                        .lambda()
-                        .in(ChatHistoryPO::getId, subs)
-                        .select(
-                                ChatHistoryPO::getId,
-                                ChatHistoryPO::getSendTime,
-                                ChatHistoryPO::getContentId,
-                                ChatHistoryPO::getContentTypeId))
+                .flatMap(subs -> chatHistoryPOMapper.selectList(new QueryWrapper<ChatHistoryPO>()
+                                .lambda()
+                                .in(ChatHistoryPO::getId, subs)
+                                .select(
+                                        ChatHistoryPO::getId,
+                                        ChatHistoryPO::getSendTime,
+                                        ChatHistoryPO::getContentId,
+                                        ChatHistoryPO::getContentTypeId))
                         .stream())
                 .collect(Collectors.toMap(
                         ChatHistoryPO::getId,
@@ -102,12 +104,12 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<ChatHistoryPO>()
-                        .lambda()
-                        .in(ChatHistoryPO::getId, subs)
-                        .select(
-                                ChatHistoryPO::getId,
-                                ChatHistoryPO::getFromUserId))
+                .flatMap(subs -> chatHistoryPOMapper.selectList(new QueryWrapper<ChatHistoryPO>()
+                                .lambda()
+                                .in(ChatHistoryPO::getId, subs)
+                                .select(
+                                        ChatHistoryPO::getId,
+                                        ChatHistoryPO::getFromUserId))
                         .stream())
                 .collect(Collectors.toMap(
                         ChatHistoryPO::getId,
@@ -128,17 +130,18 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<ChatHistoryPO>()
-                        .lambda()
-                        .in(ChatHistoryPO::getId, subs)
-                        .select(
-                                ChatHistoryPO::getId,
-                                ChatHistoryPO::getSendTime))
+                .flatMap(subs -> chatHistoryPOMapper.selectList(new QueryWrapper<ChatHistoryPO>()
+                                .lambda()
+                                .in(ChatHistoryPO::getId, subs)
+                                .select(
+                                        ChatHistoryPO::getId,
+                                        ChatHistoryPO::getSendTime))
                         .stream())
                 .collect(Collectors.toMap(
                         ChatHistoryPO::getId,
                         ChatHistoryPO::getSendTime));
     }
+
     /**
      * 根据聊天记录ID获取是否发出
      *
@@ -153,12 +156,12 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<ChatHistoryPO>()
-                        .lambda()
-                        .in(ChatHistoryPO::getId, subs)
-                        .select(
-                                ChatHistoryPO::getId,
-                                ChatHistoryPO::isSent))
+                .flatMap(subs -> chatHistoryPOMapper.selectList(new QueryWrapper<ChatHistoryPO>()
+                                .lambda()
+                                .in(ChatHistoryPO::getId, subs)
+                                .select(
+                                        ChatHistoryPO::getId,
+                                        ChatHistoryPO::isSent))
                         .stream())
                 .collect(Collectors.toMap(
                         ChatHistoryPO::getId,
@@ -179,12 +182,12 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<ChatHistoryPO>()
-                        .lambda()
-                        .in(ChatHistoryPO::getId, subs)
-                        .select(
-                                ChatHistoryPO::getId,
-                                ChatHistoryPO::getToUserId))
+                .flatMap(subs -> chatHistoryPOMapper.selectList(new QueryWrapper<ChatHistoryPO>()
+                                .lambda()
+                                .in(ChatHistoryPO::getId, subs)
+                                .select(
+                                        ChatHistoryPO::getId,
+                                        ChatHistoryPO::getToUserId))
                         .stream())
                 .collect(Collectors.toMap(
                         ChatHistoryPO::getId,
@@ -206,7 +209,7 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
         history.setContentTypeId(chatMessage.contentTypeId());
         history.setSendTime(chatMessage.sendTime());
         history.setUpdateTime(LocalDateTime.now());
-        return save(history);
+        return chatHistoryPOMapper.insert(history) > 0;
     }
 
     @Override
@@ -221,14 +224,14 @@ public class ChatHistoryPOServiceImpl extends ServiceImpl<ChatHistoryPOMapper, C
         history.setContentTypeId(contentType.getIndex());
         history.setSendTime(sendTime);
         history.setUpdateTime(LocalDateTime.now());
-        save(history);
+        chatHistoryPOMapper.insert(history);
         return history.getId();
     }
 
     @Override
     public boolean setSent(Integer id) {
-        return update(new ChatHistoryPO().setSent(true).setUpdateTime(LocalDateTime.now()), new QueryWrapper<ChatHistoryPO>().lambda()
-                .eq(ChatHistoryPO::getId, id));
+        return chatHistoryPOMapper.update(new ChatHistoryPO().setSent(true).setUpdateTime(LocalDateTime.now()), new QueryWrapper<ChatHistoryPO>().lambda()
+                .eq(ChatHistoryPO::getId, id)) > 0;
 
     }
 

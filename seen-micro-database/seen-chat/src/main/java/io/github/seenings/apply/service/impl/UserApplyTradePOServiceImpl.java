@@ -3,12 +3,12 @@ package io.github.seenings.apply.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.apply.po.UserApplyTradePO;
 import io.github.seenings.apply.service.UserApplyTradeService;
 import io.github.seenings.core.util.CollUtil;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -27,8 +27,11 @@ import java.util.stream.Collectors;
 interface UserApplyTradePOMapper extends BaseMapper<UserApplyTradePO> {
 }
 
-@Service
-public class UserApplyTradePOServiceImpl extends ServiceImpl<UserApplyTradePOMapper, UserApplyTradePO> implements UserApplyTradeService {
+@AllArgsConstructor
+@Repository
+public class UserApplyTradePOServiceImpl  implements UserApplyTradeService {
+
+    private UserApplyTradePOMapper userApplyTradePOMapper;
 
 
     @Override
@@ -38,7 +41,7 @@ public class UserApplyTradePOServiceImpl extends ServiceImpl<UserApplyTradePOMap
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<UserApplyTradePO>()
+                .flatMap(subs -> userApplyTradePOMapper.selectList(new LambdaQueryWrapper<UserApplyTradePO>()
                         .in(UserApplyTradePO::getApplyId, subs)
                         .select(UserApplyTradePO::getApplyId, UserApplyTradePO::getTradeId))
                         .stream())
@@ -52,7 +55,7 @@ public class UserApplyTradePOServiceImpl extends ServiceImpl<UserApplyTradePOMap
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<UserApplyTradePO>()
+                .flatMap(subs -> userApplyTradePOMapper.selectList(new LambdaQueryWrapper<UserApplyTradePO>()
                         .in(UserApplyTradePO::getTradeId, subs)
                         .select(UserApplyTradePO::getApplyId, UserApplyTradePO::getTradeId))
                         .stream())
@@ -67,7 +70,7 @@ public class UserApplyTradePOServiceImpl extends ServiceImpl<UserApplyTradePOMap
                     .setApplyId(applyId)
                     .setTradeId(tradeId)
                     .setCreateTime(LocalDateTime.now());
-            save(po);
+            userApplyTradePOMapper.insert(po);
             return po.getId();
         }).collect(Collectors.toList());
 

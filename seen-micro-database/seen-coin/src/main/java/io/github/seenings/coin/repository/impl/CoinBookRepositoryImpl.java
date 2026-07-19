@@ -1,11 +1,11 @@
 package io.github.seenings.coin.repository.impl;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.repository.CrudRepository;
 import io.github.seenings.coin.po.CoinBook;
 import io.github.seenings.coin.repository.CoinBookRepository;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 
@@ -17,8 +17,11 @@ interface CoinBookMapper extends BaseMapper<CoinBook>{}
 /**
  * 玫瑰币记账
  */
-@RestController
-public class CoinBookRepositoryImpl extends CrudRepository<CoinBookMapper, CoinBook> implements CoinBookRepository {
+@AllArgsConstructor
+@Repository
+public class CoinBookRepositoryImpl  implements CoinBookRepository {
+
+    private CoinBookMapper coinBookMapper;
     /**
      * 增加
      *
@@ -31,7 +34,7 @@ public class CoinBookRepositoryImpl extends CrudRepository<CoinBookMapper, CoinB
     @Override
     public Long add(Long amount, Long debitId, Long creditId, LocalDateTime transactionTime) {
         CoinBook entity = new CoinBook().setAmount(amount).setCreditId(creditId).setDebitId(debitId).setTransactionTime(transactionTime);
-        save(entity);
+        coinBookMapper.insert(entity);
         return entity.getTradeId();
     }
 }

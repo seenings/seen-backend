@@ -3,12 +3,12 @@ package io.github.seenings.zone.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.article.enumeration.ContentType;
 import io.github.seenings.zone.entity.Content;
 import io.github.seenings.zone.mapper.ContentMapper;
 import io.github.seenings.zone.service.IContentService;
-import org.springframework.stereotype.Service;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,8 +24,11 @@ import java.util.stream.Collectors;
  * @author chixh
  * @since 2021-07-25
  */
-@Service
-public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> implements IContentService {
+@AllArgsConstructor
+@Repository
+public class ContentServiceImpl implements IContentService {
+
+    private ContentMapper contentMapper;
 
     /**
      * 根据空间ID获取内容ID
@@ -39,7 +42,7 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> impl
             return Collections.emptyMap();
         }
         return ListUtil.partition(new ArrayList<>(zoneIds), 100).parallelStream()
-                .flatMap(subs -> list(new QueryWrapper<Content>().lambda()
+                .flatMap(subs -> contentMapper.selectList(new QueryWrapper<Content>().lambda()
                         .in(Content::getZoneId, subs).eq(Content::getContentTypeId,
                                 ContentType.IMAGE.getIndex())
                 ).stream()).collect(Collectors.groupingBy(Content::getZoneId,
@@ -58,7 +61,7 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> impl
             return Collections.emptyMap();
         }
         return ListUtil.partition(new ArrayList<>(zoneIds), 100).parallelStream()
-                .flatMap(subs -> list(new QueryWrapper<Content>().lambda()
+                .flatMap(subs -> contentMapper.selectList(new QueryWrapper<Content>().lambda()
                         .in(Content::getZoneId, subs).eq(Content::getContentTypeId,
                                 ContentType.TEXT.getIndex())
                 ).stream()).collect(Collectors.groupingBy(Content::getZoneId,
@@ -77,7 +80,7 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> impl
             return Collections.emptyMap();
         }
         return ListUtil.partition(new ArrayList<>(zoneContentIds), 100).parallelStream()
-                .flatMap(subs -> list(new QueryWrapper<Content>().lambda()
+                .flatMap(subs -> contentMapper.selectList(new QueryWrapper<Content>().lambda()
                         .in(Content::getId, subs).eq(Content::getContentTypeId,
                                 ContentType.TEXT.getIndex())
                 ).stream()).collect(Collectors.groupingBy(Content::getId,

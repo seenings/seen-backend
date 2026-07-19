@@ -1,6 +1,5 @@
 package io.github.seenings.voice.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import io.github.seenings.voice.entity.Voice;
 
 import java.util.Map;
@@ -14,7 +13,7 @@ import java.util.Set;
  * @author chixh
  * @since 2021-07-25
  */
-public interface IVoiceService extends IService<Voice> {
+public interface IVoiceService {
 
     Integer setPath(String path, Long userId);
 

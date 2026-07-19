@@ -4,12 +4,12 @@ import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.core.util.CollUtil;
 import io.github.seenings.auth.po.UserAuthPO;
 import io.github.seenings.info.service.UserAuthService;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -27,9 +27,10 @@ import java.util.stream.Collectors;
 @Mapper
 interface UserAuthPOMapper extends BaseMapper<UserAuthPO> {}
 
-@Service
-public class UserAuthPOServiceImpl extends ServiceImpl<UserAuthPOMapper, UserAuthPO> implements UserAuthService {
-
+@AllArgsConstructor
+@Repository
+public class UserAuthPOServiceImpl  implements UserAuthService {
+private UserAuthPOMapper userAuthPOMapper;
     @Override
     public Map<Long, Integer> userIdToUserAuth(Set<Long> userIds) {
         List<Long> list = CollUtil.valueIsNullToList(userIds);
@@ -40,7 +41,7 @@ public class UserAuthPOServiceImpl extends ServiceImpl<UserAuthPOMapper, UserAut
         SFunction<UserAuthPO, Long> getKey = UserAuthPO::getUserId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs ->
-                        list(new LambdaQueryWrapper<UserAuthPO>()
+                        userAuthPOMapper.selectList(new LambdaQueryWrapper<UserAuthPO>()
                                         .in(getKey, subs)
                                         .select(getKey, getValue))
                                 .stream())
@@ -52,9 +53,9 @@ public class UserAuthPOServiceImpl extends ServiceImpl<UserAuthPOMapper, UserAut
         Integer exists = userIdToUserAuth(Collections.singleton(userId)).get(userId);
         var po = new UserAuthPO().setUserId(userId).setAuthStatus(authStatus).setUpdateTime(LocalDateTime.now());
         if (exists == null) {
-            return save(po);
+            return userAuthPOMapper.insert(po)>0;
         } else {
-            return update(po, new LambdaQueryWrapper<UserAuthPO>().eq(UserAuthPO::getUserId, userId));
+            return userAuthPOMapper.update(po, new LambdaQueryWrapper<UserAuthPO>().eq(UserAuthPO::getUserId, userId))>0;
         }
     }
 }

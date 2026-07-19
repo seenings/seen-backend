@@ -9,11 +9,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.sys.util.ListUtils;
 import io.github.seenings.extra.util.ExtraListUtil;
 import io.github.seenings.introduce.enumeration.IntroduceTypeEnum;
@@ -35,10 +34,12 @@ import lombok.AllArgsConstructor;
 interface UserIntroducePhotoPOMapper extends BaseMapper<UserIntroducePhotoPO> {
 }
 
-@Service
+@Repository
 @AllArgsConstructor
-public class UserIntroducePhotoPOServiceImpl extends ServiceImpl<UserIntroducePhotoPOMapper, UserIntroducePhotoPO>
+public class UserIntroducePhotoPOServiceImpl
         implements UserIntroducePhotoService {
+
+    private UserIntroducePhotoPOMapper userIntroducePhotoPOMapper;
 
     /**
      * 用户介绍照片对应关系
@@ -61,7 +62,7 @@ public class UserIntroducePhotoPOServiceImpl extends ServiceImpl<UserIntroducePh
             Integer photoId = orderIdToPhotoIdMap.get(order);
             UserIntroducePhotoPO po = new UserIntroducePhotoPO().setUserId(userId).setOrderNum(order)
                     .setIntroduceType(introduceTypeEnum.getIndex()).setUpdateTime(LocalDateTime.now());
-            save(po);
+            userIntroducePhotoPOMapper.insert(po);
             if (photoId != null) {
                 userIntroducePhotoToPhotoPOService.insert(po.getId(), photoId);
             }
@@ -79,7 +80,7 @@ public class UserIntroducePhotoPOServiceImpl extends ServiceImpl<UserIntroducePh
     @Override
     public Map<Integer, LocalDateTime> idToModifyTime(Set<Integer> ids) {
         return ListUtil.partition(ids.stream().toList(), 100).stream().parallel().flatMap(
-                subs -> list(new QueryWrapper<UserIntroducePhotoPO>().lambda().in(UserIntroducePhotoPO::getId, subs)
+                subs -> userIntroducePhotoPOMapper.selectList(new QueryWrapper<UserIntroducePhotoPO>().lambda().in(UserIntroducePhotoPO::getId, subs)
                         .select(UserIntroducePhotoPO::getId, UserIntroducePhotoPO::getUpdateTime)).stream())
                 .collect(Collectors.toMap(UserIntroducePhotoPO::getId, UserIntroducePhotoPO::getUpdateTime));
     }
@@ -93,7 +94,7 @@ public class UserIntroducePhotoPOServiceImpl extends ServiceImpl<UserIntroducePh
     @Override
     public Map<Integer, Integer> idToOrder(Set<Integer> ids) {
         return ListUtil.partition(ids.stream().toList(), 100).stream().parallel().flatMap(
-                subs -> list(new QueryWrapper<UserIntroducePhotoPO>().lambda().in(UserIntroducePhotoPO::getId, subs)
+                subs -> userIntroducePhotoPOMapper.selectList(new QueryWrapper<UserIntroducePhotoPO>().lambda().in(UserIntroducePhotoPO::getId, subs)
                         .select(UserIntroducePhotoPO::getId, UserIntroducePhotoPO::getOrderNum)).stream())
                 .collect(Collectors.toMap(UserIntroducePhotoPO::getId, UserIntroducePhotoPO::getOrderNum));
     }
@@ -112,7 +113,7 @@ public class UserIntroducePhotoPOServiceImpl extends ServiceImpl<UserIntroducePh
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream().parallel()
-                .flatMap(subs -> list(new QueryWrapper<UserIntroducePhotoPO>().lambda()
+                .flatMap(subs -> userIntroducePhotoPOMapper.selectList(new QueryWrapper<UserIntroducePhotoPO>().lambda()
                         .eq(UserIntroducePhotoPO::getUserId, userId).in(UserIntroducePhotoPO::getIntroduceType, subs)
                         .select(UserIntroducePhotoPO::getIntroduceType, UserIntroducePhotoPO::getId)).stream())
                 .collect(Collectors.groupingBy(UserIntroducePhotoPO::getIntroduceType,
@@ -132,7 +133,7 @@ public class UserIntroducePhotoPOServiceImpl extends ServiceImpl<UserIntroducePh
             return Collections.emptyMap();
         }
         return ExtraListUtil.partition(userIds).stream().parallel().flatMap(
-                subs -> list(new QueryWrapper<UserIntroducePhotoPO>().lambda().in(UserIntroducePhotoPO::getUserId, subs)
+                subs -> userIntroducePhotoPOMapper.selectList(new QueryWrapper<UserIntroducePhotoPO>().lambda().in(UserIntroducePhotoPO::getUserId, subs)
                         .select(UserIntroducePhotoPO::getUserId, UserIntroducePhotoPO::getId,
                                 UserIntroducePhotoPO::getIntroduceType, UserIntroducePhotoPO::getOrderNum))
                         .stream())

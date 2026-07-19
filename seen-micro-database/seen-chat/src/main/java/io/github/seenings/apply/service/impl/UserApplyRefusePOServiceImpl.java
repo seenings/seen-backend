@@ -3,12 +3,12 @@ package io.github.seenings.apply.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.apply.po.UserApplyRefusePO;
 import io.github.seenings.apply.service.UserApplyRefuseService;
 import io.github.seenings.core.util.CollUtil;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -27,8 +27,11 @@ import java.util.stream.Collectors;
 interface UserApplyRefusePOMapper extends BaseMapper<UserApplyRefusePO> {
 }
 
-@Service
-public class UserApplyRefusePOServiceImpl extends ServiceImpl<UserApplyRefusePOMapper, UserApplyRefusePO> implements UserApplyRefuseService {
+@AllArgsConstructor
+@Repository
+public class UserApplyRefusePOServiceImpl  implements UserApplyRefuseService {
+
+    private UserApplyRefusePOMapper userApplyRefusePOMapper;
 
 
     @Override
@@ -38,7 +41,7 @@ public class UserApplyRefusePOServiceImpl extends ServiceImpl<UserApplyRefusePOM
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<UserApplyRefusePO>()
+                .flatMap(subs -> userApplyRefusePOMapper.selectList(new LambdaQueryWrapper<UserApplyRefusePO>()
                         .in(UserApplyRefusePO::getApplyId, subs)
                         .select(UserApplyRefusePO::getApplyId, UserApplyRefusePO::getCreateTime))
                         .stream())
@@ -52,7 +55,7 @@ public class UserApplyRefusePOServiceImpl extends ServiceImpl<UserApplyRefusePOM
                 .setApplyId(applyId)
                 .setTextId(textId)
                 .setCreateTime(LocalDateTime.now());
-        save(po);
+        userApplyRefusePOMapper.insert(po);
         return po.getId();
     }
 

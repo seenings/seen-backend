@@ -5,6 +5,7 @@ import io.github.seenings.info.service.UserBirthPlaceService;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.annotation.Resource;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -23,8 +24,7 @@ public class UserBirthPlaceController implements HttpUserBirthPlaceService {
     private UserBirthPlaceService userBirthPlaceService;
 
     @Override
-    @PostMapping("user-id-to-city-id")
-    public Map<Long, Integer> userIdToCityId(@RequestBody Set<Long> userIds) {
+    public Map<Long, Integer> userIdToCityId(Set<Long> userIds) {
         return userBirthPlaceService.userIdToCityId(userIds);
     }
 

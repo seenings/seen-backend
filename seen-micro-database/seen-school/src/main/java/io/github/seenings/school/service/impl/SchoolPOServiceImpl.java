@@ -3,12 +3,12 @@ package io.github.seenings.school.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.core.util.CollUtil;
 import io.github.seenings.school.po.SchoolPO;
 import io.github.seenings.school.service.SchoolService;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,8 +25,11 @@ import java.util.stream.Collectors;
 @Mapper
 interface SchoolPOMapper extends BaseMapper<SchoolPO> {}
 
-@Service
-public class SchoolPOServiceImpl extends ServiceImpl<SchoolPOMapper, SchoolPO> implements SchoolService {
+@AllArgsConstructor
+@Repository
+public class SchoolPOServiceImpl  implements SchoolService {
+
+    private SchoolPOMapper schoolPOMapper;
 
     @Override
     public Map<Integer, String> idToSchoolName(Set<Integer> ids) {
@@ -36,7 +39,7 @@ public class SchoolPOServiceImpl extends ServiceImpl<SchoolPOMapper, SchoolPO> i
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new LambdaQueryWrapper<SchoolPO>()
+                .flatMap(subs -> schoolPOMapper.selectList(new LambdaQueryWrapper<SchoolPO>()
                                 .in(SchoolPO::getId, subs)
                                 .select(SchoolPO::getId, SchoolPO::getSchoolName))
                         .stream())
@@ -50,7 +53,7 @@ public class SchoolPOServiceImpl extends ServiceImpl<SchoolPOMapper, SchoolPO> i
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<SchoolPO>()
+                .flatMap(subs -> schoolPOMapper.selectList(new LambdaQueryWrapper<SchoolPO>()
                                 .in(SchoolPO::getAreaId, subs)
                                 .select(SchoolPO::getAreaId, SchoolPO::getId))
                         .stream())
@@ -65,7 +68,7 @@ public class SchoolPOServiceImpl extends ServiceImpl<SchoolPOMapper, SchoolPO> i
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<SchoolPO>()
+                .flatMap(subs -> schoolPOMapper.selectList(new LambdaQueryWrapper<SchoolPO>()
                                 .in(SchoolPO::getId, subs)
                                 .select(SchoolPO::getAreaId, SchoolPO::getId))
                         .stream())

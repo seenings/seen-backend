@@ -3,11 +3,11 @@ package io.github.seenings.introduce.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.introduce.po.UserIntroducePhotoToPhotoPO;
 import io.github.seenings.introduce.service.UserIntroducePhotoToPhotoPOService;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 import java.util.Set;
@@ -21,9 +21,11 @@ interface UserIntroducePhotoToPhotoPOMapper extends BaseMapper<UserIntroducePhot
 
 }
 
-@Service
-public class UserIntroducePhotoToPhotoPOServiceImpl extends ServiceImpl<UserIntroducePhotoToPhotoPOMapper, UserIntroducePhotoToPhotoPO> implements UserIntroducePhotoToPhotoPOService {
+@Repository
+@AllArgsConstructor
+public class UserIntroducePhotoToPhotoPOServiceImpl implements UserIntroducePhotoToPhotoPOService {
 
+    private UserIntroducePhotoToPhotoPOMapper userIntroducePhotoToPhotoPOMapper;
 
     /**
      * 插入
@@ -34,7 +36,7 @@ public class UserIntroducePhotoToPhotoPOServiceImpl extends ServiceImpl<UserIntr
      */
     @Override
     public boolean insert(Integer userIntroducePhotoId, Integer photoId) {
-        return save(new UserIntroducePhotoToPhotoPO().setUserIntroducePhotoId(userIntroducePhotoId).setPhotoId(photoId));
+        return userIntroducePhotoToPhotoPOMapper.insert(new UserIntroducePhotoToPhotoPO().setUserIntroducePhotoId(userIntroducePhotoId).setPhotoId(photoId))>0;
     }
 
 
@@ -48,7 +50,7 @@ public class UserIntroducePhotoToPhotoPOServiceImpl extends ServiceImpl<UserIntr
     public Map<Integer, Integer> userIntroducePhotoIdToPhotoId(Set<Integer> userIntroducePhotoIds) {
         return ListUtil.partition(userIntroducePhotoIds.stream().toList(), 100)
                 .stream().parallel()
-                .flatMap(subs -> list(new QueryWrapper<UserIntroducePhotoToPhotoPO>()
+                .flatMap(subs -> userIntroducePhotoToPhotoPOMapper.selectList(new QueryWrapper<UserIntroducePhotoToPhotoPO>()
                                 .lambda()
                                 .in(UserIntroducePhotoToPhotoPO::getUserIntroducePhotoId, subs)
                                 .select(UserIntroducePhotoToPhotoPO::getUserIntroducePhotoId, UserIntroducePhotoToPhotoPO::getPhotoId)

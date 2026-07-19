@@ -3,12 +3,12 @@ package io.github.seenings.school.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.core.util.CollUtil;
 import io.github.seenings.school.po.SchoolGraduatePO;
 import io.github.seenings.school.service.SchoolGraduateService;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -26,9 +26,12 @@ import java.util.stream.Collectors;
 @Mapper
 interface SchoolGraduatePOMapper extends BaseMapper<SchoolGraduatePO> {}
 
-@Service
-public class SchoolGraduatePOServiceImpl extends ServiceImpl<SchoolGraduatePOMapper, SchoolGraduatePO>
+@AllArgsConstructor
+@Repository
+public class SchoolGraduatePOServiceImpl
         implements SchoolGraduateService {
+
+    private SchoolGraduatePOMapper schoolGraduatePOMapper;
 
     @Override
     public Map<Long, Integer> userIdToGraduated(Set<Long> userIds) {
@@ -37,7 +40,7 @@ public class SchoolGraduatePOServiceImpl extends ServiceImpl<SchoolGraduatePOMap
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 500).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<SchoolGraduatePO>()
+                .flatMap(subs -> schoolGraduatePOMapper.selectList(new LambdaQueryWrapper<SchoolGraduatePO>()
                                 .in(SchoolGraduatePO::getUserId, subs)
                                 .select(SchoolGraduatePO::getUserId, SchoolGraduatePO::getGraduated))
                         .stream())
@@ -51,9 +54,9 @@ public class SchoolGraduatePOServiceImpl extends ServiceImpl<SchoolGraduatePOMap
         SchoolGraduatePO po =
                 new SchoolGraduatePO().setUserId(userId).setGraduated(graduated).setUpdateTime(LocalDateTime.now());
         if (exists == null) {
-            return save(po);
+            return schoolGraduatePOMapper.insert(po)>0;
         } else {
-            return update(po, new LambdaQueryWrapper<SchoolGraduatePO>().eq(SchoolGraduatePO::getUserId, userId));
+            return schoolGraduatePOMapper.update(po, new LambdaQueryWrapper<SchoolGraduatePO>().eq(SchoolGraduatePO::getUserId, userId))>0;
         }
     }
 }

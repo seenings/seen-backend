@@ -2,23 +2,23 @@ package io.github.seenings.login.service.impl;
 
 import java.time.LocalDateTime;
 
+import io.github.seenings.login.mapper.SmsCodeMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import io.github.seenings.login.entity.SmsCode;
-import io.github.seenings.login.service.ISmsCodeService;
 import io.github.seenings.login.service.SendSmsService;
 import io.github.seenings.sys.service.SysService;
 
 import cn.hutool.core.util.RandomUtil;
-import jakarta.annotation.Resource;
 
+
+@AllArgsConstructor
 @Service
 public class SendSmsServiceImpl implements SendSmsService {
-    @Resource
-    ISmsCodeService iSmsCodeService;
-    @Resource
-    SysService sysService;
+    private SysService sysService;
 
+    private SmsCodeMapper smsCodeMapper;
     @Override
     public void sendSmsCode(String phone, int smsCode) {
         // 调用第三方短信api服务向客户手机发送验证码
@@ -44,7 +44,7 @@ public class SendSmsServiceImpl implements SendSmsService {
         entity.setSmsCode(smsCode);
         entity.setSmsId(smsId);
         entity.setUpdateTime(LocalDateTime.now());
-        iSmsCodeService.save(entity);
+        smsCodeMapper.insert(entity);
         return smsId;
     }
 }
