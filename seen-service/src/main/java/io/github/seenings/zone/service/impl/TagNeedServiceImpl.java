@@ -3,7 +3,7 @@ package io.github.seenings.zone.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import io.github.seenings.zone.entity.TagNeed;
 import io.github.seenings.zone.mapper.TagNeedMapper;
 import io.github.seenings.zone.service.ITagNeedService;

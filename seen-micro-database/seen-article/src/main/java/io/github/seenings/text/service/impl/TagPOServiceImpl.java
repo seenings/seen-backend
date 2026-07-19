@@ -3,12 +3,12 @@ package io.github.seenings.text.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.core.util.CollUtil;
 import io.github.seenings.text.po.TagPO;
 import io.github.seenings.text.service.TagService;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,8 +22,11 @@ import java.util.stream.Collectors;
 @Mapper
 interface TagPOMapper extends BaseMapper<TagPO> {}
 
-@Service
-public class TagPOServiceImpl extends ServiceImpl<TagPOMapper, TagPO> implements TagService {
+@Repository
+@AllArgsConstructor
+public class TagPOServiceImpl  implements TagService {
+
+    private TagPOMapper tagPOMapper;
 
     /**
      * 保存标签
@@ -34,7 +37,7 @@ public class TagPOServiceImpl extends ServiceImpl<TagPOMapper, TagPO> implements
     @Override
     public Integer saveAndReturnId(Integer parentTagId, String tagName) {
         TagPO po = new TagPO().setTagName(tagName).setParentTagId(parentTagId);
-        save(po);
+        tagPOMapper.insert(po);
         return po.getId();
     }
 
@@ -52,7 +55,7 @@ public class TagPOServiceImpl extends ServiceImpl<TagPOMapper, TagPO> implements
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<TagPO>()
+                .flatMap(subs -> tagPOMapper.selectList(new QueryWrapper<TagPO>()
                                 .lambda()
                                 .in(TagPO::getId, subs)
                                 .select(TagPO::getId, TagPO::getTagName))
@@ -73,7 +76,7 @@ public class TagPOServiceImpl extends ServiceImpl<TagPOMapper, TagPO> implements
         }
         return ListUtil.partition(new ArrayList<>(tagIds), 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<TagPO>()
+                .flatMap(subs -> tagPOMapper.selectList(new QueryWrapper<TagPO>()
                                 .lambda()
                                 .in(TagPO::getId, subs)
                                 .select(TagPO::getParentTagId, TagPO::getId))
@@ -83,7 +86,7 @@ public class TagPOServiceImpl extends ServiceImpl<TagPOMapper, TagPO> implements
 
     @Override
     public Map<Integer, List<Integer>> toParentIdToTagId() {
-        List<TagPO> list = list(new QueryWrapper<TagPO>().lambda().select(TagPO::getParentTagId, TagPO::getId));
+        List<TagPO> list = tagPOMapper.selectList(new QueryWrapper<TagPO>().lambda().select(TagPO::getParentTagId, TagPO::getId));
 
         return list.stream()
                 .collect(Collectors.groupingBy(
@@ -92,7 +95,7 @@ public class TagPOServiceImpl extends ServiceImpl<TagPOMapper, TagPO> implements
 
     @Override
     public Map<Integer, String> toTagIdToTagName() {
-        List<TagPO> list = list(new QueryWrapper<TagPO>().lambda().select(TagPO::getId, TagPO::getTagName));
+        List<TagPO> list = tagPOMapper.selectList(new QueryWrapper<TagPO>().lambda().select(TagPO::getId, TagPO::getTagName));
         return list.stream().collect(Collectors.toMap(TagPO::getId, TagPO::getTagName));
     }
 }

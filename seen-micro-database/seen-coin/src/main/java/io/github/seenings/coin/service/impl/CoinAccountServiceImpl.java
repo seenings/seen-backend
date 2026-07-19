@@ -3,14 +3,14 @@ package io.github.seenings.coin.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.coin.po.CoinAccount;
 import io.github.seenings.account.service.CoinAccountService;
 import io.github.seenings.coin.enumeration.AccountType;
 import io.github.seenings.core.util.CollUtil;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -26,10 +26,11 @@ interface CoinAccountMapper extends BaseMapper<CoinAccount> {
 /**
  * 币账户
  */
+@AllArgsConstructor
+@Repository
 @Slf4j
-@Service
-public class CoinAccountServiceImpl extends ServiceImpl<CoinAccountMapper, CoinAccount> implements CoinAccountService {
-
+public class CoinAccountServiceImpl   implements CoinAccountService {
+private CoinAccountMapper coinAccountMapper;
     @Override
     public Map<Integer, List<Long>> accountTypeToAccountId(Set<Integer> accountTypeIds) {
 
@@ -37,7 +38,7 @@ public class CoinAccountServiceImpl extends ServiceImpl<CoinAccountMapper, CoinA
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(list, 100).stream().parallel().flatMap(subs -> list(new QueryWrapper<CoinAccount>().lambda().in(CoinAccount::getAccountType, subs).select(CoinAccount::getId, CoinAccount::getAccountType)).stream()).collect(Collectors.groupingBy(CoinAccount::getAccountType, Collectors.mapping(CoinAccount::getId, Collectors.toList())));
+        return ListUtil.partition(list, 100).stream().parallel().flatMap(subs -> coinAccountMapper.selectList(new QueryWrapper<CoinAccount>().lambda().in(CoinAccount::getAccountType, subs).select(CoinAccount::getId, CoinAccount::getAccountType)).stream()).collect(Collectors.groupingBy(CoinAccount::getAccountType, Collectors.mapping(CoinAccount::getId, Collectors.toList())));
 
 
     }
@@ -55,7 +56,7 @@ public class CoinAccountServiceImpl extends ServiceImpl<CoinAccountMapper, CoinA
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(list, 100).stream().parallel().flatMap(subs -> list(new QueryWrapper<CoinAccount>().lambda().in(CoinAccount::getId, subs).select(CoinAccount::getId, CoinAccount::getAccountType)).stream()).map(n -> {
+        return ListUtil.partition(list, 100).stream().parallel().flatMap(subs -> coinAccountMapper.selectList(new QueryWrapper<CoinAccount>().lambda().in(CoinAccount::getId, subs).select(CoinAccount::getId, CoinAccount::getAccountType)).stream()).map(n -> {
             AccountType accountType = AccountType.indexToEnum(n.getAccountType());
             if (accountType == null) {
                 String msg = String.format("账户类型有误，账户ID：%s。", n.getAccountType());
@@ -75,7 +76,7 @@ public class CoinAccountServiceImpl extends ServiceImpl<CoinAccountMapper, CoinA
     @Override
     public Long createAccount(AccountType accountType) {
         CoinAccount po = new CoinAccount().setAccountType(accountType.getIndex()).setCreateTime(LocalDateTime.now());
-        boolean save = save(po);
+        boolean save = coinAccountMapper.insert(po)>0;
         if (save) {
             return po.getId();
         } else {

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import io.github.seenings.extra.util.ExtraListUtil;
 import io.github.seenings.introduce.enumeration.IntroduceTypeEnum;
 import io.github.seenings.introduce.model.IntroduceTypeAndText;

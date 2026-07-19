@@ -1,6 +1,5 @@
 package io.github.seenings.zone.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import io.github.seenings.zone.entity.Reply;
 import io.github.seenings.zone.model.ZoneReply;
 
@@ -15,7 +14,7 @@ import java.util.Set;
  * @author chixh
  * @since 2021-07-25
  */
-public interface IReplyService extends IService<Reply> {
+public interface IReplyService  {
 
     Integer publishZoneComment(Integer zoneId, Long userId, String message);
 

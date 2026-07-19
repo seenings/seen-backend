@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import io.github.seenings.time.component.NowComponent;
+import io.github.seenings.voice.mapper.VoiceMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 public class VoiceController {
     private IVoiceService iVoiceService;
 
+    private VoiceMapper voiceMapper;
     private SeenConfig seenConfig;
     /**
      * 当前时间组件
@@ -72,19 +74,19 @@ public class VoiceController {
 
     @PostMapping
     public R<Voice> post(@RequestBody Voice entity) {
-        iVoiceService.save(entity);
+        voiceMapper.insert(entity);
         return ResUtils.ok(entity);
     }
 
     @PutMapping
     public R<Voice> put(@RequestBody Voice entity) {
-        iVoiceService.updateById(entity);
+        voiceMapper.updateById(entity);
         return ResUtils.ok(entity);
     }
 
     @GetMapping("{id}")
     public R<Voice> get(@PathVariable Serializable id) {
-        return ResUtils.ok(iVoiceService.getById(id));
+        return ResUtils.ok(voiceMapper.selectById(id));
     }
 
     /**
@@ -103,7 +105,7 @@ public class VoiceController {
         Voice entity = new Voice();
         entity.setId((Integer) id);
         entity.setDeleted(1);
-        boolean b = iVoiceService.updateById(entity);
-        return b ? ResUtils.ok(iVoiceService.getById(id)) : ResUtils.error(entity, "删除语音失败");
+        boolean b = voiceMapper.updateById(entity)>0;
+        return b ? ResUtils.ok(voiceMapper.selectById(id)) : ResUtils.error(entity, "删除语音失败");
     }
 }

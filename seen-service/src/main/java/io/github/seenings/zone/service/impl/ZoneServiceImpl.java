@@ -4,18 +4,20 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import io.github.seenings.article.enumeration.ContentType;
 import io.github.seenings.text.http.HttpTextService;
 import io.github.seenings.zone.entity.Content;
 import io.github.seenings.zone.entity.Zone;
+import io.github.seenings.zone.mapper.ContentMapper;
 import io.github.seenings.zone.mapper.ZoneMapper;
 import io.github.seenings.zone.model.ZoneContent;
-import io.github.seenings.zone.service.IContentService;
 import io.github.seenings.zone.service.IZoneService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
+
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,11 +30,11 @@ import java.util.stream.Collectors;
  * @author chixh
  * @since 2021-07-25
  */
+@AllArgsConstructor
 @Service
 public class ZoneServiceImpl extends ServiceImpl<ZoneMapper, Zone> implements IZoneService {
 
-    @Resource
-    private IContentService iContentService;
+    private ContentMapper contentMapper;
 
     /**
      * 根据空间ID获取发布时间
@@ -64,9 +66,9 @@ public class ZoneServiceImpl extends ServiceImpl<ZoneMapper, Zone> implements IZ
         return ListUtil.partition(new ArrayList<>(zoneIds), 100).parallelStream()
                 .flatMap(
                         subs -> list(new QueryWrapper<Zone>()
-                                        .lambda()
-                                        .select(Zone::getUserId, Zone::getId)
-                                        .in(Zone::getId, subs))
+                                .lambda()
+                                .select(Zone::getUserId, Zone::getId)
+                                .in(Zone::getId, subs))
                                 .stream())
                 .collect(Collectors.toMap(Zone::getId, Zone::getUserId, (o1, o2) -> o2));
     }
@@ -100,6 +102,7 @@ public class ZoneServiceImpl extends ServiceImpl<ZoneMapper, Zone> implements IZ
 
     @Resource
     private HttpTextService httpTextService;
+
     /**
      * 发表说说
      *
@@ -126,7 +129,9 @@ public class ZoneServiceImpl extends ServiceImpl<ZoneMapper, Zone> implements IZ
                             .setContentTypeId(n.getContentType().getIndex())
                             .setContentId(n.getContentId()))
                     .collect(Collectors.toList());
-            boolean saveBatch = iContentService.saveBatch(contents);
+            boolean saveBatch = contentMapper.insert(contents).stream().allMatch(
+                    n -> Arrays.stream(n.
+                            getUpdateCounts()).allMatch(l -> l > 0));
             if (saveBatch) {
                 return zone.getId();
             }

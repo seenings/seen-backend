@@ -10,3 +10,6 @@ insert into seen.tag (id, parent_tag_id, tag_name) values (9, 2, '跳舞');
 insert into seen.tag (id, parent_tag_id, tag_name) values (10, 2, '吉他');
 insert into seen.tag (id, parent_tag_id, tag_name) values (11, 2, '画画');
 insert into seen.tag (id, parent_tag_id, tag_name) values (12, 2, '小提琴');
+insert into seen.tag (id, parent_tag_id, tag_name) values (13, 3, '网球');
+insert into seen.tag (id, parent_tag_id, tag_name) values (14, 3, '游泳');
+insert into seen.tag (id, parent_tag_id, tag_name) values (15, 3, '足球');

@@ -4,12 +4,12 @@ import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.address.po.CityPO;
 import io.github.seenings.address.service.CityService;
 import io.github.seenings.core.util.CollUtil;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,8 +26,11 @@ import java.util.stream.Collectors;
 @Mapper
 interface CityPOMapper extends BaseMapper<CityPO> {}
 
-@Service
-public class CityPOServiceImpl extends ServiceImpl<CityPOMapper, CityPO> implements CityService {
+@AllArgsConstructor
+@Repository
+public class CityPOServiceImpl implements CityService {
+
+    private CityPOMapper cityPOMapper;
 
     @Override
     public Map<Integer, String> idToName(Set<Integer> ids) {
@@ -39,7 +42,7 @@ public class CityPOServiceImpl extends ServiceImpl<CityPOMapper, CityPO> impleme
         SFunction<CityPO, Integer> getKey = CityPO::getId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs ->
-                        list(new LambdaQueryWrapper<CityPO>().in(getKey, subs).select(getKey, getValue)).stream())
+                        cityPOMapper.selectList(new LambdaQueryWrapper<CityPO>().in(getKey, subs).select(getKey, getValue)).stream())
                 .collect(Collectors.toMap(getKey, getValue, (o1, o2) -> o2));
     }
 
@@ -53,7 +56,7 @@ public class CityPOServiceImpl extends ServiceImpl<CityPOMapper, CityPO> impleme
         SFunction<CityPO, String> getKey = CityPO::getCode;
         return ListUtil.partition(list, 100).stream()
                 .flatMap(subs ->
-                        list(new LambdaQueryWrapper<CityPO>().in(getKey, subs).select(getKey, getValue)).stream())
+                        cityPOMapper.selectList(new LambdaQueryWrapper<CityPO>().in(getKey, subs).select(getKey, getValue)).stream())
                 .collect(Collectors.toMap(getKey, getValue));
     }
 
@@ -67,7 +70,7 @@ public class CityPOServiceImpl extends ServiceImpl<CityPOMapper, CityPO> impleme
         SFunction<CityPO, String> getKey = CityPO::getProvinceCode;
         return ListUtil.partition(list, 100).stream()
                 .flatMap(subs ->
-                        list(new LambdaQueryWrapper<CityPO>().in(getKey, subs).select(getKey, getValue)).stream())
+                        cityPOMapper.selectList(new LambdaQueryWrapper<CityPO>().in(getKey, subs).select(getKey, getValue)).stream())
                 .collect(Collectors.groupingBy(
                         CityPO::getProvinceCode, Collectors.mapping(CityPO::getCode, Collectors.toList())));
     }
@@ -79,7 +82,7 @@ public class CityPOServiceImpl extends ServiceImpl<CityPOMapper, CityPO> impleme
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<CityPO>()
+                .flatMap(subs -> cityPOMapper.selectList(new LambdaQueryWrapper<CityPO>()
                                 .in(CityPO::getCode, subs)
                                 .select(CityPO::getId, CityPO::getCode))
                         .stream())

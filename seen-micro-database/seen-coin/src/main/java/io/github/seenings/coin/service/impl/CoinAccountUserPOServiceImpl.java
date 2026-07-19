@@ -3,12 +3,12 @@ package io.github.seenings.coin.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.coin.po.CoinAccountUser;
 import io.github.seenings.account.service.CoinAccountUserService;
 import io.github.seenings.core.util.CollUtil;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -25,10 +25,12 @@ import java.util.stream.Collectors;
  */
 @Mapper
 interface CoinAccountUserPOMapper extends BaseMapper<CoinAccountUser> {}
-
-@Service
-public class CoinAccountUserPOServiceImpl extends ServiceImpl<CoinAccountUserPOMapper, CoinAccountUser>
+@AllArgsConstructor
+@Repository
+public class CoinAccountUserPOServiceImpl
         implements CoinAccountUserService {
+
+    private CoinAccountUserPOMapper coinAccountUserPOMapper;
 
     /**
      * 根据用户ID获取账户ID
@@ -44,7 +46,7 @@ public class CoinAccountUserPOServiceImpl extends ServiceImpl<CoinAccountUserPOM
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<CoinAccountUser>()
+                .flatMap(subs -> coinAccountUserPOMapper.selectList(new QueryWrapper<CoinAccountUser>()
                                 .lambda()
                                 .in(CoinAccountUser::getUserId, subs)
                                 .select(CoinAccountUser::getUserId, CoinAccountUser::getAccountId))
@@ -70,7 +72,7 @@ public class CoinAccountUserPOServiceImpl extends ServiceImpl<CoinAccountUserPOM
                     .setUserId(userId)
                     .setAccountId(accountId)
                     .setCreateTime(LocalDateTime.now());
-            return save(po);
+            return coinAccountUserPOMapper.insert(po)>0;
         } else {
             return false;
         }

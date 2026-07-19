@@ -116,45 +116,6 @@ public class ZoneController {
         return ResUtils.ok(zoneTexts);
     }
 
-    /**
-     * 根据说说获取我的相册的图片
-     *
-     * @param userId 用户ID
-     * @return 图片ID
-     */
-    @PostMapping("my-photo-album")
-    public R<List<Integer>> myPhotoAlbum(@SessionAttribute Long userId) {
-
-        Set<Integer> zoneIds =
-                iZoneService.userIdToZoneId(Collections.singleton(userId)).get(userId);
-        Map<Integer, LocalDateTime> zoneIdToPublishTimeMap = iZoneService.zoneIdToPublishTime(zoneIds);
-        Map<Integer, Set<Integer>> zoneIdToContentIdIsImageMap = iContentService.zoneIdToContentIdIsImage(zoneIds);
-        List<Integer> imageIds = zoneIdToContentIdIsImageMap.entrySet().stream()
-                // 时间从大到小
-                .sorted((o2, o1) -> {
-                    LocalDateTime o1PublishTime = zoneIdToPublishTimeMap.get(o1.getKey());
-                    LocalDateTime o2PublishTime = zoneIdToPublishTimeMap.get(o2.getKey());
-                    return o1PublishTime.compareTo(o2PublishTime);
-                })
-                .map(Map.Entry::getValue)
-                .distinct()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-        return ResUtils.ok(imageIds);
-    }
-
-    /**
-     * 列出热门的用户
-     *
-     * @param current 当前页
-     * @param size    页面大小
-     * @return 返回用户
-     */
-    @PostMapping("news")
-    public R<Map<Integer, LocalDateTime>> news(int current, int size) {
-        Map<Integer, LocalDateTime> news = iZoneService.news(current, size);
-        return ResUtils.ok(news);
-    }
 
     @Resource
     private HttpPhotoService httpPhotoService;

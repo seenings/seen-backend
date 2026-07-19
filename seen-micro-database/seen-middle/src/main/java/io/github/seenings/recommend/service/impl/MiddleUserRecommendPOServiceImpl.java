@@ -6,13 +6,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.core.util.CollUtil;
 import io.github.seenings.recommend.po.MiddleUserRecommendPO;
 
@@ -28,16 +28,19 @@ import cn.hutool.core.collection.ListUtil;
 interface MiddleUserRecommendPOMapper extends BaseMapper<MiddleUserRecommendPO> {
 }
 
-@Service
-public class MiddleUserRecommendPOServiceImpl extends ServiceImpl<MiddleUserRecommendPOMapper, MiddleUserRecommendPO>
+@AllArgsConstructor
+@Repository
+public class MiddleUserRecommendPOServiceImpl
         implements MiddleUserRecommendService {
+
+    private MiddleUserRecommendPOMapper middleUserRecommendPOMapper;
 
     @Override
     public Set<Long> haveUserId(Long userId, Set<Long> recommendUserIds) {
         if (cn.hutool.core.collection.CollUtil.isEmpty(recommendUserIds)) {
             return Collections.emptySet();
         }
-        return list(new QueryWrapper<MiddleUserRecommendPO>()
+        return middleUserRecommendPOMapper.selectList(new QueryWrapper<MiddleUserRecommendPO>()
                 .lambda()
                 .eq(MiddleUserRecommendPO::getUserId, userId)
                 .in(MiddleUserRecommendPO::getRecommendUserId, recommendUserIds)
@@ -55,7 +58,7 @@ public class MiddleUserRecommendPOServiceImpl extends ServiceImpl<MiddleUserReco
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 500).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<MiddleUserRecommendPO>()
+                .flatMap(subs -> middleUserRecommendPOMapper.selectList(new LambdaQueryWrapper<MiddleUserRecommendPO>()
                         .in(MiddleUserRecommendPO::getUserId, subs)
                         .eq(MiddleUserRecommendPO::getDate, date)
                         .select(MiddleUserRecommendPO::getUserId, MiddleUserRecommendPO::getRecommendUserId))
@@ -75,7 +78,7 @@ public class MiddleUserRecommendPOServiceImpl extends ServiceImpl<MiddleUserReco
                                 .setRecommendUserId(n)
                                 .setUserId(userId)
                                 .setDate(date);
-                        return save(po);
+                        return middleUserRecommendPOMapper.insert(po)>0;
                     })
                     .map(n -> n ? 1 : 0)
                     .reduce(Integer::sum)

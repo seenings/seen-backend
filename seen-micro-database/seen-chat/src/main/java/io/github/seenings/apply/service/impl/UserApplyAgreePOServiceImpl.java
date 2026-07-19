@@ -3,12 +3,12 @@ package io.github.seenings.apply.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.apply.po.UserApplyAgreePO;
 import io.github.seenings.apply.service.UserApplyAgreeService;
 import io.github.seenings.core.util.CollUtil;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -26,9 +26,12 @@ import java.util.stream.Collectors;
 @Mapper
 interface UserApplyAgreePOMapper extends BaseMapper<UserApplyAgreePO> {}
 
-@Service
-public class UserApplyAgreePOServiceImpl extends ServiceImpl<UserApplyAgreePOMapper, UserApplyAgreePO>
+@AllArgsConstructor
+@Repository
+public class UserApplyAgreePOServiceImpl
         implements UserApplyAgreeService {
+
+    private UserApplyAgreePOMapper userApplyAgreePOMapper;
 
     @Override
     public Map<Integer, LocalDateTime> applyIdToAgreeTime(Set<Integer> applyIds ) {
@@ -37,7 +40,7 @@ public class UserApplyAgreePOServiceImpl extends ServiceImpl<UserApplyAgreePOMap
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<UserApplyAgreePO>()
+                .flatMap(subs -> userApplyAgreePOMapper.selectList(new LambdaQueryWrapper<UserApplyAgreePO>()
                                 .in(UserApplyAgreePO::getApplyId, subs)
                                 .select(UserApplyAgreePO::getApplyId, UserApplyAgreePO::getAgreeTime))
                         .stream())
@@ -51,7 +54,7 @@ public class UserApplyAgreePOServiceImpl extends ServiceImpl<UserApplyAgreePOMap
                 .setApplyId(applyId)
                 .setAgreeTime(agreeTime)
                 .setCreateTime(LocalDateTime.now());
-        save(po);
+        userApplyAgreePOMapper.insert(po);
         return po.getId();
     }
 }

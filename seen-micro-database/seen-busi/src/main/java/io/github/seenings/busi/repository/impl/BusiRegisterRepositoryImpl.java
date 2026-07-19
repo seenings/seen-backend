@@ -29,12 +29,12 @@ public class BusiRegisterRepositoryImpl implements BusiRegisterController {
      * 数据表元数据
      */
     public static class Meta {
-        public static Table<Record> TABLE_NAME = table("BUSI_REGISTER");
-        public static Field<Long> REGISTER_ID = field("REGISTER_ID", SQLDataType.BIGINT.identity(true));
-        public static Field<Long> USER_ID = field("USER_ID", Long.class);
-        public static Field<Long> BUSI_ID = field("BUSI_ID", Long.class);
-        public static Field<Timestamp> REGISTER_TIME = field("REGISTER_TIME", Timestamp.class);
-        public static Field<Timestamp> CREATE_TIME = field("CREATE_TIME", Timestamp.class);
+        public static Table<Record> TABLE_NAME = table("busi_register");
+        public static Field<Long> REGISTER_ID = field("register_id", SQLDataType.BIGINT.generatedByDefaultAsIdentity());
+        public static Field<Long> USER_ID = field("user_id", Long.class);
+        public static Field<Long> BUSI_ID = field("busi_id", Long.class);
+        public static Field<Timestamp> REGISTER_TIME = field("register_time", Timestamp.class);
+        public static Field<Timestamp> CREATE_TIME = field("create_time", Timestamp.class);
     }
 
     /**

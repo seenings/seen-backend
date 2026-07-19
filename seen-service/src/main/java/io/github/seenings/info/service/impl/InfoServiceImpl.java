@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.address.http.HttpCityService;
 import io.github.seenings.address.http.HttpProvinceService;
 import io.github.seenings.article.enumeration.ContentType;
@@ -59,10 +58,12 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 用户信息 服务实现类
  */
-@Slf4j
-@Service
 @AllArgsConstructor
-public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements InfoService {
+@Service
+@Slf4j
+public class InfoServiceImpl  implements InfoService {
+
+    private InfoMapper infoMapper;
 
     private HttpUserMainPhotoService httpUserMainPhotoService;
 
@@ -102,7 +103,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(new ArrayList<>(userIds), 100).parallelStream().flatMap(subs -> list(new QueryWrapper<Info>().lambda().in(Info::getUserId, subs).select(Info::getUserId, Info::getName)).stream()).collect(Collectors.toMap(Info::getUserId, Info::getName, (o1, o2) -> o2));
+        return ListUtil.partition(new ArrayList<>(userIds), 100).parallelStream().flatMap(subs -> infoMapper.selectList(new QueryWrapper<Info>().lambda().in(Info::getUserId, subs).select(Info::getUserId, Info::getName)).stream()).collect(Collectors.toMap(Info::getUserId, Info::getName, (o1, o2) -> o2));
     }
 
     /**
@@ -116,7 +117,7 @@ public class InfoServiceImpl extends ServiceImpl<InfoMapper, Info> implements In
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(new ArrayList<>(userIds), 100).parallelStream().flatMap(subs -> list(new QueryWrapper<Info>().lambda().in(Info::getUserId, subs).select(Info::getUserId, Info::getProfilePhotoId)).stream()).collect(Collectors.toMap(Info::getUserId, Info::getProfilePhotoId, (o1, o2) -> o2));
+        return ListUtil.partition(new ArrayList<>(userIds), 100).parallelStream().flatMap(subs -> infoMapper.selectList(new QueryWrapper<Info>().lambda().in(Info::getUserId, subs).select(Info::getUserId, Info::getProfilePhotoId)).stream()).collect(Collectors.toMap(Info::getUserId, Info::getProfilePhotoId, (o1, o2) -> o2));
     }
 
 

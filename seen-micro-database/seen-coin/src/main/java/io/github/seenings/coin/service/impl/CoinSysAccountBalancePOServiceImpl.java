@@ -4,12 +4,12 @@ import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.coin.po.CoinSysAccountBalancePO;
 import io.github.seenings.account.service.CoinSysAccountBalanceService;
 import io.github.seenings.core.util.CollUtil;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -28,9 +28,11 @@ import java.util.stream.Collectors;
 interface CoinSysAccountBalancePOMapper extends BaseMapper<CoinSysAccountBalancePO> {
 }
 
-@Service
-public class CoinSysAccountBalancePOServiceImpl extends ServiceImpl<CoinSysAccountBalancePOMapper, CoinSysAccountBalancePO> implements CoinSysAccountBalanceService {
+@AllArgsConstructor
+@Repository
+public class CoinSysAccountBalancePOServiceImpl   implements CoinSysAccountBalanceService {
 
+    private CoinSysAccountBalancePOMapper coinSysAccountBalancePOMapper;
     /**
      * 根据账户ID获取余额
      *
@@ -46,7 +48,7 @@ public class CoinSysAccountBalancePOServiceImpl extends ServiceImpl<CoinSysAccou
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<CoinSysAccountBalancePO>()
+                .flatMap(subs -> coinSysAccountBalancePOMapper.selectList(new QueryWrapper<CoinSysAccountBalancePO>()
                         .lambda()
                         .in(CoinSysAccountBalancePO::getAccountId, subs)
                         .select(CoinSysAccountBalancePO::getAccountId, CoinSysAccountBalancePO::getCoinAmount))
@@ -71,10 +73,10 @@ public class CoinSysAccountBalancePOServiceImpl extends ServiceImpl<CoinSysAccou
                 .setCoinAmount(existsCoinAmount + offsetAmount)
                 .setChangeTime(now)
                 .setUpdateTime(now);
-        return update(
+        return coinSysAccountBalancePOMapper.update(
                 po,
                 new UpdateWrapper<CoinSysAccountBalancePO>()
                         .lambda()
-                        .eq(CoinSysAccountBalancePO::getAccountId, accountId));
+                        .eq(CoinSysAccountBalancePO::getAccountId, accountId))>0;
     }
 }

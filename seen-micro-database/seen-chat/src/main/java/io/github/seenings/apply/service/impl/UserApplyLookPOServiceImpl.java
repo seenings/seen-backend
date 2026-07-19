@@ -3,12 +3,12 @@ package io.github.seenings.apply.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.apply.po.UserApplyLookPO;
 import io.github.seenings.apply.service.UserApplyLookService;
 import io.github.seenings.core.util.CollUtil;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -26,9 +26,12 @@ import java.util.stream.Collectors;
 @Mapper
 interface UserApplyLookPOMapper extends BaseMapper<UserApplyLookPO> {}
 
-@Service
-public class UserApplyLookPOServiceImpl extends ServiceImpl<UserApplyLookPOMapper, UserApplyLookPO>
+@AllArgsConstructor
+@Repository
+public class UserApplyLookPOServiceImpl
         implements UserApplyLookService {
+
+    private UserApplyLookPOMapper userApplyLookPOMapper;
 
     @Override
     public Map<Integer, LocalDateTime> applyIdToLookTime(Set<Integer> applyIds) {
@@ -37,7 +40,7 @@ public class UserApplyLookPOServiceImpl extends ServiceImpl<UserApplyLookPOMappe
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<UserApplyLookPO>()
+                .flatMap(subs -> userApplyLookPOMapper.selectList(new LambdaQueryWrapper<UserApplyLookPO>()
                                 .in(UserApplyLookPO::getApplyId, subs)
                                 .select(UserApplyLookPO::getApplyId, UserApplyLookPO::getLookTime))
                         .stream())
@@ -49,7 +52,7 @@ public class UserApplyLookPOServiceImpl extends ServiceImpl<UserApplyLookPOMappe
 
         UserApplyLookPO po =
                 new UserApplyLookPO().setApplyId(applyId).setLookTime(lookTime).setCreateTime(LocalDateTime.now());
-        save(po);
+        userApplyLookPOMapper.insert(po);
         return po.getId();
     }
 }

@@ -4,14 +4,14 @@ import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.chat.model.ChatUser;
 import io.github.seenings.chat.po.ChatUserPO;
 import io.github.seenings.chat.service.ChatUserService;
 import io.github.seenings.common.model.ResultPage;
 import io.github.seenings.core.util.CollUtil;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -30,8 +30,11 @@ import java.util.stream.Collectors;
 @Mapper
 interface ChatUserPOMapper extends BaseMapper<ChatUserPO> {}
 
-@Service
-public class ChatUserPOServiceImpl extends ServiceImpl<ChatUserPOMapper, ChatUserPO> implements ChatUserService {
+@AllArgsConstructor
+@Repository
+public class ChatUserPOServiceImpl  implements ChatUserService {
+
+    private ChatUserPOMapper chatUserPOMapper;
 
     /**
      * 分页获取聊天列表
@@ -43,7 +46,7 @@ public class ChatUserPOServiceImpl extends ServiceImpl<ChatUserPOMapper, ChatUse
      */
     @Override
     public ResultPage<ChatUser> page(Long userId, int current, int size) {
-        Page<ChatUserPO> chatUsers = page(
+        Page<ChatUserPO> chatUsers = chatUserPOMapper.selectPage(
                 new Page<>(current, size),
                 new QueryWrapper<ChatUserPO>()
                         .lambda()
@@ -70,7 +73,7 @@ public class ChatUserPOServiceImpl extends ServiceImpl<ChatUserPOMapper, ChatUse
         }
         Map<Long, Boolean> friendUserIdToIsFriendMap = ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<ChatUserPO>()
+                .flatMap(subs -> chatUserPOMapper.selectList(new QueryWrapper<ChatUserPO>()
                                 .lambda()
                                 .in(ChatUserPO::getFriendUserId, subs)
                                 .eq(ChatUserPO::getUserId, userId)
@@ -103,7 +106,7 @@ public class ChatUserPOServiceImpl extends ServiceImpl<ChatUserPOMapper, ChatUse
                     .setUserId(userId)
                     .setFriendUserId(friendUserId)
                     .setUpdateTime(LocalDateTime.now());
-            return save(po);
+            return chatUserPOMapper.insert(po)>0;
         } else {
             return false;
         }

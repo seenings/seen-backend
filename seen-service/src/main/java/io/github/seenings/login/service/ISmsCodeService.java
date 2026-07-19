@@ -1,6 +1,5 @@
 package io.github.seenings.login.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import io.github.seenings.login.entity.SmsCode;
 
 /**
@@ -11,7 +10,7 @@ import io.github.seenings.login.entity.SmsCode;
  * @author chixh
  * @since 2021-05-08
  */
-public interface ISmsCodeService extends IService<SmsCode> {
+public interface ISmsCodeService  {
 
     boolean validate(String phone, Integer smsId, Integer smsCode);
 }

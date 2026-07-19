@@ -20,7 +20,7 @@ import java.util.Set;
 public interface HttpUserBirthPlaceService {
 
     @PostExchange("user-id-to-city-id")
-    Map<Long, Integer> userIdToCityId(Set<Long> userIds);
+    Map<Long, Integer> userIdToCityId(@RequestBody Set<Long> userIds);
 
     @PostExchange("user-id-to-province-id")
     Map<Long, Integer> userIdToProvinceId(@RequestBody Set<Long> userIds);

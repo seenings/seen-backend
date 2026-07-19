@@ -2,12 +2,12 @@ package io.github.seenings.school.service.impl;
 
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.school.enumeration.Education;
 import io.github.seenings.school.mapper.EducationalPOMapper;
 import io.github.seenings.school.po.EducationalPO;
 import io.github.seenings.school.service.EducationalService;
-import org.springframework.stereotype.Service;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,9 +22,12 @@ import java.util.stream.Collectors;
  * @author chixuehui
  * @since 2022-10-06
  */
-@Service
-public class EducationalPOServiceImpl extends ServiceImpl<EducationalPOMapper, EducationalPO>
+@AllArgsConstructor
+@Repository
+public class EducationalPOServiceImpl
         implements EducationalService {
+
+    private EducationalPOMapper educationalPOMapper;
 
     /**
      * 根据用户ID获取学历
@@ -37,7 +40,7 @@ public class EducationalPOServiceImpl extends ServiceImpl<EducationalPOMapper, E
             return Collections.emptyMap();
         }
         return ListUtil.partition(new ArrayList<>(userIds), 100).stream()
-                .flatMap(subs -> list(new QueryWrapper<EducationalPO>()
+                .flatMap(subs -> educationalPOMapper.selectList(new QueryWrapper<EducationalPO>()
                                 .lambda()
                                 .in(EducationalPO::getUserId, subs)
                                 .select(EducationalPO::getUserId, EducationalPO::getEducational))
@@ -56,17 +59,17 @@ public class EducationalPOServiceImpl extends ServiceImpl<EducationalPOMapper, E
         Map<Long, Integer> userIdToEducationalMap = userIdToEducational(Collections.singleton(userId));
         Integer educational = userIdToEducationalMap.get(userId);
         if (educational == null) {
-            return save(new EducationalPO()
+            return educationalPOMapper.insert(new EducationalPO()
                     .setUserId(userId)
                     .setEducational(education.getIndex())
-                    .setUpdateTime(LocalDateTime.now()));
+                    .setUpdateTime(LocalDateTime.now()))>0;
         } else {
-            return update(
+            return educationalPOMapper.update(
                     new EducationalPO()
                             .setUserId(userId)
                             .setEducational(education.getIndex())
                             .setUpdateTime(LocalDateTime.now()),
-                    new QueryWrapper<EducationalPO>().lambda().eq(EducationalPO::getUserId, userId));
+                    new QueryWrapper<EducationalPO>().lambda().eq(EducationalPO::getUserId, userId))>0;
         }
     }
 }

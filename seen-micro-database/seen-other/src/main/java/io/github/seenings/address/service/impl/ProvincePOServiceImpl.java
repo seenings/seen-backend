@@ -5,12 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.address.po.ProvincePO;
 import io.github.seenings.address.service.ProvinceService;
 import io.github.seenings.core.util.CollUtil;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,8 +27,11 @@ import java.util.stream.Collectors;
 @Mapper
 interface ProvincePOMapper extends BaseMapper<ProvincePO> {}
 
-@Service
-public class ProvincePOServiceImpl extends ServiceImpl<ProvincePOMapper, ProvincePO> implements ProvinceService {
+@AllArgsConstructor
+@Repository
+public class ProvincePOServiceImpl  implements ProvinceService {
+
+    private ProvincePOMapper provincePOMapper;
 
     @Override
     public Map<Integer, String> idToName(Set<Integer> ids) {
@@ -40,7 +43,7 @@ public class ProvincePOServiceImpl extends ServiceImpl<ProvincePOMapper, Provinc
         SFunction<ProvincePO, Integer> getKey = ProvincePO::getId;
         return ListUtil.partition(list, 500).stream()
                 .flatMap(subs ->
-                        list(new LambdaQueryWrapper<ProvincePO>()
+                        provincePOMapper.selectList(new LambdaQueryWrapper<ProvincePO>()
                                         .in(getKey, subs)
                                         .select(getKey, getValue))
                                 .stream())
@@ -54,7 +57,7 @@ public class ProvincePOServiceImpl extends ServiceImpl<ProvincePOMapper, Provinc
             return Collections.emptyMap();
         }
         return ListUtil.partition(list, 100).stream()
-                .flatMap(subs -> list(new LambdaQueryWrapper<ProvincePO>()
+                .flatMap(subs -> provincePOMapper.selectList(new LambdaQueryWrapper<ProvincePO>()
                                 .in(ProvincePO::getCode, subs)
                                 .select(ProvincePO::getCode, ProvincePO::getId))
                         .stream())
@@ -63,7 +66,7 @@ public class ProvincePOServiceImpl extends ServiceImpl<ProvincePOMapper, Provinc
 
     @Override
     public List<Map.Entry<String, String>> listAll() {
-        List<ProvincePO> list = list(new QueryWrapper<ProvincePO>()
+        List<ProvincePO> list = provincePOMapper.selectList(new QueryWrapper<ProvincePO>()
                 .lambda()
                 .select(ProvincePO::getCode, ProvincePO::getName)
                 .orderByAsc(ProvincePO::getCode));

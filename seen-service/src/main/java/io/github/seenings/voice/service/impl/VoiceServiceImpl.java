@@ -2,14 +2,14 @@ package io.github.seenings.voice.service.impl;
 
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.core.util.CollUtil;
 import io.github.seenings.sys.util.ListUtils;
 import io.github.seenings.sys.constant.PublicConstant;
 import io.github.seenings.voice.entity.Voice;
 import io.github.seenings.voice.mapper.VoiceMapper;
 import io.github.seenings.voice.service.IVoiceService;
-import org.springframework.stereotype.Service;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,13 +25,16 @@ import java.util.stream.Collectors;
  * @author chixh
  * @since 2021-07-25
  */
-@Service
-public class VoiceServiceImpl extends ServiceImpl<VoiceMapper, Voice> implements IVoiceService {
+@AllArgsConstructor
+@Repository
+public class VoiceServiceImpl  implements IVoiceService {
+
+    private VoiceMapper voiceMapper;
     @Override
     public Integer setPath(String path, Long userId) {
         Voice entity = new Voice();
         entity.setPath(path);
-        save(entity);
+        voiceMapper.insert(entity);
         return entity.getId();
     }
 
@@ -61,6 +64,6 @@ public class VoiceServiceImpl extends ServiceImpl<VoiceMapper, Voice> implements
         if (CollUtil.isEmpty(voiceIdList)) {
             return Collections.emptyMap();
         }
-        return ListUtil.partition(voiceIdList, 500).stream().flatMap(subs -> list(new QueryWrapper<Voice>().lambda().in(Voice::getId, subs).select(Voice::getId, Voice::getPath)).stream()).collect(Collectors.toMap(Voice::getId, Voice::getPath, (o1, o2) -> o2));
+        return ListUtil.partition(voiceIdList, 500).stream().flatMap(subs -> voiceMapper.selectList(new QueryWrapper<Voice>().lambda().in(Voice::getId, subs).select(Voice::getId, Voice::getPath)).stream()).collect(Collectors.toMap(Voice::getId, Voice::getPath, (o1, o2) -> o2));
     }
 }

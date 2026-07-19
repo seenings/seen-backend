@@ -3,7 +3,7 @@ package io.github.seenings.info.service.impl;
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import io.github.seenings.core.util.CollUtil;
 import io.github.seenings.info.po.UserPO;
 import io.github.seenings.info.service.UserService;

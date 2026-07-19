@@ -29,7 +29,7 @@ public class BusiRepositoryImpl implements BusiController {
      */
     public static class Meta {
         public static Table<Record> TABLE_NAME = table("busi");
-        public static Field<Long> BUSI_ID = field("busi_id", SQLDataType.BIGINT.identity(true));
+        public static Field<Long> BUSI_ID = field("busi_id", SQLDataType.BIGINT.generatedByDefaultAsIdentity());
         public static Field<Integer> BUSI_TYPE_ID = field("busi_type_id", Integer.class);
         public static Field<Timestamp> BUSI_TIME = field("busi_time", Timestamp.class);
     }

@@ -43,17 +43,19 @@ echo $JAVA_HOME
 ### Windows 11预先配置
 
 ```shell
+Get-Content D:\Users\CXH\data\secret\.env.secret.txt | ForEach-Object {$l=$_.Trim();if($l -and !$l.StartsWith("#")){$i=$l.IndexOf('=');$k=$l.Substring(0,$i).Trim();$v=$l.Substring($i+1).Trim();[Environment]::SetEnvironmentVariable($k,$v,"Process")}}
+```
+
+```shell
+echo "SEEN_VERSION=$env:SEEN_VERSION";
+``` 
+
+```shell
 cd ~\IdeaProjects\seenings\seen-backend
 ```
 
 ```shell
-$$Env:SEEN_VERSION = (Get-Content "./version.txt" -Raw).Trim()
-$$Env:JAVA_HOME = "C:\Users\chixu\.jdks\openjdk-26.0.1"
-```
-
-```shell
-echo "已设置版本：$Env:SEEN_VERSION"
-echo "已设置JAVA_HOME：$Env:JAVA_HOME"
+$$Env:JAVA_HOME = "C:\Users\chixu\.jdks\openjdk-26.0.1" ; echo "已设置JAVA_HOME：$Env:JAVA_HOME" ; java -version
 ```
 
 ### 开始新的开发
@@ -69,38 +71,21 @@ echo "已设置JAVA_HOME：$Env:JAVA_HOME"
 ```
 
 ```shell
-git add .
+git add . ; git commit -m "#91 修改mybatis plus变更"
 ```
 
 ```shell
-git commit -m "升级版本 #90"
+git pull origin main --rebase ; git tag -a v$Env:SEEN_VERSION -m "发布版本$Env:SEEN_VERSION"
 ```
 
 ```shell
-git pull origin main --rebase
-```
-
-```shell
-git tag -a v$Env:SEEN_VERSION -m "发布版本$Env:SEEN_VERSION"
-```
-
-```shell
-git push origin v$Env:SEEN_VERSION
-```
-
-```shell
-git push origin dev_chixh
-
+git push origin v$Env:SEEN_VERSION ; git push origin dev_chixh
 ```
 
 ### 文档发布
 
 ```shell
-./mvnw site:site
-```
-
-```shell
-./mvnw site:stage
+./mvnw site:site ; ./mvnw site:stage
 ```
 
 ```shell
@@ -108,8 +93,6 @@ git push origin dev_chixh
 ```
 
 ## 1.7 启动
-
-[启动说明](./chixuehuidocker/README.md)
 
 分布式中间件,放在内部网络时,使用宣告域名和端口控制
 

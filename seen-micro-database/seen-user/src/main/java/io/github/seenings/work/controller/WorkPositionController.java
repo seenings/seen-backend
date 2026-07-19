@@ -5,6 +5,7 @@ import io.github.seenings.info.service.WorkPositionService;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.annotation.Resource;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -24,14 +25,12 @@ public class WorkPositionController implements HttpWorkPositionService {
     private WorkPositionService workPositionService;
 
     @Override
-    @PostMapping("position-id-to-position-name")
-    public Map<Integer, String> positionIdToPositionName(@RequestBody Set<Integer> ids) {
+    public Map<Integer, String> positionIdToPositionName(Set<Integer> ids) {
         return workPositionService.positionIdToPositionName(ids);
     }
 
     @Override
-    @PostMapping("exists")
-    public boolean exists(@RequestParam("positionName") String positionName) {
+    public boolean exists(String positionName) {
         return workPositionService.exists(positionName);
     }
 
@@ -44,7 +43,6 @@ public class WorkPositionController implements HttpWorkPositionService {
 
 
     @Override
-    @GetMapping("work-position")
     public Map<Integer, String> workPosition() {
         return workPositionService.workPosition();
     }

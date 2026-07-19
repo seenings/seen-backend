@@ -1,11 +1,11 @@
 package io.github.seenings.coin.service.impl;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.coin.po.CoinTradePO;
 import io.github.seenings.trade.service.CoinTradeService;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 
@@ -17,10 +17,11 @@ import java.time.LocalDateTime;
  */
 @Mapper
 interface CoinTradePOMapper extends BaseMapper<CoinTradePO> {}
+@AllArgsConstructor
+@Repository
+public class CoinTradePOServiceImpl   implements CoinTradeService {
 
-@Service
-public class CoinTradePOServiceImpl extends ServiceImpl<CoinTradePOMapper, CoinTradePO> implements CoinTradeService {
-
+    private CoinTradePOMapper coinTradePOMapper;
     /**
      * 添加一笔交易
      * @param inAccountId   资金进账户ID
@@ -39,7 +40,7 @@ public class CoinTradePOServiceImpl extends ServiceImpl<CoinTradePOMapper, CoinT
                 .setInAccountId(inAccountId)
                 .setOutAccountId(outAccountId)
                 .setDescription(description);
-        boolean save = save(po);
+        boolean save = coinTradePOMapper.insert(po)>0;
         if (save) {
             return po.getId();
         } else {

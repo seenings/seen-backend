@@ -4,12 +4,12 @@ import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.seenings.coin.po.CoinAccountBalancePO;
 import io.github.seenings.account.service.CoinAccountBalanceService;
 import io.github.seenings.core.util.CollUtil;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -28,9 +28,12 @@ import java.util.stream.Collectors;
 interface CoinAccountBalancePOMapper extends BaseMapper<CoinAccountBalancePO> {
 }
 
-@Service
-public class CoinAccountBalancePOServiceImpl extends ServiceImpl<CoinAccountBalancePOMapper, CoinAccountBalancePO>
+@AllArgsConstructor
+@Repository
+public class CoinAccountBalancePOServiceImpl
         implements CoinAccountBalanceService {
+
+    private CoinAccountBalancePOMapper coinAccountBalancePOMapper;
 
     /**
      * 根据账户ID获取余额
@@ -47,7 +50,7 @@ public class CoinAccountBalancePOServiceImpl extends ServiceImpl<CoinAccountBala
         }
         return ListUtil.partition(list, 100).stream()
                 .parallel()
-                .flatMap(subs -> list(new QueryWrapper<CoinAccountBalancePO>()
+                .flatMap(subs -> coinAccountBalancePOMapper.selectList(new QueryWrapper<CoinAccountBalancePO>()
                         .lambda()
                         .in(CoinAccountBalancePO::getAccountId, subs)
                         .select(CoinAccountBalancePO::getAccountId, CoinAccountBalancePO::getCoinAmount))
@@ -73,15 +76,15 @@ public class CoinAccountBalancePOServiceImpl extends ServiceImpl<CoinAccountBala
                 .setChangeTime(now)
                 .setUpdateTime(now);
         if (existsCoinAmount != null) {
-            return update(
+            return coinAccountBalancePOMapper.update(
                     po,
                     new UpdateWrapper<CoinAccountBalancePO>()
                             .lambda()
-                            .eq(CoinAccountBalancePO::getAccountId, accountId));
+                            .eq(CoinAccountBalancePO::getAccountId, accountId))>0;
         } else {
             po.setCreateTime(now);
             po.setAccountId(accountId);
-            return save(po);
+            return coinAccountBalancePOMapper.insert(po)>0;
         }
     }
 
@@ -101,10 +104,10 @@ public class CoinAccountBalancePOServiceImpl extends ServiceImpl<CoinAccountBala
                 .setCoinAmount(existsCoinAmount + offsetAmount)
                 .setChangeTime(now)
                 .setUpdateTime(now);
-        return update(
+        return coinAccountBalancePOMapper.update(
                 po,
                 new UpdateWrapper<CoinAccountBalancePO>()
                         .lambda()
-                        .eq(CoinAccountBalancePO::getAccountId, accountId));
+                        .eq(CoinAccountBalancePO::getAccountId, accountId))>0;
     }
 }
