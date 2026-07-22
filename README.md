@@ -71,7 +71,7 @@ $$Env:JAVA_HOME = "C:\Users\chixu\.jdks\openjdk-26.0.1" ; echo "已设置JAVA_HO
 ```
 
 ```shell
-git add . ; git commit -m "#91 修改mybatis plus变更"
+git add . ; git commit -m "#92 更新版本"
 ```
 
 ```shell
