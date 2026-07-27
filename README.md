@@ -47,15 +47,15 @@ Get-Content D:\Users\CXH\data\secret\.env.secret.txt | ForEach-Object {$l=$_.Tri
 ```
 
 ```shell
-echo "SEEN_VERSION=$env:SEEN_VERSION";
+$$Env:JAVA_HOME = "C:\Users\chixu\.jdks\openjdk-26.0.1" ; echo "已设置JAVA_HOME：$Env:JAVA_HOME"
+```
+
+```shell
+echo "SEEN_VERSION=$env:SEEN_VERSION" ; java -version
 ``` 
 
 ```shell
 cd ~\IdeaProjects\seenings\seen-backend
-```
-
-```shell
-$$Env:JAVA_HOME = "C:\Users\chixu\.jdks\openjdk-26.0.1" ; echo "已设置JAVA_HOME：$Env:JAVA_HOME" ; java -version
 ```
 
 ### 开始新的开发
@@ -71,7 +71,7 @@ $$Env:JAVA_HOME = "C:\Users\chixu\.jdks\openjdk-26.0.1" ; echo "已设置JAVA_HO
 ```
 
 ```shell
-git add . ; git commit -m "#93 更新版本"
+git add . ; git commit -m "#94 部署调试成功"
 ```
 
 ```shell

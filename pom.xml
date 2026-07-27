@@ -13,7 +13,7 @@
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.93</version>
+    <version>0.1.94</version>
     <properties>
         <bc.version>1.85</bc.version>
         <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
