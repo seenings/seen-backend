@@ -36,7 +36,7 @@ public interface HttpSchoolService {
     /// @param schoolCodes 学校标识符
     /// @return 学校标识符对应所在地
     @PostExchange("school-code-to-location")
-    Map<String, String> schoolCodeToLocation(Set<String> schoolCodes);
+    Map<String, String> schoolCodeToLocation(@RequestBody Set<String> schoolCodes);
 
 
     /// 获取所有学校的信息
