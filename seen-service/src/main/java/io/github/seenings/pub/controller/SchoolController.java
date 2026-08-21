@@ -58,13 +58,14 @@ public class SchoolController {
                     String provinceName = provinceIdsToName.get(provinceId);
                     Set<String> schoolCodeByProvince = provinceNameToSchoolCode.get(provinceName);
                     Set<String> cityNames = provinceCodeToCityName.get(provinceCode);
-                    Set<String> schoolCOdeByCity = cityNameToSchoolCode.entrySet()
+                    if (CollUtil.isEmpty(cityNames)) return null;
+                    Set<String> schoolCodeByCity = cityNameToSchoolCode.entrySet()
                             .stream().filter(n -> cityNames.contains(n.getKey()))
                             .map(Map.Entry::getValue)
                             .flatMap(Collection::stream).collect(Collectors.toSet());
-                    return Map.entry(provinceCode, new HashSet<>(CollUtil.union(schoolCodeByProvince, schoolCOdeByCity)));
+                    return Map.entry(provinceCode, new HashSet<>(CollUtil.union(schoolCodeByProvince, schoolCodeByCity)));
 
-                }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                }).filter(Objects::nonNull).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         Set<String> schoolCodes = provinceCodeToSchoolCode.values().stream()
                 .flatMap(Collection::stream)
