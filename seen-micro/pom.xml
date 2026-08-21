@@ -6,23 +6,18 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.95</version>
+        <version>0.1.96</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-micro</artifactId>
     <name>seen-micro</name>
     <packaging>pom</packaging>
-    <description>微服务依赖</description>
+    <description>Micro dependency</description>
     <modules>
         <module>seen-socket</module>
         <module>seen-calc</module>
     </modules>
     <dependencies>
-        <!--seen spring-->
-        <dependency>
-            <groupId>io.github.seenings</groupId>
-            <artifactId>seen-spring-config</artifactId>
-        </dependency>
         <!--健康检查-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -42,10 +37,6 @@
         <dependency>
             <groupId>com.github.therapi</groupId>
             <artifactId>therapi-runtime-javadoc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
         </dependency>
         <!-- 必须保留 JSON 消息转换器依赖（Boot 4.0 需显式引入） -->
         <dependency>

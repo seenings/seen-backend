@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.95</version>
+        <version>0.1.96</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-micro-database</artifactId>
@@ -36,10 +36,10 @@
             <groupId>io.github.seenings</groupId>
             <artifactId>seen-spring-config</artifactId>
         </dependency>
-        <!--健康检查-->
+        <!--h2console-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
+            <artifactId>spring-boot-h2console</artifactId>
         </dependency>
         <!--web-->
         <dependency>
@@ -50,11 +50,6 @@
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        <!--负载均衡使用的缓存-->
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
         </dependency>
         <!-- 必须保留 JSON 消息转换器依赖（Boot 4.0 需显式引入） -->
         <dependency>

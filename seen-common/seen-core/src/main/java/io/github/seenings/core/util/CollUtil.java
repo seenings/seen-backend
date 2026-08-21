@@ -3,7 +3,6 @@ package io.github.seenings.core.util;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -39,17 +38,6 @@ public class CollUtil {
             return null;
         }
         return collection.stream().filter(Objects::nonNull).collect(Collectors.toList());
-    }
-
-    /**
-     * 集合去空
-     *
-     * @param collection 集合
-     * @param <T>        类型
-     * @return 集
-     */
-    public static <T> Set<T> valueIsNullToSet(Collection<T> collection) {
-        return collection.stream().filter(Objects::nonNull).collect(Collectors.toSet());
     }
 
     /**

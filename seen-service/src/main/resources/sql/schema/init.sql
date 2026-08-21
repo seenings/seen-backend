@@ -667,7 +667,7 @@ create table  if not exists seen.student_info
     id              int auto_increment comment '自增ID'
         primary key,
     user_id         bigint                                not null comment '用户id',
-    school_id       int                                not null comment '学校id',
+    school_id       varchar(255)                                not null comment '学校id',
     create_time     datetime default CURRENT_TIMESTAMP null comment '创建时间',
     update_time     datetime default CURRENT_TIMESTAMP not null,
     update_user     int      default 8888              not null,

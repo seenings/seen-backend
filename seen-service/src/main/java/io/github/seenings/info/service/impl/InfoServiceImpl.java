@@ -164,8 +164,8 @@ public class InfoServiceImpl  implements InfoService {
         Map<Long, Integer> userIdToCityIdMap = httpUserCurrentResidenceService.userIdToCityId(userIds);
         Set<Integer> cityIds = SetUtils.union(userIdToCityIdMap.values(), userIdToBirthPlaceCityIdMap.values());
         Map<Integer, String> cityIdToNameMap = httpCityService.idToName(cityIds);
-        Map<Long, Integer> userIdToSchoolIdMap = httpStudentInfoService.userIdToSchoolId(userIds);
-        Map<Integer, String> schoolIdToSchoolNameMap = httpSchoolService.idToSchoolName(new HashSet<>(userIdToSchoolIdMap.values()));
+        Map<Long, String> userIdToSchoolIdMap = httpStudentInfoService.userIdToSchoolId(userIds);
+        Map<String, String> schoolIdToSchoolNameMap = httpSchoolService.idToSchoolName(new HashSet<>(userIdToSchoolIdMap.values()));
 
         Map<Integer, String> provinceIdToNameMap = httpProvinceService.idToName(new HashSet<>(userIdToBirthPlaceProvinceIdMap.values()));
         Map<Long, Integer> userIdToPositionMap = httpUserWorkPositionService.userIdToPosition(userIds);
@@ -175,7 +175,7 @@ public class InfoServiceImpl  implements InfoService {
             Integer birthPlaceCityId = userIdToBirthPlaceCityIdMap.get(userId);
             Integer cityId = userIdToCityIdMap.get(userId);
             Integer birthPlaceProvinceId = userIdToBirthPlaceProvinceIdMap.get(userId);
-            Integer schoolId = userIdToSchoolIdMap.get(userId);
+            String schoolId = userIdToSchoolIdMap.get(userId);
             String schoolName = schoolId == null ? null : schoolIdToSchoolNameMap.get(schoolId);
             String positionName = positionIdToPositionNameMap.get(userIdToPositionMap.get(userId));
             UserIntroduceInfo userIntroduceInfo = new UserIntroduceInfo().setUserId(userId).setUserAuthId(0) // TODO

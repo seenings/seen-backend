@@ -21,12 +21,12 @@ public class StudentInfoController implements HttpStudentInfoService {
     private StudentInfoService studentInfoService;
 
     @Override
-    public Map<Long, Integer> userIdToSchoolId(@RequestBody Set<Long> userIds) {
+    public Map<Long, String> userIdToSchoolId(@RequestBody Set<Long> userIds) {
         return studentInfoService.userIdToSchoolId(userIds);
     }
 
     @Override
-    public boolean set(@RequestParam("userId") Long userId, @RequestParam("schoolId") Integer schoolId) {
+    public boolean set(@RequestParam("userId") Long userId, @RequestParam("schoolId") String schoolId) {
 
         return studentInfoService.set(userId, schoolId);
     }

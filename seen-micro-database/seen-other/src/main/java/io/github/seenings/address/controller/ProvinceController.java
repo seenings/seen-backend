@@ -4,13 +4,11 @@ import io.github.seenings.address.http.HttpProvinceService;
 import io.github.seenings.address.service.CityService;
 import io.github.seenings.address.service.ProvinceService;
 import io.github.seenings.common.model.CascaderString;
+import io.github.seenings.core.util.CollUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -74,5 +72,54 @@ public class ProvinceController implements HttpProvinceService {
                     return new CascaderString(provinceId + "", provinceName, c);
                 })
                 .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public Map<String, Set<String>> provinceCodeToCityName(Set<String> provinceCodes) {
+        Map<String, List<String>> provinceCodeToCodeMap = cityService.provinceCodeToCode(provinceCodes);
+        Set<String> codes = provinceCodeToCodeMap.values().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
+        Map<String, String> codeToNameMap = cityService.codeToName(codes);
+
+        return provinceCodes.stream()
+                .map(provinceCode -> {
+                    List<String> cityCodes = provinceCodeToCodeMap.get(provinceCode);
+                    if (CollUtil.isEmpty(cityCodes)) {
+                        return null;
+                    }
+                    Set<String> cityNames = cityCodes.stream()
+                            .map(codeToNameMap::get).collect(Collectors.toSet());
+                    return Map.entry(provinceCode, cityNames);
+                }).filter(Objects::nonNull)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    /// 根据所在地获取省会代码
+    ///
+    /// @param locations 所在地
+    /// @return 所在地对应省会代码
+    @Override
+    public Map<String, String> locationToProvinceCode(Set<String> locations) {
+        Set<String> cityNames = cityService.toCityName(locations);
+        Set<String> provinceNames = provinceService.toProvinceName(locations);
+
+        Map<String, String> cityNameToProvinceCode = cityService.cityNameToProvinceCode(cityNames);
+        Map<String, String> provinceNameToProvinceCode = provinceService.provinceNameToProvinceCode(provinceNames);
+
+        return locations.stream()
+                .map(location -> {
+                    if (cn.hutool.core.collection.CollUtil.contains(cityNames, location)) {
+                        String provinceCode = cityNameToProvinceCode.get(location);
+                        return Map.entry(provinceCode, location);
+                    } else if (cn.hutool.core.collection.CollUtil.contains(provinceNames, location)) {
+                        return Map.entry(provinceNameToProvinceCode.get(location), location);
+                    } else {
+                        return null;
+                    }
+                }).filter(Objects::nonNull)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
     }
 }

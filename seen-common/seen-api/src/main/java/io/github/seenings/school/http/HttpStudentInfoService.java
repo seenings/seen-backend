@@ -21,8 +21,8 @@ import org.springframework.web.service.annotation.PostExchange;
         value = SeenConstant.FEIGN_VERSION + "school/student-info")
 public interface HttpStudentInfoService {
     @PostExchange("user-id-school-id")
-    Map<Long, Integer> userIdToSchoolId(@RequestBody Set<Long> userIds);
+    Map<Long, String> userIdToSchoolId(@RequestBody Set<Long> userIds);
 
     @PostExchange("set")
-    boolean set(@RequestParam("userId") Long userId, @RequestParam("schoolId") Integer schoolId);
+    boolean set(@RequestParam("userId") Long userId, @RequestParam("schoolId") String schoolId);
 }

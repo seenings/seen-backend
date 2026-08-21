@@ -6,12 +6,12 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.95</version>
+        <version>0.1.96</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-service</artifactId>
     <name>seen-service</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Service project for Spring Boot</description>
     <dependencies>
         <!--二维码工具-->
         <dependency>

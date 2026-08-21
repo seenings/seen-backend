@@ -48,7 +48,7 @@ PowerShell
 
 ```shell
 # 提交版本变更
-git add . ; git commit -m "#95 清理spring boot包" ;
+git add . ; git commit -m "更新全国高等学校名单 resolve #69" ;
 # 拉取主线代码变基
 git pull origin main --rebase ;
 # 创建版本Tag
@@ -64,25 +64,11 @@ git push origin v$env:SEEN_VERSION ; git push origin dev_chixh ;
 
 ```shell
 # 生成站点文档
-./mvnw site:site
+./mvnw site:site ;
 # 本地预览站点
-./mvnw site:stage
+./mvnw site:stage ;
 # 推送文档至代码仓库
-./mvnw scm-publish:publish-scm
-```
-
-## 5 Maven 打包发布避坑参数
-
-### 跳过Spring Boot repackage重打包（4.1.0专用）
-
-```shell
-./mvnw clean deploy -Dmaven.test.skip=true -DskipNativeBuild -Dspring-boot.repackage.skip=true
-```
-
-### 无备份修改版本号
-
-```shell
-./mvnw versions:set -DnewVersion=$SEEN_VERSION -DgenerateBackupPoms=false
+./mvnw scm-publish:publish-scm ;
 ```
 
 ## 6 GPG 安全工具安装

@@ -5,12 +5,13 @@
     <parent>
         <groupId>io.github.seenings</groupId>
         <artifactId>seen-backend</artifactId>
-        <version>0.1.95</version>
+        <version>0.1.96</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>seen-common</artifactId>
     <name>seen-common</name>
     <packaging>pom</packaging>
+    <description>Common Pom</description>
     <modules>
         <module>seen-core</module>
         <module>seen-api</module>

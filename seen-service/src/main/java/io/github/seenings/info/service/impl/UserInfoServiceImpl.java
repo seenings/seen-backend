@@ -169,7 +169,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     public void saveEducationAndWork(Long userId, EducationAndWork educationAndWork) {
 
         httpEducationalService.set(userId, SchoolEnumUtils.indexToEducationEnum(educationAndWork.highestEducation()));
-        httpStudentInfoService.set(userId, StrUtils.stringToInt(educationAndWork.highestSchoolIds().get(1)));
+        httpStudentInfoService.set(userId, educationAndWork.highestSchoolIds().get(1));
         httpUserWorkPositionService.set(userId, educationAndWork.workPositionId());
         httpUserWorkService.set(userId, educationAndWork.workCompany());
         httpUserIncomeService.set(userId, UserEnumUtils.indexToYearIncomeEnum(educationAndWork.annualIncomeIndex()));
