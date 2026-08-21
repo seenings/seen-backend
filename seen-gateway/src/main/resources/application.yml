@@ -30,7 +30,7 @@ spring:
       on-profile: chixuehui
     import: file:C:\Users\chixu\IdeaProjects\seenings/local-config/common-chixuehui.yml
 server:
-  port: 9082
+  port: 10082
 ---
 spring:
   config:

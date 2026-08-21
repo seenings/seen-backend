@@ -24,17 +24,17 @@ import java.util.stream.Collectors;
  * @since 2022-12-03
  */
 @Mapper
-interface StudentInfoPOMapper extends BaseMapper<StudentInfoPO> {}
+interface StudentInfoPOMapper extends BaseMapper<StudentInfoPO> {
+}
 
 @AllArgsConstructor
 @Repository
-public class StudentInfoPOServiceImpl
-        implements StudentInfoService {
+public class StudentInfoPOServiceImpl implements StudentInfoService {
 
     private StudentInfoPOMapper studentInfoPOMapper;
 
     @Override
-    public Map<Long, Integer> userIdToSchoolId(Set<Long> userIds) {
+    public Map<Long, String> userIdToSchoolId(Set<Long> userIds) {
 
         List<Long> list = CollUtil.valueIsNullToList(userIds);
         if (cn.hutool.core.collection.CollUtil.isEmpty(list)) {
@@ -49,9 +49,9 @@ public class StudentInfoPOServiceImpl
     }
 
     @Override
-    public boolean set(Long userId, Integer schoolId) {
-        Map<Long, Integer> userIdToSchoolIdMap = userIdToSchoolId(Collections.singleton(userId));
-        Integer exists = userIdToSchoolIdMap.get(userId);
+    public boolean set(Long userId, String schoolId) {
+        Map<Long, String> userIdToSchoolIdMap = userIdToSchoolId(Collections.singleton(userId));
+        String exists = userIdToSchoolIdMap.get(userId);
         StudentInfoPO po = new StudentInfoPO()
                 .setUserId(userId)
                 .setSchoolId(schoolId)
@@ -59,13 +59,13 @@ public class StudentInfoPOServiceImpl
                 .setUpdateUser(userId);
         if (exists == null) {
             po.setCreateTime(LocalDateTime.now());
-            return studentInfoPOMapper.insert(po)>0;
+            return studentInfoPOMapper.insert(po) > 0;
         } else {
             return studentInfoPOMapper.update(
                     po,
                     new LambdaQueryWrapper<StudentInfoPO>()
                             .eq(StudentInfoPO::getUserId, userId)
-                            .eq(StudentInfoPO::getSchoolId, exists))>0;
+                            .eq(StudentInfoPO::getSchoolId, exists)) > 0;
         }
     }
 }

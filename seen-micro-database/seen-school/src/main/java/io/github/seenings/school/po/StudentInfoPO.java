@@ -29,7 +29,7 @@ public class StudentInfoPO {
     /**
      * 学校id
      */
-    private Integer schoolId;
+    private String schoolId;
 
     /**
      * 创建时间

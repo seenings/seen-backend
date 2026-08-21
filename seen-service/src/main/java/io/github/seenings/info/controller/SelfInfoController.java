@@ -133,14 +133,19 @@ public class SelfInfoController {
     public R<EducationAndWork> selfUserIdToEducationAndWork(@SessionAttribute Long userId) {
 
         Integer highestEducation = httpEducationalService.userIdToEducational(Collections.singleton(userId)).get(userId);
-        Integer schoolId = httpStudentInfoService.userIdToSchoolId(Collections.singleton(userId)).get(userId);
+        String schoolId = httpStudentInfoService.userIdToSchoolId(Collections.singleton(userId)).get(userId);
         List<String> highestSchoolId;
         if (schoolId == null) {
             highestSchoolId = null;
         } else {
-            String provinceCode = httpSchoolService.schoolIdToProvinceCode(Collections.singleton(schoolId)).get(schoolId);
+            //学校找所在地，所在地确认是省还是城市，如果是省直接取省份的标识符
+            //如果是城市，找到代码后，再在关联渠道省份
+            String location = httpSchoolService.schoolCodeToLocation(Collections.singleton(schoolId)).get(schoolId);
+
+            String provinceCode = httpProvinceService.locationToProvinceCode(Set.of(location)).get(location);
             Integer provinceId = httpProvinceService.provinceCodeToProvinceId(Collections.singleton(provinceCode)).get(provinceCode);
-            highestSchoolId = cn.hutool.core.collection.CollUtil.newArrayList(NumberUtils.intToString(provinceId), NumberUtils.intToString(schoolId));
+            highestSchoolId = cn.hutool.core.collection.CollUtil.newArrayList(NumberUtils.intToString(provinceId)
+                    , schoolId);
         }
         Integer workPositionId = httpUserWorkPositionService.userIdToPosition(Collections.singleton(userId)).get(userId);
         String workCompany = httpUserWorkService.userIdToCompanyName(Collections.singleton(userId)).get(userId);
