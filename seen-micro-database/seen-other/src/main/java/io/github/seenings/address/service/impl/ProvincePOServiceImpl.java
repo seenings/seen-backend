@@ -74,20 +74,6 @@ public class ProvincePOServiceImpl implements ProvinceService {
         return list.stream().map(n -> Map.entry(n.getCode(), n.getName())).collect(Collectors.toList());
     }
 
-    /// 获取省份名称
-    ///
-    /// @param provinceNames 省份名称
-    /// @return 省份名称
-    @Override
-    public Set<String> toProvinceName(Set<String> provinceNames) {
-        SFunction<ProvincePO, String> getKey = ProvincePO::getName;
-        return ListUtil.partition(cn.hutool.core.collection.CollUtil.toList(provinceNames), 500).stream()
-                .flatMap(subs ->
-                        provincePOMapper.selectList(new LambdaQueryWrapper<ProvincePO>()
-                                .in(getKey, subs).select(getKey)).stream())
-                .map(getKey)
-                .collect(Collectors.toSet());
-    }
 
     /// 根据省会名获取省会代码
     ///
@@ -95,7 +81,7 @@ public class ProvincePOServiceImpl implements ProvinceService {
     /// @return 省会名对应省会代码
     @Override
     public Map<String, String> provinceNameToProvinceCode(Set<String> provinceNames) {
-        return ListUtil.partition(cn.hutool.core.collection.CollUtil.toList(provinceNames), 500).stream()
+        return ListUtil.partition(cn.hutool.core.collection.ListUtil.toList(provinceNames), 500).stream()
                 .flatMap(subs -> provincePOMapper.selectList(new LambdaQueryWrapper<ProvincePO>()
                                 .in(ProvincePO::getName, subs)
                                 .select(ProvincePO::getName, ProvincePO::getCode))

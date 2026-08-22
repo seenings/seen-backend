@@ -9,6 +9,11 @@ public class SeenConstant {
      * url前缀
      */
     public static final String SEEN_SMALL = "seen";
+
+    /**
+     * 系统名称
+     */
+    public static final String SYSTEM_NAME = "seenings";
     /**
      * feign微服务url前缀
      */

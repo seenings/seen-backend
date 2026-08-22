@@ -16,12 +16,6 @@ public interface ProvinceService {
     Map<String, Integer> provinceCodeToProvinceId(Set<String> provinceCodes);
 
     List<Map.Entry<String, String>> listAll();
-
-    /// 获取省份名称
-    ///
-    /// @param provinceNames 省份名称
-    /// @return 省份名称
-    Set<String> toProvinceName(Set<String> provinceNames);
     /// 根据省会名获取省会代码
     ///
     /// @param provinceNames 省会名

@@ -17,12 +17,6 @@ public interface CityService {
 
     Map<String, List<String>> provinceCodeToCode(Set<String> provinceCodes);
 
-    /// 获取城市名称
-    ///
-    /// @param cityNames 城市名称
-    /// @return 城市名称
-    Set<String> toCityName(Set<String> cityNames);
-
     Map<String, Integer> cityCodeToCityId(Set<String> cityCodes);
     /// 根据城市名获取省会代码
     ///
