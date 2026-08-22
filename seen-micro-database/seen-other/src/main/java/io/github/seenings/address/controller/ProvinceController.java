@@ -5,7 +5,9 @@ import io.github.seenings.address.service.CityService;
 import io.github.seenings.address.service.ProvinceService;
 import io.github.seenings.common.model.CascaderString;
 import io.github.seenings.core.util.CollUtil;
+import io.github.seenings.sys.constant.SeenConstant;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 /**
  * 省份
  */
+@Slf4j
 @RestController
 @AllArgsConstructor
 public class ProvinceController implements HttpProvinceService {
@@ -102,19 +105,18 @@ public class ProvinceController implements HttpProvinceService {
     /// @return 所在地对应省会代码
     @Override
     public Map<String, String> locationToProvinceCode(Set<String> locations) {
-        Set<String> cityNames = cityService.toCityName(locations);
-        Set<String> provinceNames = provinceService.toProvinceName(locations);
 
-        Map<String, String> cityNameToProvinceCode = cityService.cityNameToProvinceCode(cityNames);
-        Map<String, String> provinceNameToProvinceCode = provinceService.provinceNameToProvinceCode(provinceNames);
+        log.info("【{}】，所在地：{}", SeenConstant.SYSTEM_NAME, locations);
+        Map<String, String> cityNameToProvinceCode = cityService.cityNameToProvinceCode(locations);
+        Map<String, String> provinceNameToProvinceCode = provinceService.provinceNameToProvinceCode(locations);
 
         return locations.stream()
                 .map(location -> {
-                    if (cn.hutool.core.collection.CollUtil.contains(cityNames, location)) {
+                    if (cn.hutool.core.collection.CollUtil.contains(cityNameToProvinceCode.keySet(), location)) {
                         String provinceCode = cityNameToProvinceCode.get(location);
-                        return Map.entry(provinceCode, location);
-                    } else if (cn.hutool.core.collection.CollUtil.contains(provinceNames, location)) {
-                        return Map.entry(provinceNameToProvinceCode.get(location), location);
+                        return Map.entry(location, provinceCode);
+                    } else if (cn.hutool.core.collection.CollUtil.contains(provinceNameToProvinceCode.keySet(), location)) {
+                        return Map.entry(location, provinceNameToProvinceCode.get(location));
                     } else {
                         return null;
                     }
