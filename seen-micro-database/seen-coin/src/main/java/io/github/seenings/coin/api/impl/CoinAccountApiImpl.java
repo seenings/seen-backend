@@ -1,5 +1,6 @@
 package io.github.seenings.coin.api.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import io.github.seenings.account.service.CoinAccountService;
 import io.github.seenings.account.service.CoinAccountUserService;
 import io.github.seenings.coin.enumeration.AccountType;
@@ -56,6 +57,10 @@ public class CoinAccountApiImpl implements CoinAccountApi {
         // 获取账户
         return userIds.stream().parallel().map(n -> {
             Set<Long> resultAccountIds = userIdToAccountIdMap.get(n);
+            if (CollUtil.isEmpty(resultAccountIds)) {
+                log.error("用户的账户不存在,用户ID:{}", n);
+                return null;
+            }
             Long accountId = resultAccountIds.stream().parallel().filter(l -> accountIdToAccountTypeMap.get(l) == AccountType.USER).findFirst().orElse(null);
             if (accountId == null) {
                 log.error("用户的账户不存在,用户ID:{}", n);

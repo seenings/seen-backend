@@ -13,9 +13,8 @@
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.98</version>
+    <version>0.1.99</version>
     <properties>
-        <bc.version>1.85.2</bc.version>
         <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
         <hutool-all.version>5.8.47</hutool-all.version>
         <java.version>25</java.version>
@@ -34,7 +33,7 @@
         <mybatis-plus.version>3.5.17</mybatis-plus.version>
         <poi.version>5.5.1</poi.version>
         <seen.version>${project.version}</seen.version>
-        <spring-ai.version>2.0.0</spring-ai.version>
+        <spring-ai.version>2.0.1</spring-ai.version>
         <spring-cloud.version>2025.1.3</spring-cloud.version>
         <springdoc-openapi.version>3.1.0</springdoc-openapi.version>
         <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
@@ -117,13 +116,6 @@
             </dependency>
 
             <!--import 从前往后引用-->
-            <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bc-jdk18on-bom</artifactId>
-                <version>${bc.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-bom</artifactId>
