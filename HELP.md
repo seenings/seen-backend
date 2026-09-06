@@ -48,7 +48,7 @@ PowerShell
 
 ```shell
 # 提交版本变更
-git add . ; git commit -m "更新全国高等学校名单 resolve #69" ;
+git add . ; git commit -m "系统聊天时区偏移8小时 #73" ;
 # 拉取主线代码变基
 git pull origin main --rebase ;
 # 创建版本Tag
