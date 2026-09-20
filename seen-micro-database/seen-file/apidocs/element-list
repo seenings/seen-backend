@@ -1,0 +1,7 @@
+io.github.seenings
+io.github.seenings.file.po
+io.github.seenings.file.service
+io.github.seenings.file.service.impl
+io.github.seenings.photo.api.impl
+io.github.seenings.photo.po
+io.github.seenings.photo.service.impl

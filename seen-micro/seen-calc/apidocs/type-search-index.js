@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html","k":"18"},{"p":"io.github.seenings.calc.controller","l":"RecommendController"},{"p":"io.github.seenings.calc.service.impl","l":"RecommendServiceImpl"},{"p":"io.github.seenings","l":"SeenCalcApplication"}];updateSearchResults();

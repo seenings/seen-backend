@@ -1,0 +1,8 @@
+io.github.seenings
+io.github.seenings.apply.controller
+io.github.seenings.apply.po
+io.github.seenings.apply.service.impl
+io.github.seenings.chat.controller
+io.github.seenings.chat.po
+io.github.seenings.chat.service.impl
+io.github.seenings.sys.config

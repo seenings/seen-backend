@@ -1,0 +1,6 @@
+io.github.seenings
+io.github.seenings.coin.api.impl
+io.github.seenings.coin.po
+io.github.seenings.coin.repository
+io.github.seenings.coin.repository.impl
+io.github.seenings.coin.service.impl

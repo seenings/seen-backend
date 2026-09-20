@@ -1,0 +1,8 @@
+io.github.seenings
+io.github.seenings.introduce.controller
+io.github.seenings.introduce.po
+io.github.seenings.introduce.service
+io.github.seenings.introduce.service.impl
+io.github.seenings.text.controller
+io.github.seenings.text.po
+io.github.seenings.text.service.impl

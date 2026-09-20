@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"io.github.seenings"},{"l":"io.github.seenings.recommend.controller"},{"l":"io.github.seenings.recommend.po"},{"l":"io.github.seenings.recommend.service.impl"}];updateSearchResults();

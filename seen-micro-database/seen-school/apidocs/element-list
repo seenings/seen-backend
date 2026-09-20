@@ -1,0 +1,6 @@
+io.github.seenings
+io.github.seenings.school.controller
+io.github.seenings.school.mapper
+io.github.seenings.school.po
+io.github.seenings.school.service.impl
+io.github.seenings.school.util

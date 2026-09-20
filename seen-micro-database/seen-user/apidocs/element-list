@@ -1,0 +1,14 @@
+io.github.seenings
+io.github.seenings.auth.po
+io.github.seenings.auth.service.impl
+io.github.seenings.info.controller
+io.github.seenings.info.po
+io.github.seenings.info.service.impl
+io.github.seenings.photo.po
+io.github.seenings.photo.service.impl
+io.github.seenings.thumb.controller
+io.github.seenings.thumb.po
+io.github.seenings.thumb.service.impl
+io.github.seenings.work.controller
+io.github.seenings.work.po
+io.github.seenings.work.service.impl

@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"io.github.seenings","c":"SeenGatewayApplication","l":"main(String[])","u":"main(java.lang.String[])","k":"6"},{"p":"io.github.seenings","c":"SeenGatewayApplication","l":"SeenGatewayApplication()","u":"%3Cinit%3E()","k":"3"}];updateSearchResults();
