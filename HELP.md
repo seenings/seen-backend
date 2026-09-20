@@ -19,6 +19,10 @@ echo $JAVA_HOME
 读取.env.secret.txt环境变量文件并注入进程环境
 
 ```shell
+edit D:\Users\CXH\data\secret\.env.secret.txt
+```
+
+```shell
 Get-Content D:\Users\CXH\data\secret\.env.secret.txt | ForEach-Object {$l=$_.Trim();if($l -and !$l.StartsWith("#")){$i=$l.IndexOf('=');$k=$l.Substring(0,$i).Trim();$v=$l.Substring($i+1).Trim();[Environment]::SetEnvironmentVariable($k,$v,"Process")}};
 # 设置JDK
 $$env:JAVA_HOME = "C:\Users\chixu\.jdks\openjdk-26.0.2" ; echo "已设置JAVA_HOME：$env:JAVA_HOME";
@@ -48,7 +52,7 @@ PowerShell
 
 ```shell
 # 提交版本变更
-git add . ; git commit -m "系统聊天时区偏移8小时 #73" ;
+git add . ; git commit -m "更新版本 #74" ;
 # 拉取主线代码变基
 git pull origin main --rebase ;
 # 创建版本Tag
@@ -67,8 +71,15 @@ git push origin v$env:SEEN_VERSION ; git push origin dev_chixh ;
 ./mvnw site:site ;
 # 本地预览站点
 ./mvnw site:stage ;
+```
+
+```shell
 # 推送文档至代码仓库
 ./mvnw scm-publish:publish-scm ;
+```
+
+```shell
+Remove-Item -Recurse -Force target/ ;
 ```
 
 ## 6 GPG 安全工具安装
