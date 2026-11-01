@@ -52,7 +52,7 @@ PowerShell
 
 ```shell
 # 提交版本变更
-git add . ; git commit -m "更新版本 #74" ;
+git add . ; git commit -m "更新版本 #75" ;
 # 拉取主线代码变基
 git pull origin main --rebase ;
 # 创建版本Tag
