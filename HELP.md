@@ -25,7 +25,7 @@ edit D:\Users\CXH\data\secret\.env.secret.txt
 ```shell
 Get-Content D:\Users\CXH\data\secret\.env.secret.txt | ForEach-Object {$l=$_.Trim();if($l -and !$l.StartsWith("#")){$i=$l.IndexOf('=');$k=$l.Substring(0,$i).Trim();$v=$l.Substring($i+1).Trim();[Environment]::SetEnvironmentVariable($k,$v,"Process")}};
 # 设置JDK
-$$env:JAVA_HOME = "C:\Users\chixu\.jdks\openjdk-26.0.2" ; echo "已设置JAVA_HOME：$env:JAVA_HOME";
+$$env:JAVA_HOME = "C:\Users\chixu\.jdks\openjdk-27.0.1.0.3" ; echo "已设置JAVA_HOME：$env:JAVA_HOME";
 # 校验环境变量与Java版本
 & "$env:JAVA_HOME\bin\java.exe" -version ;
 echo "SEEN_VERSION=$env:SEEN_VERSION" ;
@@ -47,7 +47,7 @@ PowerShell
 
 ```shell
 # 提交版本变更
-git add . ; git commit -m "更新版本 #76" ;
+git add . ; git commit -m "修复minio的路径 #77" ;
 # 拉取主线代码变基
 git pull origin main --rebase ;
 # 创建版本Tag
