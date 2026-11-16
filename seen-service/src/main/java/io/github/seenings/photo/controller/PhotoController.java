@@ -15,13 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
-
 import io.github.seenings.common.model.R;
 import io.github.seenings.common.util.ResUtils;
 import io.github.seenings.photo.http.HttpPhotoService;
 import io.github.seenings.sys.config.SeenConfig;
 import io.github.seenings.sys.constant.PublicConstant;
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.net.URLDecoder;
@@ -59,8 +57,9 @@ public class PhotoController {
         }
         String originalFilename = URLDecoder.decode(file.getOriginalFilename(), StandardCharsets.UTF_8);
         String fileName = nowComponent.nowToSeventeenFormatDate() + "-" + RandomUtil.randomNumbers(4) + "-" + originalFilename;
-        String relativePath = nowComponent.nowToBasicIsoDate() + File.separator + fileName;
-        String realPath = seenConfig.getPathConfig().getPhotoPath() + relativePath;
+        String nowToBasicIsoDate = nowComponent.nowToBasicIsoDate();
+        String relativePath = nowToBasicIsoDate + "-" + fileName;
+        String realPath = seenConfig.getPathConfig().getPhotoPath() + nowToBasicIsoDate + File.separator + fileName;
         long size = file.getSize();
         try {
             FileUtil.writeFromStream(file.getInputStream(), Paths.get(realPath).toFile());
