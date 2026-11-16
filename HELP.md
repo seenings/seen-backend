@@ -27,7 +27,8 @@ Get-Content D:\Users\CXH\data\secret\.env.secret.txt | ForEach-Object {$l=$_.Tri
 # 设置JDK
 $$env:JAVA_HOME = "C:\Users\chixu\.jdks\openjdk-26.0.2" ; echo "已设置JAVA_HOME：$env:JAVA_HOME";
 # 校验环境变量与Java版本
-echo "SEEN_VERSION=$env:SEEN_VERSION" ; & "$env:JAVA_HOME\bin\java.exe" -version;
+& "$env:JAVA_HOME\bin\java.exe" -version ;
+echo "SEEN_VERSION=$env:SEEN_VERSION" ;
 # 切换项目目录
 cd ~\IdeaProjects\seenings\seen-backend;
 ```
@@ -42,17 +43,11 @@ PowerShell
 ./mvnw versions:set --define newVersion=$env:SEEN_VERSION -DgenerateBackupPoms=false
 ```
 
-### 2.2 检查依赖可更新版本
-
-```shell
-./mvnw versions:dependency-updates-report
-```
-
 ## 3 Git 版本发布流程
 
 ```shell
 # 提交版本变更
-git add . ; git commit -m "更新版本 #75" ;
+git add . ; git commit -m "更新版本 #76" ;
 # 拉取主线代码变基
 git pull origin main --rebase ;
 # 创建版本Tag
