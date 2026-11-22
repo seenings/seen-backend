@@ -11,6 +11,7 @@ import io.github.seenings.trade.service.TradeService;
 import io.github.seenings.coin.api.CoinAccountApi;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -26,6 +27,7 @@ import static cn.hutool.core.collection.CollUtil.newHashSet;
  * @author chixuehui
  * @since 2023-01-01
  */
+@Slf4j
 @Service
 @AllArgsConstructor
 public class FreezeServiceImpl implements FreezeService {
@@ -88,6 +90,7 @@ public class FreezeServiceImpl implements FreezeService {
         // 1.检查用户可用账户是否有足够的虚拟币
         Long userAccountId = coinAccountApi.userIdToAccountId(Set.of(userId)).get(userId);
         Long balance = coinBalanceController.debitOrCreditIdToBalance(Set.of(userAccountId)).get(userAccountId);
+        log.info("checkEnough userId={}, coinMount={}, balance={}", userId, coinMount, balance);
         return balance >= coinMount;
     }
 

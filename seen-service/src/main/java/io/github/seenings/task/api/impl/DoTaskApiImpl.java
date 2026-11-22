@@ -27,6 +27,7 @@ public class DoTaskApiImpl implements DoTaskApi {
      */
     @Override
     public void doTaskGetCoin(Long userId, Long busiId, Long coinAmount) {
+        log.info("用户{}做任务{}获取币{}", userId, busiId, coinAmount);
         doTaskToCoinService.doTask(userId, busiId, coinAmount);
     }
 }

@@ -6,14 +6,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.2</version>
+        <version>4.2.0</version>
         <relativePath/>
     </parent>
     <groupId>io.github.seenings</groupId>
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.103</version>
+    <version>0.1.104</version>
     <properties>
         <central-publishing-maven-plugin.version>0.12.0</central-publishing-maven-plugin.version>
         <hutool-all.version>5.8.48</hutool-all.version>
@@ -33,8 +33,8 @@
         <mybatis-plus.version>3.5.18.1</mybatis-plus.version>
         <poi.version>6.0.0</poi.version>
         <seen.version>${project.version}</seen.version>
-        <spring-ai.version>2.0.2</spring-ai.version>
-        <spring-cloud.version>2025.1.4</spring-cloud.version>
+        <spring-ai.version>2.1.0</spring-ai.version>
+        <spring-cloud.version>2026.0.0</spring-cloud.version>
         <springdoc-openapi.version>3.2.0</springdoc-openapi.version>
         <therapi-runtime-javadoc.version>0.16.0</therapi-runtime-javadoc.version>
         <zxing.version>3.5.4</zxing.version>
