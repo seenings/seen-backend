@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import io.github.seenings.sys.constant.PublicConstant;
 import io.github.seenings.sys.interceptor.TokenInterceptor;
 
@@ -23,7 +22,7 @@ public class SeenWebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         var pathPatterns = Set
-                .of(PublicConstant.REST, PublicConstant.PHOTO_VERSION, PublicConstant.VOICE_VERSION)
+                .of(PublicConstant.REST, PublicConstant.PHOTO_VERSION, PublicConstant.VOICE_VERSION, PublicConstant.SSE_VERSION)
                 .stream().map(n -> n + "**").toArray(String[]::new);
         registry.addInterceptor(new TokenInterceptor())
                 .addPathPatterns(pathPatterns);

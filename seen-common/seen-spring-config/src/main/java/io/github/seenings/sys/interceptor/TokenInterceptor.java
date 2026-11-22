@@ -1,71 +1,89 @@
 package io.github.seenings.sys.interceptor;
 
-import java.nio.charset.StandardCharsets;
-
-import org.jspecify.annotations.NonNull;
-import org.springframework.web.servlet.HandlerInterceptor;
-
-import io.github.seenings.common.exception.SeenException;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.ContentType;
+import cn.hutool.http.HttpStatus;
 import io.github.seenings.core.util.StrUtils;
 import io.github.seenings.extra.util.JwtUtil;
 import io.github.seenings.sys.constant.PublicConstant;
-
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HttpStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.nio.charset.StandardCharsets;
+
+/// 令牌认证拦截器
 @Slf4j
 public class TokenInterceptor implements HandlerInterceptor {
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {
-        // 1.通过session获取用户ID，如有则验证成功
-        HttpSession session = request.getSession();
-        if (session != null) {
-            Long userId = (Long) session.getAttribute(PublicConstant.USER_ID);
-            if (userId != null) {
-                log.info("用户访问成功，用户ID：{}。", userId);
-                return HandlerInterceptor.super.preHandle(request, response, handler);
-            }
+    /// 认证结果
+    @Accessors(chain = true)
+    @Data
+    public static class AuthResult {
+        /// 认证
+        private boolean auth;
+        /// 用户ID
+        private Long userId;
+    }
+
+    /// 认证
+    ///
+    /// @param userIdBySession  会话中的用户ID
+    /// @param tokenByHeader    请求头中的token
+    /// @param tokenByParameter 请求参数中的token
+    /// @return 认证结果
+    public static AuthResult auth(Long userIdBySession, String tokenByHeader, String tokenByParameter) {
+        if (userIdBySession != null) {
+            return new AuthResult().setAuth(true).setUserId(userIdBySession);
         }
-        // 2.通过请求头获取token，如有则校验token并获取userId，存入session会话中
-        // 3.通过请求参数获取token，如有则校验token并获取userId，存入session会话中
-        String token = StrUtil.blankToDefault(request.getHeader(PublicConstant.TOKEN_NAME), request.getParameter(PublicConstant.TOKEN_NAME));
+        String token = StrUtil.blankToDefault(tokenByHeader, tokenByParameter);
         if (StrUtil.isNotBlank(token)) {
             String userIdString;
             try {
                 userIdString = JwtUtil.validateToken(token);
-            } catch (SeenException e) {
-                writeError(request, response);
-                return false;
-            }
-            Long userId = StrUtils.stringToLong(userIdString);
-            if (userId == null) {
-                writeError(request, response);
-                return false;
-            } else {
-                if (session == null) {
-                    session = request.getSession(true);
+                userIdBySession = StrUtils.stringToLong(userIdString);
+                if (userIdBySession == null) {
+                    return new AuthResult();
+                } else {
+                    log.info("用户认证成功，用户ID：{}。", userIdBySession);
+                    return new AuthResult().setAuth(true).setUserId(userIdBySession);
                 }
-                session.setAttribute(PublicConstant.USER_ID, userId);
-                log.info("用户访问成功，用户ID：{}。", userId);
-                return HandlerInterceptor.super.preHandle(request, response, handler);
+            } catch (Exception e) {
+                log.error("", e);
+                return new AuthResult();
             }
         } else {
-            writeError(request, response);
-            return false;
+            return new AuthResult();
         }
-        // TODO 按场景处理，其他场景报错
-        // 4.以上均获取不到，则返回401 错误
     }
 
-    private void writeError(HttpServletRequest request, HttpServletResponse response) {
-        response.setStatus(HttpStatus.HTTP_UNAUTHORIZED);
-        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        String msg = "uri=" + request.getRequestURI() + "没有登录用户，访问失败";
-        response.addHeader("msg", msg);
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 会话，请求头，问号参数，未认证写响应体
+        HttpSession httpSession = request.getSession();
+        if (httpSession == null) {
+            httpSession = request.getSession(true);
+        }
+        Long userIdBySession = (Long) httpSession.getAttribute(PublicConstant.USER_ID);
+        String tokenByHeader = request.getHeader(PublicConstant.TOKEN_NAME);
+        String tokenByParameter = request.getParameter(PublicConstant.TOKEN_NAME);
+        String uri = request.getRequestURI();
+        AuthResult authResult = auth(userIdBySession, tokenByHeader, tokenByParameter);
+        if (authResult.isAuth()) {
+            httpSession.setAttribute(PublicConstant.USER_ID, authResult.getUserId());
+            return HandlerInterceptor.super.preHandle(request, response, handler);
+        } else {
+            String msg = "用户认证失败，路径：%s".formatted(uri);
+            log.error(msg);
+            response.setStatus(HttpStatus.HTTP_UNAUTHORIZED);
+            response.setContentType(ContentType.JSON.getValue());
+            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+            response.getWriter().print(msg);
+            return false;
+        }
     }
 }
