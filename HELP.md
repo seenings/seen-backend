@@ -56,9 +56,8 @@ $env:JAVA_HOME = "C:\Users\chixu\.jdks\openjdk-27.0.1.1";
 
 # 校验配置
 echo "已设置 JAVA_HOME：$env:JAVA_HOME";
-echo "SEEN_VERSION=$env:SEEN_VERSION";
 & "$env:JAVA_HOME\bin\java.exe" -version;
-
+echo "SEEN_VERSION=$env:SEEN_VERSION";
 # 切换到项目目录
 cd ~\IdeaProjects\seenings\seen-backend;
 ```
@@ -81,7 +80,7 @@ cd ~\IdeaProjects\seenings\seen-backend;
 
 ```powershell
 git add .;
-git commit -m "修复聊天实时对话 #78";
+git commit -m "升级包 #79";
 git pull origin main --rebase;
 $tag = "v$env:SEEN_VERSION";
 git tag -a $tag -m "发布版本 $env:SEEN_VERSION";
