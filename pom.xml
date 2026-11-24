@@ -13,7 +13,7 @@
     <artifactId>seen-backend</artifactId>
     <name>seen-backend</name>
     <packaging>pom</packaging>
-    <version>0.1.104</version>
+    <version>0.1.105</version>
     <properties>
         <central-publishing-maven-plugin.version>0.12.0</central-publishing-maven-plugin.version>
         <hutool-all.version>5.8.48</hutool-all.version>
@@ -35,7 +35,7 @@
         <seen.version>${project.version}</seen.version>
         <spring-ai.version>2.1.0</spring-ai.version>
         <spring-cloud.version>2026.0.0</spring-cloud.version>
-        <springdoc-openapi.version>3.2.0</springdoc-openapi.version>
+        <springdoc-openapi.version>3.2.1</springdoc-openapi.version>
         <therapi-runtime-javadoc.version>0.16.0</therapi-runtime-javadoc.version>
         <zxing.version>3.5.4</zxing.version>
     </properties>
